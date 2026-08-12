@@ -1,0 +1,97 @@
+/* Feuille commune aux pages de texte légal.
+   Reprend les jetons de index.html, sans le décor. */
+
+:root{
+  color-scheme:light dark;
+
+  --page:   light-dark(#DFE4E8, #0B0E11);
+  --panel:  light-dark(#FFFFFF, #14191E);
+  --panel-2:light-dark(#F3F6F8, #1A2026);
+  --ink:    light-dark(#12171B, #EDF2F6);
+  --ink-2:  light-dark(#5C6873, #9CAAB6);
+  --ink-3:  light-dark(#5F6C78, #8A98A5);
+  --line:   light-dark(#E4E9ED, #252D35);
+  --ice-2:  light-dark(#8FC0DA, #5D8CA8);
+  --ice-deep:light-dark(#2C6B93, #9DCBE4);
+
+  --r-lg:28px;
+  --pad:clamp(1rem,3vw,2rem);
+}
+:root[data-theme="light"]{color-scheme:light}
+:root[data-theme="dark"] {color-scheme:dark}
+
+@font-face{
+  font-family:"Outfit";
+  src:url("fonts/Outfit.woff2") format("woff2-variations");
+  font-weight:100 900;font-style:normal;font-display:swap;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0;padding:var(--pad);
+  background:var(--page);color:var(--ink);
+  font-family:"Outfit",ui-sans-serif,-apple-system,"Segoe UI",system-ui,sans-serif;
+  font-size:1rem;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+svg{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--ice-deep);outline-offset:3px}
+
+.doc{
+  max-width:min(72ch,100%);margin-inline:auto;
+  background:var(--panel);border-radius:var(--r-lg);
+  padding:clamp(1.5rem,5vw,4rem);
+}
+.doc__nav{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;flex-wrap:wrap;
+  padding-bottom:clamp(1.5rem,3vw,2.2rem);
+  margin-bottom:clamp(1.5rem,3vw,2.2rem);
+  border-bottom:1px solid var(--line);
+}
+.doc__nav svg{width:auto;height:.78rem;color:var(--ink)}
+.doc__back{
+  font-size:.85rem;color:var(--ink-2);text-decoration:none;
+  border:1px solid var(--line);border-radius:999px;padding:.4rem .9rem;
+  transition:background .2s,color .2s;
+}
+.doc__back:hover{background:var(--panel-2);color:var(--ink)}
+
+h1{
+  margin:0 0 .6rem;font-size:clamp(1.7rem,4vw,2.6rem);
+  font-weight:600;line-height:1.08;letter-spacing:-.03em;text-wrap:balance;
+}
+h2{
+  margin:clamp(2.2rem,4vw,3rem) 0 .8rem;
+  font-size:1.18rem;font-weight:600;letter-spacing:-.02em;line-height:1.25;
+}
+h3{margin:1.6rem 0 .5rem;font-size:1rem;font-weight:600}
+p,li{color:var(--ink-2)}
+p{margin:0 0 .9rem}
+ul,ol{margin:0 0 .9rem;padding-left:1.2rem;display:grid;gap:.45rem}
+a{color:var(--ink)}
+strong{color:var(--ink);font-weight:600}
+hr{border:0;border-top:1px solid var(--line);margin:clamp(2rem,4vw,3rem) 0}
+
+.maj{font-size:.85rem;color:var(--ink-3);margin-bottom:clamp(2rem,4vw,2.8rem)}
+
+/* Champ que Tristan doit remplir avant la mise en ligne */
+.tbd{
+  background:light-dark(#FFF4CE,#3A3116);
+  border:1px dashed light-dark(#C9A227,#8A7524);
+  border-radius:6px;padding:.05em .45em;
+  color:light-dark(#5E4A00,#F0DFA0);font-weight:500;
+  font-size:.95em;
+}
+
+.avis{
+  background:var(--panel-2);border-radius:14px;
+  padding:clamp(1rem,2.5vw,1.4rem);margin-bottom:clamp(2rem,4vw,2.8rem);
+  border-left:3px solid var(--ice-2);
+}
+.avis p{margin:0;font-size:.9rem}
+
+table{border-collapse:collapse;width:100%;margin:0 0 .9rem;font-size:.92rem}
+th,td{text-align:left;padding:.6rem .8rem;border-bottom:1px solid var(--line);color:var(--ink-2)}
+th{color:var(--ink);font-weight:600}
+.tbl-wrap{overflow-x:auto}

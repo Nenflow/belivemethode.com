@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="BELIVE">
+  <rect width="128" height="128" rx="28" fill="#12171B"/>
+  <g transform="translate(40.6 28) scale(.72)" fill="none" stroke="#EEF3F6" stroke-width="8" stroke-linecap="butt">
+    <path d="M0,0 V100"/>
+    <path d="M0,0 H40 A25,25 0 0 1 40,50 H0"/>
+    <path d="M0,50 H40 A25,25 0 0 1 40,100 H0"/>
+  </g>
+</svg>
