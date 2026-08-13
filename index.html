@@ -80,27 +80,29 @@
 /* ================= Jetons ================= */
 /* Palette « léopard des neiges » : blanc laiteux, gris fumée,
    rosettes anthracite, œil bleu glacier. */
-/* Une seule déclaration par jeton : light-dark(clair, sombre).
-   Le thème suit le système ; le bouton du pied de page force color-scheme. */
+/* Le thème clair est la valeur par défaut ; le sombre est redéclaré deux fois,
+   une fois pour le réglage système, une fois pour le forçage par le bouton du
+   pied de page. Ne pas revenir à light-dark() : la fonction demande Safari 17.5,
+   et en dessous ce sont toutes les couleurs du site qui tombent d'un coup. */
 :root{
   color-scheme:light dark;
 
-  --page:      light-dark(#DFE4E8, #0B0E11);
-  --panel:     light-dark(#FFFFFF, #14191E);
-  --panel-2:   light-dark(#F3F6F8, #1A2026);
-  --panel-3:   light-dark(#E9EEF2, #20272E);
-  --dark:      light-dark(#161B20, #080B0E);
-  --dark-2:    light-dark(#1F262C, #121820);
-  --ink:       light-dark(#12171B, #EDF2F6);
-  --ink-2:     light-dark(#5C6873, #9CAAB6);
+  --page:      #DFE4E8;
+  --panel:     #FFFFFF;
+  --panel-2:   #F3F6F8;
+  --panel-3:   #E9EEF2;
+  --dark:      #161B20;
+  --dark-2:    #1F262C;
+  --ink:       #12171B;
+  --ink-2:     #5C6873;
   /* --ink-3 porte du texte réel (libellés, mentions) : il doit rester au-dessus
      de 4,5:1 sur --panel, --panel-2 et --panel-3. #8C98A3 tombait à 2,9:1. */
-  --ink-3:     light-dark(#5F6C78, #8A98A5);
-  --line:      light-dark(#E4E9ED, #252D35);
-  --line-dark: light-dark(rgba(255,255,255,.12), rgba(255,255,255,.1));
-  --ice:       light-dark(#B4D6E8, #3E5F75);
-  --ice-2:     light-dark(#8FC0DA, #5D8CA8);
-  --ice-deep:  light-dark(#2C6B93, #9DCBE4);
+  --ink-3:     #5F6C78;
+  --line:      #E4E9ED;
+  --line-dark: rgba(255,255,255,.12);
+  --ice:       #B4D6E8;
+  --ice-2:     #8FC0DA;
+  --ice-deep:  #2C6B93;
   --on-dark:#EEF3F6;
   --on-dark-2:#9DACB8;
 
@@ -120,6 +122,44 @@
   --gap:clamp(.7rem,1.2vw,1rem);
   --sec:clamp(3.5rem,7vw,6rem);
   --maxw:1240px;
+}
+
+/* Thème sombre suivi du système, sauf si le clair est forcé à la main. */
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --page:      #0B0E11;
+    --panel:     #14191E;
+    --panel-2:   #1A2026;
+    --panel-3:   #20272E;
+    --dark:      #080B0E;
+    --dark-2:    #121820;
+    --ink:       #EDF2F6;
+    --ink-2:     #9CAAB6;
+    --ink-3:     #8A98A5;
+    --line:      #252D35;
+    --line-dark: rgba(255,255,255,.1);
+    --ice:       #3E5F75;
+    --ice-2:     #5D8CA8;
+    --ice-deep:  #9DCBE4;
+  }
+}
+
+/* Thème sombre forcé par le bouton du pied de page. */
+:root[data-theme="dark"]{
+  --page:      #0B0E11;
+  --panel:     #14191E;
+  --panel-2:   #1A2026;
+  --panel-3:   #20272E;
+  --dark:      #080B0E;
+  --dark-2:    #121820;
+  --ink:       #EDF2F6;
+  --ink-2:     #9CAAB6;
+  --ink-3:     #8A98A5;
+  --line:      #252D35;
+  --line-dark: rgba(255,255,255,.1);
+  --ice:       #3E5F75;
+  --ice-2:     #5D8CA8;
+  --ice-deep:  #9DCBE4;
 }
 
 :root[data-theme="light"]{color-scheme:light}
@@ -240,6 +280,9 @@ p{margin:0}
   .nav__pill{
     order:3;flex-basis:100%;margin-right:0;
     display:grid;gap:.1rem;background:none;padding:0;
+    /* La pilule du bureau porte un rayon de 999px. Déplié en colonne, ce rayon
+       découpe le bloc en ovale et mange le premier et le dernier lien. */
+    border-radius:0;
     /* replié par défaut : ni cliquable ni lu tant qu'il est fermé.
        visibility bascule en fin de repli, d'où le délai. */
     max-height:0;overflow:hidden;visibility:hidden;
