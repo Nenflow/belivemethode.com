@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>BELIVE : Breathwork &amp; régulation du système nerveux | Brabant wallon</title>
-<meta name="description" content="BELIVE aide les jeunes actifs de 25 à 35 ans coincés en pilote automatique à reprendre leur énergie et leur direction, en commençant par le corps. Breathwork, régulation du système nerveux, protocole 90 jours. Séances à Nil-Saint-Vincent.">
+<title>BELIVE : Breathwork &amp; régulation du système nerveux | Brabant wallon &amp; Chartres</title>
+<meta name="description" content="BELIVE aide les jeunes actifs de 25 à 35 ans coincés en pilote automatique à reprendre leur énergie et leur direction, en commençant par le corps. Breathwork, régulation du système nerveux, protocole 90 jours. Séances à Nil-Saint-Vincent et à Chartres.">
 
 <link rel="canonical" href="https://belivemethode.com/">
 
@@ -14,7 +14,7 @@
 <meta property="og:locale" content="fr_BE">
 <meta property="og:url" content="https://belivemethode.com/">
 <meta property="og:title" content="BELIVE : sortir du pilote automatique, en commençant par le corps">
-<meta property="og:description" content="Breathwork, système nerveux, naturopathie. Séances individuelles et de groupe en Brabant wallon, et le protocole BELIVE RESET sur 90 jours.">
+<meta property="og:description" content="Breathwork, système nerveux, naturopathie. Séances individuelles et de groupe en Brabant wallon et à Chartres. Le protocole BELIVE RESET sur 90 jours ouvre prochainement.">
 <meta property="og:image" content="https://belivemethode.com/assets/img/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -35,14 +35,17 @@
   "@type": "HealthAndBeautyBusiness",
   "@id": "https://belivemethode.com/#belive",
   "name": "BELIVE",
-  "description": "Breathwork, régulation du système nerveux et naturopathie. Séances individuelles et de groupe, et le protocole BELIVE RESET sur 90 jours.",
+  "description": "Breathwork, régulation du système nerveux et naturopathie. Séances individuelles et de groupe en Brabant wallon et à Chartres. Le protocole BELIVE RESET sur 90 jours ouvre prochainement.",
   "url": "https://belivemethode.com/",
   "image": "https://belivemethode.com/assets/img/og.jpg",
   "telephone": "+32493847434",
   "email": "tristanvang.contact@gmail.com",
   "priceRange": "€€",
   "currenciesAccepted": "EUR",
-  "areaServed": { "@type": "AdministrativeArea", "name": "Brabant wallon" },
+  "areaServed": [
+    { "@type": "AdministrativeArea", "name": "Brabant wallon" },
+    { "@type": "City", "name": "Chartres", "address": { "@type": "PostalAddress", "addressLocality": "Chartres", "addressCountry": "FR" } }
+  ],
   "address": {
     "@type": "PostalAddress",
     "name": "Espace Eaurigine",
@@ -64,7 +67,8 @@
       "url": "https://cal.com/tristan-vangoidtsenhoven-3wuqnf/30min" },
     { "@type": "Offer", "name": "BELIVE Alignement, Breathwork individuel", "price": "150", "priceCurrency": "EUR",
       "url": "https://cal.com/tristan-vangoidtsenhoven-3wuqnf/120min" },
-    { "@type": "Offer", "name": "BELIVE RESET, protocole 90 jours", "price": "1800", "priceCurrency": "EUR" }
+    { "@type": "Offer", "name": "BELIVE RESET, protocole 90 jours", "price": "1800", "priceCurrency": "EUR",
+      "availability": "https://schema.org/PreOrder" }
   ]
 }
 </script>
@@ -209,6 +213,19 @@ p{margin:0}
   color:var(--ink-2);margin:0;
 }
 .num{font-variant-numeric:lining-nums tabular-nums}
+
+/* Pastille « À venir » : elle marque une offre annoncée mais pas encore
+   ouverte. Contour plutôt qu'aplat : c'est une mention, pas un bouton. */
+.venir{
+  justify-self:start;
+  display:inline-flex;align-items:center;gap:.45rem;
+  font-size:var(--t-label);font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;
+  padding:.32rem .75rem;border-radius:999px;
+  border:1px solid var(--ice-deep);color:var(--ice-deep);
+}
+.venir::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.panel--dark .venir{border-color:var(--ice-2);color:var(--ice-2)}
 
 .head{display:grid;gap:.9rem;max-width:var(--measure);margin-bottom:clamp(2rem,4vw,3rem)}
 .head h2{font-size:var(--t-h2)}
@@ -930,6 +947,8 @@ p{margin:0}
 .footer a:hover{color:var(--ink)}
 .footer p,.footer li{font-size:var(--t-small);color:var(--ink-2)}
 .footer ul{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
+/* Le second lieu n'a pas d'adresse : un filet le sépare du premier bloc. */
+.footer__lieu{margin-top:.35rem;padding-top:.7rem;border-top:1px solid var(--line)}
 .footer__base{
   display:flex;flex-wrap:wrap;gap:1rem 1.6rem;align-items:center;
   padding-top:1.5rem;border-top:1px solid var(--line);
@@ -1309,6 +1328,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <div class="seance__meta">
         <p>Environ <span class="num">2 h</span> · <strong class="num">50 €</strong> en groupe</p>
         <p><strong>Espace Eaurigine</strong>, Val d'Alvaux <span class="num">26</span>, <span class="num">1457</span> Nil-Saint-Vincent</p>
+        <p>Également à <strong>Chartres</strong>, en France. Le lieu exact est indiqué sur chaque date.</p>
         <p>Les prochaines dates et les places restantes sont sur la page Luma.</p>
       </div>
       <!-- Page Luma permanente : elle liste toujours les prochaines séances.
@@ -1375,7 +1395,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
     <div class="head stagger">
       <p class="label">Les offres</p>
       <h2>Aller plus loin, en individuel.</h2>
-      <p>Après la séance de groupe, deux formats en tête-à-tête. Tous deux sont ponctuels, sans engagement, et mènent au protocole RESET.</p>
+      <p>Après la séance de groupe, deux formats en tête-à-tête. Tous deux sont ponctuels, sans engagement, et mènent au protocole RESET, qui ouvrira prochainement.</p>
     </div>
 
     <ol class="echelle reveal">
@@ -1399,7 +1419,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
         <span class="echelle__dot" aria-hidden="true"></span>
         <p class="echelle__nom">Protocole RESET</p>
         <p class="echelle__prix num">1 800 €</p>
-        <p class="echelle__note">ça mène là</p>
+        <p class="echelle__note">ça mène là, à venir</p>
       </li>
     </ol>
 
@@ -1439,9 +1459,11 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
   <section class="panel panel--dark" id="protocole">
     <div class="head stagger">
       <p class="label">L'offre signature</p>
+      <p class="venir">À venir</p>
       <h2>BELIVE RESET, 90 jours.</h2>
       <p>Le protocole complet, en individuel : un call par semaine, des protocoles personnels entre les séances, et un canal de suivi au quotidien.</p>
-      <p class="head__prix"><span class="num">1 800 €</span>, ou <span class="num">3 × 600 €</span>. Le détail est en bas de cette section.</p>
+      <p><strong>Il n'est pas encore ouvert.</strong> La date de lancement n'est pas fixée. La liste d'attente sert à ça : tu es prévenu en premier, avant l'annonce publique.</p>
+      <p class="head__prix">Tarif prévu à l'ouverture&nbsp;: <span class="num">1 800 €</span>, ou <span class="num">3 × 600 €</span>. Le détail est en bas de cette section.</p>
     </div>
 
     <p class="label signature__sep">Le déroulé en cinq étapes&nbsp;: R · E · S · E · T</p>
@@ -1524,7 +1546,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
     </div>
 
     <!-- Le mot « Candidater » n'a de valeur que s'il désigne un vrai filtre -->
-    <p class="label signature__sep">Pour qui, et comment on entre</p>
+    <p class="label signature__sep">Pour qui, et comment on entre à l'ouverture</p>
 
     <div class="filtre reveal">
       <p class="label">Ce protocole n'est pas pour toi si…</p>
@@ -1540,35 +1562,36 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <li class="parcours__etape">
         <p class="parcours__n num">1</p>
         <div>
-          <h3>Tu écris</h3>
+          <h3>Tu t'inscris</h3>
           <p>Deux lignes suffisent : où tu en es, et ce que tu veux que ça change. Pas de formulaire à rallonge.</p>
         </div>
       </li>
       <li class="parcours__etape">
         <p class="parcours__n num">2</p>
         <div>
-          <h3>On s'appelle</h3>
-          <p>Trente minutes, gratuites, sans engagement. Je te dis honnêtement si le protocole est le bon outil pour toi, ou si autre chose le serait davantage.</p>
+          <h3>Je te préviens</h3>
+          <p>Dès que la date d'ouverture est fixée, la liste d'attente est prévenue en premier, avant l'annonce publique. Rien d'autre entre-temps.</p>
         </div>
       </li>
       <li class="parcours__etape">
         <p class="parcours__n num">3</p>
         <div>
-          <h3>Tu décides</h3>
-          <p>Je réponds oui ou non sous <span class="num">48 h</span>. Si c'est oui, on fixe la date de départ et le premier call.</p>
+          <h3>On s'appelle</h3>
+          <p>Trente minutes, gratuites, sans engagement. Je te dis honnêtement si le protocole est le bon outil pour toi, ou si autre chose le serait davantage. Si c'est oui des deux côtés, on fixe la date de départ.</p>
         </div>
       </li>
     </ol>
 
     <div class="final reveal">
       <div>
+        <p class="venir">À venir</p>
         <p class="final__montant num">1 800 €</p>
-        <p class="final__note">Comptant, ou <span class="num">3 × 600 €</span>. Une séance individuelle en clôture, comprise dans le protocole.</p>
+        <p class="final__note">Tarif prévu à l'ouverture, comptant ou <span class="num">3 × 600 €</span>. Une séance individuelle en clôture, comprise dans le protocole.</p>
       </div>
       <div class="final__act">
-        <a class="btn btn--onDark" href="https://wa.me/32493847434">Candidater sur WhatsApp <span class="btn__arrow">→</span></a>
+        <a class="btn btn--onDark" href="https://wa.me/32493847434">Rejoindre la liste d'attente <span class="btn__arrow">→</span></a>
         <p class="final__mail">ou écris à <a href="mailto:tristanvang.contact@gmail.com">tristanvang.contact@gmail.com</a></p>
-        <p class="final__delai">Réponse sous 48 h, oui ou non</p>
+        <p class="final__delai">Prévenu en premier à l'ouverture</p>
       </div>
     </div>
   </section>
@@ -1593,7 +1616,15 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <details class="faq__item" name="faq">
         <summary>Est-ce que je dois commencer par le protocole de 90 jours&nbsp;?</summary>
         <div class="faq__body">
-          <p>Non. La plupart des gens entrent par la séance de groupe, puis par une session individuelle. Le protocole RESET vient après, quand tu sais déjà ce que ça fait dans ton corps, et seulement si tu veux installer le changement dans la durée.</p>
+          <p>Non, et il n'est de toute façon pas encore ouvert. On entre par la séance de groupe, puis par une session individuelle. Le protocole RESET viendra après, quand tu sais déjà ce que ça fait dans ton corps, et seulement si tu veux installer le changement dans la durée.</p>
+        </div>
+      </details>
+
+      <details class="faq__item" name="faq">
+        <summary>Le protocole RESET ouvre quand&nbsp;?</summary>
+        <div class="faq__body">
+          <p>La date n'est pas encore fixée, et je préfère le dire plutôt que d'annoncer un mois au hasard. En attendant, la liste d'attente est ouverte : écris-moi sur WhatsApp ou par e-mail, et tu seras prévenu en premier, avant l'annonce publique.</p>
+          <p>Les séances de groupe et les sessions individuelles, elles, sont disponibles dès maintenant.</p>
         </div>
       </details>
 
@@ -1614,7 +1645,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <details class="faq__item" name="faq">
         <summary>Ça se passe où&nbsp;? En présentiel ou à distance&nbsp;?</summary>
         <div class="faq__body">
-          <p>Les séances de Breathwork, en groupe comme en individuel, ont lieu à l'Espace Eaurigine, à Nil-Saint-Vincent. Les calls hebdomadaires du protocole RESET se font à distance.</p>
+          <p>Les séances de Breathwork, en groupe comme en individuel, ont lieu à l'Espace Eaurigine, à Nil-Saint-Vincent, et à Chartres, en France. Le lieu est indiqué sur chaque date. Les calls hebdomadaires du protocole RESET se feront à distance.</p>
         </div>
       </details>
 
@@ -1629,7 +1660,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <details class="faq__item" name="faq">
         <summary>Le protocole RESET se paie en une fois&nbsp;?</summary>
         <div class="faq__body">
-          <p>Au choix : <span class="num">1 800 €</span> comptant, ou <span class="num">3 × 600 €</span> répartis sur les trois mois. Une séance individuelle est comprise en clôture dans les deux cas.</p>
+          <p>Au choix, à l'ouverture : <span class="num">1 800 €</span> comptant, ou <span class="num">3 × 600 €</span> répartis sur les trois mois. Une séance individuelle est comprise en clôture dans les deux cas.</p>
         </div>
       </details>
     </div>
@@ -1701,11 +1732,12 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
         </ul>
       </div>
       <div>
-        <h3>Lieu</h3>
+        <h3>Lieux</h3>
         <ul>
           <li>Espace Eaurigine</li>
           <li class="num">Val d'Alvaux 26</li>
           <li class="num">1457 Nil-Saint-Vincent</li>
+          <li class="footer__lieu">Chartres, France</li>
         </ul>
       </div>
     </div>
@@ -1746,7 +1778,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <li>
         <a class="resa__opt" href="https://luma.com/user/usr-RFau2gA8XZpVvCu">
           <span class="resa__opt-name">Breathwork en groupe</span>
-          <span class="resa__opt-meta">Environ <span class="num">2 h</span> · Espace Eaurigine · prochaines dates</span>
+          <span class="resa__opt-meta">Environ <span class="num">2 h</span> · Nil-Saint-Vincent ou Chartres · prochaines dates</span>
           <span class="resa__opt-price num">50 €</span>
         </a>
       </li>
@@ -1766,12 +1798,12 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       </li>
     </ul>
 
-    <p class="resa__group">L'accompagnement complet</p>
+    <p class="resa__group">L'accompagnement complet, à venir</p>
     <ul class="resa__list">
       <li>
         <a class="resa__opt resa__opt--anchor" href="https://wa.me/32493847434">
           <span class="resa__opt-name">BELIVE RESET, <span class="num">90</span> jours</span>
-          <span class="resa__opt-meta">Sur candidature · un appel de <span class="num">30</span> min d'abord</span>
+          <span class="resa__opt-meta">Pas encore ouvert · rejoins la liste d'attente</span>
           <span class="resa__opt-price num">1 800 €</span>
         </a>
       </li>
