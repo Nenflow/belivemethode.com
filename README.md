@@ -24,6 +24,7 @@ index.html              La page complète : contenu, styles, scripts, JSON-LD
 cgv.html                Conditions générales de vente
 confidentialite.html    Politique de confidentialité (RGPD)
 mentions-legales.html   Mentions légales
+404.html                Page d'erreur servie par GitHub Pages, chemins absolus
 CNAME                   Domaine personnalisé lu par GitHub Pages
 robots.txt              Indexation ouverte, pointe vers le sitemap
 sitemap.xml             Une seule URL : la page d'accueil
@@ -35,7 +36,8 @@ assets/
   gen_photos.py         Regénère les déclinaisons AVIF / WebP / JPEG des photos
 ```
 
-Les pages légales portent `noindex` : seule la page d'accueil est indexable.
+Les pages légales et la page 404 portent `noindex` : seule la page d'accueil
+est indexable.
 
 ## Points techniques
 

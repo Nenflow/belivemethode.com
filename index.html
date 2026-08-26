@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>BELIVE : Breathwork &amp; régulation du système nerveux | Brabant wallon &amp; Chartres</title>
-<meta name="description" content="BELIVE aide les jeunes actifs de 25 à 35 ans coincés en pilote automatique à reprendre leur énergie et leur direction, en commençant par le corps. Breathwork, régulation du système nerveux, protocole 90 jours. Séances à Nil-Saint-Vincent et à Chartres.">
+<title>BELIVE : Breathwork et système nerveux en Brabant wallon</title>
+<meta name="description" content="Sortir du pilote automatique en commençant par le corps. Breathwork, régulation du système nerveux et naturopathie, en Brabant wallon.">
 
 <link rel="canonical" href="https://belivemethode.com/">
 
@@ -198,6 +198,20 @@ p{margin:0}
   padding:0;margin:-1px;overflow:hidden;
   clip-path:inset(50%);white-space:nowrap;border:0;
 }
+
+/* Lien d'évitement : replié au-dessus du cadre, il redescend au premier
+   coup de tabulation. z-index au-dessus de la barre collante (60). */
+.skip{
+  position:fixed;top:var(--pad);left:var(--pad);z-index:70;
+  transform:translateY(-200%);
+  background:var(--panel);color:var(--ink);
+  font-size:.9rem;text-decoration:none;
+  padding:.7rem 1.15rem;border-radius:999px;
+  border:1px solid var(--line);
+  box-shadow:0 24px 60px -24px rgba(18,23,27,.35);
+}
+.skip:focus{transform:none}
+#contenu:focus{outline:none}
 
 .shell{max-width:var(--maxw);margin-inline:auto;display:grid;gap:var(--gap)}
 /* overflow:hidden pour que les bandeaux photo à fleur de bord
@@ -624,12 +638,9 @@ p{margin:0}
 }
 
 /* ================= Protocole ================= */
-/* Le prix est annoncé dans le chapeau, sans bloc ni bouton. Le bouton attend
-   la fin de la section, quand les 90 jours ont été montrés. */
-.head__prix{
-  color:var(--on-dark);font-weight:500;
-  padding-top:.9rem;border-top:1px solid var(--line-dark);
-}
+/* Le prix n'est plus annoncé dans le chapeau. Il n'apparaît qu'en bas de la
+   section, après les cinq étapes, les quatre livrables et le filtre : le
+   lecteur sait ce qu'il achète avant de voir le montant. */
 .signature__sep{margin-block:clamp(2.4rem,5vw,3.5rem) 1.4rem}
 
 /* ---- ce que tu gardes : quatre documents, pas quatre puces ---- */
@@ -978,6 +989,18 @@ p{margin:0}
 :root[data-theme="light"] .theme__dot{background:none}
 :root[data-theme="dark"]  .theme__dot{background:var(--ink-2)}
 
+/* Cibles tactiles. Sur écran tactile, les liens du pied et de la fin de FAQ
+   font 18 px de haut : on les monte au-dessus de 44 px par du remplissage,
+   compensé par une marge négative pour que la mise en page ne bouge pas. */
+@media (pointer:coarse){
+  .footer li a,.footer__legal a,.faq__canaux a,.final__mail a{
+    display:inline-block;padding-block:.85rem;margin-block:-.7rem;
+  }
+  .footer ul{gap:.2rem}
+  .footer__legal{gap:1.2rem .9rem}
+  .theme{padding-block:.6rem}
+}
+
 /* ================= Sélecteur de réservation ================= */
 .resa{
   border:0;padding:0;background:none;color:var(--ink);
@@ -1090,6 +1113,10 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
 </head>
 <body>
 
+<!-- Lien d'évitement : premier élément focalisable de la page, hors écran
+     tant qu'il n'a pas le focus. La page fait 11 600 px, la nav est collante. -->
+<a class="skip" href="#contenu">Aller au contenu</a>
+
 <!-- Logotype BELIVE, défini une seule fois puis appelé par <use>.
      Grille : hauteur de capitale = 100, épaisseur de trait = 5.
      Les « E » sont trois barres détachées, sans montant vertical. -->
@@ -1138,7 +1165,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
   </nav>
 
   <!-- ===== Héros ===== -->
-  <header class="panel hero">
+  <header class="panel hero" id="contenu" tabindex="-1">
     <h1 class="hero__title">
       <svg class="wordmark" viewBox="-3 -3 748 109" aria-hidden="true">
         <use href="#belive-letters"/>
@@ -1294,7 +1321,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <div class="breath__stage">
         <div class="breath__guide" aria-hidden="true"></div>
         <div class="breath__ring"></div>
-        <p class="breath__count" id="breathCount">Prêt</p>
+        <p class="breath__count" id="breathCount" aria-live="polite">Prêt</p>
       </div>
       <button class="btn btn--onDark" id="breathBtn" type="button">Démarrer</button>
       <p class="breath__hint">Cinq secondes à l'inspiration, cinq secondes à l'expiration. Six cycles, une minute.</p>
@@ -1334,7 +1361,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <!-- Page Luma permanente : elle liste toujours les prochaines séances.
            Pour pointer un événement précis à la place :
            https://luma.com/rxf6oalg, mais il faudra alors éditer ce lien à chaque fois. -->
-      <a class="btn btn--ice" href="https://luma.com/user/usr-RFau2gA8XZpVvCu">Voir les dates &amp; réserver <span class="btn__arrow">→</span></a>
+      <a class="btn btn--ice" href="https://luma.com/user/usr-RFau2gA8XZpVvCu" target="_blank" rel="noopener">Voir les dates &amp; réserver <span class="btn__arrow">→</span></a>
     </div>
     <figure class="figure figure--band figure--hinge">
       <picture>
@@ -1436,7 +1463,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
         <p class="offre__format">Session holistique individuelle, ponctuelle. <span class="num">1 h 30</span>. Méditation, mouvement, respiration : un passage par chacune des trois voies.</p>
         <p class="offre__price">90 €<small>en individuel</small></p>
         <p class="offre__role">Pour sentir la méthode dans le corps avant d'aller plus loin. Zéro engagement.</p>
-        <a class="btn btn--ice" href="https://cal.com/tristan-vangoidtsenhoven-3wuqnf/30min">Choisir un créneau <span class="btn__arrow">→</span></a>
+        <a class="btn btn--ice" href="https://cal.com/tristan-vangoidtsenhoven-3wuqnf/30min" target="_blank" rel="noopener">Choisir un créneau <span class="btn__arrow">→</span></a>
       </article>
 
       <article class="offre offre--mid">
@@ -1449,7 +1476,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
         <p class="offre__format">Séance de Breathwork individuelle, ponctuelle. <span class="num">2 h</span>. Respiration longue, libération somato-émotionnelle, débriefing, et un protocole personnel à emporter.</p>
         <p class="offre__price">150 €<small>en individuel</small></p>
         <p class="offre__role">Une seule voie, menée jusqu'au bout, là où la découverte s'arrête.</p>
-        <a class="btn btn--ghost" href="https://cal.com/tristan-vangoidtsenhoven-3wuqnf/120min">Choisir un créneau <span class="btn__arrow">→</span></a>
+        <a class="btn btn--ghost" href="https://cal.com/tristan-vangoidtsenhoven-3wuqnf/120min" target="_blank" rel="noopener">Choisir un créneau <span class="btn__arrow">→</span></a>
       </article>
 
     </div>
@@ -1463,7 +1490,6 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <h2>BELIVE RESET, 90 jours.</h2>
       <p>Le protocole complet, en individuel : un call par semaine, des protocoles personnels entre les séances, et un canal de suivi au quotidien.</p>
       <p><strong>Il n'est pas encore ouvert.</strong> La date de lancement n'est pas fixée. La liste d'attente sert à ça : tu es prévenu en premier, avant l'annonce publique.</p>
-      <p class="head__prix">Tarif prévu à l'ouverture&nbsp;: <span class="num">1 800 €</span>, ou <span class="num">3 × 600 €</span>. Le détail est en bas de cette section.</p>
     </div>
 
     <p class="label signature__sep">Le déroulé en cinq étapes&nbsp;: R · E · S · E · T</p>
@@ -1485,7 +1511,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
           <p class="step__sub">Réguler le système nerveux</p>
           <p class="step__weeks num">Semaines 4 → 6</p>
         </div>
-        <p class="step__desc">Sortir du mode survie. Mouvement conscient, hydratation cellulaire, hormèse. L'état interne devient plus calme, moins réactif : énergie plus stable, moins d'anxiété, meilleur sommeil.</p>
+        <p class="step__desc">Sortir du mode survie. Mouvement conscient, hydratation cellulaire, hormèse. Le travail porte sur la réactivité du système nerveux, avec pour objectifs une énergie plus régulière et un sommeil de meilleure qualité.</p>
       </article>
       <article class="step">
         <p class="step__letter">S</p>
@@ -1494,7 +1520,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
           <p class="step__sub">Installer dans la durée</p>
           <p class="step__weeks num">Semaines 7 → 9</p>
         </div>
-        <p class="step__desc">On arrête d'alterner entre fatigue, stress et surcharge. Installer la discipline, tenir des routines. Résultats mesurables : fin du crash de 15h, Deep Work supérieur à 90 minutes, décisions concrètes prises.</p>
+        <p class="step__desc">On arrête d'alterner entre fatigue, stress et surcharge. Installer la discipline, tenir des routines. Ce qu'on suit semaine après semaine : le creux de 15h, la durée de concentration, les décisions prises.</p>
       </article>
       <article class="step">
         <p class="step__letter">E</p>
@@ -1562,8 +1588,8 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <li class="parcours__etape">
         <p class="parcours__n num">1</p>
         <div>
-          <h3>Tu t'inscris</h3>
-          <p>Deux lignes suffisent : où tu en es, et ce que tu veux que ça change. Pas de formulaire à rallonge.</p>
+          <h3>Tu réponds à six questions</h3>
+          <p>Cinq minutes. Elles me servent à savoir si le protocole est le bon outil pour toi, avant même qu'on se parle. Réponds honnêtement plutôt que bien.</p>
         </div>
       </li>
       <li class="parcours__etape">
@@ -1589,8 +1615,8 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
         <p class="final__note">Tarif prévu à l'ouverture, comptant ou <span class="num">3 × 600 €</span>. Une séance individuelle en clôture, comprise dans le protocole.</p>
       </div>
       <div class="final__act">
-        <a class="btn btn--onDark" href="https://wa.me/32493847434">Rejoindre la liste d'attente <span class="btn__arrow">→</span></a>
-        <p class="final__mail">ou écris à <a href="mailto:tristanvang.contact@gmail.com">tristanvang.contact@gmail.com</a></p>
+        <a class="btn btn--onDark" href="https://docs.google.com/forms/d/e/1FAIpQLSfj11kIlWgP47-O8oDt12YvOwmYfR5KPWXMzn8iG9LAzuwBDQ/viewform" target="_blank" rel="noopener">Rejoindre la liste d'attente <span class="btn__arrow">→</span></a>
+        <p class="final__mail">Six questions, cinq minutes. Une question avant&nbsp;? <a href="mailto:tristanvang.contact@gmail.com">Écris-moi.</a></p>
         <p class="final__delai">Prévenu en premier à l'ouverture</p>
       </div>
     </div>
@@ -1623,7 +1649,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <details class="faq__item" name="faq">
         <summary>Le protocole RESET ouvre quand&nbsp;?</summary>
         <div class="faq__body">
-          <p>La date n'est pas encore fixée, et je préfère le dire plutôt que d'annoncer un mois au hasard. En attendant, la liste d'attente est ouverte : écris-moi sur WhatsApp ou par e-mail, et tu seras prévenu en premier, avant l'annonce publique.</p>
+          <p>La date n'est pas encore fixée, et je préfère le dire plutôt que d'annoncer un mois au hasard. En attendant, la liste d'attente est ouverte : six questions, cinq minutes, et tu seras prévenu en premier, avant l'annonce publique.</p>
           <p>Les séances de groupe et les sessions individuelles, elles, sont disponibles dès maintenant.</p>
         </div>
       </details>
@@ -1670,7 +1696,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <p class="faq__canaux">
         <a href="mailto:tristanvang.contact@gmail.com">tristanvang.contact@gmail.com</a>
         <span aria-hidden="true">·</span>
-        <a href="https://wa.me/32493847434">WhatsApp</a>
+        <a href="https://wa.me/32493847434?text=Bonjour%20Tristan%2C%20j%27ai%20une%20question%20sur%20BELIVE%20%3A%20" target="_blank" rel="noopener">WhatsApp</a>
       </p>
     </div>
     </div>
@@ -1726,9 +1752,9 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <div>
         <h3>Contact</h3>
         <ul>
-          <li><a href="https://wa.me/32493847434">WhatsApp&nbsp;: <span class="num">+32 493 84 74 34</span></a></li>
+          <li><a href="https://wa.me/32493847434" target="_blank" rel="noopener">WhatsApp&nbsp;: <span class="num">+32 493 84 74 34</span></a></li>
           <li><a href="mailto:tristanvang.contact@gmail.com">E-mail&nbsp;: tristanvang.contact@gmail.com</a></li>
-          <li><a href="https://www.instagram.com/tristan.belive/">Instagram&nbsp;: @tristan.belive</a></li>
+          <li><a href="https://www.instagram.com/tristan.belive/" target="_blank" rel="noopener">Instagram&nbsp;: @tristan.belive</a></li>
         </ul>
       </div>
       <div>
@@ -1776,21 +1802,21 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
     <p class="resa__group">Une séance</p>
     <ul class="resa__list">
       <li>
-        <a class="resa__opt" href="https://luma.com/user/usr-RFau2gA8XZpVvCu">
+        <a class="resa__opt" href="https://luma.com/user/usr-RFau2gA8XZpVvCu" target="_blank" rel="noopener">
           <span class="resa__opt-name">Breathwork en groupe</span>
           <span class="resa__opt-meta">Environ <span class="num">2 h</span> · Nil-Saint-Vincent ou Chartres · prochaines dates</span>
           <span class="resa__opt-price num">50 €</span>
         </a>
       </li>
       <li>
-        <a class="resa__opt" href="https://cal.com/tristan-vangoidtsenhoven-3wuqnf/30min">
+        <a class="resa__opt" href="https://cal.com/tristan-vangoidtsenhoven-3wuqnf/30min" target="_blank" rel="noopener">
           <span class="resa__opt-name">BELIVE Reconnexion</span>
           <span class="resa__opt-meta"><span class="num">1 h 30</span> · en individuel · les trois voies</span>
           <span class="resa__opt-price num">90 €</span>
         </a>
       </li>
       <li>
-        <a class="resa__opt" href="https://cal.com/tristan-vangoidtsenhoven-3wuqnf/120min">
+        <a class="resa__opt" href="https://cal.com/tristan-vangoidtsenhoven-3wuqnf/120min" target="_blank" rel="noopener">
           <span class="resa__opt-name">BELIVE Alignement</span>
           <span class="resa__opt-meta"><span class="num">2 h</span> · en individuel · le souffle en profondeur</span>
           <span class="resa__opt-price num">150 €</span>
@@ -1801,7 +1827,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
     <p class="resa__group">L'accompagnement complet, à venir</p>
     <ul class="resa__list">
       <li>
-        <a class="resa__opt resa__opt--anchor" href="https://wa.me/32493847434">
+        <a class="resa__opt resa__opt--anchor" href="https://docs.google.com/forms/d/e/1FAIpQLSfj11kIlWgP47-O8oDt12YvOwmYfR5KPWXMzn8iG9LAzuwBDQ/viewform" target="_blank" rel="noopener">
           <span class="resa__opt-name">BELIVE RESET, <span class="num">90</span> jours</span>
           <span class="resa__opt-meta">Pas encore ouvert · rejoins la liste d'attente</span>
           <span class="resa__opt-price num">1 800 €</span>
@@ -1810,7 +1836,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
     </ul>
 
     <p class="resa__note">Une question avant de choisir&nbsp;?
-      <a href="https://wa.me/32493847434">Écris-moi sur WhatsApp.</a></p>
+      <a href="https://wa.me/32493847434?text=Bonjour%20Tristan%2C%20j%27ai%20une%20question%20sur%20BELIVE%20%3A%20" target="_blank" rel="noopener">Écris-moi sur WhatsApp.</a></p>
   </div>
 </dialog>
 

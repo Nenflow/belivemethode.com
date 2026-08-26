@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page introuvable | BELIVE</title>
+<meta name="robots" content="noindex,follow">
+<!-- Servie par GitHub Pages pour n'importe quelle URL manquante, à n'importe
+     quelle profondeur : tous les chemins d'ici doivent partir de la racine. -->
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32">
+<link rel="stylesheet" href="/assets/legal.css">
+<style>
+  .perdu{text-align:center}
+  .perdu .doc__nav{justify-content:center}
+  .perdu h1{margin-top:clamp(1rem,4vw,2.5rem)}
+  .perdu__code{
+    font-size:.85rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ink-3);margin:0 0 .8rem;
+  }
+  .perdu__lead{font-size:1.05rem;margin-bottom:clamp(2rem,5vw,3rem)}
+  .perdu__liens{
+    display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;
+    margin:0;padding:0;list-style:none;
+  }
+  .perdu__liens a{
+    display:inline-block;text-decoration:none;color:var(--ink-2);
+    border:1px solid var(--line);border-radius:999px;padding:.62rem 1.1rem;
+    font-size:.9rem;transition:background .2s,color .2s;
+  }
+  .perdu__liens a:hover{background:var(--panel-2);color:var(--ink)}
+</style>
+<script>
+(function(){try{var m=localStorage.getItem('belive-theme');
+if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m);}catch(e){}})();
+</script>
+</head>
+<body>
+
+<main class="doc perdu">
+  <div class="doc__nav">
+    <svg viewBox="-3 -3 668 109" role="img" aria-label="BELIVE">
+      <g fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="butt">
+        <path d="M0,0 V100"/>
+        <path d="M0,0 H40 A25,25 0 0 1 40,50 H0"/>
+        <path d="M0,50 H40 A25,25 0 0 1 40,100 H0"/>
+        <path d="M135,0 H197 M135,50 H197 M135,100 H197"/>
+        <path d="M267,0 V100 H322"/>
+        <path d="M392,0 V100"/>
+        <path d="M462,0 L495,100 L528,0"/>
+        <path d="M598,0 H660 M598,50 H660 M598,100 H660"/>
+      </g>
+    </svg>
+  </div>
+
+  <p class="perdu__code">Erreur 404</p>
+  <h1>Cette page n'existe pas.</h1>
+  <p class="perdu__lead">Le lien est cassé, ou la page a changé d'adresse.
+  Le site tient sur une seule page&nbsp;: tout est là.</p>
+
+  <ul class="perdu__liens">
+    <li><a href="/">Retour à l'accueil</a></li>
+    <li><a href="/#methode">La méthode</a></li>
+    <li><a href="/#offres">Les offres</a></li>
+    <li><a href="/#questions">Les questions fréquentes</a></li>
+    <li><a href="mailto:tristanvang.contact@gmail.com">Écrire à Tristan</a></li>
+  </ul>
+</main>
+
+</body>
+</html>
