@@ -58,7 +58,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
   --r-md:18px;
   --r-sm:12px;
 
-  --t-h1:clamp(2.1rem,5vw,3.4rem);
+  --t-h1:clamp(2.1rem,5.2vw,3.9rem);
   --t-h2:clamp(1.45rem,2.6vw,2rem);
   --t-h3:1.06rem;
   --t-body:1rem;
@@ -168,7 +168,7 @@ p{margin:0}
 .retour:hover{color:var(--ink)}
 
 /* ================= Ouverture ================= */
-.ouverture{display:grid;gap:1.2rem;max-width:22ch}
+.ouverture{display:grid;gap:1.2rem;max-width:none}
 .ouverture h1{font-size:var(--t-h1)}
 .ouverture .lead{color:var(--ink-2);max-width:var(--measure);font-size:1.06rem}
 
@@ -695,7 +695,7 @@ footer a:hover{color:var(--ink)}
   }
 
   var svg = document.getElementById("courbe");
-  var M = {t:56, r:172, b:130, l:58};
+  var M = {t:56, r:172, b:130, l:72};  // sous 72, le « 90 min » de l'axe est rogné
   var pw = 1000 - M.l - M.r, ph = 480 - M.t - M.b;
   var bw = pw / N, yMax = 90;
   var x = function(i){ return M.l + i*bw; };
