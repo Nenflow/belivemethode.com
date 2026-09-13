@@ -67,7 +67,9 @@
       "url": "https://cal.com/tristan-vangoidtsenhoven-3wuqnf/30min" },
     { "@type": "Offer", "name": "BELIVE Alignement, Breathwork individuel", "price": "150", "priceCurrency": "EUR",
       "url": "https://cal.com/tristan-vangoidtsenhoven-3wuqnf/120min" },
-    { "@type": "Offer", "name": "BELIVE RESET, protocole 90 jours", "price": "1800", "priceCurrency": "EUR",
+    { "@type": "Offer", "name": "BELIVE RESET, protocole 90 jours, tarif fondateur (trois places)", "price": "1777", "priceCurrency": "EUR",
+      "availability": "https://schema.org/PreOrder" },
+    { "@type": "Offer", "name": "BELIVE RESET, protocole 90 jours", "price": "2222", "priceCurrency": "EUR",
       "availability": "https://schema.org/PreOrder" }
   ]
 }
@@ -583,7 +585,9 @@ p{margin:0}
   text-transform:uppercase;letter-spacing:.14em;
   color:var(--on-dark-2);
 }
-.step__weeks{font-size:var(--t-small);color:var(--ice-2);margin-top:.15rem}
+/* Ce que la personne dit quand l'étape est là (doc 00 §2). Pas de semaines ici :
+   les cinq lettres se chevauchent, le calendrier est celui des quatre phases. */
+.step__dit{font-size:var(--t-small);color:var(--ice-2);margin-top:.15rem}
 .step__desc{font-size:var(--t-small);color:var(--on-dark-2);max-width:52ch}
 @media (max-width:780px){
   .step{grid-template-columns:3.2rem minmax(0,1fr);row-gap:.6rem}
@@ -662,6 +666,11 @@ p{margin:0}
 .doc h4{font-size:1.05rem;color:var(--on-dark);line-height:1.15}
 .doc__rule{height:1px;background:var(--line-dark);margin-block:.2rem}
 .doc p{font-size:var(--t-small);color:var(--on-dark-2)}
+/* Le reste de la liste du doc 14 §2, et ce que le protocole ne promet pas :
+   les deux se disent au même endroit que ce qu'il donne. */
+.docs__plus{margin-top:clamp(1.2rem,2.4vw,1.6rem);display:grid;gap:.6rem;max-width:var(--measure)}
+.docs__plus p{font-size:var(--t-small);color:var(--on-dark-2)}
+.docs__plus strong{color:var(--on-dark);font-weight:500}
 
 /* ---- candidature : le filtre, puis les trois pas ---- */
 /* Dire pour qui ce n'est pas avant de dire comment on entre : c'est ce qui
@@ -773,7 +782,7 @@ p{margin:0}
 
 /* ================= Offres ================= */
 /* L'échelle : quatre marches, dont deux actives. Elle situe les deux offres
-   entre ce qu'on vient de lire (50 €) et ce vers quoi ça mène (1 800 €). */
+   entre ce qu'on vient de lire (50 €) et ce vers quoi ça mène (1 777 €, tarif fondateur). */
 .echelle{
   list-style:none;margin:0 0 clamp(2.2rem,4.5vw,3.2rem);padding:0;
   display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.5rem,1.6vw,1.2rem);
@@ -1185,7 +1194,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
     </div>
 
     <div class="hero__meta">
-      <p class="hero__desc">La méthode qui s'adapte à toi. Celle qui va te permettre de sortir du pilote automatique et de redevenir le maître à bord de ta propre vie, en passant par le souffle, le corps et le système nerveux.</p>
+      <p class="hero__desc">La méthode qui s'adapte à toi. Celle qui va te permettre de sortir du pilote automatique et de reprendre les commandes de ta propre vie, en passant par le souffle, le corps et le système nerveux.</p>
       <div class="hero__actions">
         <a class="btn" data-resa href="#offres" aria-haspopup="dialog">Réserver <span class="btn__arrow">→</span></a>
         <a class="hero__how" href="#methode">Comment ça marche&nbsp;? <span class="btn__arrow">→</span></a>
@@ -1212,7 +1221,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
             <p class="jour__time num">06:10</p>
             <div class="jour__txt">
               <h3>Le troisième réveil</h3>
-              <p>Tu as éteint deux alarmes sans t'en souvenir. Tu es debout. Tu n'es pas réveillé.</p>
+              <p>Tu as éteint deux alarmes sans t'en souvenir. Tu es debout. Ta tête dort encore.</p>
             </div>
           </li>
           <li class="jour__row reveal">
@@ -1250,7 +1259,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
     <div class="chute reveal">
       <div class="chute__rule"></div>
       <p class="chute__line">Tu ne dors pas mal. Tu ne récupères jamais.</p>
-      <p class="chute__note">Ce n'est pas un problème de volonté. C'est un système nerveux qui ne redescend plus jamais complètement. Si tu t'es reconnu ne serait-ce qu'une fois, la suite est pour toi.</p>
+      <p class="chute__note">Ce n'est pas un problème de volonté. C'est un système nerveux qui ne redescend plus jamais complètement. Si une seule de ces heures te ressemble, la suite est pour toi.</p>
     </div>
 
   </section>
@@ -1287,7 +1296,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
 
         <p>Moi aussi je suis passé par là. Une vie de salarié remplie de sécurité, mais sans conviction réelle. Une fourmi de plus dans la fourmilière.</p>
         <p>Ma reconstruction ne s'est pas faite par une illumination, mais par un apprentissage : celui du fonctionnement de la haute technologie qu'est notre corps. J'ai bâti une discipline du corps par la respiration.</p>
-        <p>C'est ce vécu qui fonde la méthode BELIVE, et c'est pour ça que je refuse la posture du sauveur. Tu es le seul maître de ton changement.</p>
+        <p>C'est ce vécu qui fonde la méthode BELIVE, et c'est pour ça que je refuse la posture du sauveur. Ton changement n'appartient qu'à toi.</p>
 
         <div class="signe">
           <span class="signe__nom">Tristan</span>
@@ -1321,7 +1330,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <div class="breath__stage">
         <div class="breath__guide" aria-hidden="true"></div>
         <div class="breath__ring"></div>
-        <p class="breath__count" id="breathCount" aria-live="polite">Prêt</p>
+        <p class="breath__count" id="breathCount" aria-live="polite">À toi</p>
       </div>
       <button class="btn btn--onDark" id="breathBtn" type="button">Démarrer</button>
       <p class="breath__hint">Cinq secondes à l'inspiration, cinq secondes à l'expiration. Six cycles, une minute.</p>
@@ -1336,7 +1345,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
 
       <div class="debrief__col">
         <p class="label">Ce que c'est</p>
-        <p>Ni coaching, ni développement personnel, ni soin. Un parcours structuré, avec une seule règle : c'est ta reconstruction, pas la mienne. Venir chercher de l'aide n'est pas un aveu de faiblesse, c'est une décision d'ingénieur sur sa propre vie.</p>
+        <p>Ni coaching, ni développement personnel, ni soin. Un parcours structuré, avec une seule règle : c'est ta reconstruction, pas la mienne. Venir chercher de l'aide n'est pas un aveu de faiblesse, c'est de l'ingénierie appliquée à sa propre vie.</p>
         <p>Trois voies s'y combinent : le souffle (Breathwork), la nature (naturopathie) et la science (système nerveux, neurosciences).</p>
       </div>
 
@@ -1347,7 +1356,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
   <!-- ===== Le premier pas, en groupe, et ce qui s'y passe ===== -->
   <!-- Un seul panneau en deux temps : l'invitation, puis ce qui se passe une fois
        allongé. La photo sert de charnière entre les deux. C'est aussi la première
-       marche de l'échelle 50 € → 90 € → 150 € → 1 800 €. -->
+       marche de l'échelle 50 € → 90 € → 150 € → 1 777 €. -->
   <section class="panel panel--tint" id="seance">
     <div class="seance__texte reveal">
       <p class="label">Le premier pas, en groupe</p>
@@ -1384,7 +1393,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
     <!-- Deuxième temps du même panneau : ce qui se passe une fois allongé.
          La photo ci-dessus sert de charnière entre l'invitation et l'explication. -->
     <div class="axes__head reveal">
-      <p class="label">Une fois que tu es allongé</p>
+      <p class="label">Pendant la séance</p>
       <h3>En groupe comme en individuel, le souffle travaille sur deux plans à la fois.</h3>
     </div>
 
@@ -1445,8 +1454,8 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <li class="echelle__pas">
         <span class="echelle__dot" aria-hidden="true"></span>
         <p class="echelle__nom">Protocole RESET</p>
-        <p class="echelle__prix num">1 800 €</p>
-        <p class="echelle__note">ça mène là, à venir</p>
+        <p class="echelle__prix num">1&nbsp;777&nbsp;€</p>
+        <p class="echelle__note">tarif fondateur, à venir</p>
       </li>
     </ol>
 
@@ -1488,19 +1497,22 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <p class="label">L'offre signature</p>
       <p class="venir">À venir</p>
       <h2>BELIVE RESET, 90 jours.</h2>
-      <p>Le protocole complet, en individuel : un call par semaine, des protocoles personnels entre les séances, et un canal de suivi au quotidien.</p>
-      <p><strong>Il n'est pas encore ouvert.</strong> La date de lancement n'est pas fixée. La liste d'attente sert à ça : tu es prévenu en premier, avant l'annonce publique.</p>
+      <p>Le protocole complet, en individuel et à distance, sur treize semaines&nbsp;: un call par semaine, un protocole quotidien, un canal de suivi entre les calls, et quatre sessions de Breathwork d'une heure trente, encadrées en direct par visio, une à la fin de chacune des quatre phases.</p>
+      <p><strong>Il n'est pas encore ouvert.</strong> La date de lancement n'est pas fixée. La liste d'attente sert à ça&nbsp;: tu l'apprends en premier, avant l'annonce publique.</p>
+      <p><a class="btn btn--ice" href="reset/">En savoir plus sur la méthode <span class="btn__arrow">→</span></a></p>
     </div>
 
-    <p class="label signature__sep">Le déroulé en cinq étapes&nbsp;: R · E · S · E · T</p>
+    <p class="label signature__sep">Le mouvement intérieur, en cinq étapes qui se chevauchent&nbsp;: R · E · S · E · T</p>
 
+    <!-- Les lettres disent ce que la personne vit, jamais le calendrier : elles ne portent
+         pas de semaines (doc 00 §2). Le calendrier, ce sont les quatre phases, sur reset/. -->
     <div class="steps stagger">
       <article class="step">
         <p class="step__letter">R</p>
         <div class="step__head">
           <h3>Reconnecter</h3>
           <p class="step__sub">Revenir dans le corps</p>
-          <p class="step__weeks num">Semaines 1 → 3</p>
+          <p class="step__dit">«&nbsp;Je sens à nouveau des choses.&nbsp;»</p>
         </div>
         <p class="step__desc">Sortir du brouillard. Diagnostic du corps et du système nerveux, identification des fuites systémiques&nbsp;: snooze, café, scroll compulsif. On revient à ce qui est réellement présent, par la respiration.</p>
       </article>
@@ -1509,66 +1521,72 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
         <div class="step__head">
           <h3>Équilibrer</h3>
           <p class="step__sub">Réguler le système nerveux</p>
-          <p class="step__weeks num">Semaines 4 → 6</p>
+          <p class="step__dit">«&nbsp;Je réagis moins fort, moins vite.&nbsp;»</p>
         </div>
-        <p class="step__desc">Sortir du mode survie. Mouvement conscient, hydratation cellulaire, hormèse. Le travail porte sur la réactivité du système nerveux, avec pour objectifs une énergie plus régulière et un sommeil de meilleure qualité.</p>
+        <p class="step__desc">Sortir du mode survie. La séquence du matin à sa pleine durée, deux trainings par semaine, le froid en fin de douche. Le travail porte sur la réactivité du système nerveux, avec pour objectifs une énergie plus régulière et un sommeil de meilleure qualité.</p>
       </article>
       <article class="step">
         <p class="step__letter">S</p>
         <div class="step__head">
           <h3>Stabiliser</h3>
           <p class="step__sub">Installer dans la durée</p>
-          <p class="step__weeks num">Semaines 7 → 9</p>
+          <p class="step__dit">«&nbsp;Mes journées se ressemblent, dans le bon sens.&nbsp;»</p>
         </div>
-        <p class="step__desc">On arrête d'alterner entre fatigue, stress et surcharge. Installer la discipline, tenir des routines. Ce qu'on suit semaine après semaine : le creux de 15h, la durée de concentration, les décisions prises.</p>
+        <p class="step__desc">On arrête d'alterner entre fatigue, stress et surcharge. L'état tient tout seul, sans que tu aies à le tenir. Ce qu'on suit semaine après semaine&nbsp;: le creux de 15h, la durée de concentration, les décisions prises.</p>
       </article>
       <article class="step">
         <p class="step__letter">E</p>
         <div class="step__head">
           <h3>Élancer</h3>
           <p class="step__sub">Retrouver l'élan</p>
-          <p class="step__weeks num">Semaines 10 → 12</p>
+          <p class="step__dit">«&nbsp;J'ai envie, pas juste besoin.&nbsp;»</p>
         </div>
-        <p class="step__desc">Quand le système est stable, l'énergie revient naturellement. Autonomisation : l'accompagnant se retire progressivement, et le Protocole de Vie Souveraine personnel est remis.</p>
+        <p class="step__desc">Quand le système est stable, l'énergie revient naturellement. Autonomisation&nbsp;: l'accompagnant se retire progressivement, et tu écris ton propre Protocole de Vie Souveraine.</p>
       </article>
       <article class="step">
         <p class="step__letter">T</p>
         <div class="step__head">
           <h3>Transformer</h3>
           <p class="step__sub">Ancrer dans ta vie</p>
-          <p class="step__weeks num">Après les 90 jours</p>
+          <p class="step__dit">«&nbsp;Je ne reviendrai pas en arrière.&nbsp;»</p>
         </div>
-        <p class="step__desc">Le changement ne reste pas ponctuel. Il s'ancre dans la vie : les décisions, le rythme, l'énergie et la direction. C'est là que le protocole devient inutile, et que tu tiens seul.</p>
+        <p class="step__desc">Le changement ne reste pas ponctuel. Il s'ancre dans la vie : les décisions, le rythme, l'énergie et la direction. C'est là que le protocole devient inutile, et que tu tiens sans moi.</p>
       </article>
     </div>
 
     <p class="label signature__sep">Ce que tu gardes, après les <span class="num">90</span> jours</p>
 
+    <!-- Les noms sont ceux du corpus : la seule liste complète est au doc 14 §2. -->
     <div class="docs stagger">
       <article class="doc">
         <p class="doc__n num">01</p>
-        <h4>Plan d'Hygiène de Vie Souveraine</h4>
+        <h4>Protocole de Vie Souveraine</h4>
         <div class="doc__rule"></div>
-        <p>Le protocole alimentaire et rythmique, écrit pour toi.</p>
+        <p>Une page, écrite de ta main en semaine 11&nbsp;: ce qui a tenu, et que tu gardes.</p>
       </article>
       <article class="doc">
         <p class="doc__n num">02</p>
         <h4>Journal de Bord de Régulation Nerveuse</h4>
         <div class="doc__rule"></div>
-        <p>Les métriques quotidiennes pour ajuster ton état interne sans deviner.</p>
+        <p>Vingt et une pages à imprimer. Le relevé de chaque jour, sur papier, loin du téléphone.</p>
       </article>
       <article class="doc">
         <p class="doc__n num">03</p>
         <h4>Guide des Pratiques Respiratoires &amp; Énergétiques</h4>
         <div class="doc__rule"></div>
-        <p>La boîte à outils pour gérer le stress en temps réel, seul.</p>
+        <p>La boîte à outils pour gérer le stress en temps réel, sans moi.</p>
       </article>
       <article class="doc">
         <p class="doc__n num">04</p>
-        <h4>Programmes d'Entraînement Physique</h4>
+        <h4>Guide du Mouvement</h4>
         <div class="doc__rule"></div>
-        <p>Les séances calibrées sur ton niveau et sur le temps que tu as vraiment.</p>
+        <p>La séquence du matin, les marches et les trainings, calibrés sur ton niveau et sur le temps que tu as vraiment.</p>
       </article>
+    </div>
+
+    <div class="docs__plus reveal">
+      <p>Avec eux&nbsp;: le Carnet d'Hygiène de Vie, une fiche par phase, la Carte du Protocole de Rechute pour les années qui suivent, et une bibliothèque de trente-neuf supports (vidéos, audios, guides, gabarits) qui s'ouvrent phase par phase, jamais tous d'un coup.</p>
+      <p><strong>Ce que le protocole ne promet pas&nbsp;:</strong> ni guérison, ni résultat garanti, ni disparition de la voix qui te critique de l'intérieur.</p>
     </div>
 
     <!-- Le mot « Candidater » n'a de valeur que s'il désigne un vrai filtre -->
@@ -1579,9 +1597,10 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <ul>
         <li>tu cherches une méthode miracle, ou un résultat sans effort&nbsp;;</li>
         <li>tu attends de moi que je porte le changement à ta place&nbsp;;</li>
-        <li>tu veux « essayer pour voir », sans intention de tenir les 90 jours.</li>
+        <li>tu veux « essayer pour voir », sans intention de tenir les 90 jours&nbsp;;</li>
+        <li>tu n'as pas, en ce moment, le temps qu'il demande&nbsp;: jusqu'à 85&nbsp;minutes par jour aux semaines 8 à 13.</li>
       </ul>
-      <p class="filtre__note">Je préfère te le dire pendant l'appel plutôt qu'au bout de trois semaines. Dire non fait partie du travail.</p>
+      <p class="filtre__note">Je préfère te le dire avant de commencer plutôt qu'au bout de trois semaines. Dire non fait partie du travail.</p>
     </div>
 
     <ol class="parcours stagger">
@@ -1602,22 +1621,23 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <li class="parcours__etape">
         <p class="parcours__n num">3</p>
         <div>
-          <h3>On s'appelle</h3>
-          <p>Trente minutes, gratuites, sans engagement. Je te dis honnêtement si le protocole est le bon outil pour toi, ou si autre chose le serait davantage. Si c'est oui des deux côtés, on fixe la date de départ.</p>
+          <h3>Un questionnaire, puis un appel</h3>
+          <p>À l'ouverture, un questionnaire d'admission&nbsp;: ta santé, et le temps dont tu disposes vraiment. Si le protocole ne peut pas démarrer maintenant, je te le dis par écrit. Sinon, trente minutes d'appel, gratuites et sans engagement, pour décider à deux. Si c'est oui des deux côtés, on fixe la date de départ.</p>
         </div>
       </li>
     </ol>
 
     <div class="final reveal">
       <div>
-        <p class="venir">À venir</p>
-        <p class="final__montant num">1 800 €</p>
-        <p class="final__note">Tarif prévu à l'ouverture, comptant ou <span class="num">3 × 600 €</span>. Une séance individuelle en clôture, comprise dans le protocole.</p>
+        <p class="venir">À venir · tarif fondateur</p>
+        <p class="final__montant num">1&nbsp;777&nbsp;€</p>
+        <p class="final__note">Trois places à ce tarif. Ensuite le prix passe à <span class="num">2&nbsp;222&nbsp;€</span>, quand ces trois-là auront terminé et que j'aurai leurs chiffres.</p>
+        <p class="final__note">Soit environ <span class="num">137&nbsp;€</span> par semaine pendant treize semaines, en une fois ou en trois mensualités. Treize calls et quatre sessions Breathwork inclus.</p>
       </div>
       <div class="final__act">
         <a class="btn btn--onDark" href="https://docs.google.com/forms/d/e/1FAIpQLSfj11kIlWgP47-O8oDt12YvOwmYfR5KPWXMzn8iG9LAzuwBDQ/viewform" target="_blank" rel="noopener">Rejoindre la liste d'attente <span class="btn__arrow">→</span></a>
         <p class="final__mail">Six questions, cinq minutes. Une question avant&nbsp;? <a href="mailto:tristanvang.contact@gmail.com">Écris-moi.</a></p>
-        <p class="final__delai">Prévenu en premier à l'ouverture</p>
+        <p class="final__delai">Tu l'apprends en premier à l'ouverture</p>
       </div>
     </div>
   </section>
@@ -1649,7 +1669,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <details class="faq__item" name="faq">
         <summary>Le protocole RESET ouvre quand&nbsp;?</summary>
         <div class="faq__body">
-          <p>La date n'est pas encore fixée, et je préfère le dire plutôt que d'annoncer un mois au hasard. En attendant, la liste d'attente est ouverte : six questions, cinq minutes, et tu seras prévenu en premier, avant l'annonce publique.</p>
+          <p>La date n'est pas encore fixée, et je préfère le dire plutôt que d'annoncer un mois au hasard. En attendant, la liste d'attente est ouverte : six questions, cinq minutes, et tu l'apprendras en premier, avant l'annonce publique.</p>
           <p>Les séances de groupe et les sessions individuelles, elles, sont disponibles dès maintenant.</p>
         </div>
       </details>
@@ -1657,7 +1677,9 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <details class="faq__item" name="faq">
         <summary>Combien de temps ça me demande, concrètement&nbsp;?</summary>
         <div class="faq__body">
-          <p>Pendant les <span class="num">90</span> jours : un call par semaine, et des protocoles personnels entre les séances, pensés pour tenir dans une vie de salarié, pas pour la remplacer. Le canal de suivi quotidien reste ouvert entre les calls.</p>
+          <p>Du vrai temps, et je préfère te le chiffrer avant que tu le découvres en semaine 8. Sur les treize semaines&nbsp;: environ <span class="num">98</span> heures de pratique qui demandent un créneau à elles, les quatre sessions Breathwork comprises. Plus une quinzaine d'heures de lumière du matin, et celles-là se prennent en buvant ton café dehors. Au total, environ <span class="num">113</span> heures, sans compter les treize calls.</p>
+          <p>Ça monte par paliers&nbsp;: <span class="num">8</span> minutes par jour la première semaine, jusqu'à <span class="num">75</span> minutes aux semaines 8 à 13, <span class="num">85</span> avec la lumière. Rien n'arrive à pleine dose le premier jour, et l'essentiel s'accroche à des moments qui existent déjà&nbsp;: le lever, le repas de midi, la soirée.</p>
+          <p>C'est pour ça que le questionnaire d'admission te demande le temps dont tu disposes vraiment. Si tu as moins de <span class="num">100</span> minutes par jour au plus fort du protocole, on décale d'une cohorte&nbsp;: ce n'est pas un refus, c'est un report.</p>
         </div>
       </details>
 
@@ -1671,7 +1693,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <details class="faq__item" name="faq">
         <summary>Ça se passe où&nbsp;? En présentiel ou à distance&nbsp;?</summary>
         <div class="faq__body">
-          <p>Les séances de Breathwork, en groupe comme en individuel, ont lieu à l'Espace Eaurigine, à Nil-Saint-Vincent, et à Chartres, en France. Le lieu est indiqué sur chaque date. Les calls hebdomadaires du protocole RESET se feront à distance.</p>
+          <p>Les séances de Breathwork, en groupe comme en individuel, ont lieu à l'Espace Eaurigine, à Nil-Saint-Vincent, et à Chartres, en France. Le lieu est indiqué sur chaque date. Le protocole RESET, lui, se fait entièrement à distance&nbsp;: les calls hebdomadaires comme les quatre sessions de Breathwork, encadrées en direct par visio.</p>
         </div>
       </details>
 
@@ -1684,9 +1706,11 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       </details>
 
       <details class="faq__item" name="faq">
-        <summary>Le protocole RESET se paie en une fois&nbsp;?</summary>
+        <summary>Combien coûte le protocole RESET, et en combien de fois&nbsp;?</summary>
         <div class="faq__body">
-          <p>Au choix, à l'ouverture : <span class="num">1 800 €</span> comptant, ou <span class="num">3 × 600 €</span> répartis sur les trois mois. Une séance individuelle est comprise en clôture dans les deux cas.</p>
+          <p><span class="num">1&nbsp;777&nbsp;€</span> au tarif fondateur. Trois places à ce tarif. Ensuite le prix passe à <span class="num">2&nbsp;222&nbsp;€</span>, quand ces trois-là auront terminé et que j'aurai leurs chiffres.</p>
+          <p>Le tarif fondateur a une raison. Ces trois personnes suivent un protocole que je n'ai encore jamais mené jusqu'au bout avec un client, et leur retour construit la version suivante. En échange, je leur demande un questionnaire complet à la fin, un témoignage, et l'autorisation d'utiliser leurs chiffres, anonymisés.</p>
+          <p>Au choix, en une fois ou en trois mensualités&nbsp;: <span class="num">592,33&nbsp;€</span> par mois au tarif fondateur, <span class="num">740,67&nbsp;€</span> ensuite. Le paiement s'échelonne, l'engagement non&nbsp;: tu t'engages sur les treize semaines, pas sur le premier mois.</p>
         </div>
       </details>
     </div>
@@ -1713,7 +1737,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
     <div class="credo stagger">
       <div class="credo__ligne">
         <h3 class="credo__mot">Souveraineté<span aria-hidden="true">.</span></h3>
-        <p class="credo__dit">Je ne porterai pas ton changement à ta place. Tu en restes le seul maître, du premier jour au dernier.</p>
+        <p class="credo__dit">Je ne porterai pas ton changement à ta place. Il reste le tien, du premier jour au dernier.</p>
       </div>
       <div class="credo__ligne">
         <h3 class="credo__mot">Authenticité<span aria-hidden="true">.</span></h3>
@@ -1829,8 +1853,8 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
       <li>
         <a class="resa__opt resa__opt--anchor" href="https://docs.google.com/forms/d/e/1FAIpQLSfj11kIlWgP47-O8oDt12YvOwmYfR5KPWXMzn8iG9LAzuwBDQ/viewform" target="_blank" rel="noopener">
           <span class="resa__opt-name">BELIVE RESET, <span class="num">90</span> jours</span>
-          <span class="resa__opt-meta">Pas encore ouvert · rejoins la liste d'attente</span>
-          <span class="resa__opt-price num">1 800 €</span>
+          <span class="resa__opt-meta">Tarif fondateur, trois places · pas encore ouvert, rejoins la liste d'attente</span>
+          <span class="resa__opt-price num">1&nbsp;777&nbsp;€</span>
         </a>
       </li>
     </ul>
@@ -1864,7 +1888,7 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
     if (timer) {
       clearInterval(timer); timer = null;
       stage.classList.remove('is-running');
-      count.textContent = 'Prêt';
+      count.textContent = 'À toi';
       btn.textContent = 'Démarrer';
       return;
     }
