@@ -350,6 +350,10 @@ b,strong{font-weight:500}
 /* ================= Graphique ================= */
 .chart-scroll{overflow-x:auto;overscroll-behavior-x:contain}
 .chart-scroll svg{min-width:700px}
+/* Sous ~800 px le graphique ne tient plus : sans repère, on croit qu'il est
+   coupé. La classe est posée par le script, seulement quand ça défile vraiment. */
+.chart-glisse{display:none;margin-top:.8rem;font-size:.78rem;color:var(--ink-3)}
+.chart-scroll.est-large + .chart-glisse{display:block}
 .axis{fill:var(--ink-3);font-size:12.5px;font-weight:500;font-variant-numeric:lining-nums tabular-nums}
 .axis--week{fill:var(--ink-2)}
 .grid{stroke:var(--line);stroke-width:1}
@@ -437,6 +441,9 @@ figcaption{color:var(--ink-3);font-size:var(--t-small);margin-top:1.6rem;max-wid
   .etape{gap:.5rem}
   .moment__quand{text-align:left}
   .etape__n{text-align:left;font-size:1.2rem}
+  /* Les capitales espacées mangent la largeur : on resserre plutôt que de
+     laisser un mot seul sur sa ligne. */
+  .etape__quand,.creux__quand{letter-spacing:.1em}
 }
 
 /* ================= Avant de commencer ================= */
@@ -709,6 +716,7 @@ footer a:hover{color:var(--ink)}
         <svg id="courbe" viewBox="0 0 1000 400" role="img"
              aria-label="Aire empilée des minutes quotidiennes par pilier, de la semaine 1 à la semaine 13. Le total passe de 18 minutes en semaine 1 à 58 en semaine 4, environ 80 pendant la Traversée, puis 85 de la semaine 8 à la fin. Le mouvement est le pilier le plus lourd, 49 minutes par jour au plus haut."></svg>
       </div>
+      <p class="chart-glisse">Fais glisser le graphique pour voir les treize semaines.</p>
       <figcaption>
         Chaque bande est un pilier&nbsp;; sa hauteur, le temps qu'il demande par jour. La bande Sommeil, c'est la lumière du matin&nbsp;: elle se combine avec ce que tu fais déjà. La nutrition n'a pas de bande, elle ne coûte pas de minutes.
       </figcaption>
@@ -732,14 +740,14 @@ footer a:hover{color:var(--ink)}
       <article class="etape reveal">
         <p class="etape__n">I</p>
         <div class="etape__corps">
-          <p class="etape__quand">Semaines 1 à 4 · le verbe est voir</p>
+          <p class="etape__quand">Semaines 1 à 4 · le verbe est&nbsp;voir</p>
           <h3>Rencontre Intérieure</h3>
           <div class="etape__txt">
             <p><b>Ce qui s'installe.</b> La lumière au réveil et la caféine déplacée, les deux seuls comportements qu'on change d'emblée. Puis les trois ancres, les marches après les repas, et la première session encadrée au jour 24.</p>
             <p><b>Ce qui disparaît.</b> Rien. C'est la seule phase des quatre qui n'enlève pas.</p>
           </div>
           <div class="creux">
-            <p class="creux__quand">Le creux · jours 10 à 15</p>
+            <p class="creux__quand">Le creux · jours 10&nbsp;à&nbsp;15</p>
             <p>La nouveauté retombe, les résultats ne sont pas encore là, et le sevrage de caféine peut mordre. C'est le pic d'abandon de tout le protocole. On baisse la durée, jamais le nombre d'ancres.</p>
           </div>
           <p class="etape__palier">«&nbsp;Ma journée a une structure.&nbsp;»</p>
@@ -749,14 +757,14 @@ footer a:hover{color:var(--ink)}
       <article class="etape reveal">
         <p class="etape__n">II</p>
         <div class="etape__corps">
-          <p class="etape__quand">Semaines 5 à 7 · le verbe est tenir</p>
+          <p class="etape__quand">Semaines 5 à 7 · le verbe est&nbsp;tenir</p>
           <h3>La Traversée</h3>
           <div class="etape__txt">
             <p><b>Ce qui s'installe.</b> Le mouvement prend sa taille&nbsp;: deux trainings par semaine, une séance de stretching, puis le froid en fin de douche. Le but n'est pas d'endurer, c'est de rester calme pendant un stress que tu as choisi.</p>
             <p><b>Ce qui disparaît.</b> Le support de l'assise du soir, en semaine 7. Même durée, même créneau, plus de compte ni de ratio. C'est le premier retrait du protocole, et il est plus dur qu'un ajout.</p>
           </div>
           <div class="creux">
-            <p class="creux__quand">Le creux · semaine 7</p>
+            <p class="creux__quand">Le creux · semaine&nbsp;7</p>
             <p>Le vide devient conscient&nbsp;: les fuites ne fonctionnent plus et rien ne les a remplacées. Rien n'est ajouté cette semaine-là, marches comprises. Une solution offerte ici deviendrait la fuite suivante.</p>
           </div>
           <p class="etape__palier">«&nbsp;Je traverse sans fuir.&nbsp;»</p>
@@ -766,7 +774,7 @@ footer a:hover{color:var(--ink)}
       <article class="etape reveal">
         <p class="etape__n">III</p>
         <div class="etape__corps">
-          <p class="etape__quand">Semaines 8 à 10 · le verbe est choisir</p>
+          <p class="etape__quand">Semaines 8 à 10 · le verbe est&nbsp;choisir</p>
           <h3>La Reconstruction</h3>
           <div class="etape__txt">
             <p><b>Ce qui s'installe.</b> Trois gestes, un par semaine, et chacun dans le réel&nbsp;: un inventaire de ce que tu portes sans l'avoir choisi, une décision que quelqu'un d'autre pourrait vérifier, une demande adressée à une personne vivante.</p>
@@ -780,14 +788,14 @@ footer a:hover{color:var(--ink)}
       <article class="etape reveal">
         <p class="etape__n">IV</p>
         <div class="etape__corps">
-          <p class="etape__quand">Semaines 11 à 13 · le verbe est ancrer</p>
+          <p class="etape__quand">Semaines 11 à 13 · le verbe est&nbsp;ancrer</p>
           <h3>L'Intégration</h3>
           <div class="etape__txt">
             <p><b>Ce qui s'installe.</b> Ton Protocole de Vie, écrit à la main, une section par jour. Ta carte de rechute, ta direction à douze mois, et deux ou trois personnes prévenues.</p>
             <p><b>Ce qui disparaît, et c'est l'essentiel.</b> L'éventail passe de treize pratiques à trois. La consigne s'arrête pendant sept jours. Le coach se retire&nbsp;: c'est toi qui mènes les deux derniers calls.</p>
           </div>
           <div class="creux">
-            <p class="creux__quand">Le creux · semaines 11 et 12</p>
+            <p class="creux__quand">Le creux · semaines 11&nbsp;et&nbsp;12</p>
             <p>La peur de la fin. Les anciens réflexes reviennent tester la structure, au moment exact où l'accompagnement se retire. Le retrait est annoncé dès la semaine 10, jamais subi.</p>
           </div>
           <p class="etape__palier">«&nbsp;Je tiens sans toi.&nbsp;»</p>
@@ -925,6 +933,7 @@ footer a:hover{color:var(--ink)}
   }
 
   var svg = document.getElementById("courbe");
+  var boite = svg.closest(".chart-scroll");
   var M = {t:46, r:150, b:86, l:64};  // sous 64, le « 90 min » de l'axe est rogné
   var pw = 1000 - M.l - M.r, ph = 400 - M.t - M.b;
   var bw = pw / N, yMax = 90;
@@ -986,6 +995,13 @@ footer a:hover{color:var(--ink)}
     svg.appendChild(el("rect", {x:x0, y:bas+32, width:w, height:26, rx:13, class:"phasebar"}));
     svg.appendChild(el("text", {x:x0+w/2, y:bas+49, "text-anchor":"middle", class:"phasetxt"}, p.txt));
   });
+
+  /* Le repère de défilement, seulement si le graphique déborde pour de bon */
+  function mesure(){
+    boite.classList.toggle("est-large", boite.scrollWidth > boite.clientWidth + 1);
+  }
+  mesure();
+  window.addEventListener("resize", mesure);
 })();
 </script>
 
