@@ -54,18 +54,22 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
   --on-dark:   #EEF3F6;
   --on-dark-2: #9DACB8;
 
+  /* L'accent change de valeur selon le fond, jamais de rôle.
+     Sur panneau clair c'est --ice-deep ; sur anthracite, --ice-2. */
+  --accent:    var(--ice-deep);
+
   --r-lg:28px;
   --r-md:18px;
   --r-sm:12px;
 
-  --t-h1:clamp(2.1rem,5.2vw,3.9rem);
-  --t-h2:clamp(1.45rem,2.6vw,2rem);
-  --t-h3:1.06rem;
+  --t-h1:clamp(2.3rem,6vw,4.6rem);
+  --t-h2:clamp(1.6rem,3.2vw,2.5rem);
+  --t-h3:1.1rem;
   --t-body:1rem;
   --t-small:.9rem;
   --t-label:.72rem;
 
-  --measure:58ch;
+  --measure:56ch;
   --pad:clamp(1rem,3vw,2rem);
   --gap:clamp(.7rem,1.2vw,1rem);
   --col:clamp(1.2rem,2.5vw,2rem);
@@ -117,37 +121,62 @@ body{
   -webkit-font-smoothing:antialiased;padding:var(--pad);
 }
 img,svg{max-width:100%;display:block}
-a{color:var(--ice-deep)}
-:focus-visible{outline:2px solid var(--ice-deep);outline-offset:3px}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 h1,h2,h3{margin:0;font-weight:600;line-height:1.05;letter-spacing:-.025em;text-wrap:balance}
 p{margin:0}
+b,strong{font-weight:500}
 .num{font-variant-numeric:lining-nums tabular-nums}
+
+.saut{
+  position:absolute;left:-9999px;top:0;
+  background:var(--ink);color:var(--panel);
+  padding:.7rem 1.1rem;border-radius:999px;font-size:var(--t-small);z-index:60;
+}
+.saut:focus{left:1rem;top:1rem}
 
 /* minmax(0,1fr) plutôt que la piste « auto » : sans ça, le SVG large du
    graphique élargit la grille et toute la page défile de côté. */
 .shell{max-width:var(--maxw);margin-inline:auto;display:grid;grid-template-columns:minmax(0,1fr);gap:var(--gap)}
 .shell > *{min-width:0}
-.panel{background:var(--panel);border-radius:var(--r-lg);padding:clamp(1.6rem,4vw,3.5rem)}
+
+.panel{background:var(--panel);border-radius:var(--r-lg);padding:clamp(1.8rem,5vw,4.5rem)}
 .panel--tint{background:var(--panel-2)}
-.panel--dark{background:var(--dark);color:var(--on-dark)}
+.panel--dark{background:var(--dark);color:var(--on-dark);--accent:var(--ice-2)}
+.panel--dark a{color:var(--on-dark)}
 
-.label{font-size:var(--t-label);font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);margin:0}
+/* ================= Le fil du haut ================= */
+/* Un trait de 2 px qui avance avec la lecture. Là où les animations liées au
+   défilement n'existent pas, il reste simplement invisible. */
+.fil{position:fixed;inset:0 0 auto 0;height:2px;z-index:50;pointer-events:none}
+.fil::after{
+  content:"";display:block;height:100%;
+  background:linear-gradient(to right,var(--ice-deep),var(--ice-2));
+  transform-origin:left;transform:scaleX(0);
+}
+@supports (animation-timeline:scroll()){
+  .fil::after{animation:filAvance linear both;animation-timeline:scroll(root block)}
+}
+@keyframes filAvance{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* ================= Libellé de chapitre ================= */
+.label{
+  font-size:var(--t-label);font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-2);margin:0;
+}
 .panel--dark .label{color:var(--on-dark-2)}
+.label__n{color:var(--accent);margin-right:.8rem}
 
-.head{display:grid;gap:.85rem;max-width:var(--measure);margin-bottom:clamp(2rem,4vw,3rem)}
-.head h2{font-size:var(--t-h2);line-height:1.18;letter-spacing:-.02em}
+.head{display:grid;gap:1rem;max-width:var(--measure);margin-bottom:clamp(2.4rem,5vw,4rem)}
+.head h2{font-size:var(--t-h2);line-height:1.12;letter-spacing:-.028em}
 .head p{color:var(--ink-2)}
-
-/* Grille à filets : un trait en haut de chaque élément, jamais de trait
-   vertical, ce qui reste propre quelle que soit la façon dont ça passe à la ligne. */
-.grille{display:grid;grid-template-columns:repeat(auto-fit,minmax(var(--min,200px),1fr));column-gap:var(--col)}
-.grille > *{border-top:1px solid var(--line);padding:1.4rem 0 1.5rem}
+.panel--dark .head p{color:var(--on-dark-2)}
 
 /* ================= Boutons ================= */
 .btn{
   display:inline-flex;align-items:center;gap:.5rem;
   font-size:.88rem;font-weight:500;letter-spacing:-.01em;
-  text-decoration:none;padding:.72rem 1.25rem;
+  text-decoration:none;padding:.78rem 1.35rem;
   border-radius:999px;border:1px solid transparent;
   background:var(--ink);color:var(--panel);
   transition:background .2s,color .2s,border-color .2s,transform .2s;
@@ -158,6 +187,9 @@ p{margin:0}
 .btn:hover .btn__arrow{transform:translateX(3px)}
 .btn--ghost{background:var(--panel-2);color:var(--ink);border-color:var(--line)}
 .btn--ghost:hover{background:var(--panel-3)}
+.panel--dark .btn{background:var(--on-dark);color:var(--dark)}
+.panel--dark .btn--ghost{background:transparent;color:var(--on-dark);border-color:var(--line-dark)}
+.panel--dark .btn--ghost:hover{background:var(--dark-2)}
 
 /* ================= En-tête ================= */
 .masthead{display:flex;align-items:center;justify-content:space-between;gap:1rem;
@@ -168,57 +200,156 @@ p{margin:0}
 .retour:hover{color:var(--ink)}
 
 /* ================= Ouverture ================= */
-.ouverture{display:grid;gap:1.2rem;max-width:none}
-.ouverture h1{font-size:var(--t-h1)}
-.ouverture .lead{color:var(--ink-2);max-width:var(--measure);font-size:1.06rem}
+.ouverture{display:grid;gap:1.4rem}
+.ouverture h1{font-size:var(--t-h1);letter-spacing:-.038em;max-width:15ch}
+.ouverture .lead{color:var(--ink-2);max-width:var(--measure);font-size:clamp(1rem,1.5vw,1.15rem)}
 
 .chiffres{display:grid;grid-template-columns:minmax(0,1fr);
-  gap:1.4rem 2rem;margin:clamp(2.2rem,5vw,3.4rem) 0 0;
-  padding-top:clamp(1.6rem,3vw,2.2rem);border-top:1px solid var(--line)}
+  gap:1.6rem var(--col);margin:clamp(2.6rem,6vw,4.4rem) 0 0;
+  padding-top:clamp(1.8rem,3vw,2.4rem);border-top:1px solid var(--line)}
 .chiffre dt{font-size:var(--t-label);font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
-.chiffre dd{margin:.5rem 0 0;font-size:1.9rem;font-weight:600;letter-spacing:-.03em;line-height:1;
+.chiffre dd{margin:.6rem 0 0;display:grid;gap:.6rem}
+.chiffre__v{font-size:clamp(1.8rem,3vw,2.3rem);font-weight:300;letter-spacing:-.04em;line-height:1;
   font-variant-numeric:lining-nums tabular-nums}
-.chiffre p{margin-top:.45rem;font-size:var(--t-small);color:var(--ink-3);line-height:1.45}
-@media (min-width:480px){.chiffres{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (min-width:900px){.chiffres{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.chiffre__d{font-size:var(--t-small);color:var(--ink-3);line-height:1.45;max-width:26ch}
+@media (min-width:520px){.chiffres{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:960px){.chiffres{grid-template-columns:repeat(4,minmax(0,1fr))}}
 
-/* ================= Les lettres ================= */
-/* Cinq éléments : une, trois, puis cinq colonnes. Jamais quatre, qui laisserait un orphelin. */
-.lettres,.piliers{grid-template-columns:minmax(0,1fr)}
-@media (min-width:640px){.lettres,.piliers{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (min-width:1180px){.lettres,.piliers{grid-template-columns:repeat(5,minmax(0,1fr))}}
-.lettre .l{font-size:2.6rem;font-weight:250;line-height:1;color:var(--ice-deep);letter-spacing:-.02em}
-.lettre h3{font-size:var(--t-h3);margin:.7rem 0 .45rem;letter-spacing:-.015em}
-.lettre p{font-size:var(--t-small);color:var(--ink-2)}
-.lettre .phrase{margin-top:.7rem;color:var(--ink);font-weight:500}
+/* ================= Les moments de respiration ================= */
+/* Ni panneau ni fond : c'est le vide qui fait l'effet. */
+.souffle{
+  display:grid;place-items:center;
+  padding-block:clamp(4rem,13vh,9rem);padding-inline:var(--pad);
+}
+.souffle p{
+  margin:0;max-width:22ch;text-align:center;text-wrap:balance;
+  font-size:clamp(1.8rem,5vw,3.6rem);font-weight:500;
+  letter-spacing:-.038em;line-height:1.08;
+}
+.souffle--long p{max-width:26ch;font-size:clamp(1.55rem,4vw,2.9rem)}
+.hl{
+  background:var(--ice);
+  border-radius:6px;padding:0 .22em;
+  box-decoration-break:clone;-webkit-box-decoration-break:clone;
+}
 
-/* ================= Les piliers ================= */
-.pilier .code{font-size:var(--t-label);font-weight:600;letter-spacing:.16em;color:var(--ice-deep)}
-.pilier h3{font-size:var(--t-h3);margin:.5rem 0 .55rem;letter-spacing:-.015em}
-.pilier p{font-size:var(--t-small);color:var(--ink-2)}
-.pilier .quand{margin-top:.7rem;color:var(--ink-3)}
+/* ================= Les cinq lettres ================= */
+/* Cinq lignes empilées, pas cinq cartes : on lit de haut en bas, comme on
+   traverse les cinq mouvements. */
+.lettres{display:grid;border-top:1px solid var(--line-dark)}
+.lettre{
+  display:grid;grid-template-columns:5rem minmax(0,15rem) minmax(0,1fr);
+  gap:clamp(1rem,3vw,2.5rem);align-items:baseline;
+  padding-block:clamp(1.4rem,2.8vw,2.2rem);
+  border-bottom:1px solid var(--line-dark);
+}
+.lettre__l{
+  font-size:clamp(2.4rem,5vw,3.4rem);font-weight:200;
+  line-height:.8;letter-spacing:-.05em;color:var(--accent);
+}
+.lettre__nom{display:grid;gap:.35rem}
+.lettre__nom h3{font-size:1rem;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.lettre__sous{font-size:.7rem;font-style:italic;text-transform:uppercase;letter-spacing:.14em;color:var(--on-dark-2)}
+.lettre__dit{
+  font-size:clamp(1.05rem,2vw,1.4rem);font-weight:300;
+  letter-spacing:-.02em;line-height:1.25;color:var(--accent);text-wrap:balance;
+}
+@media (max-width:780px){
+  .lettre{grid-template-columns:3.4rem minmax(0,1fr);row-gap:.7rem}
+  .lettre__l{grid-row:span 2}
+  .lettre__dit{grid-column:2}
+}
 
 /* ================= La journée ================= */
-/* Quatre moments : une colonne, puis deux sur deux. */
-.moments{grid-template-columns:minmax(0,1fr)}
-@media (min-width:760px){.moments{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.moment .quand{font-size:var(--t-label);font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ice-deep)}
-.moment h3{font-size:var(--t-h3);margin:.5rem 0 0;letter-spacing:-.015em}
-.gestes{list-style:none;margin:1rem 0 0;padding:0;display:grid;gap:.9rem}
-.geste{display:grid;grid-template-columns:1fr auto;gap:.2rem 1rem;align-items:baseline}
-.geste .quoi{font-size:var(--t-small);font-weight:500;color:var(--ink)}
-.geste .duree{font-size:var(--t-small);font-weight:600;color:var(--ice-deep);white-space:nowrap;
+.jour{
+  position:relative;
+  --rail:6.5rem;--gapx:clamp(1.2rem,3vw,2.6rem);
+  --railx:calc(var(--rail) + var(--gapx)/2);
+}
+.jour__rail{position:absolute;left:var(--railx);top:.7rem;bottom:0;width:1px;background:var(--line);overflow:hidden}
+.jour__rail::after{
+  content:"";position:absolute;inset:0;transform-origin:top;transform:scaleY(1);
+  background:linear-gradient(to bottom,var(--ice-deep),var(--ice-2));
+}
+/* Là où les animations de défilement existent, le filet se remplit à mesure
+   que la section traverse l'écran ; ailleurs il reste plein, sans JavaScript. */
+@supports (animation-timeline:view()){
+  .jour__rail::after{
+    transform:scaleY(0);
+    animation:railFill linear both;
+    animation-timeline:view(block);
+    animation-range:entry 85% exit 25%;
+  }
+}
+@keyframes railFill{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+
+.jour__liste{list-style:none;margin:0;padding:0;display:grid;gap:clamp(2rem,4vw,3.2rem)}
+.moment{
+  position:relative;
+  display:grid;grid-template-columns:var(--rail) minmax(0,1fr);
+  gap:var(--gapx);align-items:start;
+}
+.moment::before{
+  content:"";position:absolute;
+  left:calc(var(--railx) - 3.5px);top:.6rem;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--panel-2);box-shadow:0 0 0 1px var(--line) inset;
+  transition:background .5s ease,box-shadow .5s ease;
+}
+.moment.is-in::before{
+  background:var(--accent);
+  box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 18%,transparent);
+}
+.moment__quand{
+  text-align:right;font-size:clamp(1.15rem,2.2vw,1.5rem);
+  font-weight:200;letter-spacing:-.035em;line-height:1.1;
+  color:var(--ink-3);transition:color .5s ease;
+}
+.moment.is-in .moment__quand{color:var(--ink)}
+.moment__corps{display:grid;gap:.9rem;max-width:54ch}
+.moment__corps h3{font-size:var(--t-h3);letter-spacing:-.02em}
+
+.gestes{list-style:none;margin:0;padding:0;display:grid}
+.geste{
+  display:flex;gap:1rem;align-items:baseline;justify-content:space-between;
+  padding:.62rem 0;border-top:1px solid var(--line);font-size:var(--t-small);
+}
+.geste:first-child{border-top:0;padding-top:0}
+.geste .duree{color:var(--accent);font-weight:600;white-space:nowrap;
   font-variant-numeric:lining-nums tabular-nums}
-.geste .pourquoi{grid-column:1 / -1;font-size:.86rem;line-height:1.5;color:var(--ink-3)}
-.releve{margin-top:1.4rem;font-size:var(--t-small);color:var(--ink-3);max-width:var(--measure)}
-.regles{--min:290px;margin-top:clamp(1.6rem,3vw,2.2rem)}
-.regle h3{font-size:var(--t-h3);letter-spacing:-.015em}
-.regle p{margin-top:.55rem;font-size:var(--t-small);color:var(--ink-2)}
-.regle b{font-weight:500;color:var(--ink)}
+.moment__note{font-size:var(--t-small);color:var(--ink-3);line-height:1.5}
+
+.releve{
+  margin-top:clamp(2.2rem,4vw,3.2rem);padding-top:1.4rem;border-top:1px solid var(--line);
+  font-size:var(--t-small);color:var(--ink-2);max-width:var(--measure);
+}
+.regles{
+  display:grid;grid-template-columns:minmax(0,1fr);gap:1.4rem var(--col);
+  margin-top:1.6rem;
+}
+@media (min-width:820px){.regles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.regle{border-top:1px solid var(--line);padding-top:1.2rem}
+.regle h3{font-size:var(--t-h3);letter-spacing:-.02em}
+.regle p{margin-top:.6rem;font-size:var(--t-small);color:var(--ink-2)}
+.regle b{color:var(--ink)}
+
+/* ================= Les cinq piliers ================= */
+.piliers{
+  display:grid;grid-template-columns:minmax(0,1fr);
+  column-gap:var(--col);
+  margin-bottom:clamp(2.6rem,6vw,4.4rem);
+}
+@media (min-width:640px){.piliers{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:1120px){.piliers{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.pilier{border-top:1px solid var(--line);padding:1.3rem 0 1.5rem}
+.pilier__code{font-size:var(--t-label);font-weight:600;letter-spacing:.16em;color:var(--accent)}
+.pilier h3{font-size:var(--t-h3);margin:.5rem 0 .55rem;letter-spacing:-.02em}
+.pilier p{font-size:var(--t-small);color:var(--ink-2)}
+.pilier .entree{margin-top:.7rem;color:var(--ink-3)}
 
 /* ================= Graphique ================= */
 .chart-scroll{overflow-x:auto;overscroll-behavior-x:contain}
-.chart-scroll svg{min-width:760px}
+.chart-scroll svg{min-width:700px}
 .axis{fill:var(--ink-3);font-size:12.5px;font-weight:500;font-variant-numeric:lining-nums tabular-nums}
 .axis--week{fill:var(--ink-2)}
 .grid{stroke:var(--line);stroke-width:1}
@@ -226,74 +357,153 @@ p{margin:0}
 .bandlabel{fill:var(--ink);font-size:13px;font-weight:500}
 .bandlabel tspan{fill:var(--ink-3);font-weight:400;font-variant-numeric:lining-nums tabular-nums}
 .leader{stroke:var(--line);stroke-width:1;fill:none}
-.note{fill:var(--ice-deep);font-size:12.5px;font-weight:600;font-variant-numeric:lining-nums tabular-nums}
-.rule{stroke:var(--ice-deep);stroke-width:1.25;stroke-dasharray:3 4;fill:none}
+.note{fill:var(--accent);font-size:12.5px;font-weight:600;font-variant-numeric:lining-nums tabular-nums}
+.rule{stroke:var(--accent);stroke-width:1.25;stroke-dasharray:3 4;fill:none}
 .phasebar{fill:var(--panel-3)}
 .phasetxt{fill:var(--ink-2);font-size:12.5px;font-weight:500}
-.marker{fill:var(--ice-deep)}
-figcaption{color:var(--ink-3);font-size:var(--t-small);margin-top:1.4rem;max-width:var(--measure)}
+figcaption{color:var(--ink-3);font-size:var(--t-small);margin-top:1.6rem;max-width:var(--measure)}
 
-/* ================= Les phases ================= */
-.phase{display:grid;grid-template-columns:3.6rem 1fr;gap:.5rem 1.6rem;
-  padding:1.7rem 0;border-top:1px solid var(--line);align-items:start}
-.phases > .phase:first-child{border-top:0;padding-top:0}
-.phase .rom{font-size:1.55rem;font-weight:300;color:var(--ice-deep);line-height:1;letter-spacing:-.02em}
-.phase h3{font-size:var(--t-h3);letter-spacing:-.015em}
-.phase .quand{font-size:var(--t-small);color:var(--ink-3);margin-top:.3rem}
-.phase .corps{display:grid;gap:.55rem;margin-top:.9rem;max-width:var(--measure)}
-.phase .corps p{font-size:var(--t-small);color:var(--ink-2)}
-.phase .corps b{font-weight:500;color:var(--ink)}
-.phase .palier{margin-top:1rem;font-size:1.02rem;font-weight:500;color:var(--ink);letter-spacing:-.01em}
-@media (max-width:560px){
-  .phase{grid-template-columns:1fr;gap:.2rem}
-  .phase .rom{font-size:1.2rem}
+/* ================= Les quatre phases ================= */
+.voyage{
+  position:relative;
+  --rail:4.4rem;--gapx:clamp(1.2rem,3vw,2.6rem);
+  --railx:calc(var(--rail) + var(--gapx)/2);
+  display:grid;gap:clamp(2.8rem,6vw,4.6rem);
+}
+.voyage__rail{position:absolute;left:var(--railx);top:.9rem;bottom:0;width:1px;background:var(--line-dark);overflow:hidden}
+.voyage__rail::after{
+  content:"";position:absolute;inset:0;transform-origin:top;transform:scaleY(1);
+  background:linear-gradient(to bottom,var(--ice-2),var(--ice));
+}
+@supports (animation-timeline:view()){
+  .voyage__rail::after{
+    transform:scaleY(0);
+    animation:railFill linear both;
+    animation-timeline:view(block);
+    animation-range:entry 90% exit 15%;
+  }
+}
+.etape{
+  position:relative;
+  display:grid;grid-template-columns:var(--rail) minmax(0,1fr);
+  gap:var(--gapx);align-items:start;
+}
+.etape::before{
+  content:"";position:absolute;
+  left:calc(var(--railx) - 3.5px);top:.75rem;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--dark);box-shadow:0 0 0 1px var(--line-dark) inset;
+  transition:background .5s ease,box-shadow .5s ease;
+}
+.etape.is-in::before{
+  background:var(--accent);
+  box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 18%,transparent);
+}
+.etape__n{
+  text-align:right;font-size:clamp(1.6rem,3.2vw,2.4rem);
+  font-weight:200;letter-spacing:-.04em;line-height:1;
+  color:var(--on-dark-2);transition:color .5s ease;
+}
+.etape.is-in .etape__n{color:var(--accent)}
+.etape__corps{display:grid;gap:.55rem;max-width:52ch}
+.etape__quand{font-size:var(--t-label);font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--on-dark-2)}
+.etape__corps h3{font-size:clamp(1.25rem,2.4vw,1.7rem);letter-spacing:-.03em}
+.etape__txt{display:grid;gap:.6rem;margin-top:.7rem}
+.etape__txt p{font-size:var(--t-small);color:var(--on-dark-2)}
+.etape__txt b{color:var(--on-dark)}
+
+/* Le creux : le seul encart de la page, parce que c'est le seul endroit où
+   le protocole prévient d'avance de ce qui va faire mal. */
+.creux{
+  margin-top:1.2rem;padding:1rem 1.2rem;
+  border-radius:0 var(--r-md) var(--r-md) 0;background:var(--dark-2);
+  border-left:2px solid var(--accent);
+  display:grid;gap:.4rem;
+}
+.creux__quand{font-size:var(--t-label);font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.creux p{font-size:var(--t-small);color:var(--on-dark-2)}
+.etape__palier{
+  margin-top:1.3rem;
+  font-size:clamp(1.1rem,2.2vw,1.5rem);font-weight:300;
+  letter-spacing:-.025em;line-height:1.2;color:var(--on-dark);
+}
+/* Trop étroit pour une colonne de repères : le filet passe à gauche,
+   le moment et le chiffre romain montent au-dessus du titre. */
+@media (max-width:600px){
+  .jour,.voyage{--rail:0;--railx:.3rem}
+  .jour__rail,.voyage__rail{left:.3rem}
+  .moment,.etape{grid-template-columns:minmax(0,1fr);padding-left:1.6rem}
+  .moment{gap:.6rem}
+  .etape{gap:.5rem}
+  .moment__quand{text-align:left}
+  .etape__n{text-align:left;font-size:1.2rem}
 }
 
-/* ================= Les creux ================= */
-/* Trois éléments : une colonne, puis trois. Jamais deux, qui laisserait un orphelin. */
-.creux{grid-template-columns:minmax(0,1fr)}
-@media (min-width:900px){.creux{grid-template-columns:repeat(3,minmax(0,1fr))}}
-.creu .quand{font-size:var(--t-label);font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ice-deep)}
-.creu h3{font-size:var(--t-h3);margin:.5rem 0 .6rem;letter-spacing:-.015em}
-.creu p{font-size:var(--t-small);color:var(--ink-2)}
-.creu .rep{margin-top:.7rem;color:var(--ink-3)}
-
-/* ================= La promesse ================= */
-.promesse{display:grid;gap:1.6rem}
-.promesse .dit{font-size:clamp(1.5rem,3.2vw,2.35rem);font-weight:600;line-height:1.14;
-  letter-spacing:-.025em;max-width:24ch;text-wrap:balance}
-.promesse .socle{display:grid;gap:.8rem;max-width:var(--measure);color:var(--on-dark-2);font-size:var(--t-small)}
-.promesse .socle b{font-weight:500;color:var(--on-dark)}
-
 /* ================= Avant de commencer ================= */
-.avant{display:grid;grid-template-columns:minmax(0,1fr);column-gap:var(--col)}
+.avant{display:grid;grid-template-columns:minmax(0,1fr);gap:1.6rem var(--col)}
 @media (min-width:860px){.avant{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.cas{border-top:1px solid var(--line);padding:1.4rem 0 1.5rem}
-.cas h3{font-size:var(--t-h3);letter-spacing:-.015em}
-.cas p{margin-top:.55rem;font-size:var(--t-small);color:var(--ink-2)}
-.liste{list-style:none;margin:.8rem 0 0;padding:0;display:grid;gap:.45rem}
+.cas{border-top:1px solid var(--line);padding-top:1.3rem}
+.cas h3{font-size:var(--t-h3);letter-spacing:-.02em}
+.cas p{margin-top:.6rem;font-size:var(--t-small);color:var(--ink-2)}
+.cas p + p{margin-top:.55rem}
+
+.depli{margin-top:clamp(2rem,4vw,2.8rem);border-top:1px solid var(--line)}
+.depli summary{
+  list-style:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:1.2rem 0;font-size:var(--t-small);font-weight:500;color:var(--ink);
+}
+.depli summary::-webkit-details-marker{display:none}
+.depli summary::after{content:"+";color:var(--accent);font-size:1.15rem;font-weight:400;line-height:1}
+.depli[open] summary::after{content:"–"}
+.depli__corps{padding-bottom:1.4rem;display:grid;gap:1rem;max-width:var(--measure)}
+.depli__corps p{font-size:var(--t-small);color:var(--ink-2)}
+.liste{list-style:none;margin:0;padding:0;display:grid;gap:.45rem}
 .liste li{position:relative;padding-left:1.1rem;font-size:var(--t-small);color:var(--ink-2)}
-.liste li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--ice-deep)}
-.cas .note-cas{margin-top:.9rem;color:var(--ink-3)}
-.urgence{margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid var(--line);font-size:var(--t-small);color:var(--ink-2);max-width:var(--measure)}
+.liste li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
+.urgence{
+  margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid var(--line);
+  font-size:var(--t-small);color:var(--ink-2);max-width:var(--measure);
+}
 .urgence a{font-weight:500;white-space:nowrap}
 
 /* ================= La suite ================= */
-.suite p{color:var(--ink-2);max-width:var(--measure)}
-.suite p + p{margin-top:.7rem}
-.actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.8rem}
+.suite p{color:var(--on-dark-2);max-width:var(--measure);font-size:var(--t-small)}
+.suite p + p{margin-top:.75rem}
+.actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2rem}
 
 footer{display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;padding:2.4rem .4rem .8rem;color:var(--ink-3);font-size:var(--t-small)}
 footer a{color:inherit}
 footer a:hover{color:var(--ink)}
 
+/* ================= Apparition ================= */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+.reveal.is-in{opacity:1;transform:none}
+.stagger > *{
+  opacity:0;transform:translateY(24px);
+  transition:opacity .65s ease,transform .75s cubic-bezier(.22,.68,.3,1);
+}
+.stagger.is-in > *{opacity:1;transform:none}
+.stagger.is-in > *:nth-child(1){transition-delay:0ms}
+.stagger.is-in > *:nth-child(2){transition-delay:90ms}
+.stagger.is-in > *:nth-child(3){transition-delay:180ms}
+.stagger.is-in > *:nth-child(4){transition-delay:270ms}
+.stagger.is-in > *:nth-child(5){transition-delay:360ms}
+
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
   .btn:hover,.btn:hover .btn__arrow{transform:none}
+  .reveal{opacity:1;transform:none}
+  .stagger > *{opacity:1;transform:none}
+  .jour__rail::after,.voyage__rail::after{transform:scaleY(1)}
 }
 </style>
 </head>
 <body>
+
+<a class="saut" href="#contenu">Aller au contenu</a>
+<div class="fil" aria-hidden="true"></div>
 
 <div class="shell">
 
@@ -313,336 +523,343 @@ footer a:hover{color:var(--ink)}
     <a class="retour" href="/#protocole">← Retour au site</a>
   </header>
 
-  <main class="shell" style="max-width:none">
+  <main class="shell" style="max-width:none" id="contenu" tabindex="-1">
 
-  <!-- 1. Ouverture -->
+  <!-- ===== Ouverture ===== -->
   <section class="panel">
-    <div class="ouverture">
+    <div class="ouverture stagger">
       <p class="label">Le protocole RESET</p>
-      <h1>Treize semaines, quatre phases, cinq piliers</h1>
-      <p class="lead">Ce que le protocole demande, quand il le demande, et ce qu'il coûte. Rien n'arrive à pleine dose au premier jour : une pratique qui y arriverait serait la première à tomber.</p>
+      <h1>Treize semaines. À la fin, tu tiens sans moi.</h1>
+      <p class="lead">Quatre phases, cinq piliers, trois ancres par jour. Voici ce que le protocole demande, quand il le demande, et ce qu'il coûte vraiment.</p>
     </div>
-    <dl class="chiffres">
-      <div class="chiffre"><dt>Durée</dt><dd>13 semaines</dd><p>91 jours, du premier call au dernier</p></div>
-      <div class="chiffre"><dt>Rythme</dt><dd>3 ancres</dd><p>Matin, milieu de journée, soir. Tous les jours.</p></div>
-      <div class="chiffre"><dt>Rendez-vous</dt><dd>13 + 4</dd><p>Un call par semaine, et quatre sessions Breathwork encadrées d'une heure trente</p></div>
-      <div class="chiffre"><dt>Ce que ça coûte</dt><dd>98 heures</dd><p>De pratique dédiée sur les 91 jours, plus une quinzaine d'heures de lumière du matin. Le chiffre est dit avant l'engagement.</p></div>
+    <dl class="chiffres stagger">
+      <div class="chiffre"><dt>Durée</dt>
+        <dd><span class="chiffre__v"><span class="num">13</span> semaines</span><span class="chiffre__d">91 jours, du premier call au dernier.</span></dd></div>
+      <div class="chiffre"><dt>Rythme</dt>
+        <dd><span class="chiffre__v"><span class="num">3</span> ancres</span><span class="chiffre__d">Matin, midi, soir. Tous les jours.</span></dd></div>
+      <div class="chiffre"><dt>Rendez-vous</dt>
+        <dd><span class="chiffre__v"><span class="num">13 + 4</span></span><span class="chiffre__d">Un call par semaine, et quatre sessions Breathwork encadrées d'une heure trente.</span></dd></div>
+      <div class="chiffre"><dt>Ce que ça coûte</dt>
+        <dd><span class="chiffre__v"><span class="num">98</span> heures</span><span class="chiffre__d">De pratique sur les 91 jours. Le chiffre est dit avant, pas après.</span></dd></div>
     </dl>
   </section>
 
-  <!-- 2. Les cinq lettres -->
-  <section class="panel">
+  <!-- ===== Respiration ===== -->
+  <section class="souffle">
+    <p class="reveal">Rien n'arrive à pleine dose le premier jour. Une pratique qui y arriverait serait la <span class="hl">première à tomber.</span></p>
+  </section>
+
+  <!-- ===== 01. Le mouvement intérieur ===== -->
+  <!-- Cinq lignes, pas cinq cartes : les lettres se lisent de haut en bas comme
+       elles se traversent. Elles ne portent pas de semaines, le calendrier c'est
+       les quatre phases, plus bas. -->
+  <section class="panel panel--dark">
     <div class="head">
-      <p class="label">Les cinq lettres</p>
-      <h2>RESET, ce sont cinq mouvements intérieurs, et ils se chevauchent.</h2>
-      <p>Ils ne suivent pas le calendrier : chacun arrive quand le précédent a fait de la place, et aucun ne s'arrête quand le suivant commence. Pour chacun, la phrase que tu diras le jour où il sera là. Le calendrier, ce sont les quatre phases, plus bas.</p>
+      <p class="label"><span class="label__n num">01</span> Le mouvement intérieur</p>
+      <h2>RESET, ce sont cinq mouvements, et ils se chevauchent.</h2>
+      <p>Chacun arrive quand le précédent a fait de la place, et aucun ne s'arrête quand le suivant commence. Voici, pour chacun, la phrase que tu diras le jour où il sera là.</p>
     </div>
-    <div class="grille lettres">
-      <div class="lettre">
-        <p class="l" aria-hidden="true">R</p><h3>Reconnexion</h3>
-        <p>On sort du mental et on revient à ce qui est présent. Par la respiration, on reprend contact avec le corps et les sensations.</p>
-        <p class="phrase">« Je sens à nouveau des choses. »</p>
-      </div>
-      <div class="lettre">
-        <p class="l" aria-hidden="true">E</p><h3>Équilibrage</h3>
-        <p>On apaise les tensions accumulées et on régule. L'état intérieur devient plus calme, plus stable, moins réactif.</p>
-        <p class="phrase">« Je réagis moins fort, moins vite. »</p>
-      </div>
-      <div class="lettre">
-        <p class="l" aria-hidden="true">S</p><h3>Stabilisation</h3>
-        <p>On installe cet état dans la durée. On arrête d'alterner entre fatigue, stress et surcharge.</p>
-        <p class="phrase">« Mes journées se ressemblent, dans le bon sens. »</p>
-      </div>
-      <div class="lettre">
-        <p class="l" aria-hidden="true">É</p><h3>Élan</h3>
-        <p>Quand le système est stable, l'énergie revient. On retrouve la capacité d'agir sans se forcer ni se bloquer.</p>
-        <p class="phrase">« J'ai envie, pas juste besoin. »</p>
-      </div>
-      <div class="lettre">
-        <p class="l" aria-hidden="true">T</p><h3>Transformation</h3>
-        <p>Le changement ne reste pas ponctuel. Il s'ancre dans les décisions, le rythme, l'énergie et la direction.</p>
-        <p class="phrase">« Je ne reviendrai pas en arrière. »</p>
-      </div>
+    <div class="lettres stagger">
+      <article class="lettre">
+        <p class="lettre__l" aria-hidden="true">R</p>
+        <div class="lettre__nom"><h3>Reconnexion</h3><p class="lettre__sous">Revenir dans le corps</p></div>
+        <p class="lettre__dit">«&nbsp;Je sens à nouveau des choses.&nbsp;»</p>
+      </article>
+      <article class="lettre">
+        <p class="lettre__l" aria-hidden="true">E</p>
+        <div class="lettre__nom"><h3>Équilibrage</h3><p class="lettre__sous">Réguler, réagir moins</p></div>
+        <p class="lettre__dit">«&nbsp;Je réagis moins fort, moins vite.&nbsp;»</p>
+      </article>
+      <article class="lettre">
+        <p class="lettre__l" aria-hidden="true">S</p>
+        <div class="lettre__nom"><h3>Stabilisation</h3><p class="lettre__sous">Tenir dans la durée</p></div>
+        <p class="lettre__dit">«&nbsp;Mes journées se ressemblent, dans le bon sens.&nbsp;»</p>
+      </article>
+      <article class="lettre">
+        <p class="lettre__l" aria-hidden="true">É</p>
+        <div class="lettre__nom"><h3>Élan</h3><p class="lettre__sous">L'énergie revient</p></div>
+        <p class="lettre__dit">«&nbsp;J'ai envie, pas juste besoin.&nbsp;»</p>
+      </article>
+      <article class="lettre">
+        <p class="lettre__l" aria-hidden="true">T</p>
+        <div class="lettre__nom"><h3>Transformation</h3><p class="lettre__sous">Ancrer dans ta vie</p></div>
+        <p class="lettre__dit">«&nbsp;Je ne reviendrai pas en arrière.&nbsp;»</p>
+      </article>
     </div>
   </section>
 
-  <!-- 3. Les cinq piliers -->
-  <section class="panel">
+  <!-- ===== 02. La journée ===== -->
+  <section class="panel panel--tint">
     <div class="head">
-      <p class="label">Les cinq piliers</p>
-      <h2>Tout ce que tu fais appartient à l'un des cinq.</h2>
-      <p>Les lettres disent ce que tu vis. Les piliers disent ce que tu fais. Ils ne se travaillent pas l'un après l'autre : ils montent ensemble, à des vitesses différentes, et chacun a sa semaine d'entrée.</p>
-    </div>
-    <div class="grille piliers">
-      <div class="pilier">
-        <p class="code">SO</p><h3>Sommeil</h3>
-        <p>La lumière dehors dans les trente minutes du réveil, le téléphone hors des trente premières minutes, une heure de lever stable. C'est la fondation : tout le reste s'appuie dessus.</p>
-        <p class="quand">Entre en semaine 1</p>
-      </div>
-      <div class="pilier">
-        <p class="code">NU</p><h3>Nutrition</h3>
-        <p>La caféine déplacée hors des quatre-vingt-dix premières minutes et de l'après-midi, puis des repas à heures fixes. C'est le seul pilier qui ne coûte pas de minutes : il coûte des décisions.</p>
-        <p class="quand">Entre en semaine 1, se personnalise en phase III</p>
-      </div>
-      <div class="pilier">
-        <p class="code">MO</p><h3>Mouvement</h3>
-        <p>Les marches après les repas, la séquence du matin, cinq minutes jambes au mur. Puis, dès la semaine 5, deux trainings par semaine, une séance de stretching et le froid. C'est le pilier le plus lourd en temps.</p>
-        <p class="quand">Entre en semaine 2, à pleine taille en semaine 8</p>
-      </div>
-      <div class="pilier">
-        <p class="code">RE</p><h3>Respiration</h3>
-        <p>Deux à trois minutes après le repas de midi, tous les jours. Et quatre sessions longues d'une heure trente, toujours encadrées : la régulation courte se fait seul, la longue jamais.</p>
-        <p class="quand">Entre en semaine 1, quatre sessions datées</p>
-      </div>
-      <div class="pilier">
-        <p class="code">ME</p><h3>Méditation</h3>
-        <p>Deux assises, une le matin avant le café, une avant le coucher. Elles perdent leur compte en semaine 7 puis en semaine 8, et gardent leur durée.</p>
-        <p class="quand">Entre en semaine 1, complète en semaine 4</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. La journée -->
-  <section class="panel">
-    <div class="head">
-      <p class="label">La journée</p>
-      <h2>Trois ancres, et trois rendez-vous du corps.</h2>
-      <p>C'est ce qui tient la journée, de la semaine 4 à la semaine 13. Le reste du protocole s'accroche dessus. Les durées sont celles de la pleine charge ; la phase I en demande moins.</p>
+      <p class="label"><span class="label__n num">02</span> La journée</p>
+      <h2>Trois ancres. Le reste s'accroche dessus.</h2>
+      <p>C'est ce qui tient la journée, de la semaine 4 à la semaine 13. Les durées sont celles de la pleine charge&nbsp;; la phase I en demande beaucoup moins.</p>
     </div>
 
-    <div class="grille moments">
-      <div class="moment">
-        <p class="quand">Au lever</p>
-        <h3>Lumière, assise, douche, mouvement</h3>
-        <ul class="gestes">
-          <li class="geste"><span class="quoi">Dehors, à la lumière, sans téléphone</span><span class="duree">10 min</span>
-            <span class="pourquoi">Elle se combine avec ce que tu fais déjà, un trajet à pied par exemple.</span></li>
-          <li class="geste"><span class="quoi">L'assise du matin, avant le café</span><span class="duree">10 min</span>
-            <span class="pourquoi">L'ancre qui ne saute jamais. Un jour de catastrophe, trois minutes, jamais zéro.</span></li>
-          <li class="geste"><span class="quoi">La douche, froide en fin de douche</span><span class="duree">1 à 2 min</span>
-            <span class="pourquoi">À partir de la semaine 6, jamais un jour de training.</span></li>
-          <li class="geste"><span class="quoi">La séquence du matin</span><span class="duree">10 à 15 min</span>
-            <span class="pourquoi">Deux à trois minutes en phase I. Elle ne change jamais de forme : une séquence mémorisée se fait sans décision.</span></li>
-        </ul>
-      </div>
-      <div class="moment">
-        <p class="quand">Milieu de journée</p>
-        <h3>L'ancre courte, puis la marche</h3>
-        <ul class="gestes">
-          <li class="geste"><span class="quoi">À la fin du repas, assis : la reprise</span><span class="duree">2 à 5 min</span>
-            <span class="pourquoi">La pièce la plus fragile. Elle s'accroche à un geste qui a déjà lieu, jamais à une heure.</span></li>
-          <li class="geste"><span class="quoi">Juste après, une marche lente</span><span class="duree">10 min</span>
-            <span class="pourquoi">Cinq minutes en semaine 2. Quand la journée déborde, la marche saute et la reprise reste.</span></li>
-        </ul>
-      </div>
-      <div class="moment">
-        <p class="quand">Fin de journée</p>
-        <h3>Une fenêtre, pas une quatrième ancre</h3>
-        <ul class="gestes">
-          <li class="geste"><span class="quoi">Le training, deux fois par semaine</span><span class="duree">25 à 35 min</span>
-            <span class="pourquoi">À partir de la semaine 5. Les autres jours, la fenêtre reste vide, et c'est voulu.</span></li>
-          <li class="geste"><span class="quoi">Le stretching, une fois par semaine</span><span class="duree">25 min</span>
-            <span class="pourquoi">Jamais dans l'heure qui précède l'assise du soir : le sommeil passe avant la séance.</span></li>
-        </ul>
-      </div>
-      <div class="moment">
-        <p class="quand">Avant le coucher</p>
-        <h3>Marche, jambes au mur, assise</h3>
-        <ul class="gestes">
-          <li class="geste"><span class="quoi">Après le repas du soir, une marche lente</span><span class="duree">5 à 10 min</span>
-            <span class="pourquoi">Cinq minutes de la semaine 4 à la semaine 7, dix ensuite. Elle ne monte pas pendant la Traversée.</span></li>
-          <li class="geste"><span class="quoi">Allongé, jambes au mur</span><span class="duree">5 min</span>
-            <span class="pourquoi">Le geste que tu sauras reprendre seul n'importe quel jour de ta vie.</span></li>
-          <li class="geste"><span class="quoi">L'assise du soir, une demi-heure avant le coucher</span><span class="duree">10 min</span>
-            <span class="pourquoi">Silencieuse à partir de la semaine 7.</span></li>
-        </ul>
-      </div>
-    </div>
-    <p class="releve">Et matin et soir, quatre-vingt-dix secondes pour le relevé du journal. C'est le geste le plus prédictif de tout le protocole : qui relève tient.</p>
+    <div class="jour">
+      <div class="jour__rail" aria-hidden="true"></div>
+      <ol class="jour__liste">
 
-    <div class="grille regles">
+        <li class="moment reveal">
+          <p class="moment__quand">Au lever</p>
+          <div class="moment__corps">
+            <h3>Lumière, assise, mouvement</h3>
+            <ul class="gestes">
+              <li class="geste"><span>Dehors, à la lumière, sans téléphone</span><span class="duree">10 min</span></li>
+              <li class="geste"><span>L'assise du matin, avant le café</span><span class="duree">10 min</span></li>
+              <li class="geste"><span>La séquence du matin</span><span class="duree">10 à 15 min</span></li>
+              <li class="geste"><span>La douche, froide sur la fin</span><span class="duree">1 à 2 min</span></li>
+            </ul>
+            <p class="moment__note">L'assise du matin est l'ancre qui ne saute jamais. Un jour de catastrophe&nbsp;: trois minutes, jamais zéro.</p>
+          </div>
+        </li>
+
+        <li class="moment reveal">
+          <p class="moment__quand">À midi</p>
+          <div class="moment__corps">
+            <h3>La reprise, puis la marche</h3>
+            <ul class="gestes">
+              <li class="geste"><span>À la fin du repas, assis&nbsp;: la reprise</span><span class="duree">2 à 5 min</span></li>
+              <li class="geste"><span>Juste après, une marche lente</span><span class="duree">10 min</span></li>
+            </ul>
+            <p class="moment__note">La pièce la plus fragile du protocole. Elle s'accroche à un geste qui a déjà lieu, jamais à une heure.</p>
+          </div>
+        </li>
+
+        <li class="moment reveal">
+          <p class="moment__quand">En soirée</p>
+          <div class="moment__corps">
+            <h3>Une fenêtre, pas une quatrième ancre</h3>
+            <ul class="gestes">
+              <li class="geste"><span>Le training, deux fois par semaine</span><span class="duree">25 à 35 min</span></li>
+              <li class="geste"><span>Le stretching, une fois par semaine</span><span class="duree">25 min</span></li>
+            </ul>
+            <p class="moment__note">À partir de la semaine 5. Les autres soirs, la fenêtre reste vide, et c'est voulu.</p>
+          </div>
+        </li>
+
+        <li class="moment reveal">
+          <p class="moment__quand">Au coucher</p>
+          <div class="moment__corps">
+            <h3>Marche, jambes au mur, assise</h3>
+            <ul class="gestes">
+              <li class="geste"><span>Après le repas du soir, une marche lente</span><span class="duree">5 à 10 min</span></li>
+              <li class="geste"><span>Allongé, jambes au mur</span><span class="duree">5 min</span></li>
+              <li class="geste"><span>L'assise du soir, une demi-heure avant</span><span class="duree">10 min</span></li>
+            </ul>
+            <p class="moment__note">Jamais de stretching dans l'heure qui précède&nbsp;: le sommeil passe avant la séance.</p>
+          </div>
+        </li>
+
+      </ol>
+    </div>
+
+    <p class="releve">Et matin et soir, quatre-vingt-dix secondes pour le relevé du journal. C'est le geste le plus prédictif de tout le protocole&nbsp;: qui relève tient.</p>
+
+    <div class="regles">
       <div class="regle">
         <h3>Quand la journée déborde</h3>
-        <p>On sacrifie dans cet ordre, jamais un autre : la fin de journée, puis le milieu de journée, puis l'assise du soir. <b>L'assise du matin ne saute pas.</b> Sous pression, les ancres se réduisent en durée, jamais en nombre : trois ancres à trois minutes valent mieux qu'une seule à trente.</p>
+        <p>On sacrifie dans cet ordre, jamais un autre&nbsp;: la soirée, puis le midi, puis l'assise du soir. <b>L'assise du matin ne saute pas.</b> Sous pression, les ancres se réduisent en durée, jamais en nombre&nbsp;: trois ancres à trois minutes valent mieux qu'une seule à trente.</p>
       </div>
       <div class="regle">
         <h3>Ce qui ne se fait jamais</h3>
-        <p><b>Rattraper.</b> Une journée ratée ne se rattrape pas : pas de séance doublée le lendemain, pas de moyenne à combler, aucune note sur une assise. Manquer est normal. Faire est le résultat.</p>
+        <p><b>Rattraper.</b> Une journée ratée ne se rattrape pas&nbsp;: pas de séance doublée le lendemain, pas de moyenne à combler, aucune note sur une assise. Manquer est normal. Faire est le résultat.</p>
       </div>
     </div>
   </section>
 
-  <!-- 5. Le graphique -->
+  <!-- ===== 03. Les cinq piliers ===== -->
   <section class="panel">
     <div class="head">
-      <p class="label">Les piliers dans le temps</p>
-      <h2>Chaque bande est un pilier. Sa hauteur est le temps qu'il demande, par jour.</h2>
-      <p>Dix-huit minutes la première semaine, quatre-vingts pendant la Traversée, quatre-vingt-cinq de la semaine 8 à la fin. La montée dure huit semaines, puis elle s'arrête : la dernière phase ne retire pas des minutes, elle retire des appuis.</p>
+      <p class="label"><span class="label__n num">03</span> Les cinq piliers</p>
+      <h2>Les lettres disent ce que tu vis. Les piliers disent ce que tu fais.</h2>
+      <p>Ils ne se travaillent pas l'un après l'autre&nbsp;: ils montent ensemble, à des vitesses différentes, et chacun a sa semaine d'entrée.</p>
     </div>
+
+    <div class="piliers stagger">
+      <div class="pilier">
+        <p class="pilier__code">SO</p><h3>Sommeil</h3>
+        <p>La lumière au réveil, le téléphone plus tard, une heure de lever stable. C'est la fondation&nbsp;: tout le reste s'appuie dessus.</p>
+        <p class="entree">Entre en semaine 1</p>
+      </div>
+      <div class="pilier">
+        <p class="pilier__code">NU</p><h3>Nutrition</h3>
+        <p>La caféine déplacée, puis des repas à heures fixes. Le seul pilier qui ne coûte pas de minutes&nbsp;: il coûte des décisions.</p>
+        <p class="entree">Entre en semaine 1</p>
+      </div>
+      <div class="pilier">
+        <p class="pilier__code">MO</p><h3>Mouvement</h3>
+        <p>Les marches après les repas, la séquence du matin, puis les trainings, le stretching et le froid. Le pilier le plus lourd en temps.</p>
+        <p class="entree">Entre en semaine 2, à pleine taille en semaine 8</p>
+      </div>
+      <div class="pilier">
+        <p class="pilier__code">RE</p><h3>Respiration</h3>
+        <p>Deux à trois minutes après le repas de midi. Et quatre sessions longues, toujours encadrées&nbsp;: la longue ne se fait jamais seul.</p>
+        <p class="entree">Entre en semaine 1, quatre sessions datées</p>
+      </div>
+      <div class="pilier">
+        <p class="pilier__code">ME</p><h3>Méditation</h3>
+        <p>Deux assises, une le matin avant le café, une avant le coucher. Elles perdent leur compte, jamais leur durée.</p>
+        <p class="entree">Entre en semaine 1, complète en semaine 4</p>
+      </div>
+    </div>
+
     <figure style="margin:0">
       <div class="chart-scroll">
-        <svg id="courbe" viewBox="0 0 1000 480" role="img"
+        <svg id="courbe" viewBox="0 0 1000 400" role="img"
              aria-label="Aire empilée des minutes quotidiennes par pilier, de la semaine 1 à la semaine 13. Le total passe de 18 minutes en semaine 1 à 58 en semaine 4, environ 80 pendant la Traversée, puis 85 de la semaine 8 à la fin. Le mouvement est le pilier le plus lourd, 49 minutes par jour au plus haut."></svg>
       </div>
       <figcaption>
-        La bande Sommeil, c'est la lumière du matin : dix minutes qui se combinent avec ce que tu fais déjà, et c'est pour ça qu'on la compte à part. Sans elle, le temps dédié va de huit à soixante-quinze minutes par jour. La nutrition n'a pas de bande, elle ne coûte pas de minutes. Les quatre losanges sont les sessions encadrées, aux jours 24, 45, 66 et 89 : ce sont des rendez-vous, pas de la charge quotidienne. Les trainings et le stretching sont lissés sur sept jours.
+        Chaque bande est un pilier&nbsp;; sa hauteur, le temps qu'il demande par jour. La bande Sommeil, c'est la lumière du matin&nbsp;: elle se combine avec ce que tu fais déjà. La nutrition n'a pas de bande, elle ne coûte pas de minutes.
       </figcaption>
     </figure>
   </section>
 
-  <!-- 6. Les phases -->
-  <section class="panel">
+  <!-- ===== 04. Le déroulé ===== -->
+  <!-- Les trois creux sont rendus à la phase où ils tombent, plutôt que réunis
+       dans une section à part : annoncés à leur place, ils se lisent comme
+       faisant partie du chemin. -->
+  <section class="panel panel--dark">
     <div class="head">
-      <p class="label">Comment ça se déroule</p>
+      <p class="label"><span class="label__n num">04</span> Le déroulé</p>
       <h2>Quatre phases. Trois ajoutent, la dernière retire.</h2>
-      <p>Une phase s'ouvre au call qui la commence, jamais avant. Chaque palier est atteignable en trois ou quatre semaines : tu n'as jamais plus d'un mois devant toi, et les critères de passage sont les mêmes pour tous, annoncés dès le premier jour.</p>
+      <p>Une phase s'ouvre au call qui la commence, jamais avant. Tu n'as jamais plus d'un mois devant toi. Les trois creux sont datés d'avance, parce qu'un creux annoncé se traverse, quand un creux découvert se lit comme un échec personnel.</p>
     </div>
-    <div class="phases">
 
-      <article class="phase">
-        <p class="rom">I</p>
-        <div>
+    <div class="voyage">
+      <div class="voyage__rail" aria-hidden="true"></div>
+
+      <article class="etape reveal">
+        <p class="etape__n">I</p>
+        <div class="etape__corps">
+          <p class="etape__quand">Semaines 1 à 4 · le verbe est voir</p>
           <h3>Rencontre Intérieure</h3>
-          <p class="quand">Semaines 1 à 4 · le verbe est voir</p>
-          <div class="corps">
-            <p><b>Ce qui s'installe.</b> La lumière au réveil et la caféine déplacée, les deux seuls comportements qu'on change d'emblée. Puis les trois ancres, les marches après les repas, les premiers rendez-vous du corps, et la première session encadrée au jour 24.</p>
+          <div class="etape__txt">
+            <p><b>Ce qui s'installe.</b> La lumière au réveil et la caféine déplacée, les deux seuls comportements qu'on change d'emblée. Puis les trois ancres, les marches après les repas, et la première session encadrée au jour 24.</p>
             <p><b>Ce qui disparaît.</b> Rien. C'est la seule phase des quatre qui n'enlève pas.</p>
-            <p><b>Ce que tu vas trouver.</b> Que c'est trop peu. C'est voulu : la motivation du premier jour est exactement l'énergie qui s'effondre au douzième.</p>
           </div>
-          <p class="palier">« Ma journée a une structure. »</p>
+          <div class="creux">
+            <p class="creux__quand">Le creux · jours 10 à 15</p>
+            <p>La nouveauté retombe, les résultats ne sont pas encore là, et le sevrage de caféine peut mordre. C'est le pic d'abandon de tout le protocole. On baisse la durée, jamais le nombre d'ancres.</p>
+          </div>
+          <p class="etape__palier">«&nbsp;Ma journée a une structure.&nbsp;»</p>
         </div>
       </article>
 
-      <article class="phase">
-        <p class="rom">II</p>
-        <div>
+      <article class="etape reveal">
+        <p class="etape__n">II</p>
+        <div class="etape__corps">
+          <p class="etape__quand">Semaines 5 à 7 · le verbe est tenir</p>
           <h3>La Traversée</h3>
-          <p class="quand">Semaines 5 à 7 · le verbe est tenir</p>
-          <div class="corps">
-            <p><b>Ce qui s'installe.</b> Le mouvement prend sa taille : la séquence du matin passe à dix ou quinze minutes, deux trainings par semaine, une séance de stretching. Puis le froid en fin de douche, jamais un jour de training. Le but n'est pas d'endurer : c'est de rester calme pendant un stress que tu as choisi.</p>
+          <div class="etape__txt">
+            <p><b>Ce qui s'installe.</b> Le mouvement prend sa taille&nbsp;: deux trainings par semaine, une séance de stretching, puis le froid en fin de douche. Le but n'est pas d'endurer, c'est de rester calme pendant un stress que tu as choisi.</p>
             <p><b>Ce qui disparaît.</b> Le support de l'assise du soir, en semaine 7. Même durée, même créneau, plus de compte ni de ratio. C'est le premier retrait du protocole, et il est plus dur qu'un ajout.</p>
-            <p><b>Ce que tu vas trouver.</b> Le vide, en semaine 7. Les fuites ne fonctionnent plus et rien ne les a remplacées. Rien n'est ajouté cette semaine-là, marches comprises.</p>
           </div>
-          <p class="palier">« Je traverse sans fuir. »</p>
+          <div class="creux">
+            <p class="creux__quand">Le creux · semaine 7</p>
+            <p>Le vide devient conscient&nbsp;: les fuites ne fonctionnent plus et rien ne les a remplacées. Rien n'est ajouté cette semaine-là, marches comprises. Une solution offerte ici deviendrait la fuite suivante.</p>
+          </div>
+          <p class="etape__palier">«&nbsp;Je traverse sans fuir.&nbsp;»</p>
         </div>
       </article>
 
-      <article class="phase">
-        <p class="rom">III</p>
-        <div>
+      <article class="etape reveal">
+        <p class="etape__n">III</p>
+        <div class="etape__corps">
+          <p class="etape__quand">Semaines 8 à 10 · le verbe est choisir</p>
           <h3>La Reconstruction</h3>
-          <p class="quand">Semaines 8 à 10 · le verbe est choisir</p>
-          <div class="corps">
-            <p><b>Ce qui s'installe.</b> Trois gestes, un par semaine, et chacun dans le réel : un inventaire de ce que tu portes sans l'avoir choisi, une décision que quelqu'un d'autre pourrait vérifier, une demande adressée à une personne vivante. L'éventail complet s'ouvre à midi, et la marche du soir passe à dix minutes.</p>
+          <div class="etape__txt">
+            <p><b>Ce qui s'installe.</b> Trois gestes, un par semaine, et chacun dans le réel&nbsp;: un inventaire de ce que tu portes sans l'avoir choisi, une décision que quelqu'un d'autre pourrait vérifier, une demande adressée à une personne vivante.</p>
             <p><b>Ce qui disparaît.</b> Le compte de l'assise du matin, à son tour.</p>
-            <p><b>Ce que tu vas trouver.</b> Que ce qui n'est pas daté n'a pas lieu. Réfléchir à ses injonctions est agréable et ne coûte rien ; le non se dit à une date, la demande se fait à une date.</p>
+            <p>Ce que tu vas trouver&nbsp;: que ce qui n'est pas daté n'a pas lieu. Réfléchir à ses injonctions est agréable et ne coûte rien. Le non se dit à une date, la demande se fait à une date.</p>
           </div>
-          <p class="palier">« Je décide, et je le prouve. »</p>
+          <p class="etape__palier">«&nbsp;Je décide, et je le prouve.&nbsp;»</p>
         </div>
       </article>
 
-      <article class="phase">
-        <p class="rom">IV</p>
-        <div>
+      <article class="etape reveal">
+        <p class="etape__n">IV</p>
+        <div class="etape__corps">
+          <p class="etape__quand">Semaines 11 à 13 · le verbe est ancrer</p>
           <h3>L'Intégration</h3>
-          <p class="quand">Semaines 11 à 13 · le verbe est ancrer</p>
-          <div class="corps">
+          <div class="etape__txt">
             <p><b>Ce qui s'installe.</b> Ton Protocole de Vie, écrit à la main, une section par jour. Ta carte de rechute, ta direction à douze mois, et deux ou trois personnes prévenues.</p>
-            <p><b>Ce qui disparaît, et c'est l'essentiel.</b> L'éventail passe de treize pratiques à trois. La consigne s'arrête pendant sept jours. Le coach se retire : c'est toi qui mènes les deux derniers calls.</p>
-            <p><b>Ce que tu vas trouver.</b> Une liste de lignes qui ont lâché pendant la semaine sans consigne. Cette liste est le livrable, pas l'échec.</p>
+            <p><b>Ce qui disparaît, et c'est l'essentiel.</b> L'éventail passe de treize pratiques à trois. La consigne s'arrête pendant sept jours. Le coach se retire&nbsp;: c'est toi qui mènes les deux derniers calls.</p>
           </div>
-          <p class="palier">« Je tiens sans toi. »</p>
+          <div class="creux">
+            <p class="creux__quand">Le creux · semaines 11 et 12</p>
+            <p>La peur de la fin. Les anciens réflexes reviennent tester la structure, au moment exact où l'accompagnement se retire. Le retrait est annoncé dès la semaine 10, jamais subi.</p>
+          </div>
+          <p class="etape__palier">«&nbsp;Je tiens sans toi.&nbsp;»</p>
         </div>
       </article>
 
     </div>
   </section>
 
-  <!-- 7. Les creux -->
+  <!-- ===== Respiration : la promesse ===== -->
+  <section class="souffle souffle--long">
+    <p class="reveal">À la fin des 90 jours, tu ne prends plus les mêmes décisions, parce&nbsp;que <span class="hl">tu n'es plus dans le même état.</span></p>
+  </section>
+
+  <!-- ===== 05. Avant de commencer ===== -->
   <section class="panel panel--tint">
     <div class="head">
-      <p class="label">Les trois creux</p>
-      <h2>Ils sont datés d'avance.</h2>
-      <p>Un creux annoncé se traverse. Un creux découvert se lit comme un échec personnel. Les trois te sont dits avant d'arriver.</p>
+      <p class="label"><span class="label__n num">05</span> Avant de commencer</p>
+      <h2>Ce que le protocole n'est pas, et pour qui il n'est pas fait.</h2>
+      <p>Tout commence par un questionnaire d'admission. Une réponse négative se donne sur ce que tu as écrit, et elle se donne avant de commencer, pas au bout de trois semaines.</p>
     </div>
-    <div class="grille creux">
-      <div class="creu">
-        <p class="quand">Jours 10 à 15</p>
-        <h3>La nouveauté retombe</h3>
-        <p>L'inconfort reste, les résultats ne sont pas encore là, et le sevrage de caféine peut mordre. C'est le pic d'abandon de tout le protocole.</p>
-        <p class="rep">Ce qu'on fait : on baisse la durée, jamais le nombre d'ancres.</p>
-      </div>
-      <div class="creu">
-        <p class="quand">Semaine 7</p>
-        <h3>Le vide devient conscient</h3>
-        <p>Les fuites ne fonctionnent plus et rien ne les a remplacées. Rien n'augmente cette semaine-là, et c'est pourtant la plus dure.</p>
-        <p class="rep">Ce qu'on fait : rien de neuf. Une solution offerte ici deviendrait la fuite suivante.</p>
-      </div>
-      <div class="creu">
-        <p class="quand">Semaines 11 et 12</p>
-        <h3>La peur de la fin</h3>
-        <p>Les anciens réflexes reviennent tester la structure, au moment exact où l'accompagnement se retire.</p>
-        <p class="rep">Ce qu'on fait : le retrait est annoncé dès la semaine 10, jamais subi.</p>
-      </div>
-    </div>
-  </section>
 
-  <!-- 8. La promesse -->
-  <section class="panel panel--dark">
-    <div class="promesse">
-      <p class="label">La promesse, et ses limites</p>
-      <p class="dit">À la fin des 90 jours, tu ne prends plus les mêmes décisions, parce que tu n'es plus dans le même état.</p>
-      <div class="socle">
-        <p><b>Ce n'est pas une remise en forme, pas une thérapie, pas un programme de discipline.</b> Une remise en forme change ce que le corps peut faire. Une thérapie change le rapport au passé. RESET change l'état dans lequel tu te lèves le matin : ta physiologie, ton état intérieur, tes décisions, et ton lien à toi-même et aux autres. Les quatre bougent ensemble, ou aucun ne tient.</p>
-        <p><b>Ce que le protocole ne promet pas.</b> Pas de guérison, pas de résultat garanti, pas de disparition de la voix critique. Ce qu'il donne à la place : un cadre de sécurité écrit, des critères de passage identiques pour tous et annoncés d'avance, et son coût réel, dit avant l'achat.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 9. Avant de commencer -->
-  <section class="panel">
-    <div class="head">
-      <p class="label">Avant de commencer</p>
-      <h2>Le protocole n'est pas fait pour tout le monde, et c'est dit avant.</h2>
-      <p>Tout commence par un questionnaire d'admission. Une réponse négative se donne sur ce que tu as écrit, jamais au téléphone, et elle se donne avant de commencer, pas au bout de trois semaines.</p>
-    </div>
     <div class="avant">
       <div class="cas">
-        <h3>Le protocole n'est pas adapté en cas de</h3>
+        <h3>Ni remise en forme, ni thérapie</h3>
+        <p>Une remise en forme change ce que le corps peut faire. Une thérapie change le rapport au passé. RESET change l'état dans lequel tu te lèves le matin&nbsp;: ta physiologie, ton état intérieur, tes décisions, et ton lien à toi-même et aux autres. Les quatre bougent ensemble, ou aucun ne tient.</p>
+      </div>
+      <div class="cas">
+        <h3>Ce qu'il ne promet pas</h3>
+        <p>Pas de guérison, pas de résultat garanti, pas de disparition de la voix qui te critique de l'intérieur.</p>
+        <p>Ce qu'il donne à la place&nbsp;: un cadre de sécurité écrit, des critères de passage identiques pour tous et annoncés d'avance, et son coût réel, dit avant l'achat.</p>
+      </div>
+      <div class="cas">
+        <h3>Du temps, vraiment disponible</h3>
+        <p>Il te faut au moins cent minutes libres par jour pour les semaines 8 à 13, où le protocole en demande quatre-vingt-cinq. Sans cette marge, la première semaine chargée fait tout tomber. En dessous, ce n'est pas un refus&nbsp;: c'est un report à la cohorte suivante.</p>
+      </div>
+      <div class="cas">
+        <h3>Ta santé, d'abord</h3>
+        <p>Certaines situations ne vont pas avec ce protocole. D'autres sont possibles, avec l'accord écrit de ton praticien. La liste est courte, et elle est juste en dessous.</p>
+      </div>
+    </div>
+
+    <details class="depli">
+      <summary>Les situations qui demandent un avis, ou un non</summary>
+      <div class="depli__corps">
+        <p><b>Le protocole n'est pas adapté en cas de&nbsp;:</b></p>
         <ul class="liste">
-          <li>grossesse en cours ;</li>
-          <li>trouble cardiovasculaire non contrôlé : hypertension non stabilisée, arythmie, infarctus ou AVC récent, anévrisme connu ;</li>
-          <li>épilepsie ;</li>
-          <li>trouble respiratoire sévère, comme un asthme sévère ou une BPCO ;</li>
-          <li>diagnostic de psychose ou de trouble bipolaire ;</li>
-          <li>idées suicidaires, actuelles ou dans les six derniers mois ;</li>
-          <li>trouble du comportement alimentaire actif ;</li>
+          <li>grossesse en cours&nbsp;;</li>
+          <li>trouble cardiovasculaire non contrôlé&nbsp;: hypertension non stabilisée, arythmie, infarctus ou AVC récent, anévrisme connu&nbsp;;</li>
+          <li>épilepsie&nbsp;;</li>
+          <li>trouble respiratoire sévère, comme un asthme sévère ou une BPCO&nbsp;;</li>
+          <li>diagnostic de psychose ou de trouble bipolaire&nbsp;;</li>
+          <li>idées suicidaires, actuelles ou dans les six derniers mois&nbsp;;</li>
+          <li>trouble du comportement alimentaire actif&nbsp;;</li>
           <li>dépendance active à l'alcool ou à une substance.</li>
         </ul>
-        <p class="note-cas">Dans ces cas, je te le dis simplement, et je t'oriente vers quelqu'un si je le peux.</p>
+        <p>Dans ces cas, je te le dis simplement, et je t'oriente vers quelqu'un si je le peux.</p>
+        <p><b>Possible, avec l'accord écrit de ton praticien.</b> Un suivi psychologique en cours n'est pas un motif de refus&nbsp;: le protocole travaille l'hygiène de vie et la régulation, pas le rapport au passé. Il faut seulement que ton praticien soit au courant et d'accord. C'est la même chose pour un traitement psychotrope, un trauma accompagné par ailleurs, un trouble cardiovasculaire stabilisé, un diabète sous traitement, des migraines sévères ou un glaucome, ou un projet de grossesse. Certaines pratiques sont alors retirées de ton protocole.</p>
       </div>
-      <div>
-        <div class="cas">
-          <h3>Possible, avec l'accord de ton praticien</h3>
-          <p>Un suivi psychologique en cours n'est pas un motif de refus : le protocole travaille l'hygiène de vie et la régulation, pas le rapport au passé. Il faut seulement que ton praticien soit au courant et d'accord, par écrit. C'est la même chose pour un traitement psychotrope, un trauma accompagné par ailleurs, un trouble cardiovasculaire stabilisé, un diabète sous traitement, des migraines sévères ou un glaucome, ou un projet de grossesse. Certaines pratiques sont alors retirées de ton protocole.</p>
-        </div>
-        <div class="cas">
-          <h3>Du temps, vraiment disponible</h3>
-          <p>Il te faut au moins cent minutes libres par jour pour les semaines 8 à 13, où le protocole en demande quatre-vingt-cinq. Sans cette marge, la première semaine chargée fait tout tomber. En dessous, ce n'est pas un refus : c'est un report à la cohorte suivante.</p>
-        </div>
-      </div>
-    </div>
-    <p class="urgence">Si tu traverses des idées suicidaires en ce moment, n'attends pas d'en parler : appelle le <a href="tel:080032123">0800 32 123</a> en Belgique, ou le <a href="tel:3114">3114</a> en France. C'est gratuit, et quelqu'un répond jour et nuit.</p>
+    </details>
+
+    <p class="urgence">Si tu traverses des idées suicidaires en ce moment, n'attends pas d'en parler&nbsp;: appelle le <a href="tel:080032123">0800 32 123</a> en Belgique, ou le <a href="tel:3114">3114</a> en France. C'est gratuit, et quelqu'un répond jour et nuit.</p>
   </section>
 
-  <!-- 10. La suite -->
-  <section class="panel suite">
-    <div class="head" style="margin-bottom:0">
-      <p class="label">La suite</p>
+  <!-- ===== 06. La suite ===== -->
+  <section class="panel panel--dark suite">
+    <div class="head" style="margin-bottom:1.4rem">
+      <p class="label"><span class="label__n num">06</span> La suite</p>
       <h2>RESET n'est pas encore ouvert.</h2>
     </div>
-    <p style="margin-top:1.1rem">La date n'est pas fixée, et je préfère le dire plutôt que d'annoncer un mois au hasard. La liste d'attente est prévenue en premier, avant l'annonce publique.</p>
-    <p>À l'ouverture, un questionnaire d'admission : ta santé, et le temps dont tu disposes vraiment. Si le protocole ne peut pas démarrer maintenant, je te le dis par écrit. Sinon, trente minutes d'appel, gratuites et sans engagement, pour décider à deux.</p>
+    <p>La date n'est pas fixée, et je préfère le dire plutôt que d'annoncer un mois au hasard. La liste d'attente est prévenue en premier, avant l'annonce publique.</p>
+    <p>À l'ouverture, un questionnaire d'admission&nbsp;: ta santé, et le temps dont tu disposes vraiment. Si le protocole ne peut pas démarrer maintenant, je te le dis par écrit. Sinon, trente minutes d'appel, gratuites et sans engagement, pour décider à deux.</p>
     <div class="actions">
       <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfj11kIlWgP47-O8oDt12YvOwmYfR5KPWXMzn8iG9LAzuwBDQ/viewform" target="_blank" rel="noopener">Rejoindre la liste d'attente <span class="btn__arrow">→</span></a>
       <a class="btn btn--ghost" href="/#offres">Commencer par une séance <span class="btn__arrow">→</span></a>
@@ -662,6 +879,20 @@ footer a:hover{color:var(--ink)}
 <script>
 (function(){
   "use strict";
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cibles = document.querySelectorAll('.reveal, .stagger, .moment, .etape');
+
+  if (!reduce && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entrees){
+      entrees.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    cibles.forEach(function(el){ io.observe(el); });
+  } else {
+    cibles.forEach(function(el){ el.classList.add('is-in'); });
+  }
 
   /* Minutes par jour et par pilier, semaine 1 à 13. Source : la grille du
      06 §4 et les hypothèses du 06 §10 (lumière 10, relevé 3, ancre de midi
@@ -683,7 +914,6 @@ footer a:hover{color:var(--ink)}
     {de:7, a:10, txt:"III · La Reconstruction"},
     {de:10,a:13, txt:"IV · L'Intégration"}
   ];
-  var SESSIONS = [{s:3,j:"J24"},{s:6,j:"J45"},{s:9,j:"J66"},{s:12,j:"J89"}];
 
   var N = 13, SVGNS = "http://www.w3.org/2000/svg";
   function fr(n){ return String(n).replace(".", ","); }
@@ -695,8 +925,8 @@ footer a:hover{color:var(--ink)}
   }
 
   var svg = document.getElementById("courbe");
-  var M = {t:56, r:172, b:130, l:72};  // sous 72, le « 90 min » de l'axe est rogné
-  var pw = 1000 - M.l - M.r, ph = 480 - M.t - M.b;
+  var M = {t:46, r:150, b:86, l:64};  // sous 64, le « 90 min » de l'axe est rogné
+  var pw = 1000 - M.l - M.r, ph = 400 - M.t - M.b;
   var bw = pw / N, yMax = 90;
   var x = function(i){ return M.l + i*bw; };
   var y = function(v){ return M.t + ph * (1 - v/yMax); };
@@ -746,27 +976,16 @@ footer a:hover{color:var(--ink)}
   /* Axe des semaines */
   svg.appendChild(el("line", {x1:M.l, y1:bas, x2:M.l+pw, y2:bas, class:"grid"}));
   for (var i=0;i<N;i++){
-    svg.appendChild(el("text", {x:x(i)+bw/2, y:bas+22, "text-anchor":"middle", class:"axis axis--week"},
+    svg.appendChild(el("text", {x:x(i)+bw/2, y:bas+20, "text-anchor":"middle", class:"axis axis--week"},
       "S" + (i+1)));
   }
 
   /* La barre des phases */
   PHASES.forEach(function(p){
     var x0 = x(p.de)+1.5, w = (p.a-p.de)*bw-3;
-    svg.appendChild(el("rect", {x:x0, y:bas+36, width:w, height:28, rx:14, class:"phasebar"}));
-    svg.appendChild(el("text", {x:x0+w/2, y:bas+54, "text-anchor":"middle", class:"phasetxt"}, p.txt));
+    svg.appendChild(el("rect", {x:x0, y:bas+32, width:w, height:26, rx:13, class:"phasebar"}));
+    svg.appendChild(el("text", {x:x0+w/2, y:bas+49, "text-anchor":"middle", class:"phasetxt"}, p.txt));
   });
-
-  /* Les quatre sessions encadrées */
-  SESSIONS.forEach(function(s){
-    var cx = x(s.s)+bw/2, cy = bas+84;
-    svg.appendChild(el("path", {
-      d:"M"+cx+" "+(cy-5)+" L"+(cx+5)+" "+cy+" L"+cx+" "+(cy+5)+" L"+(cx-5)+" "+cy+" Z",
-      class:"marker"
-    }));
-    svg.appendChild(el("text", {x:cx, y:cy+21, "text-anchor":"middle", class:"axis"}, s.j));
-  });
-  svg.appendChild(el("text", {x:M.l, y:bas+89, class:"axis"}, "Sessions"));
 })();
 </script>
 
