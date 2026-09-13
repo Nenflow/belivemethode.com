@@ -327,10 +327,10 @@ b,strong{font-weight:500}
   display:grid;grid-template-columns:minmax(0,1fr);gap:1.4rem var(--col);
   margin-top:1.6rem;
 }
-@media (min-width:820px){.regles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:720px){.regles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .regle{border-top:1px solid var(--line);padding-top:1.2rem}
 .regle h3{font-size:var(--t-h3);letter-spacing:-.02em}
-.regle p{margin-top:.6rem;font-size:var(--t-small);color:var(--ink-2)}
+.regle p{margin-top:.6rem;font-size:var(--t-small);color:var(--ink-2);max-width:var(--measure)}
 .regle b{color:var(--ink)}
 
 /* ================= Les cinq piliers ================= */
@@ -448,10 +448,12 @@ figcaption{color:var(--ink-3);font-size:var(--t-small);margin-top:1.6rem;max-wid
 
 /* ================= Avant de commencer ================= */
 .avant{display:grid;grid-template-columns:minmax(0,1fr);gap:1.6rem var(--col)}
-@media (min-width:860px){.avant{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:720px){.avant{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .cas{border-top:1px solid var(--line);padding-top:1.3rem}
 .cas h3{font-size:var(--t-h3);letter-spacing:-.02em}
-.cas p{margin-top:.6rem;font-size:var(--t-small);color:var(--ink-2)}
+/* Sans ce plafond, la colonne unique des tablettes donnait des lignes de
+   88 signes : le double de ce que --measure autorise ailleurs. */
+.cas p{margin-top:.6rem;font-size:var(--t-small);color:var(--ink-2);max-width:var(--measure)}
 .cas p + p{margin-top:.55rem}
 
 .depli{margin-top:clamp(2rem,4vw,2.8rem);border-top:1px solid var(--line)}
@@ -716,7 +718,7 @@ footer a:hover{color:var(--ink)}
         <svg id="courbe" viewBox="0 0 1000 400" role="img"
              aria-label="Aire empilée des minutes quotidiennes par pilier, de la semaine 1 à la semaine 13. Le total passe de 18 minutes en semaine 1 à 58 en semaine 4, environ 80 pendant la Traversée, puis 85 de la semaine 8 à la fin. Le mouvement est le pilier le plus lourd, 49 minutes par jour au plus haut."></svg>
       </div>
-      <p class="chart-glisse">Fais glisser le graphique pour voir les treize semaines.</p>
+      <p class="chart-glisse">Fais glisser le graphique pour le voir en entier.</p>
       <figcaption>
         Chaque bande est un pilier&nbsp;; sa hauteur, le temps qu'il demande par jour. La bande Sommeil, c'est la lumière du matin&nbsp;: elle se combine avec ce que tu fais déjà. La nutrition n'a pas de bande, elle ne coûte pas de minutes.
       </figcaption>
