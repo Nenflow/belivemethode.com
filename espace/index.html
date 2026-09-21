@@ -564,9 +564,12 @@ function ecrire(cle, val){
 }
 
 let vus = lire(CLE_VU, {});
-let depart = lire(CLE_DEPART, null);
+let depart = lireDate(String(lire(CLE_DEPART, '') || ''));
 
-/* Le lien personnalisé : belivemethode.com/espace/?j1=2026-10-06
+/* Le lien personnalisé : belivemethode.com/espace/06-10-2026
+   Ce chemin n'existe pas en fichier : GitHub Pages sert la page 404 du site,
+   qui renvoie aussitôt ici avec ?j1=06-10-2026. L'ancien format
+   ?j1=2026-10-06 marche toujours.
    La date lue dans l'adresse gagne sur celle du navigateur, et s'y enregistre.
    C'est ce qui permet d'envoyer à chaque client un lien déjà calé.
 
@@ -574,9 +577,29 @@ let depart = lire(CLE_DEPART, null);
    Safari efface la mémoire d'un site qu'on n'a pas ouvert depuis sept
    jours, et un favori ou une icône d'écran d'accueil garde l'adresse
    telle qu'elle s'affiche : c'est l'adresse qui doit porter la date. */
+
+/* « 06-10-2026 », « 6-10-2026 » ou « 2026-10-06 » → « 2026-10-06 ».
+   Une date qui n'existe pas (31-02-2026) est refusée. */
+function lireDate(t){
+  let m = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(t), a, mo, j;
+  if(m){ a = +m[1]; mo = +m[2]; j = +m[3]; }
+  else {
+    m = /^(\d{1,2})-(\d{1,2})-(\d{4})$/.exec(t);
+    if(!m) return null;
+    j = +m[1]; mo = +m[2]; a = +m[3];
+  }
+  const d = new Date(a, mo - 1, j);
+  if(d.getFullYear() !== a || d.getMonth() !== mo - 1 || d.getDate() !== j) return null;
+  return a + '-' + String(mo).padStart(2, '0') + '-' + String(j).padStart(2, '0');
+}
+function versJJMMAAAA(iso){
+  const [a, mo, j] = iso.split('-');
+  return j + '-' + mo + '-' + a;
+}
+
 (function(){
-  const j1 = new URLSearchParams(location.search).get('j1');
-  if(j1 && /^\d{4}-\d{2}-\d{2}$/.test(j1) && !isNaN(new Date(j1 + 'T00:00:00'))){
+  const j1 = lireDate(new URLSearchParams(location.search).get('j1') || '');
+  if(j1){
     depart = j1;
     ecrire(CLE_DEPART, depart);
   }
@@ -586,8 +609,8 @@ let depart = lire(CLE_DEPART, null);
 function majAdresse(){
   try{
     const u = new URL(location.href);
-    if(depart) u.searchParams.set('j1', depart);
-    else u.searchParams.delete('j1');
+    u.searchParams.delete('j1');
+    u.pathname = u.pathname.replace(/[^/]*$/, '') + (depart ? versJJMMAAAA(depart) : '');
     if(u.href !== location.href) history.replaceState(null, '', u.href);
   }catch(e){}
 }

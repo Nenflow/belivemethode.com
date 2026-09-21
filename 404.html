@@ -3,6 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* L'espace privé : /espace/06-10-2026 n'existe pas en fichier, GitHub Pages
+   sert donc cette page. On repart tout de suite vers l'espace avec la date,
+   avant que quoi que ce soit ne s'affiche ; l'espace remet l'adresse propre. */
+(function(){var m=location.pathname.match(/^\/espace\/(\d{1,2}-\d{1,2}-\d{4})\/?$/);
+if(m)location.replace('/espace/?j1='+m[1]+location.hash);})();
+</script>
 <title>Page introuvable | BELIVE</title>
 <meta name="robots" content="noindex,follow">
 <!-- Servie par GitHub Pages pour n'importe quelle URL manquante, à n'importe
