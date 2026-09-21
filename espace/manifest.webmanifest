@@ -1,0 +1,15 @@
+{
+  "name": "Espace RESET",
+  "short_name": "RESET",
+  "description": "Ton espace du protocole RESET, calé sur la date de ton premier call.",
+  "lang": "fr",
+  "dir": "ltr",
+  "display": "standalone",
+  "background_color": "#DFE4E8",
+  "theme_color": "#DFE4E8",
+  "icons": [
+    { "src": "/assets/img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/img/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
