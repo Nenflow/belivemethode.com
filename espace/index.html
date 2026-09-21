@@ -266,6 +266,7 @@ p{margin:0}
 .docs-head{display:grid;gap:.5rem;max-width:var(--measure)}
 .docs-head h2{font-size:var(--t-h3)}
 .docs-head p{color:var(--ink-2);font-size:var(--t-small)}
+.docs-groupes{display:grid;gap:1.6rem}
 
 /* ================= Pied ================= */
 .pied{display:flex;flex-wrap:wrap;gap:.6rem 1.2rem;justify-content:space-between;
@@ -456,10 +457,10 @@ p{margin:0}
            aria-labelledby="onglet-documents" hidden>
     <div class="docs-head">
       <h2>Les documents du protocole</h2>
-      <p>À imprimer une fois, à garder tout du long. Le relevé du journal est le geste
-        le plus prédictif de tout le protocole : qui relève tient.</p>
+      <p>Chaque document s'ouvre au moment où il sert, les fiches avec leur phase. Le relevé
+        du journal est le geste le plus prédictif de tout le protocole : qui relève tient.</p>
     </div>
-    <div class="liste" id="docs"></div>
+    <div class="docs-groupes" id="docs"></div>
   </section>
 
   <footer class="pied">
@@ -481,8 +482,11 @@ p{margin:0}
    Tant que id est vide, la ligne s'affiche en « à venir » et n'est pas comptée.
 
    Pour ajouter un document :
-     - mets le fichier sur ton Drive, passe-le en « Tous les utilisateurs
-       disposant du lien », puis colle le lien de partage dans url.
+     - dépose le PDF dans le dossier Drive « RESET / Espace client · partagé
+       par lien ». Le dossier est partagé par lien, le fichier l'est donc
+       aussi, sans rien régler. Colle ensuite son lien dans url.
+     - pour remplacer un PDF sans changer son lien : dans Drive, clic droit
+       sur le fichier, « Gérer les versions », puis envoyer la nouvelle.
      - les documents ne vivent pas dans le dépôt : le dépôt est public.
    ========================================================================== */
 
@@ -503,13 +507,29 @@ const VIDEOS = [
   { phase:4, semaine:13, titre:"Les trois pratiques qui restent",             duree:"", id:"" }
 ];
 
+/* des : la semaine où le document s'ouvre, 0 = dès l'inscription.
+   Repris du LISEZMOI des documents client : les fiches de phase au call
+   qui ouvre leur phase, le Protocole de Vie en semaine 11, la carte de
+   rechute en semaine 12. */
 const DOCS = [
-  { titre:"Journal RESET, treize semaines", meta:"PDF · 21 pages A4",
-    url:"https://drive.google.com/file/d/1eNGEVZELMrMD3Tu_QU4SLepK6gWAQoT4/view" },
-  { titre:"Carte du protocole",             meta:"PDF · 6 pages A4",
-    url:"https://drive.google.com/file/d/1LV4sv9NbDHpCW6zaftpk5V0ZZcN8QUO7/view" },
-  { titre:"Carte du test CO₂",              meta:"PDF · 2 pages A5",
-    url:"https://drive.google.com/file/d/1n5VQNWvwyPC2iXgc2p1Hm_1a1qzHGzdA/view" }
+  { groupe:"Avant le jour 1", docs:[
+    { n:"01", titre:"Carte du protocole",                     meta:"PDF · 5 pages A4",  des:0,  url:"https://drive.google.com/file/d/1XX4_rexwPJ5oKtLmhXirIQYl-KSMiX39/view" },
+    { n:"02", titre:"Journal de bord",                        meta:"PDF · 21 pages A4", des:0,  url:"https://drive.google.com/file/d/1VV7gQMwxAmbgK8wc-Htli0mUZEJpslKL/view" },
+    { n:"03", titre:"Carte du test CO₂",                      meta:"PDF · 2 pages A5",  des:0,  url:"https://drive.google.com/file/d/17ytySZnNIwN9KlWcfxHOoSf_CCCLxYcB/view" }
+  ]},
+  { groupe:"Tes références", docs:[
+    { n:"04", titre:"Guide des Pratiques Respiratoires",      meta:"PDF · 7 pages A4",  des:0,  url:"https://drive.google.com/file/d/1iZEJFFmbBTI6FzTO-KFM7zjS2Nfnig_0/view" },
+    { n:"05", titre:"Guide du Mouvement",                     meta:"PDF · 8 pages A4",  des:0,  url:"https://drive.google.com/file/d/1q3QeiZlYy4z1li11ic_ikHXN9NKm734D/view" },
+    { n:"06", titre:"Carnet d'Hygiène de Vie",                meta:"PDF · 5 pages A4",  des:1,  url:"https://drive.google.com/file/d/1xalXWrzqIUElibvjgCv-epu_ran7TsAT/view" }
+  ]},
+  { groupe:"Au fil des phases", docs:[
+    { n:"07", titre:"Fiche de phase I · Rencontre Intérieure", meta:"PDF · 4 pages A4", des:1,  url:"https://drive.google.com/file/d/1QAe9qYlhxQd3WK9YHxBWkPwm0ezza1H9/view" },
+    { n:"08", titre:"Fiche de phase II · La Traversée",       meta:"PDF · 3 pages A4",  des:5,  url:"https://drive.google.com/file/d/1vlVFue4rEznk5XVeH3qQin4Fibzcx1-W/view" },
+    { n:"09", titre:"Fiche de phase III · La Reconstruction", meta:"PDF · 3 pages A4",  des:8,  url:"https://drive.google.com/file/d/1itRadYyABdoFhzCSjeIhQmjLI_4Irfk_/view" },
+    { n:"10", titre:"Fiche de phase IV · L'Intégration",      meta:"PDF · 3 pages A4",  des:11, url:"https://drive.google.com/file/d/1EjGDagqfYKXyKENTpICARNENRk92a5eB/view" },
+    { n:"11", titre:"Protocole de Vie Souveraine",            meta:"PDF · 2 pages A4",  des:11, url:"https://drive.google.com/file/d/12cggYKPPmKaSiRrHivLblYp_zXzx_9BR/view" },
+    { n:"12", titre:"Carte du protocole de rechute",          meta:"PDF · 2 pages A5",  des:12, url:"https://drive.google.com/file/d/1neclc6GL8eB1gf7MCuvCKDy61mdnHgq7/view" }
+  ]}
 ];
 
 /* ——————————————————————————————————————————————————————
@@ -738,22 +758,34 @@ function bloc(p){
 
 document.getElementById('phases').innerHTML = PHASES.map(bloc).join('');
 
-document.getElementById('docs').innerHTML = DOCS.map((d, i) => {
-  if(!d.url){
+/* Un document s'ouvre à sa semaine, comme une phase : sans date, ou avant
+   le premier call, seuls ceux de l'inscription sont là. */
+function ligneDoc(d, s){
+  const ouvert = d.des === 0 || (s >= 1 && s >= d.des);
+  if(!ouvert || !d.url){
+    const quand = !ouvert
+      ? (d.des <= 1 ? "s'ouvre au premier call" : "s'ouvre en semaine " + d.des)
+      : 'lien à venir';
     return '<div class="item item--vide">'
       + '<span class="coche" aria-hidden="true" style="border-style:dashed"></span>'
       + '<span class="item-txt"><span class="item-titre">' + echap(d.titre) + '</span>'
-      + '<span class="item-meta">' + echap(d.meta) + ' · lien à venir</span></span></div>';
+      + '<span class="item-meta">' + echap(d.meta) + ' · ' + quand + '</span></span></div>';
   }
-  const cle = 'd' + i;
+  const cle = 'd' + d.n;
   return '<div class="item">'
     + '<input class="coche" type="checkbox" data-cle="' + cle + '"'
-    + (vus[cle] ? ' checked' : '') + ' aria-label="Marquer ' + echap(d.titre) + ' comme imprimé">'
+    + (vus[cle] ? ' checked' : '') + ' aria-label="Marquer ' + echap(d.titre) + ' comme vu">'
     + '<span class="item-txt"><span class="item-titre">' + echap(d.titre) + '</span>'
     + '<span class="item-meta">' + echap(d.meta) + '</span></span>'
     + '<a class="btn" href="' + echap(d.url) + '" target="_blank"'
     + ' rel="noopener noreferrer">Ouvrir</a></div>';
-}).join('');
+}
+function majDocs(s){
+  document.getElementById('docs').innerHTML = DOCS.map(g =>
+    '<div><p class="bloc-titre">' + echap(g.groupe) + '</p>'
+    + '<div class="liste">' + g.docs.map(d => ligneDoc(d, s)).join('') + '</div></div>'
+  ).join('');
+}
 
 /* ========================== Jauges ========================== */
 function majVideos(){
@@ -888,6 +920,7 @@ function majEtat(){
   const j = jourCourant();
   majJourEtSession(s);
   majPhases(s, j);
+  majDocs(s);
 
   grille.innerHTML = '';
   for(let i = 1; i <= 13; i++){
