@@ -277,13 +277,21 @@ p{margin:0}
 .outils-head{display:grid;gap:.5rem;max-width:var(--measure)}
 .outils-head h2{font-size:var(--t-h3)}
 .outils-head p:not(.label){color:var(--ink-2);font-size:var(--t-small)}
-.onglets{display:flex;flex-wrap:wrap;gap:.5rem}
-.onglet{font-family:inherit;font-size:var(--t-label);font-weight:500;letter-spacing:.16em;
-  text-transform:uppercase;padding:.55rem 1.1rem;border-radius:999px;cursor:pointer;
-  background:var(--panel-2);color:var(--ink-2);border:1px solid var(--line);
-  transition:background .2s,color .2s,border-color .2s}
-.onglet:hover{background:var(--panel-3);color:var(--ink)}
-.onglet[aria-selected="true"]{background:var(--ink);color:var(--panel);border-color:var(--ink)}
+/* Un sélecteur segmenté : trois parts égales dans une seule pilule, jamais
+   deux plus une. Sur téléphone il prend toute la largeur, et le texte se
+   réduit un peu sous 370 px pour tenir jusqu'à 320. */
+.onglets{display:inline-grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;padding:4px;
+  justify-self:start;background:var(--panel-2);border:1px solid var(--line);border-radius:999px}
+.onglet{font-family:inherit;font-size:var(--t-small);font-weight:500;letter-spacing:-.01em;
+  padding:.55rem 1.3rem;border-radius:999px;cursor:pointer;white-space:nowrap;
+  background:none;color:var(--ink-2);border:0;transition:color .2s}
+.onglet:hover{color:var(--ink)}
+.onglet[aria-selected="true"]{background:var(--ink);color:var(--panel)}
+@media (pointer:coarse){.onglet{min-height:44px}}
+@media (max-width:640px){
+  .onglets{display:grid;justify-self:stretch}
+  .onglet{padding-inline:.3rem;font-size:clamp(.78rem,3.9vw,.9rem)}
+}
 .prats{display:grid;gap:.6rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
 .prat{background:var(--panel-2);border-radius:var(--r-md);padding:1rem 1.15rem;display:grid;gap:.35rem}
 .prat-top{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
