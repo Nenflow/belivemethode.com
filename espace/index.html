@@ -113,8 +113,10 @@ p{margin:0}
 .rows>.row:first-child{border-top:0;padding-top:0}
 
 /* ================= Barre du haut ================= */
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;
-  padding:.35rem .4rem 0}
+/* Logo, onglets, actions. Sur téléphone les onglets passent sur leur
+   propre ligne, sous le logo. */
+.topbar{display:grid;grid-template-columns:auto 1fr auto;align-items:center;
+  gap:.4rem 2.4rem;padding:.35rem .4rem 0}
 .brand{display:inline-flex;color:var(--ink);text-decoration:none}
 .brand svg{height:.78rem;width:auto;fill:none;stroke:currentColor;overflow:visible}
 .top-actions{display:flex;align-items:center;gap:.7rem}
@@ -128,6 +130,21 @@ p{margin:0}
 :root[data-theme="light"] .theme-pastille{background:none}
 :root[data-theme="dark"] .theme-pastille{background:currentColor}
 @media (pointer:coarse){.theme{width:44px;height:44px}}
+
+/* ================= Les trois vues ================= */
+.vues{display:flex;gap:1.6rem}
+.vue-onglet{font-family:inherit;font-size:var(--t-small);font-weight:500;letter-spacing:-.01em;
+  color:var(--ink-2);background:none;border:0;border-bottom:2px solid transparent;
+  padding:.6rem 0 .45rem;cursor:pointer;white-space:nowrap;transition:color .2s}
+.vue-onglet:hover{color:var(--ink)}
+/* Pas de gras sur l'onglet actif : le mot s'élargirait et ferait bouger ses voisins. */
+.vue-onglet[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ice-deep)}
+@media (pointer:coarse){.vue-onglet{min-height:44px}}
+.vue{display:grid;gap:var(--gap)}
+@media (max-width:640px){
+  .topbar{grid-template-columns:1fr auto}
+  .vues{grid-column:1/-1;grid-row:2;gap:1.4rem}
+}
 
 /* ================= Bande de tête ================= */
 .tete{display:grid;gap:1.3rem;padding:clamp(1.4rem,3.2vw,2.4rem) clamp(1.5rem,4vw,3.5rem)}
@@ -347,6 +364,14 @@ p{margin:0}
         </g>
       </svg>
     </a>
+    <div class="vues" id="vues" role="tablist" aria-label="Sections de ton espace">
+      <button class="vue-onglet" type="button" role="tab" id="onglet-parcours"
+              data-vue="parcours" aria-controls="vue-parcours" aria-selected="true">Parcours</button>
+      <button class="vue-onglet" type="button" role="tab" id="onglet-outils" tabindex="-1"
+              data-vue="outils" aria-controls="vue-outils" aria-selected="false">Boîte à outils</button>
+      <button class="vue-onglet" type="button" role="tab" id="onglet-documents" tabindex="-1"
+              data-vue="documents" aria-controls="vue-documents" aria-selected="false">Documents</button>
+    </div>
     <div class="top-actions">
       <span class="pill pill--mute">Espace privé</span>
       <button class="theme" id="theme" type="button" aria-label="Thème : système. Changer de thème."
@@ -354,56 +379,58 @@ p{margin:0}
     </div>
   </header>
 
-  <section class="panel panel--dark tete" id="tete">
-    <div class="tete-texte">
-      <div class="tete-haut">
-        <p class="label">Tableau de bord</p>
-        <h1 id="tete-titre">Ton espace.</h1>
+  <div class="vue" id="vue-parcours" role="tabpanel" aria-labelledby="onglet-parcours">
+    <section class="panel panel--dark tete" id="tete">
+      <div class="tete-texte">
+        <div class="tete-haut">
+          <p class="label">Tableau de bord</p>
+          <h1 id="tete-titre">Ton espace.</h1>
+        </div>
+        <p class="lede" id="tete-lede">Dis-moi la date de ton premier call, et la page se
+          cale dessus pour les treize semaines.</p>
       </div>
-      <p class="lede" id="tete-lede">Dis-moi la date de ton premier call, et la page se
-        cale dessus pour les treize semaines.</p>
-    </div>
 
-    <div class="reglage">
-      <p class="reglage-info" id="reglage-info" hidden>
-        <span id="reglage-txt"></span>
-        <button class="lien" type="button" id="reglage-modifier">modifier</button>
-      </p>
-      <div class="depart" id="depart-bloc">
-        <label for="depart">Premier call</label>
-        <input type="date" id="depart">
+      <div class="reglage">
+        <p class="reglage-info" id="reglage-info" hidden>
+          <span id="reglage-txt"></span>
+          <button class="lien" type="button" id="reglage-modifier">modifier</button>
+        </p>
+        <div class="depart" id="depart-bloc">
+          <label for="depart">Premier call</label>
+          <input type="date" id="depart">
+        </div>
       </div>
-    </div>
 
-    <div class="semaines" id="semaines" role="list" aria-label="Les treize semaines" hidden></div>
-  </section>
+      <div class="semaines" id="semaines" role="list" aria-label="Les treize semaines" hidden></div>
+    </section>
 
-  <section class="phase session" id="panneau-session" hidden>
-    <h2 class="phase-titre">
-      <button class="phase-tete" type="button" data-bascule="session"
-              aria-expanded="false" aria-controls="corps-session">
-        <span class="label">Breathwork encadré</span>
-        <span class="phase-ligne">
-          <span class="phase-nom" id="session-titre"></span>
-          <span class="phase-etat phase-etat--now" id="session-quand"></span>
-          <span class="phase-fleche" aria-hidden="true"></span>
-        </span>
-        <span class="phase-quand num" id="session-date"></span>
-      </button>
-    </h2>
-    <div class="phase-corps" id="corps-session" role="region" hidden>
-      <p class="session-ferme" id="session-ferme"></p>
-      <div>
-        <p class="bloc-titre">Ce que tu prépares</p>
-        <ul class="prepa" id="prepa"></ul>
+    <section class="phase session" id="panneau-session" hidden>
+      <h2 class="phase-titre">
+        <button class="phase-tete" type="button" data-bascule="session"
+                aria-expanded="false" aria-controls="corps-session">
+          <span class="label">Breathwork encadré</span>
+          <span class="phase-ligne">
+            <span class="phase-nom" id="session-titre"></span>
+            <span class="phase-etat phase-etat--now" id="session-quand"></span>
+            <span class="phase-fleche" aria-hidden="true"></span>
+          </span>
+          <span class="phase-quand num" id="session-date"></span>
+        </button>
+      </h2>
+      <div class="phase-corps" id="corps-session" role="region" hidden>
+        <p class="session-ferme" id="session-ferme"></p>
+        <div>
+          <p class="bloc-titre">Ce que tu prépares</p>
+          <ul class="prepa" id="prepa"></ul>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <div id="phases" class="phases"></div>
+    <div id="phases" class="phases"></div>
+  </div>
 
-
-  <section class="panel outils">
+  <section class="panel outils vue" id="vue-outils" role="tabpanel"
+           aria-labelledby="onglet-outils" hidden>
     <div class="outils-head">
       <p class="label">Ma boîte à outils</p>
       <h2>Toutes les pratiques, au même endroit.</h2>
@@ -414,7 +441,8 @@ p{margin:0}
     <div id="outils-corps"></div>
   </section>
 
-  <section class="panel docs">
+  <section class="panel docs vue" id="vue-documents" role="tabpanel"
+           aria-labelledby="onglet-documents" hidden>
     <div class="docs-head">
       <h2>Les documents du protocole</h2>
       <p>À imprimer une fois, à garder tout du long. Le relevé du journal est le geste
@@ -611,7 +639,7 @@ function majAdresse(){
     const u = new URL(location.href);
     u.searchParams.delete('j1');
     u.pathname = u.pathname.replace(/[^/]*$/, '') + (depart ? versJJMMAAAA(depart) : '');
-    if(u.href !== location.href) history.replaceState(null, '', u.href);
+    if(u.href !== location.href) history.replaceState(history.state, '', u.href);
   }catch(e){}
 }
 
@@ -1099,6 +1127,42 @@ barre.addEventListener('keydown', e => {
 });
 
 montrer(lire(CLE_ONGLET, OUTILS[0].cle));
+
+/* ========================== Les trois vues ==========================
+   Le parcours est la vue principale. La boîte à outils et les documents
+   ont chacun la leur. L'adresse ne change pas : chaque changement de vue
+   ajoute une étape à l'historique, pour que le bouton retour du téléphone
+   ramène à la vue d'avant au lieu de quitter la page. */
+const VUES = ['parcours', 'outils', 'documents'];
+const barreVues = document.getElementById('vues');
+
+function afficherVue(v, remonter){
+  if(!VUES.includes(v)) v = 'parcours';
+  VUES.forEach(x => {
+    document.getElementById('vue-' + x).hidden = x !== v;
+    const b = barreVues.querySelector('[data-vue="' + x + '"]');
+    b.setAttribute('aria-selected', String(x === v));
+    b.tabIndex = x === v ? 0 : -1;
+  });
+  if(remonter) window.scrollTo(0, 0);
+}
+
+barreVues.addEventListener('click', e => {
+  const b = e.target.closest('[data-vue]');
+  if(!b || b.getAttribute('aria-selected') === 'true') return;
+  history.pushState({ vue:b.dataset.vue }, '', location.href);
+  afficherVue(b.dataset.vue, true);
+});
+barreVues.addEventListener('keydown', e => {
+  if(e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+  const bs = [...barreVues.children];
+  const i = bs.findIndex(b => b.getAttribute('aria-selected') === 'true');
+  const suivant = bs[(i + (e.key === 'ArrowRight' ? 1 : bs.length - 1)) % bs.length];
+  suivant.focus(); suivant.click();
+});
+window.addEventListener('popstate', e => afficherVue(e.state && e.state.vue, true));
+/* Au rechargement, le navigateur garde la vue où l'on était. */
+afficherVue(history.state && history.state.vue, false);
 
 /* ========================== Thème ==========================
    Le même cycle que sur le site, avec la même clé : système, clair, sombre.
