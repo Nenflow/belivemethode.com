@@ -316,24 +316,27 @@ p{margin:0}
 @media (max-width:1140px){.moments{grid-template-columns:repeat(2,1fr)}}
 .moment{background:var(--panel-2);border-radius:var(--r-md);padding:1.1rem 1.25rem;
   display:grid;gap:.85rem;align-content:start}
-.moment h3{font-size:var(--t-label);font-weight:500;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--ink-3)}
-.actes{display:grid;gap:.7rem}
-.acte{display:grid;gap:.15rem}
+/* Le nom du moment est un vrai titre ; la hauteur minimale garde les
+   quatre têtes alignées, que la pastille « Maintenant » soit là ou non. */
+.moment-tete{display:flex;align-items:center;justify-content:space-between;gap:.6rem;
+  min-height:1.75rem}
+.moment h3{font-size:1.05rem;font-weight:600;letter-spacing:-.015em;color:var(--ink)}
+/* Une pratique par ligne, séparées par un filet. */
+.acte{display:grid;gap:.2rem;padding-block:.75rem;border-top:1px solid var(--line)}
+.acte:first-child{border-top:0;padding-top:0}
+.acte:last-child{padding-bottom:0}
 .acte-top{display:flex;align-items:baseline;gap:.7rem}
-.acte-nom{font-size:.93rem;font-weight:500;letter-spacing:-.01em}
-.acte-duree{margin-left:auto;font-size:var(--t-label);letter-spacing:.14em;
-  text-transform:uppercase;color:var(--ink-3);white-space:nowrap;
+.acte-nom{font-size:.95rem;font-weight:500;letter-spacing:-.01em}
+.acte-duree{margin-left:auto;font-size:var(--t-small);color:var(--ink-2);white-space:nowrap;
   font-variant-numeric:lining-nums tabular-nums}
 .acte-note{font-size:var(--t-small);color:var(--ink-2)}
 .moment-pied{font-size:var(--t-small);color:var(--ink-3);
   border-top:1px solid var(--line);padding-top:.75rem}
 .moment--vide .acte-note{color:var(--ink-3)}
-/* Le moment en cours est le seul à changer : on ajoute du contraste,
-   on n'en retire nulle part ailleurs. Le mot « maintenant » le dit
-   aussi, pour que la couleur ne soit pas le seul signal. */
-.moment[data-maintenant]{background:var(--panel-3)}
-.moment[data-maintenant] > h3{color:var(--ice-deep)}
+/* Le moment en cours est le seul à changer : le même liseré « tu es ici »
+   que la phase en cours et le creux, et la pastille « Maintenant » pour
+   que la couleur ne soit pas le seul signal. Rien n'est retiré aux autres. */
+.moment[data-maintenant]{background:var(--panel);outline:2px solid var(--ice-deep);outline-offset:-2px}
 
 /* ================= La prochaine session ================= */
 .session .label{color:var(--ink-3)}
@@ -543,12 +546,12 @@ const SESSIONS = [
 ];
 
 const PREPA = [
-  "Une pièce où tu peux faire du bruit, porte fermée, animaux dehors, téléphone en mode avion sauf l'appel.",
-  "Au sol, pas sur un lit. Tapis ou couverture épaisse. Rien de dur ni de coupant à moins d'un bras.",
-  "Caméra allumée et cadrée sur ton corps entier, pas sur ton visage : ton facilitateur a besoin de voir tes mains, ta cage thoracique et tes jambes.",
+  "Une pièce où tu peux faire du bruit, porte fermée, animaux dehors, téléphone en mode avion.",
+  "Au sol, pas sur un lit. Tapis ou couverture épaisse, et rien de dur ni de coupant aux alentours.",
+  "Caméra allumée et cadrée sur ton corps : il faut que tes mains, ta cage thoracique et tes jambes soient visibles.",
   "Un casque ou des écouteurs, jamais le haut-parleur. Micro ouvert du début à la fin.",
-  "Un verre d'eau et une couverture posés avant de commencer.",
-  "Rien de lourd dans les deux heures qui précèdent."
+  "Prévois une bouteille d'eau, une couverture et un gros coussin à glisser sous tes genoux.",
+  "Mange léger, au moins dans les trois heures qui précèdent la pratique."
 ];
 
 /* ========================== Les quatre phases ==========================
@@ -560,8 +563,8 @@ const PHASES = [
   { n:1, romain:"I",   nom:"Rencontre Intérieure", s:[1,4],
     verbe:"voir",
     installe:"La lumière au réveil et la caféine déplacée, les deux seuls comportements qu'on change d'emblée. Puis les trois ancres, les marches après les repas, et la première session encadrée au jour 24.",
-    disparait:"Rien. C'est la seule phase des quatre qui n'enlève pas.",
-    creux:"Jours 10 à 15. La nouveauté retombe, les résultats ne sont pas encore là, et le sevrage de caféine peut mordre. On baisse la durée, jamais le nombre d'ancres.",
+    disparait:null,   // rien ne disparaît : la carte n'est pas affichée
+    creux:"Jours 10 à 15. La nouveauté retombe, les résultats ne sont pas encore là, et le sevrage de caféine peut mordre. C'est normal et c'est prévu : tout le monde passe par là.",
     creuxJours:[10,15],
     dit:"« Ma journée a une structure. »" },
   { n:2, romain:"II",  nom:"La Traversée", s:[5,7],
@@ -724,7 +727,7 @@ function bloc(p){
     +   '<p class="phase-dit">' + echap(p.dit) + '</p>'
     +   '<div class="notes">'
     +     '<div class="note"><h3>Ce qui s\'installe</h3><p>' + echap(p.installe) + '</p></div>'
-    +     '<div class="note"><h3>Ce qui disparaît</h3><p>' + echap(p.disparait) + '</p></div>'
+    +     (p.disparait ? '<div class="note"><h3>Ce qui disparaît</h3><p>' + echap(p.disparait) + '</p></div>' : '')
     +     '<div class="note note--creux"><h3>Le creux</h3><p>' + echap(p.creux) + '</p></div>'
     +   '</div>'
     +   '<div data-jour="' + p.n + '"></div>'
@@ -1057,7 +1060,9 @@ function majJourEtSession(s){
       const ici = i === maintenant;
       return '<div class="moment' + (m.actes.length ? '' : ' moment--vide') + '"'
         + (ici ? ' data-maintenant' : '') + '>'
-        + '<h3>' + echap(m.titre) + (ici ? ' · maintenant' : '') + '</h3>' + corps
+        + '<div class="moment-tete"><h3>' + echap(m.titre) + '</h3>'
+        + (ici ? '<span class="phase-etat phase-etat--now">Maintenant</span>' : '') + '</div>'
+        + corps
         + (m.pied ? '<p class="moment-pied">' + echap(m.pied) + '</p>' : '')
         + '</div>';
     }).join('');
