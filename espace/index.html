@@ -567,14 +567,14 @@ const PHASES = [
   { n:2, romain:"II",  nom:"La Traversée", s:[5,7],
     verbe:"tenir",
     installe:"Deux trainings par semaine, une séance de stretching, puis le froid en fin de douche. Le but n'est pas d'endurer, c'est de rester calme pendant un stress que tu as choisi.",
-    disparait:"Le support de l'assise du soir, en semaine 7. Même durée, même créneau, plus de compte ni de ratio. Le premier retrait du protocole, et il est plus dur qu'un ajout.",
+    disparait:"Le support de l'assise du soir, en semaine 7. Même durée, même créneau, plus de ratio : le soir rejoint le matin en pleine conscience. Le premier retrait du protocole, et il est plus dur qu'un ajout.",
     creux:"Semaine 7. Le vide devient conscient : les fuites ne fonctionnent plus et rien ne les a remplacées. Rien n'est ajouté cette semaine-là, marches comprises.",
     creuxJours:[43,49],
     dit:"« Je traverse sans fuir. »" },
   { n:3, romain:"III", nom:"La Reconstruction", s:[8,10],
     verbe:"choisir",
     installe:"Trois gestes, un par semaine, et chacun dans le réel : un inventaire de ce que tu portes sans l'avoir choisi, une décision que quelqu'un d'autre pourrait vérifier, une demande adressée à une personne vivante.",
-    disparait:"Le compte de l'assise du matin, à son tour.",
+    disparait:"Rien. Tes deux assises sont en pleine conscience depuis la semaine 7, et elles ne bougent plus.",
     creux:"Pas de creux daté. Ce que tu vas trouver : ce qui n'est pas daté n'a pas lieu. Le non se dit à une date, la demande se fait à une date.",
     creuxJours:null,
     dit:"« Je décide, et je le prouve. »" },
@@ -961,13 +961,12 @@ function journee(s){
                  : "Dans les trente premières minutes du lever." });
 
   let am;
-  if(s === 1)      am = ["5 min",  "Ratio 4/6, compté."];
-  else if(s <= 7)  am = ["10 min", "Ratio 4/8, compté."];
-  else if(s <= 10) am = ["10 min", "Le compte devient optionnel."];
-  else             am = ["10 min", "En silence."];
+  if(s === 1)      am = ["5 min",  "Tu observes ton souffle et tu le comptes."];
+  else if(s === 2) am = ["10 min", "Tu observes ton souffle et tu le comptes."];
+  else             am = ["10 min", "En pleine conscience."];
   lever.push({ nom:"L'assise du matin, avant le café", duree:am[0], note:am[1] });
 
-  if(s >= 6) lever.push({ nom:"La douche, froide sur la fin", duree:"30 à 60 s",
+  if(s >= 6) lever.push({ nom:"La douche, froide sur la fin", duree: s === 6 ? "30 à 60 s" : "90 à 120 s",
     note:"Les jours sans training. Jamais les deux le même jour." });
 
   if(s >= 2 && s <= 4) lever.push({ nom:"La séquence du matin", duree:"2 à 3 min",
@@ -999,9 +998,9 @@ function journee(s){
     note:"Avant l'assise du soir, pas après." });
   if(s >= 3){
     let as;
-    if(s === 3)     as = ["5 min",  "Ratio 4/8, compté."];
-    else if(s <= 6) as = ["10 min", "Ratio 4/8, compté."];
-    else            as = ["10 min", "En silence. Plus de compte, plus de ratio."];
+    if(s === 3)     as = ["5 min",  "Souffle guidé, ratio 4/8."];
+    else if(s <= 6) as = ["10 min", "Souffle guidé, ratio 4/8."];
+    else            as = ["10 min", "En pleine conscience. Plus de ratio."];
     coucher.push({ nom:"L'assise du soir, une demi-heure avant", duree:as[0], note:as[1] });
   }
 
