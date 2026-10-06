@@ -9,7 +9,7 @@ Publié sur [belivemethode.com](https://belivemethode.com) via GitHub Pages.
 ## Aperçu en local
 
 Ouvrir `index.html` dans un navigateur suffit. Pour un rendu identique à la
-production (chemins absolus, polices, WebGL), servir le dossier :
+production (chemins absolus, polices), servir le dossier :
 
 ```bash
 python3 -m http.server 4322
@@ -41,12 +41,16 @@ est indexable.
 
 ## Points techniques
 
-- **La sphère du héros** est rendue en WebGL brut (raymarching), écrit directement
-  dans `index.html`. Elle se fige si « réduire les animations » est actif dans le
-  système, se met en pause hors écran, et retombe sur un dégradé si WebGL est
-  indisponible.
-- **Thème clair / sombre** : suit le réglage système, avec bascule manuelle
-  mémorisée dans `localStorage`.
+- **Mise en page** : la page d'accueil est la conversion de la maquette Claude
+  Design. Chaque bloc porte son style en ligne ; la feuille `<style>` ne tient
+  que la fonte, les animations, les survols, la navigation et les ajustements
+  mobiles (d'où ses `!important`, seuls capables de passer devant un style en ligne).
+- **Animations** : tout est en JavaScript natif, en bas de `index.html`. Le souffle
+  de la page (classe `exhale` sur `<html>`, toutes les cinq secondes), l'exercice
+  de respiration cohérente, et les effets liés au défilement, pilotés par des
+  attributs `data-*` (`data-reveal`, `data-words`, `data-hz`, `data-stack`...).
+  Avec « réduire les animations » actif dans le système, rien ne bouge et tout
+  le contenu reste lisible.
 - **Images** : chaque photo existe en AVIF, WebP et JPEG, en deux largeurs,
   servies par `<picture>`. Les fichiers sources en pleine définition restent dans
   `assets/img/` même s'ils ne sont pas appelés par le HTML : ce sont eux qui
