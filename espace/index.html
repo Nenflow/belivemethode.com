@@ -305,8 +305,11 @@ main{max-width:1100px;margin:0 auto;padding:4px 16px 116px}
 .famille .entre{padding-bottom:8px}
 .famille .res:last-child{border-bottom:0}
 .biblio{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,420px),1fr));column-gap:28px}
-.groupe-docs{display:flex;flex-direction:column;gap:4px}
-.groupe-docs+.groupe-docs{margin-top:18px}
+.filtres{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.filtres::-webkit-scrollbar{display:none}
+.filtres button{flex:none;min-height:38px;padding:0 14px;border-radius:999px;font-size:13.5px;font-weight:500;
+  white-space:nowrap;border:1px solid var(--line);background:transparent;color:var(--ink)}
+.filtres button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--panel)}
 .res{display:flex;align-items:center;gap:14px;width:100%;min-height:64px;padding:10px 0;border:0;
   border-bottom:1px solid var(--filet);background:transparent;text-align:left}
 .res[data-ferme]{opacity:.55}
@@ -451,6 +454,8 @@ const PRATIQUES = [
 ];
 
 /* des : la semaine où le document s'ouvre, 0 = dès l'inscription.
+   C'est aussi elle qui range le document dans sa phase : ce qui s'ouvre
+   avant la semaine 5 est en phase I, puis 5 à 7, 8 à 10, 11 à 13.
    Repris du LISEZMOI des documents client : les fiches de phase au call
    qui ouvre leur phase, le Protocole de Vie en semaine 11, la carte de
    rechute en semaine 12. */
@@ -742,7 +747,7 @@ function momentActuel(){
 
 /* ========================== État de l'écran ========================== */
 const VUES = ['jour', 'parcours', 'journal', 'ressources'];
-const ecran = { vue:'jour', moment:null, courbe:'energie', onglet:'documents', tousCalls:false,
+const ecran = { vue:'jour', moment:null, courbe:'energie', onglet:'documents', phaseDoc:'cours', tousCalls:false,
                 changerDate:false, feuille:null, creneau:null };
 const main = document.getElementById('main');
 const feuille = document.getElementById('feuille');
@@ -1040,8 +1045,11 @@ function vueJournal(c){
 
 /* ========================== Ressources ========================== */
 function ressources(){
-  const docs = DOCS.flatMap(g => g.docs.map(d => ({ cle:'d' + d.n, type:'pdf', genre:'PDF', groupe:g.groupe,
-    titre:d.titre, meta:d.meta, des:d.des, url:d.url, pret:!!d.url })));
+  const docs = DOCS.flatMap(g => g.docs.map(d => {
+    const ph = PHASES.find(p => Math.max(1, d.des) <= p.s[1]);
+    return { cle:'d' + d.n, type:'pdf', genre:'PDF', phase:ph.n, titre:d.titre,
+      meta:d.meta + ' · phase ' + ph.romain, des:d.des, url:d.url, pret:!!d.url };
+  }));
   /* La clé d'une vidéo est son identifiant YouTube : la coche « vu » la
      suit même si la liste change d'ordre. */
   const videos = PRATIQUES.flatMap(f => f.videos.filter(v => v.id).map(v => ({ cle:'y' + v.id, type:'video',
@@ -1079,6 +1087,14 @@ function vueRessources(c){
     }).join('');
   } else {
     const docs = tout.filter(r => r.type === 'pdf');
+    /* Les documents se rangent par phase. La phase en cours vient en
+       premier ; tant qu'il n'y en a pas, on montre tout. */
+    const filtres = (c.phase ? [['cours', 'Phase ' + c.phase.romain + ', en cours']] : [])
+      .concat([['tout', 'Tout']], PHASES.map(p => [String(p.n), 'Phase ' + p.romain
+        + (c.etat === 'fini' || (c.etat === 'cours' && c.s >= p.s[0]) ? '' : ' · fermée')]));
+    let f = ecran.phaseDoc;
+    if(f === 'cours' && !c.phase) f = 'tout';
+    const montre = f === 'cours' ? String(c.phase.n) : f;
     const kit = KIT.map((k, i) => {
       const r = docs.find(x => x.cle === 'd' + k.n);
       if(!r) return '';
@@ -1088,9 +1104,10 @@ function vueRessources(c){
     }).join('');
     corps = '<section style="display:flex;flex-direction:column;gap:12px"><span class="label" style="padding:0 4px">Ton kit</span>'
       + '<div class="kit">' + kit + '</div></section>'
-      + '<section class="carte" style="gap:0;padding:22px">'
-      + DOCS.map(g => '<div class="groupe-docs"><span class="label">' + echap(g.groupe) + '</span><div class="biblio">'
-          + docs.filter(r => r.groupe === g.groupe).map(r => ligneRes(r, c)).join('') + '</div></div>').join('')
+      + '<section class="carte" style="gap:14px;padding:22px">'
+      + '<div class="filtres">' + filtres.map(x => '<button type="button" data-act="phase" data-v="' + x[0]
+          + '" aria-pressed="' + (f === x[0]) + '">' + echap(x[1]) + '</button>').join('') + '</div>'
+      + '<div class="biblio">' + docs.filter(r => montre === 'tout' || r.phase === +montre).map(r => ligneRes(r, c)).join('') + '</div>'
       + '</section>';
   }
   const titre = ecran.onglet === 'pratiques' ? 'Respiration, méditation, mouvement.' : 'Phase par phase, jamais tout d\'un coup.';
@@ -1249,6 +1266,7 @@ document.addEventListener('click', e => {
       break;
     }
     case 'onglet': ecran.onglet = d.v; rendre(); break;
+    case 'phase': ecran.phaseDoc = d.v; rendre(); break;
     case 'res': ouvrirFeuille({ type:'res', cle:d.cle }); break;
     case 'session': ouvrirFeuille({ type:'session', n:+d.n }); break;
     case 'vu':
