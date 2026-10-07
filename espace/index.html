@@ -1099,7 +1099,7 @@ function vueRessources(c){
       const r = docs.find(x => x.cle === 'd' + k.n);
       if(!r) return '';
       return '<button type="button" data-act="res" data-cle="' + r.cle + '">'
-        + '<small>0' + (i + 1) + ' · ' + echap(ouvert(r.des, c) ? r.meta : 'semaine ' + r.des) + '</small>'
+        + '<small>0' + (i + 1) + ' · phase ' + PHASES[r.phase - 1].romain + '</small>'
         + '<strong>' + echap(r.titre) + '</strong></button>';
     }).join('');
     corps = '<section style="display:flex;flex-direction:column;gap:12px"><span class="label" style="padding:0 4px">Ton kit</span>'
