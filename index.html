@@ -246,6 +246,20 @@ img{max-width:100%}
   .resa__arrow{display:none}
 }
 
+/* ================= Performance ================= */
+/* Une section hors écran n'anime plus rien : le script pose .is-off dessus. */
+.is-off,.is-off *{animation-play-state:paused!important}
+/* Sur téléphone, on retire ce qui oblige à recomposer toute la page à chaque image
+   du défilement : le grain en fusion, les flous d'arrière-plan, le halo des électrons,
+   et la rotation des orbites (140 s le tour, invisible à cette taille). */
+@media (max-width:760px),(hover:none){
+  .grain{display:none}
+  .nav,.nav.is-scrolled{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(11,14,17,.96)}
+  [style*="backdrop-filter"]{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  [data-electron]{filter:none}
+  g[style*="spin"]{animation:none!important}
+}
+
 /* ================= Ajustements mobiles ================= */
 /* Les styles en ligne l'emportent sur une feuille : d'où les !important. */
 @media (max-width:860px){
@@ -264,6 +278,12 @@ img{max-width:100%}
   .chip--4{right:4%!important;top:84%!important}
   .chip--5{display:none}
 }
+@media (max-width:760px){
+  /* Le héros est bien plus haut que l'écran sur téléphone : avec le dégradé du bureau,
+     le premier écran restait presque blanc et le mot BELIVE s'y perdait. */
+  .hero{background:linear-gradient(180deg,#DCEAF1 0%,#B4D3E2 30%,#9CC7DC 62%,#8DBBD2 100%)!important}
+  .hero__word{text-shadow:0 8px 40px rgba(36,84,108,.38)!important}
+}
 @media (max-width:480px){
   .hero__meta{gap:12px!important;font-size:10.5px!important;letter-spacing:.1em!important}
 }
@@ -274,7 +294,7 @@ img{max-width:100%}
 
 <a class="skip" href="#contenu">Aller au contenu</a>
 
-<div aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;z-index:60;opacity:.07;mix-blend-mode:overlay;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>&quot;)"></div>
+<div class="grain" aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;z-index:60;opacity:.07;mix-blend-mode:overlay;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>&quot;)"></div>
 
 <header class="nav-wrap">
 <nav class="nav" id="nav" aria-label="Navigation principale">
@@ -296,7 +316,7 @@ img{max-width:100%}
 
 <main id="contenu">
 <section id="top" style="padding:14px;background:#E8ECEF">
-<div style="position:relative;min-height:calc(100vh - 28px);border-radius:28px;overflow:hidden;background:linear-gradient(180deg,#F3F7F9 0%,#D9E8EF 48%,#A9CCDD 100%);color:#12171B;display:flex;flex-direction:column;padding:104px clamp(20px,4vw,56px) 24px">
+<div class="hero" style="position:relative;min-height:calc(100vh - 28px);border-radius:28px;overflow:hidden;background:linear-gradient(180deg,#F3F7F9 0%,#D9E8EF 48%,#A9CCDD 100%);color:#12171B;display:flex;flex-direction:column;padding:104px clamp(20px,4vw,56px) 24px">
 <div aria-hidden="true" style="position:absolute;left:50%;top:54%;width:min(86vw,820px);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none">
 <div style="position:absolute;inset:0;border-radius:50%;border:1px solid rgba(255,255,255,.55);transform:scale(var(--r3));transition:transform 5s cubic-bezier(.45,0,.55,1)"></div>
 <div style="position:absolute;inset:12%;border-radius:50%;border:1px solid rgba(255,255,255,.7);transform:scale(var(--r2));transition:transform 5s cubic-bezier(.45,0,.55,1) .15s"></div>
@@ -326,7 +346,7 @@ img{max-width:100%}
 <circle data-electron data-rot="0" data-speed="0.55" data-phase="0" cx="470" cy="0" r="9" fill="#FFFFFF" filter="url(#eGlow)"/><circle data-electron data-rot="60" data-speed="0.42" data-phase="2.1" cx="-237" cy="0" r="9" fill="#FFFFFF" filter="url(#eGlow)"/><circle data-electron data-rot="120" data-speed="0.5" data-phase="4.2" cx="-230" cy="0" r="9" fill="#FFFFFF" filter="url(#eGlow)"/>
 </svg>
 </div>
-<span role="img" aria-label="BELIVE" style="position:relative;display:flex;align-items:center;gap:.08em;font-size:clamp(96px,21vw,330px);font-weight:700;letter-spacing:-.06em;line-height:.8;color:#FFFFFF;text-shadow:0 10px 50px rgba(51,112,143,.25)">
+<span class="hero__word" role="img" aria-label="BELIVE" style="position:relative;display:flex;align-items:center;gap:.08em;font-size:clamp(96px,21vw,330px);font-weight:700;letter-spacing:-.06em;line-height:.8;color:#FFFFFF;text-shadow:0 10px 50px rgba(51,112,143,.25)">
 <span style="display:flex"><span style="display:inline-block;animation:wordIn 1.4s 0.15s cubic-bezier(.2,.7,.2,1) both">B</span><span style="display:inline-block;animation:wordIn 1.4s 0.23s cubic-bezier(.2,.7,.2,1) both">E</span><span style="display:inline-block;animation:wordIn 1.4s 0.31s cubic-bezier(.2,.7,.2,1) both">L</span><span style="display:inline-block;animation:wordIn 1.4s 0.39s cubic-bezier(.2,.7,.2,1) both">I</span><span style="display:inline-block;animation:wordIn 1.4s 0.47s cubic-bezier(.2,.7,.2,1) both">V</span><span style="display:inline-block;animation:wordIn 1.4s 0.55s cubic-bezier(.2,.7,.2,1) both">E</span></span>
 <span style="display:inline-flex;animation:wordIn 1.4s .7s cubic-bezier(.2,.7,.2,1) both;margin-left:.06em;align-self:flex-start;margin-top:.02em"><span style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:.3em;height:.3em;border-radius:50%;border:max(3px,.028em) solid currentColor;flex:none"><span style="width:46%;height:46%;border-radius:50%;background:#33708F;box-shadow:0 0 0 0 rgba(156,199,220,.5);animation:recFade 2s ease-in-out infinite"></span></span></span>
 </span>
@@ -1305,24 +1325,133 @@ img{max-width:100%}
   });
 
   /* ---------- Effets liés au défilement ---------- */
-  var heroWord = one('[data-hero-word]');
-  var tl = one('[data-tl]'), tlFill = one('[data-tl-fill]');
-  var parImg = one('[data-par-img]');
-  var words = all('[data-words]').map(function (el) { return { el: el, ws: all('[data-w]', el) }; });
-  var clips = all('[data-clip]').map(function (el) { return { el: el, img: one('img', el) }; });
-  var hz = all('[data-hz]').map(function (el) {
-    return { el: el, track: one('[data-hz-track]', el), bar: one('[data-hz-bar]', el), letters: all('[data-hz-l]', el) };
+  /* Chaque effet s'inscrit avec son élément. À chaque image, on lit d'abord toutes
+     les positions, puis on écrit tous les styles : mélanger les deux oblige le
+     navigateur à recalculer la page entre chaque effet, et le défilement saccade. */
+  var fx = [];
+  function track(el, apply, always) { if (el) fx.push({ el: el, apply: apply, always: always, r: null }); }
+
+  track(one('[data-hero-word]'), function (r, vh, y) {
+    if (y < vh * 1.2) this.el.style.transform = 'translate3d(0,' + (y * 0.35) + 'px,0)';
+  }, true);
+
+  var tlFill = one('[data-tl-fill]');
+  track(one('[data-tl]'), function (r, vh) {
+    tlFill.style.transform = 'scaleY(' + clamp((vh * 0.6 - r.top) / r.height) + ')';
   });
-  var stack = all('[data-stack]');
-  var dotGrids = all('[data-dots]');
-  var strikes = all('[data-strike]').map(function (el) {
-    return { el: el, i: all('[data-strike]', el.parentElement).indexOf(el) };
+
+  all('[data-words]').forEach(function (el) {
+    var ws = all('[data-w]', el), last = -1;
+    track(el, function (r, vh) {
+      var n = Math.ceil(clamp((vh * 0.85 - r.top) / (vh * 0.45)) * ws.length);
+      if (n === last) return;
+      last = n;
+      ws.forEach(function (w, i) { w.style.color = i < n ? w.dataset.c : w.dataset.off; });
+    });
   });
-  var lines = all('[data-line]').map(function (el) { return { el: el, fill: one('[data-line-fill]', el) }; });
-  var energy = all('[data-energy]');
-  var pars = all('[data-par]');
-  var rises = all('[data-rise]').map(function (el) { return { el: el, ls: all('[data-l]', el) }; });
-  var counts = all('[data-count]');
+
+  all('[data-clip]').forEach(function (el) {
+    var img = one('img', el), par = img && img.hasAttribute('data-par-img');
+    track(el, function (r, vh) {
+      var p = clamp((vh - r.top) / (vh * 0.8));
+      var v = ((1 - p) * 12).toFixed(2) + '%';
+      el.style.clipPath = 'inset(' + v + ' ' + v + ' ' + v + ' ' + v + ' round 28px)';
+      if (!img) return;
+      img.style.scale = String(1.2 - p * 0.2);
+      if (par) img.style.transform = 'translateY(' + (((r.top + r.height / 2) - vh / 2) * -0.1) + 'px)';
+    });
+  });
+
+  all('[data-hz]').forEach(function (el) {
+    var tr = one('[data-hz-track]', el), bar = one('[data-hz-bar]', el), ls = all('[data-hz-l]', el), max = 0;
+    function measure() { max = Math.max(0, tr.scrollWidth - tr.parentElement.clientWidth); }
+    measure();
+    window.addEventListener('resize', measure);
+    window.addEventListener('load', measure);
+    track(el, function (r, vh) {
+      var p = clamp(-r.top / (r.height - vh));
+      tr.style.transform = 'translate3d(' + (-p * max) + 'px,0,0)';
+      bar.style.transform = 'scaleX(' + p + ')';
+      ls.forEach(function (l, i) { l.style.color = p >= i / 5 - 0.02 ? '#9CC7DC' : '#3C4852'; });
+    });
+  });
+
+  /* Cartes empilées : chaque carte recule à mesure que les suivantes la recouvrent */
+  var stack = all('[data-stack]').map(function (el) { return { el: el, top: parseFloat(el.style.top) || 110, r: null }; });
+  stack.forEach(function (c, i) {
+    track(c.el, function (r, vh) {
+      var sum = 0;
+      for (var j = i + 1; j < stack.length; j++) sum += clamp(1 - (stack[j].r.top - stack[j].top) / (vh * 0.5));
+      c.el.style.transform = 'scale(' + (1 - sum * 0.035) + ')';
+      c.el.style.filter = sum ? 'brightness(' + (1 - sum * 0.04) + ')' : '';
+    });
+  });
+
+  all('[data-dots]').forEach(function (el) {
+    var ds = el.children, last = -1;
+    track(el, function (r, vh) {
+      var n = Math.round(clamp((vh * 0.9 - r.top) / (vh * 0.5)) * ds.length);
+      if (n === last) return;
+      last = n;
+      for (var i = 0; i < ds.length; i++) {
+        ds[i].style.background = i < n ? '#9CC7DC' : 'rgba(230,236,240,.1)';
+        ds[i].style.boxShadow = i < n ? '0 0 10px rgba(156,199,220,.5)' : 'none';
+      }
+    });
+  });
+
+  all('[data-strike]').forEach(function (el) {
+    var i = all('[data-strike]', el.parentElement).indexOf(el);
+    track(el, function (r, vh) {
+      var p = clamp((vh * 0.75 - r.top) / (vh * 0.2) - i * 0.4);
+      el.style.setProperty('--p', p);
+      el.style.color = p > 0.95 ? (el.dataset.after || '#5F6C78') : (el.dataset.before || '#E6ECF0');
+    });
+  });
+
+  all('[data-line]').forEach(function (el) {
+    var fill = one('[data-line-fill]', el);
+    track(el, function (r, vh) { fill.style.transform = 'scaleY(' + clamp((vh * 0.7 - r.top) / r.height) + ')'; });
+  });
+
+  all('[data-energy]').forEach(function (el) {
+    var done = false;
+    track(el, function (r, vh) {
+      if (done || r.top >= vh * 0.85) return;
+      done = true;
+      el.style.transform = 'scaleX(' + (+el.dataset.energy / 100) + ')';
+    });
+  });
+
+  /* La position lue inclut déjà le décalage posé à l'image précédente : on le retire */
+  all('[data-par]').forEach(function (el) {
+    var k = +el.dataset.par, shift = 0;
+    track(el, function (r, vh) {
+      shift = ((r.top - shift + r.height / 2) - vh / 2) * -k / (1 + k);
+      el.style.translate = '0 ' + shift.toFixed(1) + 'px';
+    });
+  });
+
+  all('[data-rise]').forEach(function (el) {
+    var ls = all('[data-l]', el);
+    track(el, function (r, vh) {
+      var p = clamp((vh - r.top) / (r.height + vh * 0.3));
+      ls.forEach(function (l, i) {
+        var q = clamp(p * 2.2 - i * 0.12);
+        l.style.transform = 'translateY(' + ((1 - q) * 80) + '%)';
+        l.style.opacity = q;
+      });
+    });
+  });
+
+  all('[data-count]').forEach(function (el) {
+    var done = false;
+    track(el, function (r, vh) {
+      if (done || r.top > vh * 0.92) return;
+      done = true;
+      if (!reduce) countUp(el);
+    });
+  });
 
   function countUp(el) {
     var n = +el.dataset.count, t0 = performance.now();
@@ -1335,100 +1464,15 @@ img{max-width:100%}
   }
 
   function update() {
-    var y = window.scrollY, vh = window.innerHeight, r, p;
-
+    var y = window.scrollY, vh = window.innerHeight, i, f;
     nav.classList.toggle('is-scrolled', y > 40);
-
-    if (heroWord && y < vh * 1.2) heroWord.style.transform = 'translateY(' + (y * 0.35) + 'px)';
-
-    if (tl && tlFill) {
-      r = tl.getBoundingClientRect();
-      tlFill.style.transform = 'scaleY(' + clamp((vh * 0.6 - r.top) / r.height) + ')';
+    for (i = 0; i < fx.length; i++) fx[i].r = fx[i].el.getBoundingClientRect();
+    for (i = 0; i < stack.length; i++) stack[i].r = stack[i].el.getBoundingClientRect();
+    for (i = 0; i < fx.length; i++) {
+      f = fx[i];
+      /* loin de l'écran, rien à mettre à jour */
+      if (f.always || (f.r.bottom > -vh && f.r.top < vh * 2)) f.apply(f.r, vh, y);
     }
-
-    words.forEach(function (o) {
-      var p = clamp((vh * 0.85 - o.el.getBoundingClientRect().top) / (vh * 0.45));
-      o.ws.forEach(function (w, i) { w.style.color = p * o.ws.length > i ? w.dataset.c : w.dataset.off; });
-    });
-
-    clips.forEach(function (o) {
-      var p = clamp((vh - o.el.getBoundingClientRect().top) / (vh * 0.8));
-      var v = ((1 - p) * 12).toFixed(2) + '%';
-      o.el.style.clipPath = 'inset(' + v + ' ' + v + ' ' + v + ' ' + v + ' round 28px)';
-      if (o.img) o.img.style.scale = String(1.2 - p * 0.2);
-    });
-
-    hz.forEach(function (o) {
-      var r = o.el.getBoundingClientRect();
-      var p = clamp(-r.top / (r.height - vh));
-      var max = Math.max(0, o.track.scrollWidth - o.track.parentElement.clientWidth);
-      o.track.style.transform = 'translateX(' + (-p * max) + 'px)';
-      o.bar.style.transform = 'scaleX(' + p + ')';
-      o.letters.forEach(function (l, i) { l.style.color = p >= i / 5 - 0.02 ? '#9CC7DC' : '#3C4852'; });
-    });
-
-    /* Cartes empilées : chaque carte recule à mesure que les suivantes la recouvrent */
-    stack.forEach(function (el, i) {
-      var sum = 0;
-      for (var j = i + 1; j < stack.length; j++) {
-        var top = parseFloat(stack[j].style.top) || 110;
-        sum += clamp(1 - (stack[j].getBoundingClientRect().top - top) / (vh * 0.5));
-      }
-      el.style.transform = 'scale(' + (1 - sum * 0.035) + ')';
-      el.style.filter = sum ? 'brightness(' + (1 - sum * 0.04) + ')' : '';
-    });
-
-    dotGrids.forEach(function (el) {
-      var p = clamp((vh * 0.9 - el.getBoundingClientRect().top) / (vh * 0.5));
-      var ds = el.children, n = Math.round(p * ds.length);
-      for (var i = 0; i < ds.length; i++) {
-        ds[i].style.background = i < n ? '#9CC7DC' : 'rgba(230,236,240,.1)';
-        ds[i].style.boxShadow = i < n ? '0 0 10px rgba(156,199,220,.5)' : 'none';
-      }
-    });
-
-    strikes.forEach(function (o) {
-      var p = clamp((vh * 0.75 - o.el.getBoundingClientRect().top) / (vh * 0.2) - o.i * 0.4);
-      o.el.style.setProperty('--p', p);
-      o.el.style.color = p > 0.95 ? (o.el.dataset.after || '#5F6C78') : (o.el.dataset.before || '#E6ECF0');
-    });
-
-    lines.forEach(function (o) {
-      var r = o.el.getBoundingClientRect();
-      o.fill.style.transform = 'scaleY(' + clamp((vh * 0.7 - r.top) / r.height) + ')';
-    });
-
-    energy.forEach(function (el) {
-      if (el.dataset.done || el.getBoundingClientRect().top >= vh * 0.85) return;
-      el.dataset.done = '1';
-      el.style.transform = 'scaleX(' + (+el.dataset.energy / 100) + ')';
-    });
-
-    pars.forEach(function (el) {
-      var r = el.getBoundingClientRect();
-      el.style.translate = '0 ' + (((r.top + r.height / 2) - vh / 2) * -(+el.dataset.par)) + 'px';
-    });
-
-    if (parImg) {
-      r = parImg.closest('[data-clip]').getBoundingClientRect();
-      parImg.style.transform = 'translateY(' + (((r.top + r.height / 2) - vh / 2) * -0.1) + 'px)';
-    }
-
-    rises.forEach(function (o) {
-      var r = o.el.getBoundingClientRect();
-      var p = clamp((vh - r.top) / (r.height + vh * 0.3));
-      o.ls.forEach(function (l, i) {
-        var q = clamp(p * 2.2 - i * 0.12);
-        l.style.transform = 'translateY(' + ((1 - q) * 80) + '%)';
-        l.style.opacity = q;
-      });
-    });
-
-    counts.forEach(function (el) {
-      if (el.dataset.done || el.getBoundingClientRect().top > vh * 0.92) return;
-      el.dataset.done = '1';
-      if (!reduce) countUp(el);
-    });
   }
 
   var queued = false;
@@ -1440,6 +1484,14 @@ img{max-width:100%}
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
   update();
+
+  /* ---------- Animations en pause hors écran ---------- */
+  if ('IntersectionObserver' in window) {
+    var onScreen = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { e.target.classList.toggle('is-off', !e.isIntersecting); });
+    }, { rootMargin: '200px 0px' });
+    all('main > *, footer').forEach(function (el) { onScreen.observe(el); });
+  }
 
   if (reduce) return;
 
