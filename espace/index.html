@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
 <meta name="googlebot" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
@@ -17,7 +17,7 @@
      d'écran d'accueil s'ouvre sur l'adresse du moment, donc avec la date du client. -->
 <link rel="manifest" href="/espace/manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="RESET">
-<meta name="theme-color" content="#DFE4E8" media="(prefers-color-scheme:light)">
+<meta name="theme-color" content="#E8ECEF" media="(prefers-color-scheme:light)">
 <meta name="theme-color" content="#0B0E11" media="(prefers-color-scheme:dark)">
 
 <script>
@@ -35,34 +35,31 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
 /* ================= Jetons ================= */
 :root{
   color-scheme:light dark;
-  --page:#DFE4E8; --panel:#FFFFFF; --panel-2:#F3F6F8; --panel-3:#E9EEF2;
-  --dark:#161B20; --dark-2:#1F262C;
-  --ink:#12171B; --ink-2:#5C6873; --ink-3:#5F6C78;
-  --line:#E4E9ED; --line-dark:rgba(255,255,255,.12);
-  --ice:#B4D6E8; --ice-2:#8FC0DA; --ice-deep:#2C6B93;
-  --on-dark:#EEF3F6; --on-dark-2:#9DACB8;
-  --r-lg:28px; --r-md:18px; --r-sm:12px;
-  --t-h2:clamp(1.9rem,4vw,3.1rem); --t-h3:1.22rem;
-  --t-body:1rem; --t-small:.9rem; --t-label:.72rem;
-  --measure:58ch;
-  --pad:clamp(1rem,3vw,2rem); --gap:clamp(.7rem,1.2vw,1rem);
-  --maxw:1240px;
+  --page:#E8ECEF; --panel:#FFFFFF; --p2:#F3F5F7; --p3:#DDE3E8;
+  --ink:#12171B; --ink-2:#4B5762; --ink-3:#5F6C78;
+  --line:#D5DCE2; --filet:#EEF1F3; --anneau:#B7C1C9;
+  --ice:#2C6A8A; --ice-2:#DCEBF2; --ice-ink:#1F4F68;
+  --dark:#12171B; --on-dark:#E8ECEF; --on-dark-2:#A9B4BD; --dark-line:#4B5762;
+  --nav:rgba(255,255,255,.96); --haut:rgba(232,236,239,.92);
+  --r-lg:28px; --r-md:18px;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --page:#0B0E11; --panel:#14191E; --panel-2:#1A2026; --panel-3:#20272E;
-    --dark:#080B0E; --dark-2:#121820;
+    --page:#0B0E11; --panel:#14191E; --p2:#1A2026; --p3:#252D35;
     --ink:#EDF2F6; --ink-2:#9CAAB6; --ink-3:#8A98A5;
-    --line:#252D35; --line-dark:rgba(255,255,255,.1);
-    --ice:#3E5F75; --ice-2:#5D8CA8; --ice-deep:#9DCBE4;
+    --line:#252D35; --filet:#20272E; --anneau:#4B5762;
+    --ice:#9DCBE4; --ice-2:#1B2A35; --ice-ink:#BFD9E6;
+    --dark:#1F262C; --on-dark:#EEF3F6; --on-dark-2:#9DACB8; --dark-line:#4B5762;
+    --nav:rgba(20,25,30,.96); --haut:rgba(11,14,17,.92);
   }
 }
 :root[data-theme="dark"]{
-  --page:#0B0E11; --panel:#14191E; --panel-2:#1A2026; --panel-3:#20272E;
-  --dark:#080B0E; --dark-2:#121820;
+  --page:#0B0E11; --panel:#14191E; --p2:#1A2026; --p3:#252D35;
   --ink:#EDF2F6; --ink-2:#9CAAB6; --ink-3:#8A98A5;
-  --line:#252D35; --line-dark:rgba(255,255,255,.1);
-  --ice:#3E5F75; --ice-2:#5D8CA8; --ice-deep:#9DCBE4;
+  --line:#252D35; --filet:#20272E; --anneau:#4B5762;
+  --ice:#9DCBE4; --ice-2:#1B2A35; --ice-ink:#BFD9E6;
+  --dark:#1F262C; --on-dark:#EEF3F6; --on-dark-2:#9DACB8; --dark-line:#4B5762;
+  --nav:rgba(20,25,30,.96); --haut:rgba(11,14,17,.92);
 }
 :root[data-theme="light"]{color-scheme:light}
 :root[data-theme="dark"]{color-scheme:dark}
@@ -70,410 +67,345 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
 /* ================= Base ================= */
 *,*::before,*::after{box-sizing:border-box}
 [hidden]{display:none !important}
+html,body{margin:0;background:var(--page);-webkit-tap-highlight-color:transparent}
 body{
-  margin:0;padding:var(--pad);background:var(--page);color:var(--ink);
+  min-height:100vh;color:var(--ink);
   font-family:"Outfit",ui-sans-serif,-apple-system,"Segoe UI",system-ui,sans-serif;
-  font-size:var(--t-body);font-weight:400;line-height:1.6;
-  -webkit-font-smoothing:antialiased;
+  font-variant-numeric:lining-nums tabular-nums;-webkit-font-smoothing:antialiased;
 }
-img,svg{max-width:100%;display:block}
-a{color:inherit}
-:focus-visible{outline:2px solid var(--ice-deep);outline-offset:3px}
-h1,h2,h3,h4{margin:0;font-weight:600;line-height:1.05;letter-spacing:-.025em;text-wrap:balance}
-p{margin:0}
-.num{font-variant-numeric:lining-nums tabular-nums}
-.shell{max-width:var(--maxw);margin-inline:auto;display:grid;gap:var(--gap)}
-/* Pas de margin-inline:auto ici : sur un élément de grille, une marge
-   automatique force la largeur en fit-content et rétrécit le bloc. */
-.phases{display:grid;gap:var(--gap)}
+a{color:var(--ice);text-decoration:none}
+a:hover{color:var(--ink)}
+button,input{font-family:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--ice);outline-offset:3px}
+h1,h2,h3,p{margin:0}
+svg{flex:none}
+@keyframes sheetUp{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
 /* ================= Primitives ================= */
-.panel{background:var(--panel);border-radius:var(--r-lg);padding:clamp(1.5rem,4vw,3.5rem);overflow:hidden}
-.panel--dark{background:var(--dark);color:var(--on-dark)}
-.panel--tint{background:var(--panel-2)}
-.label{font-size:var(--t-label);font-weight:500;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--ink-2);margin:0}
-.panel--dark .label{color:var(--on-dark-2)}
-.pill{display:inline-flex;align-items:center;gap:.45rem;font-size:var(--t-label);
-  font-weight:500;letter-spacing:.16em;text-transform:uppercase;padding:.32rem .75rem;
-  border-radius:999px;border:1px solid currentColor;color:var(--ice-deep);
-  line-height:1.5;white-space:nowrap}
-.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
-.pill--mute{color:var(--ink-3)}
-.panel--dark .pill{color:var(--ice-2)}
-.btn{display:inline-flex;align-items:center;gap:.5rem;font-size:.88rem;font-weight:500;
-  letter-spacing:-.01em;text-decoration:none;padding:.72rem 1.25rem;border-radius:999px;
-  border:1px solid transparent;background:var(--ink);color:var(--panel);
-  transition:background .2s,color .2s,border-color .2s,transform .2s;cursor:pointer;
-  font-family:inherit}
-.btn:hover{transform:translateY(-1px)}
-.btn--ghost{background:var(--panel-2);color:var(--ink);border-color:var(--line)}
-.btn--ghost:hover{background:var(--panel-3)}
-.row{padding:.95rem 0;border-top:1px solid var(--line)}
-.rows>.row:first-child{border-top:0;padding-top:0}
+.label{font-size:.72rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+.h1{font-size:clamp(34px,7vw,52px);font-weight:600;line-height:1.05;letter-spacing:-.025em;text-wrap:balance}
+.h1--today{font-size:clamp(36px,8vw,56px)}
+.h2{font-size:22px;font-weight:600;line-height:1.1;letter-spacing:-.02em}
+.lede{font-size:16px;line-height:1.5;color:var(--ink-2)}
+.lede b{color:var(--ink);font-weight:500}
+.vue{display:flex;flex-direction:column;gap:20px;animation:fadeIn .25s ease}
+.tete{display:flex;flex-direction:column;gap:12px;padding:8px 4px 4px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:20px;align-items:start}
+.col{display:flex;flex-direction:column;gap:20px;min-width:0}
+.carte{display:flex;flex-direction:column;gap:18px;padding:24px 22px;border-radius:var(--r-lg);background:var(--panel);min-width:0}
+.carte--liste{gap:4px;padding-bottom:14px}
+.carte--liste .h2{margin:4px 0 8px}
+.entre{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.petit{font-size:13.5px;line-height:1.5;color:var(--ink-2);text-wrap:pretty}
+.pastille{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid var(--line);
+  border-radius:999px;font-size:12px;color:var(--ink);white-space:nowrap}
+.pastille::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--pt,var(--anneau))}
+.seg{display:flex;padding:3px;border-radius:999px;background:var(--p2);flex:none}
+.seg button{min-height:36px;padding:0 14px;border:0;border-radius:999px;font-size:13.5px;font-weight:500;
+  background:transparent;color:var(--ink-3)}
+.seg button[aria-pressed="true"]{background:var(--panel);color:var(--ink)}
+.lien{border:0;background:transparent;padding:0;color:var(--ice);font-size:inherit;font-weight:500;
+  text-decoration:underline;text-underline-offset:3px}
+.bouton{display:flex;align-items:center;justify-content:center;min-height:52px;padding:0 22px;border:0;
+  border-radius:999px;background:var(--ink);color:var(--panel);font-size:16px;font-weight:500}
+a.bouton:hover{color:var(--panel)}
+.bouton--ligne{min-height:48px;background:var(--panel);color:var(--ink);border:1px solid var(--line);font-size:15px}
+.bouton--ligne[aria-pressed="true"]{background:var(--ice-2)}
+.bandeau{display:flex;flex-direction:column;gap:8px;padding:20px 22px;border-radius:var(--r-md);background:var(--ice-2)}
+.bandeau .label{color:var(--ice-ink)}
+.bandeau p{font-size:15.5px;line-height:1.55;text-wrap:pretty}
+.bandeau .lien{align-self:flex-start;color:var(--ice-ink);font-size:14px}
 
-/* ================= Barre du haut ================= */
-/* Logo, onglets, actions. Sur téléphone les onglets passent sur leur
-   propre ligne, sous le logo. */
-.topbar{display:grid;grid-template-columns:auto 1fr auto;align-items:center;
-  gap:.4rem 2.4rem;padding:.35rem .4rem 0}
-.brand{display:inline-flex;color:var(--ink);text-decoration:none}
-.brand svg{height:.78rem;width:auto;fill:none;stroke:currentColor;overflow:visible}
-.top-actions{display:flex;align-items:center;gap:.7rem}
-.theme{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:999px;
-  border:1px solid var(--line);background:var(--panel);color:var(--ink-2);cursor:pointer;
-  padding:0}
-.theme:hover{background:var(--panel-2);color:var(--ink)}
+/* ================= Ossature ================= */
+.marque{display:flex;align-items:center;gap:14px;color:var(--ink)}
+.marque-mot{font-size:19px;letter-spacing:.34em;line-height:1;font-weight:300}
+.marque-mot b{font-weight:600}
+.cote{position:fixed;top:0;left:0;bottom:0;width:256px;padding:28px 18px;display:none;flex-direction:column;
+  gap:28px;background:var(--page);border-right:1px solid var(--line);z-index:20}
+.cote-tete{display:flex;flex-direction:column;gap:6px;padding:0 10px}
+.cote nav{display:flex;flex-direction:column;gap:4px}
+.cote nav button{display:flex;align-items:center;gap:12px;min-height:48px;padding:0 14px;border:0;
+  border-radius:999px;font-size:15px;font-weight:500;text-align:left;background:transparent;color:var(--ink-3)}
+.cote nav button[aria-current="page"]{background:var(--panel);color:var(--ink)}
+.cote-pied{margin-top:auto;display:flex;flex-direction:column;gap:14px;padding:0 6px}
+.cote-ou{display:flex;flex-direction:column;gap:4px;padding:0 4px}
+.cote-ou strong{font-size:15px;font-weight:500}
+.cote-bas{display:flex;gap:8px}
+.ecrire{display:flex;align-items:center;justify-content:center;gap:8px;flex:1;min-height:46px;border-radius:999px;
+  background:var(--panel);color:var(--ink);font-size:14px;font-weight:500;border:1px solid var(--line)}
+.theme{display:inline-grid;place-items:center;flex:none;width:46px;height:46px;border-radius:999px;
+  border:1px solid var(--line);background:var(--panel);color:var(--ink-2);padding:0}
 /* La pastille du site : demi-pleine = système, vide = clair, pleine = sombre */
 .theme-pastille{width:12px;height:12px;border-radius:50%;border:1.5px solid currentColor;
   background:linear-gradient(to right,transparent 50%,currentColor 50%)}
 :root[data-theme="light"] .theme-pastille{background:none}
 :root[data-theme="dark"] .theme-pastille{background:currentColor}
-@media (pointer:coarse){.theme{width:44px;height:44px}}
 
-/* ================= Les trois vues ================= */
-.vues{display:flex;gap:1.6rem}
-.vue-onglet{font-family:inherit;font-size:var(--t-small);font-weight:500;letter-spacing:-.01em;
-  color:var(--ink-2);background:none;border:0;border-bottom:2px solid transparent;
-  padding:.6rem 0 .45rem;cursor:pointer;white-space:nowrap;transition:color .2s}
-.vue-onglet:hover{color:var(--ink)}
-/* Pas de gras sur l'onglet actif : le mot s'élargirait et ferait bouger ses voisins. */
-.vue-onglet[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ice-deep)}
-@media (pointer:coarse){.vue-onglet{min-height:44px}}
-.vue{display:grid;gap:var(--gap)}
-@media (max-width:640px){
-  .topbar{grid-template-columns:1fr auto}
-  .vues{grid-column:1/-1;grid-row:2;gap:1.4rem}
+.haut{position:sticky;top:0;z-index:15;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 18px;background:var(--haut);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.haut-g{display:flex;align-items:center;gap:10px}
+.haut .marque{gap:10px}
+.haut .marque-mot{font-size:15px;letter-spacing:.32em}
+.haut .label{font-size:.68rem}
+.haut-d{display:flex;align-items:center;gap:8px}
+.haut .ecrire{flex:none;min-height:40px;padding:0 14px;font-size:13.5px;gap:7px}
+.haut .theme{width:40px;height:40px}
+
+main{max-width:1100px;margin:0 auto;padding:4px 16px 116px}
+
+.bas{position:fixed;left:0;right:0;bottom:0;z-index:20;display:grid;grid-template-columns:repeat(4,1fr);
+  padding:6px 8px calc(8px + env(safe-area-inset-bottom));background:var(--nav);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+.bas button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:56px;
+  border:0;background:transparent;font-size:11.5px;font-weight:500;color:var(--ink-3)}
+.bas button span{display:flex;align-items:center;justify-content:center;width:52px;height:30px;
+  border-radius:999px;transition:background .15s}
+.bas button[aria-current="page"]{color:var(--ink)}
+.bas button[aria-current="page"] span{background:var(--ice-2)}
+
+@media (min-width:900px){
+  .cote{display:flex}
+  .haut,.bas{display:none}
+  .principal{padding-left:256px}
+  main{padding:44px 44px 72px}
 }
 
-/* ================= Bande de tête ================= */
-.tete{display:grid;gap:1.3rem;padding:clamp(1.4rem,3.2vw,2.4rem) clamp(1.5rem,4vw,3.5rem)}
-.tete-texte{display:grid;gap:.6rem}
-/* Étiquette à gauche, valeur à droite, sur la même ligne de base.
-   Si le titre est long, il passe à la ligne et revient à gauche
-   tout seul : pas de phrase alignée à droite. */
-.tete-haut{display:flex;flex-wrap:wrap;align-items:baseline;
-  justify-content:space-between;gap:.4rem 2rem}
-/* Le nom de la page, plus présent que les sur-titres de section :
-   plus grand, plus gras, et en pleine clarté plutôt qu'en gris. */
-.tete-haut .label{font-size:.9rem;font-weight:600;letter-spacing:.14em;
-  color:var(--on-dark)}
-.tete h1{font-size:clamp(1.7rem,3.4vw,2.6rem)}
-.tete .lede{color:var(--on-dark-2);font-size:var(--t-small);max-width:var(--measure)}
-.tete .lede:empty{display:none}
-.tete-texte .label:empty{display:none}
+/* ================= Aujourd'hui ================= */
+.barre{display:flex;gap:4px;margin-top:4px}
+.barre i{flex:1;height:6px;border-radius:999px;background:var(--p3)}
+.barre i[data-e="fait"]{background:var(--ink)}
+.barre i[data-e="ici"]{background:var(--ice)}
+.barre i[data-coupe]{margin-left:6px}
+.barre-legende{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3)}
 
-.reglage{display:grid;gap:.5rem;justify-items:start}
-.reglage-info{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem;
-  font-size:var(--t-small);color:var(--on-dark-2)}
-.lien{font-family:inherit;font-size:inherit;background:none;border:0;padding:0;
-  color:var(--ice-2);cursor:pointer;text-decoration:underline;
-  text-underline-offset:3px}
-.lien:hover{color:var(--on-dark)}
-.depart{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem;
-  font-size:var(--t-small);color:var(--on-dark-2)}
-.depart input{font-family:inherit;font-size:var(--t-small);color:var(--on-dark);
-  background:var(--dark-2);border:1px solid var(--line-dark);border-radius:999px;
-  padding:.5rem .9rem;line-height:1;color-scheme:dark}
+.call{display:flex;flex-direction:column;gap:18px;padding:26px 24px;border-radius:var(--r-lg);
+  background:var(--dark);color:var(--on-dark)}
+.call .label{color:var(--on-dark-2)}
+.call-quand{display:flex;flex-direction:column;gap:6px}
+.call-quand strong{font-size:28px;font-weight:600;line-height:1.1;letter-spacing:-.02em}
+.call-quand span{font-size:15px;color:var(--on-dark-2)}
+.call-actes{display:flex;gap:10px;flex-wrap:wrap}
+.call-actes a{display:flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;
+  border-radius:999px;font-size:15px;font-weight:500}
+.call-oui{flex:1 1 auto;background:var(--on-dark);color:var(--dark)}
+.call-non{flex:0 1 auto;border:1px solid var(--dark-line);color:var(--on-dark)}
 
-.semaines{display:grid;grid-template-columns:repeat(13,1fr);gap:6px}
-.sem{display:grid;place-items:center;height:clamp(2rem,3.2vw,2.7rem);
-  border-radius:var(--r-sm);background:var(--dark-2);border:1px solid var(--line-dark);
-  font-size:.8rem;color:var(--on-dark-2);font-variant-numeric:lining-nums tabular-nums}
-.sem[data-passee]{background:transparent;border-color:var(--line-dark);color:var(--on-dark-2)}
-.sem[data-courante]{background:var(--on-dark);border-color:var(--on-dark);
-  color:var(--dark);font-weight:600}
+.mesures{display:flex;flex-direction:column;gap:16px}
+.mesure{display:flex;flex-direction:column;gap:8px}
+.mesure-nom{font-size:15px;font-weight:500}
+.mesure-echelle{font-size:12.5px;color:var(--ink-3)}
+.notes{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.notes button{min-height:44px;border-radius:999px;font-size:15px;font-weight:500;
+  border:1px solid var(--p2);background:var(--p2);color:var(--ink);transition:background .15s,color .15s}
+.notes button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--panel)}
 
-/* ================= Phases ================= */
-.phase{background:var(--panel);border-radius:var(--r-lg);overflow:hidden}
-.phase[data-statut="courante"]{outline:2px solid var(--ice-deep);outline-offset:-2px}
-.phase[data-statut="avenir"],
-.phase[data-statut="libre"]{background:var(--panel-2)}
-.phase-titre{margin:0}
-.phase-tete{display:grid;gap:.6rem;width:100%;text-align:left;font-family:inherit;
-  background:none;border:0;cursor:pointer;color:inherit;
-  padding:clamp(1.2rem,3vw,1.9rem) clamp(1.5rem,4vw,3.5rem)}
-.phase-tete:hover:not(:disabled){background:var(--panel-2)}
-.phase-tete:disabled{cursor:default;color:var(--ink-3)}
-.phase-ligne{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem .9rem}
-.phase-num{font-size:var(--t-label);font-weight:600;letter-spacing:.16em;
-  color:var(--ice-deep);line-height:1.5;min-width:2.1rem}
-.phase[data-statut="avenir"] .phase-num,
-.phase[data-statut="libre"] .phase-num{color:var(--ink-3)}
-.phase-nom{font-size:clamp(1.25rem,2.2vw,1.7rem);font-weight:600;letter-spacing:-.025em}
-.phase-etat{font-size:var(--t-label);font-weight:500;letter-spacing:.16em;
-  text-transform:uppercase;padding:.28rem .7rem;border-radius:999px;
-  border:1px solid currentColor;line-height:1.5;white-space:nowrap;color:var(--ink-3)}
-.phase-etat--ok{color:var(--ice-deep)}
-.phase-etat--now{color:var(--ice-deep)}
-.phase-etat:empty{display:none}
-.phase-fleche{margin-left:auto;width:11px;height:11px;flex:none;
-  border-right:1.5px solid var(--ink-3);border-bottom:1.5px solid var(--ink-3);
-  transform:rotate(45deg) translate(-2px,-2px);transition:transform .2s}
-.phase-tete[aria-expanded="true"] .phase-fleche{transform:rotate(-135deg) translate(-2px,-2px)}
-.phase-tete:disabled .phase-fleche{display:none}
-.phase-quand{font-size:var(--t-small);color:var(--ink-2)}
-.phase-tete:disabled .phase-quand{color:var(--ink-3)}
-.phase-dit{font-size:var(--t-small);color:var(--ink-2);font-style:italic}
+.proto{gap:6px;padding-bottom:12px}
+.proto-tete{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding-bottom:8px}
+.proto-tete>div{display:flex;flex-direction:column;gap:6px}
+.compte{font-size:15px;font-weight:500;color:var(--ice)}
+.jauge{height:4px;border-radius:999px;background:var(--page);overflow:hidden}
+.jauge i{display:block;height:100%;border-radius:999px;background:var(--ice);transition:width .3s ease}
+.groupe{display:flex;flex-direction:column;padding-top:18px}
+.groupe-tete{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-bottom:4px;min-height:26px}
+.groupe-tete small{font-size:12.5px;color:var(--ink-3)}
+.groupe-tete .pastille{--pt:var(--ice)}
+.acte{display:flex;align-items:center;gap:14px;width:100%;min-height:56px;padding:8px 0;border:0;
+  border-bottom:1px solid var(--filet);background:transparent;text-align:left}
+.rond{flex:none;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  border:1.5px solid var(--anneau);transition:background .15s,border-color .15s;color:var(--panel)}
+.rond svg{opacity:0}
+.acte[aria-pressed="true"] .rond{background:var(--ink);border-color:var(--ink)}
+.acte[aria-pressed="true"] .rond svg{opacity:1}
+.acte-txt{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}
+.acte-nom{font-size:15.5px;line-height:1.35}
+.acte[aria-pressed="true"] .acte-nom{color:var(--ink-3)}
+.acte-note{font-size:12.5px;line-height:1.4;color:var(--ink-3)}
+.acte-duree{flex:none;font-size:13.5px;color:var(--ink-3);white-space:nowrap}
+.groupe .petit{margin-top:10px}
+.proto-pied{margin:14px 0 10px;padding-top:12px}
 
-.jauge{display:grid;gap:.4rem;width:100%}
-.jauge-piste{display:block;height:6px;border-radius:999px;background:var(--panel-3);
-  overflow:hidden}
-.jauge-fil{display:block;height:100%;width:0;border-radius:999px;background:var(--ice-deep);
-  transition:width .3s}
-.jauge-txt{display:block}
-.jauge-txt{font-size:var(--t-label);letter-spacing:.16em;text-transform:uppercase;
-  color:var(--ink-3);font-variant-numeric:lining-nums tabular-nums}
+.depart{display:flex;flex-wrap:wrap;align-items:center;gap:12px;font-size:15px;color:var(--ink-2)}
+.depart input{font-size:15px;min-height:46px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--p2);color:var(--ink)}
 
-.phase-corps{display:grid;gap:clamp(1.4rem,3vw,2.2rem);
-  padding:0 clamp(1.5rem,4vw,3.5rem) clamp(1.5rem,4vw,3rem)}
-.phase-corps[hidden]{display:none}
-.jour-bloc{display:grid;gap:.9rem}
-.notes{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-.note{background:var(--panel-2);border-radius:var(--r-md);padding:1.1rem 1.25rem;display:grid;gap:.4rem}
-.note h3{font-size:var(--t-label);font-weight:500;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--ink-3)}
-.note p{font-size:var(--t-small);color:var(--ink-2)}
-.note--creux{background:transparent;border:1px solid var(--line)}
-/* Les jours où le client est dans le creux : même logique que le moment
-   en cours, du contraste en plus et un mot, rien d'autre d'ajouté. */
-.note--creux[data-maintenant]{border-color:var(--ice-deep)}
-.note--creux[data-maintenant] h3{color:var(--ice-deep)}
+/* ================= Parcours ================= */
+.phases{display:flex;flex-direction:column;gap:12px;min-width:0}
+.phase{display:flex;flex-direction:column;gap:14px;padding:22px;border-radius:var(--r-lg)}
+.phase[data-e="ici"]{background:var(--panel)}
+.phase[data-e="fait"]{background:var(--p2)}
+.phase[data-e="fait"] .pastille{--pt:var(--ink)}
+.phase[data-e="ici"] .pastille{--pt:var(--ice)}
+.phase-tete{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.phase-nom{display:flex;flex-direction:column;gap:4px}
+.phase-nom h3{font-size:24px;font-weight:600;line-height:1.1;letter-spacing:-.02em}
+.phase-nom span{font-size:15px;color:var(--ink-2)}
+.phase-detail{display:flex;flex-direction:column;gap:10px;font-size:14.5px;line-height:1.55}
+.phase-detail p{text-wrap:pretty}
+.phase-detail b{font-weight:500}
+.sems{display:flex;gap:6px;flex-wrap:wrap}
+.sems span{min-width:40px;height:30px;padding:0 10px;border-radius:999px;display:inline-flex;align-items:center;
+  justify-content:center;font-size:12.5px;font-weight:500;background:var(--p3);color:var(--ink-2)}
+.sems span[data-e="fait"]{background:var(--ink);color:var(--panel)}
+.sems span[data-e="ici"]{background:var(--ice);color:var(--panel)}
+.phase[data-e="avenir"] .sems span{background:transparent;border:1px solid var(--line)}
 
-.bloc-titre{font-size:var(--t-label);font-weight:500;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--ink-3);margin-bottom:.8rem}
-.liste{display:grid;gap:.5rem}
-.item{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.9rem;
-  background:var(--panel-2);border-radius:var(--r-md);padding:.85rem 1.05rem}
-.item--vide{background:transparent;border:1px dashed var(--line);color:var(--ink-3)}
-.coche{appearance:none;width:22px;height:22px;border-radius:999px;border:1px solid var(--line);
-  background:var(--panel);cursor:pointer;display:grid;place-items:center;flex:none;margin:0}
-.coche:checked{background:var(--ice-deep);border-color:var(--ice-deep)}
-.coche:checked::after{content:"";width:9px;height:5px;border-left:2px solid var(--panel);
-  border-bottom:2px solid var(--panel);transform:rotate(-45deg) translate(1px,-1px)}
-.item-txt{display:grid;gap:.15rem;min-width:0}
-.item-titre{font-size:.95rem;font-weight:500;letter-spacing:-.01em}
-.item-meta{font-size:var(--t-small);color:var(--ink-3)}
-.item .btn{padding:.5rem 1rem;font-size:.82rem}
-.item--vide .item-titre{font-weight:400}
+.ligne{display:flex;align-items:center;gap:14px;min-height:58px;width:100%;padding:6px 0;border:0;
+  border-top:1px solid var(--filet);background:transparent;text-align:left}
+.ligne-n{flex:none;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:600;background:var(--p2);color:var(--ink)}
+.ligne[data-e="fait"] .ligne-n{background:var(--ink);color:var(--panel)}
+.ligne[data-e="proche"] .ligne-n{background:var(--ice-2);color:var(--ice-ink)}
+.ligne-txt{flex:1;display:flex;flex-direction:column;gap:1px;min-width:0}
+.ligne-txt strong{font-size:15px;font-weight:500}
+.ligne-txt small{font-size:13px;color:var(--ink-3)}
+.ligne-etat{font-size:13px;color:var(--ink-3);white-space:nowrap}
+.ligne[data-e="fait"] .ligne-etat,.ligne[data-e="proche"] .ligne-etat,.ligne[data-e="prochain"] .ligne-etat{color:var(--ice)}
+.ligne--call{min-height:52px}
+.ligne--call .ligne-num{flex:none;width:28px;font-size:13px;font-weight:600}
+.ligne--call .ligne-date{flex:1;font-size:15px}
+.ligne--call[data-e="fait"]{color:var(--ink-3)}
+.plus{align-self:flex-start;margin-top:6px;min-height:40px;padding:0 4px;border:0;background:transparent;
+  color:var(--ice);font-size:14px;font-weight:500}
+.reglage{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:4px;font-size:14px;color:var(--ink-2)}
 
-.lecteur{grid-column:1/-1;margin-top:.85rem;border-radius:var(--r-md);overflow:hidden;
-  background:var(--dark);aspect-ratio:16/9}
+/* ================= Journal ================= */
+.graphe{display:flex;align-items:flex-end;gap:4px;height:168px;padding-bottom:2px;border-bottom:1px solid var(--line)}
+.graphe div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
+.graphe i{width:100%;max-width:22px;border-radius:999px;background:var(--ink);transition:height .3s ease}
+.graphe i[data-e="vide"]{background:var(--p3)}
+.graphe i[data-e="ici"]{background:var(--ice)}
+.graphe-legende{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);margin-top:-10px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.stat{display:flex;flex-direction:column;gap:4px;padding:16px;border-radius:var(--r-md);background:var(--p2)}
+.stat small{font-size:12.5px;color:var(--ink-2)}
+.stat strong{font-size:28px;font-weight:600;letter-spacing:-.02em}
+.stat:nth-child(2) strong{color:var(--ink-3)}
+.stat:nth-child(3) strong{color:var(--ice)}
+.stat span{font-size:12.5px;color:var(--ink-3)}
+.releve{display:flex;align-items:center;gap:6px 12px;min-height:56px;padding:8px 0;border-top:1px solid var(--filet);flex-wrap:wrap}
+.releve strong{flex:1 1 140px;font-size:15px;font-weight:500}
+.releve span{font-size:13.5px;color:var(--ink-2)}
+
+/* ================= Ressources ================= */
+.kit{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:12px}
+.kit button{display:flex;flex-direction:column;gap:22px;padding:20px;border:0;border-radius:var(--r-md);
+  text-align:left;min-height:150px;background:var(--panel);color:var(--ink)}
+.kit small{font-size:12.5px;font-weight:500;letter-spacing:.06em;color:var(--ink-2)}
+.kit strong{margin-top:auto;font-size:18px;font-weight:600;line-height:1.15;letter-spacing:-.015em;text-wrap:balance}
+.kit button:first-child{background:var(--dark);color:var(--on-dark)}
+.kit button:first-child small{color:var(--on-dark-2)}
+.cherche{display:flex;align-items:center;gap:10px;min-height:48px;padding:0 16px;border-radius:999px;
+  background:var(--p2);color:var(--ink-2)}
+.cherche input{flex:1;min-width:0;border:0;background:transparent;font-size:15px;color:var(--ink);outline:none}
+.cherche:focus-within{outline:2px solid var(--ice);outline-offset:2px}
+.filtres{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.filtres button{flex:none;min-height:38px;padding:0 14px;border-radius:999px;font-size:13.5px;font-weight:500;
+  white-space:nowrap;border:1px solid var(--line);background:transparent;color:var(--ink)}
+.filtres button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--panel)}
+.biblio{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,420px),1fr));column-gap:28px}
+.res{display:flex;align-items:center;gap:14px;width:100%;min-height:64px;padding:10px 0;border:0;
+  border-bottom:1px solid var(--filet);background:transparent;text-align:left}
+.res[data-ferme]{opacity:.55}
+.res-type{flex:none;width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:600;letter-spacing:.06em;background:var(--p2);color:var(--ink-2)}
+.res[data-type="video"]:not([data-ferme]) .res-type{background:var(--ink);color:var(--panel)}
+.res-txt{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}
+.res-txt strong{font-size:15px;font-weight:500;line-height:1.3}
+.res-txt small{font-size:13px;color:var(--ink-3)}
+.res-vu{font-size:12.5px;color:var(--ice)}
+.res svg{color:var(--ink-3)}
+
+/* ================= Feuille ================= */
+.feuille{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;justify-content:center}
+.voile{position:absolute;inset:0;border:0;background:rgba(18,23,27,.45);animation:fadeIn .2s ease;cursor:default}
+.feuille-corps{position:relative;width:100%;max-width:560px;max-height:88vh;overflow-y:auto;display:flex;
+  flex-direction:column;gap:18px;padding:12px 22px calc(24px + env(safe-area-inset-bottom));background:var(--panel);
+  box-shadow:0 24px 60px -24px rgba(18,23,27,.35);animation:sheetUp .25s ease;border-radius:28px 28px 0 0}
+.poignee{display:flex;justify-content:center;padding-top:2px}
+.poignee i{width:40px;height:4px;border-radius:999px;background:var(--line)}
+.feuille-tete{display:flex;flex-direction:column;gap:6px}
+.feuille-tete h2{font-size:24px;font-weight:600;line-height:1.15;letter-spacing:-.02em;text-wrap:balance}
+.feuille-txt{font-size:15px;line-height:1.6;text-wrap:pretty}
+.verrou{display:flex;flex-direction:column;gap:10px;padding:20px;border-radius:var(--r-md);background:var(--p2)}
+.verrou strong{font-size:15.5px;font-weight:500}
+.verrou span{font-size:14.5px;line-height:1.5;color:var(--ink-2)}
+.lecteur{aspect-ratio:16/9;width:100%;border-radius:var(--r-md);overflow:hidden;background:#12171B}
 .lecteur iframe{width:100%;height:100%;border:0;display:block}
-
-/* ================= Documents ================= */
-.docs{display:grid;gap:1.4rem}
-.docs-head{display:grid;gap:.5rem;max-width:var(--measure)}
-.docs-head h2{font-size:var(--t-h3)}
-.docs-head p{color:var(--ink-2);font-size:var(--t-small)}
-.docs-groupes{display:grid;gap:1.6rem}
-
-/* ================= Pied ================= */
-.pied{display:flex;flex-wrap:wrap;gap:.6rem 1.2rem;justify-content:space-between;
-  align-items:center;padding:.6rem .4rem 0;font-size:var(--t-small);color:var(--ink-3)}
-.pied a{color:var(--ice-deep)}
-
-/* ================= Boîte à outils ================= */
-.outils{display:grid;gap:1.6rem}
-.outils-head{display:grid;gap:.5rem;max-width:var(--measure)}
-.outils-head h2{font-size:var(--t-h3)}
-.outils-head p:not(.label){color:var(--ink-2);font-size:var(--t-small)}
-/* Un sélecteur segmenté : trois parts égales dans une seule pilule, jamais
-   deux plus une. Sur téléphone il prend toute la largeur, et le texte se
-   réduit un peu sous 370 px pour tenir jusqu'à 320. */
-.onglets{display:inline-grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;padding:4px;
-  justify-self:start;background:var(--panel-2);border:1px solid var(--line);border-radius:999px}
-.onglet{font-family:inherit;font-size:var(--t-small);font-weight:500;letter-spacing:-.01em;
-  padding:.55rem 1.3rem;border-radius:999px;cursor:pointer;white-space:nowrap;
-  background:none;color:var(--ink-2);border:0;transition:color .2s}
-.onglet:hover{color:var(--ink)}
-.onglet[aria-selected="true"]{background:var(--ink);color:var(--panel)}
-@media (pointer:coarse){.onglet{min-height:44px}}
-@media (max-width:640px){
-  .onglets{display:grid;justify-self:stretch}
-  .onglet{padding-inline:.3rem;font-size:clamp(.78rem,3.9vw,.9rem)}
+.doc{display:flex;flex-direction:column;gap:10px}
+.doc .petit{text-align:center}
+.prepa{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
+.prepa li{position:relative;padding-left:18px;font-size:14.5px;line-height:1.5;text-wrap:pretty}
+.prepa li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--ice)}
+@media (min-width:900px){
+  .feuille{align-items:center;padding:24px}
+  .feuille-corps{border-radius:28px}
 }
-.prats{display:grid;gap:.6rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-.prat{background:var(--panel-2);border-radius:var(--r-md);padding:1rem 1.15rem;display:grid;gap:.35rem}
-.prat-top{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
-.prat-code{font-size:var(--t-label);font-weight:600;letter-spacing:.1em;color:var(--ice-deep);
-  font-variant-numeric:lining-nums tabular-nums}
-.prat-nom{font-size:.95rem;font-weight:600;letter-spacing:-.015em}
-.prat-duree{font-size:var(--t-label);letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ink-3);margin-left:auto;white-space:nowrap;
-  font-variant-numeric:lining-nums tabular-nums}
-.prat p{font-size:var(--t-small);color:var(--ink-2)}
-.vide{border:1px dashed var(--line);border-radius:var(--r-md);padding:1.1rem 1.25rem;
-  color:var(--ink-3);font-size:var(--t-small)}
 
-/* ================= La journée ================= */
-.jour{display:grid;gap:1.4rem}
-.jour-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem 1.1rem}
-.jour-head h2{font-size:var(--t-h3)}
-.jour-head p{font-size:var(--t-small);color:var(--ink-2)}
-/* Quatre, puis deux par deux, puis une. Jamais 3 + 1 : un moment
-   seul sur sa ligne casse la lecture de la journée. */
-.moments{display:grid;gap:.9rem;grid-template-columns:repeat(4,1fr)}
-@media (max-width:1140px){.moments{grid-template-columns:repeat(2,1fr)}}
-.moment{background:var(--panel-2);border-radius:var(--r-md);padding:1.1rem 1.25rem;
-  display:grid;gap:.85rem;align-content:start}
-/* Le nom du moment est un vrai titre ; la hauteur minimale garde les
-   quatre têtes alignées, que la pastille « Maintenant » soit là ou non. */
-.moment-tete{display:flex;align-items:center;justify-content:space-between;gap:.6rem;
-  min-height:1.75rem}
-.moment h3{font-size:1.05rem;font-weight:600;letter-spacing:-.015em;color:var(--ink)}
-/* Une pratique par ligne, séparées par un filet. */
-.acte{display:grid;gap:.2rem;padding-block:.75rem;border-top:1px solid var(--line)}
-.acte:first-child{border-top:0;padding-top:0}
-.acte:last-child{padding-bottom:0}
-.acte-top{display:flex;align-items:baseline;gap:.7rem}
-.acte-nom{font-size:.95rem;font-weight:500;letter-spacing:-.01em}
-.acte-duree{margin-left:auto;font-size:var(--t-small);color:var(--ink-2);white-space:nowrap;
-  font-variant-numeric:lining-nums tabular-nums}
-.acte-note{font-size:var(--t-small);color:var(--ink-2)}
-.moment-pied{font-size:var(--t-small);color:var(--ink-3);
-  border-top:1px solid var(--line);padding-top:.75rem}
-.moment--vide .acte-note{color:var(--ink-3)}
-/* Le moment en cours est le seul à changer : le même liseré « tu es ici »
-   que la phase en cours et le creux, et la pastille « Maintenant » pour
-   que la couleur ne soit pas le seul signal. Rien n'est retiré aux autres. */
-.moment[data-maintenant]{background:var(--panel);outline:2px solid var(--ice-deep);outline-offset:-2px}
-
-/* ================= La prochaine session ================= */
-.session .label{color:var(--ink-3)}
-.session-ferme{font-size:var(--t-small);color:var(--ink-2);max-width:var(--measure)}
-.prepa{display:grid;gap:.5rem;margin:0;padding:0;list-style:none}
-.prepa li{font-size:var(--t-small);color:var(--ink-2);padding-left:1.1rem;position:relative}
-.prepa li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;
-  border-radius:50%;background:var(--ice-deep)}
-
-@media (max-width:640px){.session-corps{grid-template-columns:1fr}}
-
-@media (max-width:640px){
-  .moments{grid-template-columns:1fr}
-  .semaines{grid-template-columns:repeat(7,1fr)}
-  .item{grid-template-columns:auto 1fr;row-gap:.7rem}
-  .item .btn{grid-column:2}
-}
-@media (prefers-reduced-motion:reduce){
-  *{animation:none !important;transition:none !important}
-  .btn:hover{transform:none}
-}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
 </style>
 </head>
 <body>
-<div class="shell">
 
-  <header class="topbar">
-    <a class="brand" href="/" aria-label="BELIVE, retour au site">
-      <svg viewBox="-3 -3 671 111" role="img" aria-label="BELIVE">
-        <g fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10">
-          <path d="M40,50 A25,25 0 0 0 40,0 H0 V100 H40 A25,25 0 0 0 40,50 H0"/>
-          <path d="M135,0 H197 M135,50 H197 M135,100 H197"/>
-          <path d="M267,0 V100 H322"/><path d="M392,0 V100"/>
-          <path d="M462,0 L495,100 L528,0"/>
-          <path d="M598,0 H660 M598,50 H660 M598,100 H660"/>
-        </g>
-      </svg>
-    </a>
-    <div class="vues" id="vues" role="tablist" aria-label="Sections de ton espace">
-      <button class="vue-onglet" type="button" role="tab" id="onglet-parcours"
-              data-vue="parcours" aria-controls="vue-parcours" aria-selected="true">Parcours</button>
-      <button class="vue-onglet" type="button" role="tab" id="onglet-outils" tabindex="-1"
-              data-vue="outils" aria-controls="vue-outils" aria-selected="false">Boîte à outils</button>
-      <button class="vue-onglet" type="button" role="tab" id="onglet-documents" tabindex="-1"
-              data-vue="documents" aria-controls="vue-documents" aria-selected="false">Documents</button>
+<aside class="cote">
+  <div class="cote-tete">
+    <a class="marque" href="/" aria-label="BELIVE, retour au site"><span class="marque-mot">BE<b>LIVE</b></span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.6" fill="currentColor"/></svg></a>
+    <span class="label">Espace RESET</span>
+  </div>
+  <nav aria-label="Sections de ton espace">
+    <button type="button" data-vue="jour"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>Aujourd'hui</button>
+    <button type="button" data-vue="parcours"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="6" r="2.2"/><path d="M7 17c6-1 3-9 10-10"/></svg>Parcours</button>
+    <button type="button" data-vue="journal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Journal</button>
+    <button type="button" data-vue="ressources"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="4" width="6" height="16" rx="1.5"/><rect x="12" y="4" width="4.5" height="16" rx="1.5"/><path d="M18.5 5.5l2.5 14"/></svg>Ressources</button>
+  </nav>
+  <div class="cote-pied">
+    <div class="cote-ou" id="cote-ou" hidden>
+      <span class="label" id="cote-semaine"></span>
+      <strong id="cote-phase"></strong>
     </div>
-    <div class="top-actions">
-      <span class="pill pill--mute">Espace privé</span>
-      <button class="theme" id="theme" type="button" aria-label="Thème : système. Changer de thème."
-              title="Thème : système"><span class="theme-pastille" aria-hidden="true"></span></button>
+    <div class="cote-bas">
+      <a class="ecrire" data-wa target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/></svg>Écrire à Tristan</a>
+      <button class="theme" type="button" data-theme-bouton><span class="theme-pastille" aria-hidden="true"></span></button>
+    </div>
+    <span class="petit" style="padding:0 4px">Espace privé. Ne partage pas cette adresse.</span>
+  </div>
+</aside>
+
+<div class="principal">
+  <header class="haut">
+    <div class="haut-g">
+      <a class="marque" href="/" aria-label="BELIVE, retour au site"><span class="marque-mot">BE<b>LIVE</b></span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.9"/><circle cx="12" cy="12" r="4.6" fill="currentColor"/></svg></a>
+      <span class="label">RESET</span>
+    </div>
+    <div class="haut-d">
+      <button class="theme" type="button" data-theme-bouton><span class="theme-pastille" aria-hidden="true"></span></button>
+      <a class="ecrire" data-wa target="_blank" rel="noopener noreferrer" aria-label="Écrire à Tristan sur WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/></svg>Tristan</a>
     </div>
   </header>
-
-  <div class="vue" id="vue-parcours" role="tabpanel" aria-labelledby="onglet-parcours">
-    <section class="panel panel--dark tete" id="tete">
-      <div class="tete-texte">
-        <div class="tete-haut">
-          <p class="label">Tableau de bord</p>
-          <h1 id="tete-titre">Ton espace.</h1>
-        </div>
-        <p class="lede" id="tete-lede">Dis-moi la date de ton premier call, et la page se
-          cale dessus pour les treize semaines.</p>
-      </div>
-
-      <div class="reglage">
-        <p class="reglage-info" id="reglage-info" hidden>
-          <span id="reglage-txt"></span>
-          <button class="lien" type="button" id="reglage-modifier">modifier</button>
-        </p>
-        <div class="depart" id="depart-bloc">
-          <label for="depart">Premier call</label>
-          <input type="date" id="depart">
-        </div>
-      </div>
-
-      <div class="semaines" id="semaines" role="list" aria-label="Les treize semaines" hidden></div>
-    </section>
-
-    <section class="phase session" id="panneau-session" hidden>
-      <h2 class="phase-titre">
-        <button class="phase-tete" type="button" data-bascule="session"
-                aria-expanded="false" aria-controls="corps-session">
-          <span class="label">Breathwork encadré</span>
-          <span class="phase-ligne">
-            <span class="phase-nom" id="session-titre"></span>
-            <span class="phase-etat phase-etat--now" id="session-quand"></span>
-            <span class="phase-fleche" aria-hidden="true"></span>
-          </span>
-          <span class="phase-quand num" id="session-date"></span>
-        </button>
-      </h2>
-      <div class="phase-corps" id="corps-session" role="region" hidden>
-        <p class="session-ferme" id="session-ferme"></p>
-        <div>
-          <p class="bloc-titre">Ce que tu prépares</p>
-          <ul class="prepa" id="prepa"></ul>
-        </div>
-      </div>
-    </section>
-
-    <div id="phases" class="phases"></div>
-  </div>
-
-  <section class="panel outils vue" id="vue-outils" role="tabpanel"
-           aria-labelledby="onglet-outils" hidden>
-    <div class="outils-head">
-      <p class="label">Ma boîte à outils</p>
-      <h2>Toutes les pratiques, au même endroit.</h2>
-      <p>Tu n'as pas à tout retenir. Tu viens chercher ce dont tu as besoin, au moment
-        où tu en as besoin.</p>
-    </div>
-    <div class="onglets" role="tablist" aria-label="Familles de pratiques" id="onglets"></div>
-    <div id="outils-corps"></div>
-  </section>
-
-  <section class="panel docs vue" id="vue-documents" role="tabpanel"
-           aria-labelledby="onglet-documents" hidden>
-    <div class="docs-head">
-      <h2>Les documents du protocole</h2>
-      <p>Chaque document s'ouvre au moment où il sert, les fiches avec leur phase. Le relevé
-        du journal est le geste le plus prédictif de tout le protocole : qui relève tient.</p>
-    </div>
-    <div class="docs-groupes" id="docs"></div>
-  </section>
-
-  <footer class="pied">
-    <span>Espace privé. Ne partage pas cette adresse.</span>
-    <span><a href="/">Retour au site</a></span>
-  </footer>
-
+  <main id="main"></main>
 </div>
+
+<nav class="bas" aria-label="Sections de ton espace">
+  <button type="button" data-vue="jour"><span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg></span>Aujourd'hui</button>
+  <button type="button" data-vue="parcours"><span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="6" r="2.2"/><path d="M7 17c6-1 3-9 10-10"/></svg></span>Parcours</button>
+  <button type="button" data-vue="journal"><span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>Journal</button>
+  <button type="button" data-vue="ressources"><span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="4" width="6" height="16" rx="1.5"/><rect x="12" y="4" width="4.5" height="16" rx="1.5"/><path d="M18.5 5.5l2.5 14"/></svg></span>Ressources</button>
+</nav>
+
+<div id="feuille"></div>
 
 <script>
 /* ==========================================================================
-   LES VIDÉOS ET LES DOCUMENTS
+   LES RÉGLAGES, LES VIDÉOS ET LES DOCUMENTS
    C'est le seul bloc à modifier. Le reste de la page se construit tout seul.
+
+   Les calls :
+     - VISIO : le lien de la visio. Vide, le bouton « Rejoindre » n'apparaît pas.
+     - HEURE_CALL : "18:30" par exemple. Vide, aucune heure n'est affichée.
+     Le call tombe chaque semaine le même jour que le premier. Le déplacer
+     passe par WhatsApp : la page n'a pas de serveur, elle ne peut prévenir
+     personne toute seule.
 
    Pour ajouter une vidéo :
      - copie une ligne, colle l'identifiant YouTube dans id
@@ -489,6 +421,10 @@ p{margin:0}
        sur le fichier, « Gérer les versions », puis envoyer la nouvelle.
      - les documents ne vivent pas dans le dépôt : le dépôt est public.
    ========================================================================== */
+
+const WHATSAPP = '32493847434';
+const VISIO = '';
+const HEURE_CALL = '';
 
 const VIDEOS = [
   { phase:1, semaine:1,  titre:"La lumière au réveil et la caféine déplacée", duree:"", id:"" },
@@ -513,46 +449,32 @@ const VIDEOS = [
    rechute en semaine 12. */
 const DOCS = [
   { groupe:"Avant le jour 1", docs:[
-    { n:"01", titre:"Carte du protocole",                     meta:"PDF · 5 pages A4",  des:0,  url:"https://drive.google.com/file/d/1XX4_rexwPJ5oKtLmhXirIQYl-KSMiX39/view" },
-    { n:"02", titre:"Journal de bord",                        meta:"PDF · 21 pages A4", des:0,  url:"https://drive.google.com/file/d/1VV7gQMwxAmbgK8wc-Htli0mUZEJpslKL/view" },
-    { n:"03", titre:"Carte du test CO₂",                      meta:"PDF · 2 pages A5",  des:0,  url:"https://drive.google.com/file/d/17ytySZnNIwN9KlWcfxHOoSf_CCCLxYcB/view" }
+    { n:"01", titre:"Carte du protocole",                     meta:"5 pages A4",  des:0,  url:"https://drive.google.com/file/d/1XX4_rexwPJ5oKtLmhXirIQYl-KSMiX39/view" },
+    { n:"02", titre:"Journal de bord",                        meta:"21 pages A4", des:0,  url:"https://drive.google.com/file/d/1VV7gQMwxAmbgK8wc-Htli0mUZEJpslKL/view" },
+    { n:"03", titre:"Carte du test CO₂",                      meta:"2 pages A5",  des:0,  url:"https://drive.google.com/file/d/17ytySZnNIwN9KlWcfxHOoSf_CCCLxYcB/view" }
   ]},
   { groupe:"Tes références", docs:[
-    { n:"04", titre:"Guide des Pratiques Respiratoires",      meta:"PDF · 7 pages A4",  des:0,  url:"https://drive.google.com/file/d/1iZEJFFmbBTI6FzTO-KFM7zjS2Nfnig_0/view" },
-    { n:"05", titre:"Guide du Mouvement",                     meta:"PDF · 8 pages A4",  des:0,  url:"https://drive.google.com/file/d/1q3QeiZlYy4z1li11ic_ikHXN9NKm734D/view" },
-    { n:"06", titre:"Carnet d'Hygiène de Vie",                meta:"PDF · 5 pages A4",  des:1,  url:"https://drive.google.com/file/d/1xalXWrzqIUElibvjgCv-epu_ran7TsAT/view" }
+    { n:"04", titre:"Guide des Pratiques Respiratoires",      meta:"7 pages A4",  des:0,  url:"https://drive.google.com/file/d/1iZEJFFmbBTI6FzTO-KFM7zjS2Nfnig_0/view" },
+    { n:"05", titre:"Guide du Mouvement",                     meta:"8 pages A4",  des:0,  url:"https://drive.google.com/file/d/1q3QeiZlYy4z1li11ic_ikHXN9NKm734D/view" },
+    { n:"06", titre:"Carnet d'Hygiène de Vie",                meta:"5 pages A4",  des:1,  url:"https://drive.google.com/file/d/1xalXWrzqIUElibvjgCv-epu_ran7TsAT/view" }
   ]},
   { groupe:"Au fil des phases", docs:[
-    { n:"07", titre:"Fiche de phase I · Rencontre Intérieure", meta:"PDF · 4 pages A4", des:1,  url:"https://drive.google.com/file/d/1QAe9qYlhxQd3WK9YHxBWkPwm0ezza1H9/view" },
-    { n:"08", titre:"Fiche de phase II · La Traversée",       meta:"PDF · 3 pages A4",  des:5,  url:"https://drive.google.com/file/d/1vlVFue4rEznk5XVeH3qQin4Fibzcx1-W/view" },
-    { n:"09", titre:"Fiche de phase III · La Reconstruction", meta:"PDF · 3 pages A4",  des:8,  url:"https://drive.google.com/file/d/1itRadYyABdoFhzCSjeIhQmjLI_4Irfk_/view" },
-    { n:"10", titre:"Fiche de phase IV · L'Intégration",      meta:"PDF · 3 pages A4",  des:11, url:"https://drive.google.com/file/d/1EjGDagqfYKXyKENTpICARNENRk92a5eB/view" },
-    { n:"11", titre:"Protocole de Vie Souveraine",            meta:"PDF · 2 pages A4",  des:11, url:"https://drive.google.com/file/d/12cggYKPPmKaSiRrHivLblYp_zXzx_9BR/view" },
-    { n:"12", titre:"Carte du protocole de rechute",          meta:"PDF · 2 pages A5",  des:12, url:"https://drive.google.com/file/d/1neclc6GL8eB1gf7MCuvCKDy61mdnHgq7/view" }
+    { n:"07", titre:"Fiche de phase I · Rencontre Intérieure", meta:"4 pages A4", des:1,  url:"https://drive.google.com/file/d/1QAe9qYlhxQd3WK9YHxBWkPwm0ezza1H9/view" },
+    { n:"08", titre:"Fiche de phase II · La Traversée",       meta:"3 pages A4",  des:5,  url:"https://drive.google.com/file/d/1vlVFue4rEznk5XVeH3qQin4Fibzcx1-W/view" },
+    { n:"09", titre:"Fiche de phase III · La Reconstruction", meta:"3 pages A4",  des:8,  url:"https://drive.google.com/file/d/1itRadYyABdoFhzCSjeIhQmjLI_4Irfk_/view" },
+    { n:"10", titre:"Fiche de phase IV · L'Intégration",      meta:"3 pages A4",  des:11, url:"https://drive.google.com/file/d/1EjGDagqfYKXyKENTpICARNENRk92a5eB/view" },
+    { n:"11", titre:"Protocole de Vie Souveraine",            meta:"2 pages A4",  des:11, url:"https://drive.google.com/file/d/12cggYKPPmKaSiRrHivLblYp_zXzx_9BR/view" },
+    { n:"12", titre:"Carte du protocole de rechute",          meta:"2 pages A5",  des:12, url:"https://drive.google.com/file/d/1neclc6GL8eB1gf7MCuvCKDy61mdnHgq7/view" }
   ]}
 ];
 
-/* ——————————————————————————————————————————————————————
-   MA BOÎTE À OUTILS
-   Les trois onglets existent, ils sont vides. On les remplit au fur
-   et à mesure, une pratique à la fois.
-
-   Pour ajouter une pratique : copie la ligne d'exemple en commentaire
-   dans les crochets de l'onglet voulu.
-     code  : le repère court, ou "" si la pratique n'en a pas
-     nom   : le nom de la pratique
-     duree : "3 min", "60 s", ce que tu veux
-     texte : une ou deux phrases, comment on la fait
-   —————————————————————————————————————————————————————— */
-
-const OUTILS = [
-  { cle:"respiration", titre:"Respiration", pratiques:[
-    // { code:"A1", nom:"", duree:"", texte:"" },
-  ]},
-  { cle:"meditation",  titre:"Méditation",  pratiques:[
-  ]},
-  { cle:"mouvement",   titre:"Mouvement",   pratiques:[
-  ]}
+/* Les quatre cartes « Ton kit », en haut des ressources : le numéro du
+   document, et la phrase qui s'affiche quand on l'ouvre. */
+const KIT = [
+  { n:"11", texte:"Une page, écrite de ta main en semaine 11 : ce qui a tenu, et que tu gardes." },
+  { n:"02", texte:"Vingt et une pages à imprimer. Le relevé de chaque jour, sur papier, loin du téléphone." },
+  { n:"04", texte:"La boîte à outils pour gérer le stress en temps réel, sans moi." },
+  { n:"05", texte:"La séquence du matin, les marches et les trainings, calibrés sur ton niveau et sur le temps que tu as vraiment." }
 ];
 
 /* ========================== Les quatre sessions encadrées ==========================
@@ -583,36 +505,51 @@ const PHASES = [
   { n:1, romain:"I",   nom:"Rencontre Intérieure", s:[1,4],
     verbe:"voir",
     installe:"La lumière au réveil et la caféine déplacée, les deux seuls comportements qu'on change d'emblée. Puis les trois ancres, les marches après les repas, et la première session encadrée au jour 24.",
-    disparait:null,   // rien ne disparaît : la carte n'est pas affichée
+    disparait:null,
     creux:"Jours 10 à 15. La nouveauté retombe, les résultats ne sont pas encore là, et le sevrage de caféine peut mordre. C'est normal et c'est prévu : tout le monde passe par là.",
     creuxJours:[10,15],
-    dit:"« Ma journée a une structure. »" },
+    dit:"Ma journée a une structure." },
   { n:2, romain:"II",  nom:"La Traversée", s:[5,7],
     verbe:"tenir",
     installe:"Deux trainings par semaine, une séance de stretching, puis le froid en fin de douche. Le but n'est pas d'endurer, c'est de rester calme pendant un stress que tu as choisi.",
     disparait:"Le support de l'assise du soir, en semaine 7. Même durée, même créneau, plus de ratio : le soir rejoint le matin en pleine conscience. Le premier retrait du protocole, et il est plus dur qu'un ajout.",
     creux:"Semaine 7. Le vide devient conscient : les fuites ne fonctionnent plus et rien ne les a remplacées. Rien n'est ajouté cette semaine-là, marches comprises.",
     creuxJours:[43,49],
-    dit:"« Je traverse sans fuir. »" },
+    dit:"Je traverse sans fuir." },
   { n:3, romain:"III", nom:"La Reconstruction", s:[8,10],
     verbe:"choisir",
     installe:"Trois gestes, un par semaine, et chacun dans le réel : un inventaire de ce que tu portes sans l'avoir choisi, une décision que quelqu'un d'autre pourrait vérifier, une demande adressée à une personne vivante.",
-    disparait:null,   // rien ne disparaît : la carte n'est pas affichée
+    disparait:null,
     creux:"Pas de creux daté. Ce que tu vas trouver : ce qui n'est pas daté n'a pas lieu. Le non se dit à une date, la demande se fait à une date.",
     creuxJours:null,
-    dit:"« Je décide, et je le prouve. »" },
+    dit:"Je décide, et je le prouve." },
   { n:4, romain:"IV",  nom:"L'Intégration", s:[11,13],
     verbe:"ancrer",
     installe:"Ton Protocole de Vie, écrit à la main, une section par jour. Ta carte de rechute, ta direction à douze mois, et deux ou trois personnes prévenues.",
     disparait:"L'éventail passe de treize pratiques à trois. La consigne s'arrête pendant sept jours. Le coach se retire : c'est toi qui mènes les deux derniers calls.",
     creux:"Semaines 11 et 12. La peur de la fin. Les anciens réflexes reviennent tester la structure, au moment exact où l'accompagnement se retire. Le retrait est annoncé dès la semaine 10.",
     creuxJours:[71,84],
-    dit:"« Je ne reviendrai pas en arrière. »" }
+    dit:"Je ne reviendrai pas en arrière." }
 ];
 
-/* ========================== Mémoire locale ========================== */
+/* Le relevé : trois notes de 1 à 5, matin et soir. */
+const MESURES = {
+  matin:[ { k:'sommeil', nom:'Sommeil', echelle:'1 agité · 5 profond' },
+          { k:'energie', nom:'Énergie', echelle:'1 vide · 5 pleine' },
+          { k:'stress',  nom:'Tension', echelle:'1 calme · 5 tendu' } ],
+  soir: [ { k:'energie', nom:'Énergie', echelle:'1 vide · 5 pleine' },
+          { k:'stress',  nom:'Tension', echelle:'1 calme · 5 tendu' },
+          { k:'creux',   nom:'Le creux de 15 h', echelle:'1 absent · 5 fort' } ]
+};
+const COURBES = [ ['energie','Énergie'], ['sommeil','Sommeil'], ['stress','Tension'] ];
+
+/* ========================== Mémoire locale ==========================
+   Tout reste dans le navigateur du client : la page n'envoie rien.
+   Les coches et les relevés sont rangés par date du calendrier, pas par
+   numéro de jour, pour survivre à une date de premier call corrigée. */
 const CLE_VU = 'belive-espace-vu';
 const CLE_DEPART = 'belive-espace-depart';
+const CLE_JOURNAL = 'belive-espace-journal';
 
 function lire(cle, defaut){
   try{ const v = localStorage.getItem(cle); return v === null ? defaut : JSON.parse(v); }
@@ -622,7 +559,8 @@ function ecrire(cle, val){
   try{ localStorage.setItem(cle, JSON.stringify(val)); }catch(e){}
 }
 
-let vus = lire(CLE_VU, {});
+let vus = lire(CLE_VU, {}) || {};
+let journal = Object.assign({ coches:{}, releves:{} }, lire(CLE_JOURNAL, {}) || {});
 let depart = lireDate(String(lire(CLE_DEPART, '') || ''));
 
 /* Le lien personnalisé : belivemethode.com/espace/06-10-2026
@@ -674,325 +612,54 @@ function majAdresse(){
   }catch(e){}
 }
 
-/* ========================== Semaine en cours ========================== */
-function semaineCourante(){
-  if(!depart) return null;
-  const d0 = new Date(depart + 'T00:00:00');
-  if(isNaN(d0)) return null;
-  const jours = Math.floor((Date.now() - d0.getTime()) / 86400000);
-  if(jours < 0) return 0;              // pas encore commencé
-  const s = Math.floor(jours / 7) + 1;
-  return s > 13 ? 14 : s;              // 14 = terminé
+/* ========================== Où en est le client ========================== */
+function iso(d){
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
 }
-function phaseDe(s){
-  if(!s || s < 1 || s > 13) return null;
-  return PHASES.find(p => s >= p.s[0] && s <= p.s[1]) || null;
+/* La date du jour n du protocole. Midi, pour qu'un changement d'heure
+   ne fasse jamais glisser d'un jour. */
+function dateDu(n){
+  const d = new Date(depart + 'T12:00:00');
+  d.setDate(d.getDate() + n - 1);
+  return d;
 }
+function texteDate(d, o){
+  return d.toLocaleDateString('fr-BE', o || { weekday:'long', day:'numeric', month:'long' });
+}
+function maj(t){ return t.charAt(0).toUpperCase() + t.slice(1); }
 function jourCourant(){
   if(!depart) return null;
   const d0 = new Date(depart + 'T00:00:00');
   if(isNaN(d0)) return null;
-  return Math.floor((Date.now() - d0.getTime()) / 86400000) + 1;
+  const a = new Date(); a.setHours(0, 0, 0, 0);
+  return Math.round((a - d0) / 86400000) + 1;
 }
-
-/* ========================== Construction ========================== */
-function echap(t){
-  return String(t).replace(/[&<>"']/g, c =>
-    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-
-function ligneVideo(v, i){
-  const cle = 'v' + i;
-  const vide = !v.id;
-  const meta = 'Semaine ' + v.semaine + (v.duree ? ' · ' + v.duree : '');
-  if(vide){
-    return '<div class="item item--vide">'
-      + '<span class="coche" aria-hidden="true" style="border-style:dashed"></span>'
-      + '<span class="item-txt"><span class="item-titre">' + echap(v.titre) + '</span>'
-      + '<span class="item-meta">' + meta + ' · à venir</span></span></div>';
-  }
-  return '<div class="item" data-video="' + echap(v.id) + '">'
-    + '<input class="coche" type="checkbox" data-cle="' + cle + '"'
-    + (vus[cle] ? ' checked' : '') + ' aria-label="Marquer ' + echap(v.titre) + ' comme vue">'
-    + '<span class="item-txt"><span class="item-titre">' + echap(v.titre) + '</span>'
-    + '<span class="item-meta">' + meta + '</span></span>'
-    + '<button class="btn" type="button" data-ouvrir>Regarder</button></div>';
-}
-
-function bloc(p){
-  const vids = VIDEOS.map((v, i) => ({v, i})).filter(o => o.v.phase === p.n);
-  const html = vids.length
-    ? vids.map(o => ligneVideo(o.v, o.i)).join('')
-    : '<div class="item item--vide"><span class="coche" aria-hidden="true" style="border-style:dashed"></span>'
-      + '<span class="item-txt"><span class="item-titre">Aucune vidéo pour cette phase</span></span></div>';
-
-  return '<article class="phase" id="phase-' + p.n + '" data-phase="' + p.n + '">'
-    + '<h2 class="phase-titre">'
-    +   '<button class="phase-tete" type="button" data-bascule="' + p.n + '"'
-    +   ' aria-expanded="false" aria-controls="corps-' + p.n + '">'
-    +     '<span class="phase-ligne">'
-    +       '<span class="phase-num num">' + p.romain + '</span>'
-    +       '<span class="phase-nom">' + echap(p.nom) + '</span>'
-    +       '<span class="phase-etat" data-etat="' + p.n + '"></span>'
-    +       '<span class="phase-fleche" aria-hidden="true"></span>'
-    +     '</span>'
-    +     '<span class="phase-quand num">Semaines ' + p.s[0] + ' à ' + p.s[1]
-    +       ' · le verbe est ' + p.verbe + '</span>'
-    +     '<span class="jauge"><span class="jauge-piste">'
-    +       '<span class="jauge-fil" data-fil="' + p.n + '"></span></span>'
-    +       '<span class="jauge-txt num" data-jauge="' + p.n + '"></span></span>'
-    +   '</button>'
-    + '</h2>'
-    + '<div class="phase-corps" id="corps-' + p.n + '" role="region" hidden>'
-    +   '<p class="phase-dit">' + echap(p.dit) + '</p>'
-    +   '<div class="notes">'
-    +     '<div class="note"><h3>Ce qui s\'installe</h3><p>' + echap(p.installe) + '</p></div>'
-    +     (p.disparait ? '<div class="note"><h3>Ce qui disparaît</h3><p>' + echap(p.disparait) + '</p></div>' : '')
-    +     '<div class="note note--creux"><h3>Le creux</h3><p>' + echap(p.creux) + '</p></div>'
-    +   '</div>'
-    +   '<div data-jour="' + p.n + '"></div>'
-    +   '<div><p class="bloc-titre">Les vidéos<span data-vid="' + p.n + '"></span></p>'
-    +     '<div class="liste">' + html + '</div></div>'
-    + '</div></article>';
-}
-
-document.getElementById('phases').innerHTML = PHASES.map(bloc).join('');
-
-/* Un document s'ouvre à sa semaine, comme une phase : sans date, ou avant
-   le premier call, seuls ceux de l'inscription sont là. */
-function ligneDoc(d, s){
-  const ouvert = d.des === 0 || (s >= 1 && s >= d.des);
-  if(!ouvert || !d.url){
-    const quand = !ouvert
-      ? (d.des <= 1 ? "s'ouvre au premier call" : "s'ouvre en semaine " + d.des)
-      : 'lien à venir';
-    return '<div class="item item--vide">'
-      + '<span class="coche" aria-hidden="true" style="border-style:dashed"></span>'
-      + '<span class="item-txt"><span class="item-titre">' + echap(d.titre) + '</span>'
-      + '<span class="item-meta">' + echap(d.meta) + ' · ' + quand + '</span></span></div>';
-  }
-  const cle = 'd' + d.n;
-  return '<div class="item">'
-    + '<input class="coche" type="checkbox" data-cle="' + cle + '"'
-    + (vus[cle] ? ' checked' : '') + ' aria-label="Marquer ' + echap(d.titre) + ' comme vu">'
-    + '<span class="item-txt"><span class="item-titre">' + echap(d.titre) + '</span>'
-    + '<span class="item-meta">' + echap(d.meta) + '</span></span>'
-    + '<a class="btn" href="' + echap(d.url) + '" target="_blank"'
-    + ' rel="noopener noreferrer">Ouvrir</a></div>';
-}
-function majDocs(s){
-  document.getElementById('docs').innerHTML = DOCS.map(g =>
-    '<div><p class="bloc-titre">' + echap(g.groupe) + '</p>'
-    + '<div class="liste">' + g.docs.map(d => ligneDoc(d, s)).join('') + '</div></div>'
-  ).join('');
-}
-
-/* ========================== Jauges ========================== */
-function majVideos(){
-  PHASES.forEach(p => {
-    const dispo = VIDEOS.map((v, i) => ({v, i})).filter(o => o.v.phase === p.n && o.v.id);
-    const faits = dispo.filter(o => vus['v' + o.i]).length;
-    const el = document.querySelector('[data-vid="' + p.n + '"]');
-    if(el) el.textContent = dispo.length ? ' · ' + faits + ' sur ' + dispo.length + ' vues' : '';
-  });
-}
-majVideos();
-
-document.addEventListener('change', e => {
-  const c = e.target.closest('.coche');
-  if(!c || !c.dataset.cle) return;
-  vus[c.dataset.cle] = c.checked;
-  ecrire(CLE_VU, vus);
-  majVideos();
-});
-
-/* ========================== L'accordéon des phases ========================== */
-function plier(n, ouvrir){
-  const tete = document.querySelector('[data-bascule="' + n + '"]');
-  const corps = document.getElementById('corps-' + n);
-  if(!tete || !corps) return;
-  tete.setAttribute('aria-expanded', String(ouvrir));
-  corps.hidden = !ouvrir;
-}
-
-document.addEventListener('click', e => {
-  const b = e.target.closest('.phase-tete');
-  if(!b || b.disabled) return;
-  plier(b.dataset.bascule, b.getAttribute('aria-expanded') !== 'true');
-});
-
-/* La jauge suit le temps passé dans la phase, pas les vidéos.
-   Une phase à venir ne s'ouvre pas : le protocole dit qu'une phase
-   s'ouvre au call qui la commence, jamais avant. */
-function majPhases(s, j){
-  PHASES.forEach(p => {
-    const art = document.getElementById('phase-' + p.n);
-    if(!art) return;
-    const tete = art.querySelector('.phase-tete');
-    const etat = art.querySelector('[data-etat]');
-    const fil = art.querySelector('[data-fil]');
-    const txt = art.querySelector('[data-jauge]');
-
-    let statut;
-    if(!s || s < 1 || s > 13) statut = 'libre';
-    else if(s > p.s[1]) statut = 'passee';
-    else if(s < p.s[0]) statut = 'avenir';
-    else statut = 'courante';
-    art.dataset.statut = statut;
-    tete.disabled = (statut === 'avenir' || statut === 'libre');
-
-    const debut = (p.s[0] - 1) * 7 + 1;
-    const bout  = p.s[1] * 7;
-    let pct = 0;
-    if(statut === 'passee') pct = 100;
-    else if(statut === 'courante')
-      pct = Math.min(100, Math.max(0, Math.round((j - debut + 1) / (bout - debut + 1) * 100)));
-    fil.style.width = pct + '%';
-
-    const creux = art.querySelector('.note--creux');
-    const dedans = statut === 'courante' && !!p.creuxJours
-      && j >= p.creuxJours[0] && j <= p.creuxJours[1];
-    creux.toggleAttribute('data-maintenant', dedans);
-    creux.querySelector('h3').textContent = dedans ? 'Le creux · tu y es' : 'Le creux';
-
-    if(statut === 'passee'){
-      etat.textContent = 'Validé'; etat.className = 'phase-etat phase-etat--ok';
-      txt.textContent = 'Terminée';
-    } else if(statut === 'courante'){
-      etat.textContent = 'En cours'; etat.className = 'phase-etat phase-etat--now';
-      txt.textContent = pct + ' %';
-    } else if(statut === 'avenir'){
-      etat.textContent = "S'ouvre en semaine " + p.s[0];
-      etat.className = 'phase-etat'; txt.textContent = '';
-    } else {
-      /* Pas de date : la page ne sait pas où en est le client,
-         donc aucune phase ne s'ouvre. */
-      etat.textContent = "S'ouvre au premier call";
-      etat.className = 'phase-etat'; txt.textContent = '';
-    }
-
-    plier(p.n, statut === 'courante');
-  });
-}
-
-/* ========================== Lecteur ========================== */
-document.addEventListener('click', e => {
-  const b = e.target.closest('[data-ouvrir]');
-  if(!b) return;
-  const item = b.closest('.item');
-  const id = item.dataset.video;
-  const ouvert = item.querySelector('.lecteur');
-  if(ouvert){ ouvert.remove(); b.textContent = 'Regarder'; return; }
-  document.querySelectorAll('.lecteur').forEach(l => {
-    const prec = l.closest('.item').querySelector('[data-ouvrir]');
-    if(prec) prec.textContent = 'Regarder';
-    l.remove();
-  });
-  const d = document.createElement('div');
-  d.className = 'lecteur';
-  d.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id)
-    + '?rel=0&modestbranding=1" title="Vidéo" allow="accelerometer; autoplay; clipboard-write;'
-    + ' encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="no-referrer"></iframe>';
-  item.appendChild(d);
-  b.textContent = 'Fermer';
-});
-
-/* ========================== Où tu en es ========================== */
-const champ = document.getElementById('depart');
-const grille = document.getElementById('semaines');
-const bTitre = document.getElementById('tete-titre');
-const bLede = document.getElementById('tete-lede');
-const rInfo = document.getElementById('reglage-info');
-const rTxt = document.getElementById('reglage-txt');
-const dBloc = document.getElementById('depart-bloc');
-
-function dateLongue(iso){
-  const d = new Date(iso + 'T00:00:00');
-  return isNaN(d) ? iso
-    : d.toLocaleDateString('fr-BE', { day:'numeric', month:'long', year:'numeric' });
-}
-
-/* Chaque fait n'est écrit qu'une fois : le jour dans la bande,
-   la semaine dans les cases, la phase sur son onglet,
-   la journée dans la phase en cours. */
-function majEtat(){
-  const s = semaineCourante();
+/* etat : 'sans' (pas de date), 'avant', 'cours', 'fini'. */
+function situation(){
   const j = jourCourant();
-  majJourEtSession(s);
-  majPhases(s, j);
-  majDocs(s);
-
-  grille.innerHTML = '';
-  for(let i = 1; i <= 13; i++){
-    const d = document.createElement('div');
-    d.className = 'sem num';
-    d.setAttribute('role', 'listitem');
-    d.textContent = i;
-    if(s && (s > 13 || i < s)) d.setAttribute('data-passee', '');
-    else if(s && i === s) d.setAttribute('data-courante', '');
-    grille.appendChild(d);
-  }
-
-  if(!depart){
-    bTitre.textContent = 'Ton espace.';
-    bLede.textContent = 'Dis-moi la date de ton premier call, et la page se cale '
-      + 'dessus pour les treize semaines.';
-    grille.hidden = true;
-    rInfo.hidden = true;
-    dBloc.hidden = false;
-    return;
-  }
-
-  rTxt.textContent = 'Premier call, ' + dateLongue(depart) + '.';
-  rInfo.hidden = false;
-  dBloc.hidden = true;
-
-  if(s === 0){
-    bTitre.textContent = 'Ça commence le ' + dateLongue(depart) + '.';
-    bLede.textContent = "La phase I s'ouvrira au premier call.";
-    grille.hidden = true;
-    return;
-  }
-  if(s > 13){
-    bTitre.textContent = 'Les treize semaines sont passées.';
-    bLede.textContent = "L'éventail est à trois pratiques. C'est toi qui mènes.";
-    grille.hidden = false;
-    return;
-  }
-  bTitre.textContent = 'Jour ' + j + ' sur 91.';
-  bLede.textContent = '';
-  grille.hidden = false;
+  if(j === null) return { etat:'sans', j:null, s:null, phase:null };
+  if(j < 1) return { etat:'avant', j:j, s:0, phase:null };
+  if(j > 91) return { etat:'fini', j:j, s:14, phase:null };
+  const s = Math.ceil(j / 7);
+  return { etat:'cours', j:j, s:s, phase:PHASES.find(p => s >= p.s[0] && s <= p.s[1]) };
 }
-
-if(depart) champ.value = depart;
-champ.addEventListener('change', () => {
-  depart = champ.value || null;
-  ecrire(CLE_DEPART, depart);
-  majAdresse();
-  majEtat();
-});
-document.getElementById('reglage-modifier').addEventListener('click', () => {
-  rInfo.hidden = true;
-  dBloc.hidden = false;
-  champ.focus();
-});
-majEtat();
-
-/* Au retour sur l'onglet : le moment a pu changer, et le jour aussi
-   si la page est restée ouverte toute la nuit. */
-document.addEventListener('visibilitychange', () => {
-  if(!document.hidden) majEtat();
-});
+function jourDuCall(n){ return 1 + 7 * (n - 1); }
+function ouvert(des, c){
+  if(des === 0 || c.etat === 'fini') return true;
+  return c.etat === 'cours' && c.s >= des;
+}
 
 /* ========================== La journée d'aujourd'hui ==========================
    Tout ce qui suit est repris de la grille des treize semaines (doc 06) et des
    deux guides. Rien n'est extrapolé : une ligne apparaît la semaine où la grille
    la fait entrer, avec la durée de cette semaine-là.
+   libre : la pratique ne se fait pas tous les jours, elle se coche mais ne
+   compte pas dans le total de la journée.
    ============================================================================ */
 function journee(s){
   const lever = [], midi = [], soiree = [], coucher = [];
 
-  lever.push({ nom:"Dehors, à la lumière", duree:"10 min",
+  lever.push({ id:'lumiere', nom:"Dehors, à la lumière", duree:"10 min",
     note: s >= 2 ? "Dans les trente premières minutes, téléphone hors de portée."
                  : "Dans les trente premières minutes du lever." });
 
@@ -1000,14 +667,15 @@ function journee(s){
   if(s === 1)      am = ["5 min",  "Tu observes ton souffle et tu le comptes."];
   else if(s === 2) am = ["10 min", "Tu observes ton souffle et tu le comptes."];
   else             am = ["10 min", "En pleine conscience."];
-  lever.push({ nom:"L'assise du matin, avant le café", duree:am[0], note:am[1] });
+  lever.push({ id:'assise-m', nom:"L'assise du matin, avant le café", duree:am[0], note:am[1] });
 
-  if(s >= 6) lever.push({ nom:"La douche, froide sur la fin", duree: s === 6 ? "30 à 60 s" : "90 à 120 s",
+  if(s >= 6) lever.push({ id:'froid', libre:true, nom:"La douche, froide sur la fin",
+    duree: s === 6 ? "30 à 60 s" : "90 à 120 s",
     note:"Les jours sans training. Jamais les deux le même jour." });
 
-  if(s >= 2 && s <= 4) lever.push({ nom:"La séquence du matin", duree:"2 à 3 min",
+  if(s >= 2 && s <= 4) lever.push({ id:'sequence', nom:"La séquence du matin", duree:"2 à 3 min",
     note:"Le bloc 1 seul, délier." });
-  else if(s >= 5)      lever.push({ nom:"La séquence du matin", duree:"10 à 15 min",
+  else if(s >= 5)      lever.push({ id:'sequence', nom:"La séquence du matin", duree:"10 à 15 min",
     note:"Les trois blocs." });
 
   if(s >= 2){
@@ -1015,29 +683,29 @@ function journee(s){
     if(s <= 4)      note = "La reprise en trois temps, puis trois respirations 4/8. Toujours la même.";
     else if(s <= 7) note = "Trois options, une par état. Tu choisis selon où tu en es.";
     else            note = "L'éventail complet est ouvert.";
-    midi.push({ nom:"À la fin du repas, assis", duree: s <= 4 ? "2 min" : "2 à 5 min", note:note });
-    midi.push({ nom:"Juste après, une marche lente", duree: s === 2 ? "5 min" : "10 min",
+    midi.push({ id:'reprise', nom:"À la fin du repas, assis", duree: s <= 4 ? "2 min" : "2 à 5 min", note:note });
+    midi.push({ id:'marche-midi', nom:"Juste après, une marche lente", duree: s === 2 ? "5 min" : "10 min",
       note:"Accrochée au repas, jamais à une heure." });
   }
 
   if(s >= 5){
-    soiree.push({ nom:"Le training", duree: s === 5 ? "25 à 35 min" : "22 à 26 min",
+    soiree.push({ id:'training', libre:true, nom:"Le training", duree: s === 5 ? "25 à 35 min" : "22 à 26 min",
       note: s === 5 ? "Deux séances modérées cette semaine. Allure où la conversation reste possible."
                     : "Deux séances en intervalles cette semaine. Jamais deux jours de suite." });
-    soiree.push({ nom:"Le stretching", duree:"25 min",
+    soiree.push({ id:'stretching', libre:true, nom:"Le stretching", duree:"25 min",
       note:"Une fois cette semaine, un jour sans training." });
   }
 
-  if(s >= 4) coucher.push({ nom:"Après le repas du soir, une marche lente",
+  if(s >= 4) coucher.push({ id:'marche-soir', nom:"Après le repas du soir, une marche lente",
     duree: s <= 7 ? "5 min" : "10 min", note:"" });
-  if(s >= 2) coucher.push({ nom:"Allongé, jambes au mur", duree:"5 min",
+  if(s >= 2) coucher.push({ id:'mur', nom:"Allongé, jambes au mur", duree:"5 min",
     note:"Avant l'assise du soir, pas après." });
   if(s >= 3){
     let as;
     if(s === 3)     as = ["5 min",  "Souffle guidé, ratio 4/8."];
     else if(s <= 6) as = ["10 min", "Souffle guidé, ratio 4/8."];
     else            as = ["10 min", "En pleine conscience. Plus de ratio."];
-    coucher.push({ nom:"L'assise du soir, une demi-heure avant", duree:as[0], note:as[1] });
+    coucher.push({ id:'assise-s', nom:"L'assise du soir, une demi-heure avant", duree:as[0], note:as[1] });
   }
 
   return [
@@ -1065,165 +733,553 @@ function momentActuel(){
   return 3;                        // au coucher
 }
 
-function acteHTML(a){
-  return '<div class="acte"><div class="acte-top">'
-    + '<span class="acte-nom">' + echap(a.nom) + '</span>'
-    + '<span class="acte-duree num">' + echap(a.duree) + '</span></div>'
-    + (a.note ? '<span class="acte-note">' + echap(a.note) + '</span>' : '')
-    + '</div>';
+/* ========================== État de l'écran ========================== */
+const VUES = ['jour', 'parcours', 'journal', 'ressources'];
+const ecran = { vue:'jour', moment:null, courbe:'energie', filtre:'ouvertes', mot:'', tousCalls:false,
+                changerDate:false, feuille:null };
+const main = document.getElementById('main');
+const feuille = document.getElementById('feuille');
+
+function echap(t){
+  return String(t).replace(/[&<>"']/g, c =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function wa(texte){
+  return 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(texte);
+}
+const COCHE = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"'
+  + ' stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const CADENAS = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"'
+  + ' aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+
+function champDate(){
+  return '<div class="depart"><label for="depart">Premier call</label>'
+    + '<input type="date" id="depart" value="' + echap(depart || '') + '"></div>';
 }
 
-function majJourEtSession(s){
-  const ps = document.getElementById('panneau-session');
-  const j = jourCourant();
+/* ========================== Aujourd'hui ========================== */
+function barreSemaines(s){
+  let h = '';
+  for(let i = 1; i <= 13; i++)
+    h += '<i title="Semaine ' + i + '"' + (i < s ? ' data-e="fait"' : i === s ? ' data-e="ici"' : '')
+      + (i === 5 || i === 8 || i === 11 ? ' data-coupe' : '') + '></i>';
+  return '<div class="barre" role="img" aria-label="Semaine ' + Math.min(s, 13) + ' sur 13">' + h + '</div>'
+    + '<div class="barre-legende"><span>Semaine 1</span><span>Semaine 13</span></div>';
+}
 
-  /* La journée vit dans la phase en cours, juste avant les vidéos. */
-  document.querySelectorAll('[data-jour]').forEach(el => { el.innerHTML = ''; });
+function carteCall(c){
+  let n = 1;
+  while(n <= 13 && jourDuCall(n) < c.j) n++;
+  if(n > 13) return '';
+  const reste = jourDuCall(n) - c.j;
+  const d = dateDu(jourDuCall(n));
+  const quand = reste === 0 ? "Aujourd'hui" : reste === 1 ? 'Demain' : maj(texteDate(d));
+  const detail = [HEURE_CALL, reste > 1 ? 'dans ' + reste + ' jours' : '', 'visio', n >= 12 ? 'tu le mènes' : '']
+    .filter(Boolean).join(' · ');
+  const msg = 'Bonjour Tristan, je voudrais déplacer le call ' + n + ' du ' + texteDate(d) + '.';
+  return '<section class="call">'
+    + '<span class="label">Prochain call · ' + n + ' sur 13</span>'
+    + '<div class="call-quand"><strong>' + echap(quand) + '</strong><span>' + echap(detail) + '</span></div>'
+    + '<div class="call-actes">'
+    + (VISIO ? '<a class="call-oui" href="' + echap(VISIO) + '" target="_blank" rel="noopener noreferrer">Rejoindre la visio</a>' : '')
+    + '<a class="' + (VISIO ? 'call-non' : 'call-oui') + '" href="' + echap(wa(msg))
+    + '" target="_blank" rel="noopener noreferrer">Demander à le déplacer</a>'
+    + '</div></section>';
+}
 
-  if(!s || s < 1 || s > 13 || !j){ ps.hidden = true; return; }
+function carteReleve(){
+  const cle = iso(new Date());
+  const moment = ecran.moment || (new Date().getHours() >= 15 ? 'soir' : 'matin');
+  const cur = (journal.releves[cle] && journal.releves[cle][moment]) || {};
+  const mesures = MESURES[moment];
+  const faits = mesures.filter(m => cur[m.k]).length;
+  const statut = faits === mesures.length
+    ? 'Relevé du ' + moment + ' noté. ' + (moment === 'matin' ? 'À ce soir.' : 'Bonne nuit.')
+    : faits + ' sur ' + mesures.length + '. Réponds vite, la première impression est la bonne.';
+  return '<section class="carte">'
+    + '<div class="entre" style="align-items:flex-start"><div style="display:flex;flex-direction:column;gap:6px">'
+    + '<span class="label">Le relevé · 90 secondes</span><h2 class="h2">Comment tu es, là.</h2></div>'
+    + '<div class="seg">'
+    + ['matin', 'soir'].map(m => '<button type="button" data-act="moment" data-v="' + m + '" aria-pressed="'
+        + (m === moment) + '">' + maj(m) + '</button>').join('')
+    + '</div></div>'
+    + '<div class="mesures">' + mesures.map(m =>
+        '<div class="mesure"><div class="entre"><span class="mesure-nom">' + echap(m.nom) + '</span>'
+        + '<span class="mesure-echelle">' + echap(m.echelle) + '</span></div>'
+        + '<div class="notes" role="group" aria-label="' + echap(m.nom) + '">'
+        + [1, 2, 3, 4, 5].map(n => '<button type="button" data-act="note" data-moment="' + moment + '" data-k="' + m.k
+            + '" data-v="' + n + '" aria-pressed="' + (cur[m.k] === n) + '">' + n + '</button>').join('')
+        + '</div></div>').join('')
+    + '</div>'
+    + '<p class="petit"' + (faits === mesures.length ? ' style="color:var(--ice)"' : '') + '>' + echap(statut) + '</p>'
+    + '</section>';
+}
 
-  const ph = phaseDe(s);
-  const cible = document.querySelector('[data-jour="' + ph.n + '"]');
-  if(cible){
-    const maintenant = momentActuel();
-    const moments = journee(s).map((m, i) => {
-      const corps = m.actes.length
-        ? '<div class="actes">' + m.actes.map(acteHTML).join('') + '</div>'
-        : '<span class="acte-note">' + echap(m.vide) + '</span>';
-      const ici = i === maintenant;
-      return '<div class="moment' + (m.actes.length ? '' : ' moment--vide') + '"'
-        + (ici ? ' data-maintenant' : '') + '>'
-        + '<div class="moment-tete"><h3>' + echap(m.titre) + '</h3>'
-        + (ici ? '<span class="phase-etat phase-etat--now">Maintenant</span>' : '') + '</div>'
-        + corps
-        + (m.pied ? '<p class="moment-pied">' + echap(m.pied) + '</p>' : '')
-        + '</div>';
+function carteProtocole(c){
+  const cle = iso(new Date());
+  const coches = journal.coches[cle] || {};
+  const moments = journee(c.s);
+  const comptes = moments.flatMap(m => m.actes).filter(a => !a.libre);
+  const faits = comptes.filter(a => coches[a.id]).length;
+  const ici = momentActuel();
+  const groupes = moments.map((m, i) => {
+    const quot = m.actes.filter(a => !a.libre);
+    return '<div class="groupe"><div class="groupe-tete"><span class="label">' + echap(m.titre) + '</span>'
+      + (i === ici ? '<span class="pastille">Maintenant</span>'
+          : quot.length ? '<small>' + quot.filter(a => coches[a.id]).length + '/' + quot.length + '</small>' : '')
+      + '</div>'
+      + m.actes.map(a =>
+          '<button class="acte" type="button" data-act="coche" data-id="' + a.id + '" aria-pressed="' + !!coches[a.id] + '">'
+          + '<span class="rond">' + COCHE + '</span>'
+          + '<span class="acte-txt"><span class="acte-nom">' + echap(a.nom) + '</span>'
+          + (a.note ? '<span class="acte-note">' + echap(a.note) + '</span>' : '') + '</span>'
+          + '<span class="acte-duree">' + echap(a.duree) + '</span></button>').join('')
+      + (m.actes.length ? (m.pied ? '<p class="petit">' + echap(m.pied) + '</p>' : '')
+                        : '<p class="petit" style="margin-top:4px">' + echap(m.vide) + '</p>')
+      + '</div>';
+  }).join('');
+  return '<section class="carte proto">'
+    + '<div class="proto-tete"><div><span class="label">Le protocole du jour</span>'
+    + '<h2 class="h2">Trois ancres.</h2></div>'
+    + '<span class="compte">' + faits + ' / ' + comptes.length + '</span></div>'
+    + '<div class="jauge"><i style="width:' + (comptes.length ? faits / comptes.length * 100 : 0) + '%"></i></div>'
+    + groupes
+    + '<p class="petit proto-pied">Une journée ratée ne se rattrape pas. Manquer est normal. Faire est le résultat.</p>'
+    + '</section>';
+}
+
+function vueJour(c){
+  if(c.etat === 'sans')
+    return '<div class="vue"><section class="tete"><span class="label">Espace RESET</span>'
+      + '<h1 class="h1 h1--today">Ton espace.</h1>'
+      + '<p class="lede">Dis-moi la date de ton premier call, et la page se cale dessus pour les treize semaines.</p></section>'
+      + '<section class="carte">' + champDate() + '</section></div>';
+
+  if(c.etat === 'avant')
+    return '<div class="vue"><section class="tete"><span class="label">Avant le jour 1</span>'
+      + '<h1 class="h1 h1--today">Ça commence le ' + echap(texteDate(dateDu(1), { day:'numeric', month:'long' })) + '.</h1>'
+      + '<p class="lede">La phase I s\'ouvrira au premier call. D\'ici là, tes premiers documents '
+      + 'sont dans les ressources.</p>' + barreSemaines(0) + '</section>'
+      + '<button class="bouton" type="button" data-vue="ressources" style="align-self:flex-start">Ouvrir les ressources</button></div>';
+
+  if(c.etat === 'fini')
+    return '<div class="vue"><section class="tete"><span class="label">Après les 91 jours</span>'
+      + '<h1 class="h1 h1--today">Les treize semaines sont passées.</h1>'
+      + '<p class="lede">L\'éventail est à trois pratiques. C\'est toi qui mènes.</p>' + barreSemaines(14) + '</section>'
+      + '<div class="cols"><div class="col">' + carteReleve() + '</div></div></div>';
+
+  const p = c.phase;
+  const creux = p.creuxJours && c.j >= p.creuxJours[0] && c.j <= p.creuxJours[1];
+  const sess = SESSIONS.find(x => x.jour >= c.j && x.jour - c.j <= 7);
+  const resteS = sess ? sess.jour - c.j : 0;
+  return '<div class="vue">'
+    + '<section class="tete" style="gap:14px"><span class="label">' + echap(maj(texteDate(new Date())))
+    + ' · Jour ' + c.j + ' sur 91</span>'
+    + '<h1 class="h1 h1--today">' + echap(p.nom) + '.</h1>'
+    + '<p class="lede">Phase ' + p.romain + ' · semaine ' + c.s + ' sur 13 · le verbe est <b>' + echap(p.verbe) + '</b>.</p>'
+    + barreSemaines(c.s) + '</section>'
+    + (creux ? '<section class="bandeau"><span class="label">Le creux · tu y es</span><p>' + echap(p.creux) + '</p></section>' : '')
+    + (sess ? '<section class="bandeau"><span class="label">Session Breathwork ' + sess.n + ' sur 4 · '
+        + (resteS === 0 ? "aujourd'hui" : resteS === 1 ? 'demain' : 'dans ' + resteS + ' jours') + '</span>'
+        + '<p>' + echap(maj(texteDate(dateDu(sess.jour)))) + '. ' + echap(sess.ferme) + '</p>'
+        + '<button class="lien" type="button" data-act="session" data-n="' + sess.n + '">Ce que tu prépares</button></section>' : '')
+    + '<div class="cols"><div class="col">' + carteCall(c) + carteReleve() + '</div>'
+    + carteProtocole(c) + '</div></div>';
+}
+
+/* ========================== Parcours ========================== */
+function vueParcours(c){
+  const phases = PHASES.map(p => {
+    const e = c.etat === 'fini' ? 'fait'
+      : c.etat !== 'cours' ? 'avenir'
+      : c.s > p.s[1] ? 'fait' : c.s < p.s[0] ? 'avenir' : 'ici';
+    let sems = '';
+    for(let n = p.s[0]; n <= p.s[1]; n++)
+      sems += '<span' + (e === 'fait' || (e === 'ici' && n < c.s) ? ' data-e="fait"' : e === 'ici' && n === c.s ? ' data-e="ici"' : '')
+        + '>S' + n + '</span>';
+    const verrou = e !== 'avenir' ? ''
+      : p.n === 1 || !depart ? "S'ouvre au premier call."
+      : "S'ouvre au call du " + texteDate(dateDu(jourDuCall(p.s[0])), { day:'numeric', month:'long' }) + '.';
+    return '<article class="phase" data-e="' + e + '">'
+      + '<div class="phase-tete"><span class="label">Phase ' + p.romain + ' · semaines ' + p.s[0] + ' à ' + p.s[1] + '</span>'
+      + '<span class="pastille">' + (e === 'fait' ? 'Terminée' : e === 'ici' ? 'En cours' : 'À venir') + '</span></div>'
+      + '<div class="phase-nom"><h3>' + echap(p.nom) + '</h3>'
+      + '<span>Le verbe est ' + echap(p.verbe) + '. « ' + echap(p.dit) + ' »</span></div>'
+      + (e !== 'avenir' ? '<div class="phase-detail">'
+          + '<p><b>Ce qui s\'installe.</b> ' + echap(p.installe) + '</p>'
+          + (p.disparait ? '<p><b>Ce qui disparaît.</b> ' + echap(p.disparait) + '</p>' : '')
+          + '<p><b>Le creux.</b> ' + echap(p.creux) + '</p></div>' : '')
+      + '<div class="sems">' + sems + '</div>'
+      + (verrou ? '<span class="petit">' + echap(verrou) + '</span>' : '')
+      + '</article>';
+  }).join('');
+
+  let cote = '';
+  if(depart){
+    const j = c.j;
+    const sessions = SESSIONS.map(x => {
+      const e = x.jour < j ? 'fait' : x.jour - j < 8 ? 'proche' : '';
+      return '<button class="ligne" type="button" data-act="session" data-n="' + x.n + '" data-e="' + e + '">'
+        + '<span class="ligne-n">' + x.n + '</span>'
+        + '<span class="ligne-txt"><strong>' + echap(maj(texteDate(dateDu(x.jour)))) + '</strong>'
+        + '<small>Semaine ' + x.semaine + ' · visio · fin de phase ' + PHASES[x.n - 1].romain + '</small></span>'
+        + '<span class="ligne-etat">' + (x.jour < j ? 'Faite' : x.jour === j ? "Aujourd'hui" : 'Jour ' + x.jour) + '</span></button>';
     }).join('');
-    cible.innerHTML = '<div class="jour-bloc">'
-      + '<p class="bloc-titre">Aujourd\'hui</p>'
-      + '<div class="moments">' + moments + '</div></div>';
+
+    let prochain = 1;
+    while(prochain <= 13 && jourDuCall(prochain) < j) prochain++;
+    let calls = [];
+    for(let n = 1; n <= 13; n++){
+      const e = jourDuCall(n) < j ? 'fait' : n === prochain ? 'prochain' : '';
+      calls.push('<div class="ligne ligne--call" data-e="' + e + '">'
+        + '<span class="ligne-num">' + String(n).padStart(2, '0') + '</span>'
+        + '<span class="ligne-date">' + echap(maj(texteDate(dateDu(jourDuCall(n)), { weekday:'short', day:'numeric', month:'short' }))) + '</span>'
+        + '<span class="ligne-etat">' + (e === 'fait' ? 'Fait' : e === 'prochain' ? 'Prochain' : n >= 12 ? 'Tu le mènes' : '') + '</span></div>');
+    }
+    if(!ecran.tousCalls){
+      const p0 = Math.min(prochain, 13);
+      calls = calls.slice(Math.max(0, p0 - 3), p0 + 2);
+    }
+    cote = '<div class="col">'
+      + '<section class="carte carte--liste"><span class="label">Les sessions Breathwork · 1 h 30</span>'
+      + '<h2 class="h2">La longue ne se fait jamais seul.</h2>' + sessions + '</section>'
+      + '<section class="carte carte--liste"><div class="entre"><span class="label">Les calls · un par semaine</span>'
+      + '<span class="compte" style="font-size:13px">' + (prochain - 1) + ' / 13</span></div>'
+      + '<h2 class="h2">Le ' + echap(texteDate(dateDu(1), { weekday:'long' })) + (HEURE_CALL ? ', ' + echap(HEURE_CALL) : '') + '.</h2>'
+      + calls.join('')
+      + '<button class="plus" type="button" data-act="calls">' + (ecran.tousCalls ? 'Voir moins' : 'Voir les treize calls') + '</button>'
+      + '</section>'
+      + '<div class="reglage">' + (ecran.changerDate ? champDate()
+          : '<span>Premier call, ' + echap(texteDate(dateDu(1), { day:'numeric', month:'long', year:'numeric' })) + '.</span>'
+            + '<button class="lien" type="button" data-act="date">modifier</button>') + '</div>'
+      + '</div>';
+  } else {
+    cote = '<div class="col"><section class="carte"><span class="label">Ton calendrier</span>'
+      + '<p class="petit" style="font-size:15px">Les sessions et les treize calls se datent à partir de ton premier call.</p>'
+      + champDate() + '</section></div>';
   }
 
-  const suiv = SESSIONS.find(x => x.jour >= j);
-  if(!suiv){ ps.hidden = true; return; }
-  ps.hidden = false;
-
-  /* Le panneau se range sous la phase où tombe la session.
-     Les quatre sessions tombent sur la dernière semaine de chaque phase,
-     donc juste après un call de fin de phase le rendez-vous suivant
-     appartient déjà à la phase d'après. */
-  const phSess = PHASES.find(x => suiv.semaine >= x.s[0] && suiv.semaine <= x.s[1]);
-  const art = phSess && document.getElementById('phase-' + phSess.n);
-  if(art && art.nextElementSibling !== ps) art.insertAdjacentElement('afterend', ps);
-  const reste = suiv.jour - j;
-  const d = new Date(depart + 'T00:00:00');
-  d.setDate(d.getDate() + suiv.jour - 1);
-
-  document.getElementById('session-titre').textContent = 'Session n° ' + suiv.n + ' sur 4';
-  document.getElementById('session-quand').textContent =
-    reste === 0 ? "aujourd'hui" : (reste === 1 ? 'demain' : 'dans ' + reste + ' jours');
-  document.getElementById('session-date').textContent = 'Semaine ' + suiv.semaine + ' · '
-    + d.toLocaleDateString('fr-BE', { weekday:'long', day:'numeric', month:'long' })
-    + ' · jour ' + suiv.jour;
-  document.getElementById('session-ferme').textContent = suiv.ferme;
-  document.getElementById('prepa').innerHTML =
-    PREPA.map(t => '<li>' + echap(t) + '</li>').join('');
+  const sur = c.etat === 'cours' ? ' · jour ' + c.j + ' sur 91' : '';
+  return '<div class="vue"><section class="tete"><span class="label">Ton parcours' + sur + '</span>'
+    + '<h1 class="h1">Quatre phases. Tu n\'as jamais plus d\'un mois devant toi.</h1></section>'
+    + '<div class="cols"><section class="phases">' + phases + '</section>' + cote + '</div></div>';
 }
 
-/* ========================== Boîte à outils ========================== */
-const CLE_ONGLET = 'belive-espace-onglet';
-const barre = document.getElementById('onglets');
-const corps = document.getElementById('outils-corps');
+/* ========================== Journal ==========================
+   Rien n'est inventé : un jour sans relevé reste un jour sans relevé. */
+function valeur(n, k){
+  const r = journal.releves[iso(dateDu(n))];
+  if(!r) return null;
+  const v = [r.matin && r.matin[k], r.soir && r.soir[k]].filter(Boolean);
+  return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null;
+}
+function moyenne(a, b, k){
+  const v = [];
+  for(let n = a; n <= b; n++){ const x = valeur(n, k); if(x) v.push(x); }
+  return v.length ? v.reduce((p, q) => p + q, 0) / v.length : null;
+}
+function vueJournal(c){
+  const tete = '<section class="tete"><span class="label">Journal de régulation</span>'
+    + '<h1 class="h1">Qui relève tient.</h1>';
+  if(c.etat === 'sans' || c.etat === 'avant')
+    return '<div class="vue">' + tete + '<p class="lede">Matin et soir, quatre-vingt-dix secondes. '
+      + 'Le journal commence au premier call.</p></section></div>';
 
-function carte(pr){
-  const code = pr.code ? '<span class="prat-code">' + echap(pr.code) + '</span>' : '';
-  const duree = pr.duree ? '<span class="prat-duree num">' + echap(pr.duree) + '</span>' : '';
-  const texte = pr.texte ? '<p>' + echap(pr.texte) + '</p>' : '';
-  return '<article class="prat">'
-    + '<div class="prat-top">' + code
-    + '<span class="prat-nom">' + echap(pr.nom) + '</span>' + duree + '</div>'
-    + texte + '</article>';
+  const jour = c.j;
+  const k = ecran.courbe;
+  const nom = COURBES.find(x => x[0] === k)[1];
+  let releves = 0;
+  for(let n = 1; n <= jour; n++) if(journal.releves[iso(dateDu(n))]) releves++;
+  const de = Math.max(1, jour - 20);
+  let barres = '';
+  for(let n = de; n <= jour; n++){
+    const v = valeur(n, k);
+    barres += '<div title="Jour ' + n + (v ? ' · ' + v.toFixed(1).replace('.', ',') : ' · pas de relevé') + '">'
+      + '<i style="height:' + (v ? v / 5 * 100 + '%' : '6px') + '"' + (v ? (n === jour ? ' data-e="ici"' : '') : ' data-e="vide"') + '></i></div>';
+  }
+  const f = x => x ? x.toFixed(1).replace('.', ',') : '–';
+  const stats = [
+    [nom + ', 7 derniers jours', f(moyenne(Math.max(1, jour - 6), jour, k)), 'sur 5'],
+    [nom + ', semaine 1', f(moyenne(1, Math.min(7, jour), k)), 'ton point de départ'],
+    ['Jours relevés', releves + '/' + jour, 'depuis le premier call']
+  ].map(s => '<div class="stat"><small>' + echap(s[0]) + '</small><strong>' + s[1] + '</strong><span>' + s[2] + '</span></div>').join('');
+
+  let recents = '';
+  for(let n = jour; n >= Math.max(1, jour - 4); n--){
+    const r = journal.releves[iso(dateDu(n))] || {};
+    const ligne = moment => r[moment] ? maj(moment) + ' · ' + MESURES[moment].filter(m => r[moment][m.k])
+      .map(m => (m.k === 'creux' ? 'creux' : m.nom.toLowerCase()) + ' ' + r[moment][m.k]).join(', ') : '';
+    const t = [ligne('matin'), ligne('soir')].filter(Boolean);
+    recents += '<div class="releve"><strong>' + (n === jour ? "Aujourd'hui"
+        : echap(maj(texteDate(dateDu(n), { weekday:'long', day:'numeric', month:'short' })))) + '</strong>'
+      + (t.length ? t.map(x => '<span>' + echap(x) + '</span>').join('') : '<span>Pas de relevé</span>') + '</div>';
+  }
+
+  return '<div class="vue">' + tete
+    + '<p class="lede">Matin et soir, quatre-vingt-dix secondes. Tu as relevé ' + releves + ' jour' + (releves > 1 ? 's' : '')
+    + (c.etat === 'fini' ? '' : ' sur ' + jour) + '.</p></section>'
+    + '<section class="carte" style="gap:20px"><div class="entre" style="align-items:center;flex-wrap:wrap">'
+    + '<span class="label">Les 21 derniers jours</span><div class="seg">'
+    + COURBES.map(x => '<button type="button" data-act="courbe" data-v="' + x[0] + '" aria-pressed="' + (x[0] === k) + '">' + x[1] + '</button>').join('')
+    + '</div></div>'
+    + '<div class="graphe">' + barres + '</div>'
+    + '<div class="graphe-legende"><span>' + echap(maj(texteDate(dateDu(de), { day:'numeric', month:'short' }))) + '</span><span>Aujourd\'hui</span></div>'
+    + '<div class="stats">' + stats + '</div></section>'
+    + '<section class="carte carte--liste"><span class="label" style="padding-bottom:8px">Les derniers relevés</span>' + recents + '</section>'
+    + '<p class="petit" style="padding:0 4px">Tes relevés restent sur cet appareil, dans ce navigateur. '
+    + 'Le journal papier reste la référence.</p></div>';
 }
 
-function montrer(cle){
-  const o = OUTILS.find(x => x.cle === cle) || OUTILS[0];
-  [...barre.children].forEach(b =>
-    b.setAttribute('aria-selected', String(b.dataset.cle === o.cle)));
-  corps.innerHTML = o.pratiques.length
-    ? '<div class="prats">' + o.pratiques.map(carte).join('') + '</div>'
-    : '<p class="vide">Rien ici pour l\'instant. Cet onglet se remplira au fur et à mesure.</p>';
-  ecrire(CLE_ONGLET, o.cle);
+/* ========================== Ressources ========================== */
+function ressources(){
+  const docs = DOCS.flatMap(g => g.docs.map(d => ({ cle:'d' + d.n, type:'pdf', titre:d.titre, meta:d.meta,
+    des:d.des, url:d.url, pret:!!d.url })));
+  const videos = VIDEOS.map((v, i) => ({ cle:'v' + i, type:'video', titre:v.titre, meta:v.duree,
+    des:v.semaine, id:v.id, pret:!!v.id }));
+  return docs.concat(videos);
+}
+function quandOuvre(des){
+  if(des <= 1 || !depart) return des <= 1 ? "s'ouvre au premier call" : "s'ouvre en semaine " + des;
+  return "s'ouvre en semaine " + des;
+}
+function ligneRes(r, c){
+  const ok = ouvert(r.des, c);
+  const genre = r.type === 'video' ? 'Vidéo' : 'PDF';
+  const meta = !ok ? genre + ' · ' + quandOuvre(r.des)
+    : !r.pret ? genre + ' · à venir'
+    : [genre, r.meta, r.type === 'video' ? 'semaine ' + r.des : ''].filter(Boolean).join(' · ');
+  return '<button class="res" type="button" data-act="res" data-cle="' + r.cle + '" data-type="' + r.type + '"'
+    + (ok && r.pret ? '' : ' data-ferme') + '>'
+    + '<span class="res-type">' + (r.type === 'video' ? 'VID' : 'PDF') + '</span>'
+    + '<span class="res-txt"><strong>' + echap(r.titre) + '</strong><small>' + echap(meta) + '</small></span>'
+    + (!ok ? CADENAS : vus[r.cle] ? '<span class="res-vu">Vu</span>' : '') + '</button>';
+}
+function listeRes(c){
+  const q = ecran.mot.trim().toLowerCase();
+  const f = ecran.filtre;
+  const l = ressources().filter(r =>
+    (f === 'tout' || (f === 'ouvertes' && ouvert(r.des, c) && r.pret) || f === r.type)
+    && (!q || r.titre.toLowerCase().includes(q)));
+  return l.length ? '<div class="biblio">' + l.map(r => ligneRes(r, c)).join('') + '</div>'
+    : '<p class="lede" style="font-size:15px;padding:20px 0">Aucune ressource ne correspond. Essaie un autre mot.</p>';
+}
+function vueRessources(c){
+  const tout = ressources();
+  const nb = tout.filter(r => ouvert(r.des, c) && r.pret).length;
+  const kit = KIT.map((k, i) => {
+    const r = tout.find(x => x.cle === 'd' + k.n);
+    if(!r) return '';
+    return '<button type="button" data-act="res" data-cle="' + r.cle + '">'
+      + '<small>0' + (i + 1) + ' · ' + echap(ouvert(r.des, c) ? r.meta : 'semaine ' + r.des) + '</small>'
+      + '<strong>' + echap(r.titre) + '</strong></button>';
+  }).join('');
+  const filtres = [['ouvertes', 'Ouvertes'], ['tout', 'Tout'], ['pdf', 'Documents'], ['video', 'Vidéos']];
+  return '<div class="vue"><section class="tete"><span class="label">Ressources · ' + nb + ' sur ' + tout.length + ' ouvertes</span>'
+    + '<h1 class="h1">Phase par phase, jamais tout d\'un coup.</h1></section>'
+    + '<section style="display:flex;flex-direction:column;gap:12px"><span class="label" style="padding:0 4px">Ton kit</span>'
+    + '<div class="kit">' + kit + '</div></section>'
+    + '<section class="carte" style="gap:14px;padding:22px">'
+    + '<label class="cherche"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"'
+    + ' stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg>'
+    + '<input id="cherche" type="search" value="' + echap(ecran.mot) + '" placeholder="Chercher une vidéo, un guide, une fiche"'
+    + ' aria-label="Chercher une ressource"></label>'
+    + '<div class="filtres">' + filtres.map(x => '<button type="button" data-act="filtre" data-v="' + x[0]
+        + '" aria-pressed="' + (ecran.filtre === x[0]) + '">' + x[1] + '</button>').join('') + '</div>'
+    + '<div id="liste-res">' + listeRes(c) + '</div></section></div>';
 }
 
-barre.innerHTML = OUTILS.map(o =>
-  '<button class="onglet" type="button" role="tab" data-cle="' + o.cle + '"'
-  + ' aria-selected="false">' + echap(o.titre) + '</button>').join('');
+/* ========================== Feuilles ========================== */
+function feuilleRes(cle, c){
+  const r = ressources().find(x => x.cle === cle);
+  if(!r) return '';
+  const ok = ouvert(r.des, c);
+  const kit = KIT.find(k => 'd' + k.n === cle);
+  const genre = r.type === 'video' ? 'Vidéo' : 'PDF';
+  let corps;
+  if(!ok){
+    const quand = r.des <= 1 || !depart ? "S'ouvre au premier call."
+      : "S'ouvre en semaine " + r.des + ', au call du ' + texteDate(dateDu(jourDuCall(r.des)), { day:'numeric', month:'long' }) + '.';
+    corps = '<div class="verrou"><strong>' + echap(quand) + '</strong>'
+      + '<span>Une phase s\'ouvre au call qui la commence, jamais avant. Ce qui arrive trop tôt devient une distraction.</span></div>';
+  } else if(!r.pret){
+    corps = '<div class="verrou"><strong>À venir.</strong><span>Cette ressource n\'est pas encore en ligne.</span></div>';
+  } else if(r.type === 'video'){
+    corps = '<div class="lecteur"><iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(r.id)
+      + '?rel=0&modestbranding=1" title="' + echap(r.titre) + '" allow="accelerometer; autoplay; clipboard-write;'
+      + ' encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="no-referrer"></iframe></div>';
+  } else {
+    corps = '<div class="doc"><a class="bouton" href="' + echap(r.url) + '" target="_blank" rel="noopener noreferrer">Ouvrir le PDF</a>'
+      + '<span class="petit">S\'ouvre dans un nouvel onglet.</span></div>';
+  }
+  return '<div class="feuille-tete"><span class="label">' + echap([kit ? 'Ton kit' : genre, ok ? r.meta : ''].filter(Boolean).join(' · ')) + '</span>'
+    + '<h2 id="feuille-titre">' + echap(r.titre) + '</h2></div>'
+    + corps
+    + (kit ? '<p class="feuille-txt">' + echap(kit.texte) + '</p>' : '')
+    + (ok && r.pret ? '<button class="bouton bouton--ligne" type="button" data-act="vu" data-cle="' + r.cle
+        + '" aria-pressed="' + !!vus[r.cle] + '">' + (vus[r.cle] ? 'Marqué comme vu' : 'Marquer comme vu') + '</button>' : '');
+}
+function feuilleSession(n){
+  const x = SESSIONS.find(s => s.n === n);
+  if(!x) return '';
+  return '<div class="feuille-tete"><span class="label">Session Breathwork ' + x.n + ' sur 4 · semaine ' + x.semaine + '</span>'
+    + '<h2 id="feuille-titre">' + echap(depart ? maj(texteDate(dateDu(x.jour))) + '.' : 'Jour ' + x.jour + '.') + '</h2></div>'
+    + '<p class="feuille-txt">' + echap(x.ferme) + '</p>'
+    + '<span class="label">Ce que tu prépares</span>'
+    + '<ul class="prepa">' + PREPA.map(t => '<li>' + echap(t) + '</li>').join('') + '</ul>';
+}
+let avantFeuille = null;
+function rendreFeuille(){
+  const f = ecran.feuille;
+  const h = !f ? '' : f.type === 'res' ? feuilleRes(f.cle, situation()) : feuilleSession(f.n);
+  if(!h){ feuille.innerHTML = ''; document.body.style.overflow = ''; return; }
+  feuille.innerHTML = '<div class="feuille"><button class="voile" type="button" data-act="fermer" aria-label="Fermer"></button>'
+    + '<div class="feuille-corps" role="dialog" aria-modal="true" aria-labelledby="feuille-titre" tabindex="-1">'
+    + '<div class="poignee"><i></i></div>' + h + '</div></div>';
+  document.body.style.overflow = 'hidden';
+}
+function ouvrirFeuille(f){
+  avantFeuille = document.activeElement;
+  ecran.feuille = f;
+  rendreFeuille();
+  const c = feuille.querySelector('.feuille-corps');
+  if(c) c.focus();
+}
+function fermerFeuille(){
+  if(!ecran.feuille) return;
+  ecran.feuille = null;
+  rendreFeuille();
+  rendre();
+  if(avantFeuille && document.contains(avantFeuille)) avantFeuille.focus();
+}
 
-barre.addEventListener('click', e => {
-  const b = e.target.closest('.onglet');
-  if(b) montrer(b.dataset.cle);
-});
-barre.addEventListener('keydown', e => {
-  if(e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-  const bs = [...barre.children];
-  const i = bs.findIndex(b => b.getAttribute('aria-selected') === 'true');
-  const suivant = bs[(i + (e.key === 'ArrowRight' ? 1 : bs.length - 1)) % bs.length];
-  suivant.focus(); montrer(suivant.dataset.cle);
-});
-
-montrer(lire(CLE_ONGLET, OUTILS[0].cle));
-
-/* ========================== Les trois vues ==========================
-   Le parcours est la vue principale. La boîte à outils et les documents
-   ont chacun la leur. L'adresse ne change pas : chaque changement de vue
-   ajoute une étape à l'historique, pour que le bouton retour du téléphone
-   ramène à la vue d'avant au lieu de quitter la page. */
-const VUES = ['parcours', 'outils', 'documents'];
-const barreVues = document.getElementById('vues');
-
-function afficherVue(v, remonter){
-  if(!VUES.includes(v)) v = 'parcours';
-  VUES.forEach(x => {
-    document.getElementById('vue-' + x).hidden = x !== v;
-    const b = barreVues.querySelector('[data-vue="' + x + '"]');
-    b.setAttribute('aria-selected', String(x === v));
-    b.tabIndex = x === v ? 0 : -1;
+/* ========================== Rendu ========================== */
+function rendre(){
+  const c = situation();
+  main.innerHTML = ecran.vue === 'parcours' ? vueParcours(c)
+    : ecran.vue === 'journal' ? vueJournal(c)
+    : ecran.vue === 'ressources' ? vueRessources(c)
+    : vueJour(c);
+  document.querySelectorAll('nav [data-vue]').forEach(b => {
+    if(b.dataset.vue === ecran.vue) b.setAttribute('aria-current', 'page');
+    else b.removeAttribute('aria-current');
   });
+  const ou = document.getElementById('cote-ou');
+  ou.hidden = c.etat !== 'cours';
+  if(c.etat === 'cours'){
+    document.getElementById('cote-semaine').textContent = 'Semaine ' + c.s + ' sur 13';
+    document.getElementById('cote-phase').textContent = c.phase.nom;
+  }
+}
+
+/* L'adresse ne change pas d'une vue à l'autre : chaque changement ajoute une
+   étape à l'historique, pour que le bouton retour du téléphone ramène à la
+   vue d'avant au lieu de quitter la page. */
+function afficherVue(v, remonter){
+  ecran.vue = VUES.includes(v) ? v : 'jour';
+  rendre();
   if(remonter) window.scrollTo(0, 0);
 }
 
-barreVues.addEventListener('click', e => {
-  const b = e.target.closest('[data-vue]');
-  if(!b || b.getAttribute('aria-selected') === 'true') return;
-  history.pushState({ vue:b.dataset.vue }, '', location.href);
-  afficherVue(b.dataset.vue, true);
+document.addEventListener('click', e => {
+  const v = e.target.closest('[data-vue]');
+  if(v){
+    if(v.dataset.vue === ecran.vue){ window.scrollTo(0, 0); return; }
+    history.pushState({ vue:v.dataset.vue }, '', location.href);
+    afficherVue(v.dataset.vue, true);
+    return;
+  }
+  const b = e.target.closest('[data-act]');
+  if(!b) return;
+  const d = b.dataset;
+  const jour = iso(new Date());
+  switch(d.act){
+    case 'moment': ecran.moment = d.v; rendre(); break;
+    case 'note': {
+      const r = journal.releves[jour] || (journal.releves[jour] = {});
+      const m = r[d.moment] || (r[d.moment] = {});
+      m[d.k] = +d.v;
+      ecrire(CLE_JOURNAL, journal);
+      rendre();
+      break;
+    }
+    case 'coche': {
+      const k = journal.coches[jour] || (journal.coches[jour] = {});
+      k[d.id] = !k[d.id];
+      ecrire(CLE_JOURNAL, journal);
+      rendre();
+      break;
+    }
+    case 'courbe': ecran.courbe = d.v; rendre(); break;
+    case 'calls': ecran.tousCalls = !ecran.tousCalls; rendre(); break;
+    case 'date': {
+      ecran.changerDate = true; rendre();
+      const i = document.getElementById('depart'); if(i) i.focus();
+      break;
+    }
+    case 'filtre': ecran.filtre = d.v; rendre(); break;
+    case 'res': ouvrirFeuille({ type:'res', cle:d.cle }); break;
+    case 'session': ouvrirFeuille({ type:'session', n:+d.n }); break;
+    case 'vu':
+      vus[d.cle] = !vus[d.cle];
+      ecrire(CLE_VU, vus);
+      rendreFeuille();
+      break;
+    case 'fermer': fermerFeuille(); break;
+  }
+  const actif = d.act && main.querySelector('[data-act="' + d.act + '"]'
+    + (d.id ? '[data-id="' + d.id + '"]' : '') + (d.k ? '[data-k="' + d.k + '"]' : '') + (d.v ? '[data-v="' + d.v + '"]' : ''));
+  if(actif && !ecran.feuille && main.contains(actif) && d.act !== 'date') actif.focus({ preventScroll:true });
 });
-barreVues.addEventListener('keydown', e => {
-  if(e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-  const bs = [...barreVues.children];
-  const i = bs.findIndex(b => b.getAttribute('aria-selected') === 'true');
-  const suivant = bs[(i + (e.key === 'ArrowRight' ? 1 : bs.length - 1)) % bs.length];
-  suivant.focus(); suivant.click();
+
+document.addEventListener('change', e => {
+  if(e.target.id !== 'depart') return;
+  depart = lireDate(e.target.value) || null;
+  ecrire(CLE_DEPART, depart);
+  ecran.changerDate = false;
+  majAdresse();
+  rendre();
 });
-window.addEventListener('popstate', e => afficherVue(e.state && e.state.vue, true));
+/* La recherche ne redessine que la liste : redessiner le champ ferait
+   perdre le curseur à chaque lettre. */
+document.addEventListener('input', e => {
+  if(e.target.id !== 'cherche') return;
+  ecran.mot = e.target.value;
+  document.getElementById('liste-res').innerHTML = listeRes(situation());
+});
+document.addEventListener('keydown', e => { if(e.key === 'Escape') fermerFeuille(); });
+window.addEventListener('popstate', e => {
+  ecran.feuille = null; rendreFeuille();
+  afficherVue(e.state && e.state.vue, true);
+});
+
+document.querySelectorAll('[data-wa]').forEach(a => { a.href = wa('Bonjour Tristan, '); });
+
 /* Au rechargement, le navigateur garde la vue où l'on était. */
 afficherVue(history.state && history.state.vue, false);
+
+/* Au retour sur l'onglet : le moment a pu changer, et le jour aussi
+   si la page est restée ouverte toute la nuit. */
+document.addEventListener('visibilitychange', () => {
+  if(!document.hidden && !ecran.feuille && document.activeElement.tagName !== 'INPUT') rendre();
+});
 
 /* ========================== Thème ==========================
    Le même cycle que sur le site, avec la même clé : système, clair, sombre.
    La clé est en texte brut (le site l'écrit ainsi), d'où localStorage direct. */
 const MODES = ['system', 'light', 'dark'];
 const NOMS = { system:'Thème : système', light:'Thème : clair', dark:'Thème : sombre' };
-const COULEURS = { light:'#DFE4E8', dark:'#0B0E11' };
-const bTheme = document.getElementById('theme');
+const COULEURS = { light:'#E8ECEF', dark:'#0B0E11' };
+const bThemes = document.querySelectorAll('[data-theme-bouton]');
 let mode = 'system';
 try{ const m = localStorage.getItem('belive-theme'); if(MODES.includes(m)) mode = m; }catch(e){}
 
 function appliquerTheme(){
   if(mode === 'system') document.documentElement.removeAttribute('data-theme');
   else document.documentElement.setAttribute('data-theme', mode);
-  bTheme.setAttribute('aria-label', NOMS[mode] + '. Changer de thème.');
-  bTheme.title = NOMS[mode];
+  bThemes.forEach(b => {
+    b.setAttribute('aria-label', NOMS[mode] + '. Changer de thème.');
+    b.title = NOMS[mode];
+  });
   /* La barre du navigateur, et celle du téléphone quand la page est
      ouverte depuis l'écran d'accueil, suivent le thème choisi. */
   document.querySelectorAll('meta[name="theme-color"]').forEach(el => {
@@ -1231,11 +1287,11 @@ function appliquerTheme(){
   });
 }
 appliquerTheme();
-bTheme.addEventListener('click', () => {
+bThemes.forEach(b => b.addEventListener('click', () => {
   mode = MODES[(MODES.indexOf(mode) + 1) % MODES.length];
   try{ localStorage.setItem('belive-theme', mode); }catch(e){}
   appliquerTheme();
-});
+}));
 </script>
 </body>
 </html>
