@@ -262,6 +262,14 @@ img{max-width:100%}
 
 /* ================= Ajustements mobiles ================= */
 /* Les styles en ligne l'emportent sur une feuille : d'où les !important. */
+/* Parcours des offres : dès que les quatre étapes ne tiennent plus sur une ligne,
+   la frise passe à la verticale, le trait à gauche et une étape par ligne. */
+@media (max-width:1020px){
+  .parcours{grid-template-columns:1fr!important;gap:0!important;border-top:0!important;border-left:1px solid rgba(18,23,27,.25)}
+  .parcours>div{gap:8px!important;padding:0 0 34px 30px!important}
+  .parcours>div:last-child{padding-bottom:0!important}
+  .parcours>div>span:first-child{left:-.5px!important;top:0!important;margin:0!important;transform:translateX(-50%)}
+}
 @media (max-width:860px){
   .faq__aside{position:static!important}
 }
@@ -729,7 +737,7 @@ img{max-width:100%}
 <p data-reveal style="margin:0;max-width:44ch;font-size:18px;line-height:1.6;color:#2B343C">Après la séance de groupe, deux formats en tête-à-tête. Tous deux sont ponctuels, sans engagement, et mènent au protocole RESET, qui ouvrira prochainement.</p>
 </div>
 
-<div data-reveal style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:28px 24px;border-top:1px solid rgba(18,23,27,.25)">
+<div class="parcours" data-reveal style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:28px 24px;border-top:1px solid rgba(18,23,27,.25)">
 <div style="position:relative;display:flex;flex-direction:column;gap:14px;padding-top:34px">
 <span style="position:absolute;left:0;top:0;width:18px;height:18px;margin-top:-9px;border-radius:50%;background:#12171B;border:4px solid #FFFFFF;box-shadow:0 0 0 6px rgba(18,23,27,.08)"></span>
 <span style="font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#33708F">01 · tu viens d'ici</span>
@@ -757,7 +765,7 @@ img{max-width:100%}
 </div>
 
 <div data-reveal style="display:flex;justify-content:center">
-<p style="margin:0;max-width:52ch;text-align:center;font-size:clamp(20px,2vw,28px);font-weight:300;line-height:1.4;color:#12171B;text-wrap:balance">Tu ne sais pas par où entrer ? Prends <strong style="font-weight:600">Alignement</strong>. Tu sais déjà que c'est le souffle que tu veux ? Va direct sur <strong style="font-weight:600">Reconnexion</strong>.</p>
+<p style="margin:0;max-width:52ch;text-align:center;font-size:clamp(20px,2vw,28px);font-weight:300;line-height:1.4;color:#12171B;text-wrap:balance">Tu ne sais pas par où entrer&nbsp;? Prends <strong style="font-weight:600">Alignement</strong>. Tu sais déjà que c'est le souffle que tu veux&nbsp;? Va direct sur <strong style="font-weight:600">Reconnexion</strong>.</p>
 </div>
 
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:16px;align-items:stretch">
