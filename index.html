@@ -193,6 +193,19 @@ img{max-width:100%}
   .nav__links a{padding:14px 16px;border-radius:14px;color:#E6ECF0}
 }
 
+/* ================= Exercice du souffle ================= */
+/* Le cercle central est le bouton : il recouvre le disque blanc, qui respire dessous. */
+.souffle__btn{
+  position:absolute;inset:32%;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  padding:0;border:0;border-radius:50%;background:none;color:#12171B;font-family:inherit;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;transition:transform .3s;
+}
+.souffle__btn:active{transform:scale(.96)}
+.souffle__btn:focus-visible{outline:2px solid #FFFFFF;outline-offset:6px}
+/* Au repos, un anneau bat autour du cercle pour inviter à appuyer */
+.souffle__pulse{position:absolute;inset:32%;border-radius:50%;border:1.5px solid rgba(255,255,255,.8);animation:invite 2.4s ease-out infinite}
+@keyframes invite{from{transform:scale(1);opacity:.9}to{transform:scale(1.45);opacity:0}}
+
 /* ================= Questions ================= */
 .faq__icon{
   flex:none;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;
@@ -462,14 +475,15 @@ f();addEventListener('resize',f);})();
 <div data-ex-ripple hidden style="position:absolute;inset:34%;border-radius:50%;border:1px solid rgba(255,255,255,.7);animation:ripple 5s ease-out infinite"></div>
 <div data-ex-ripple hidden style="position:absolute;inset:34%;border-radius:50%;border:1px solid rgba(255,255,255,.7);animation:ripple 5s 2.5s ease-out infinite"></div>
 <div data-ex-core style="position:absolute;inset:32%;border-radius:50%;background:#FFFFFF;box-shadow:0 0 80px rgba(156,199,220,.55);transform:scale(1);transition:transform 5s cubic-bezier(.45,0,.55,1)"></div>
-<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#12171B">
-<span style="width:12px;height:12px;border-radius:50%;background:#33708F;animation:recFade 2s ease-in-out infinite"></span>
-<span data-ex-label style="font-size:13px;font-weight:500;letter-spacing:.18em;text-transform:uppercase">À toi</span>
-<span style="font-size:clamp(36px,5vw,52px);font-weight:300;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums" data-ex-count>5 · 5</span>
-</div>
+<div data-ex-idle aria-hidden="true" class="souffle__pulse"></div>
+<button type="button" data-ex-btn class="souffle__btn" aria-label="Démarrer l'exercice de respiration">
+<span aria-hidden="true" style="width:12px;height:12px;border-radius:50%;background:#33708F;animation:recFade 2s ease-in-out infinite"></span>
+<span aria-hidden="true" data-ex-label style="font-size:13px;font-weight:500;letter-spacing:.18em;text-transform:uppercase">À toi</span>
+<span aria-hidden="true" style="font-size:clamp(36px,5vw,52px);font-weight:300;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums" data-ex-count>5 · 5</span>
+</button>
 </div>
 <div data-reveal style="display:flex;flex-direction:column;align-items:center;gap:20px">
-<button type="button" data-ex-btn style="font-family:inherit;font-size:16px;font-weight:500;border:0;cursor:pointer;background:#E6ECF0;color:#12171B;padding:16px 32px;border-radius:999px;transition:transform .3s" class="hv-6">Démarrer</button>
+<p data-ex-hint aria-hidden="true" style="margin:0;font-size:15px;color:#DDE9EF">Appuie sur le cercle pour commencer.</p>
 <div style="display:flex;align-items:center;gap:14px;font-size:14px;color:#DDE9EF;font-variant-numeric:tabular-nums">
 <div style="display:flex;gap:8px"><span data-ex-dot style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .4s"></span>
 <span data-ex-dot style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .4s"></span>
@@ -568,7 +582,7 @@ f();addEventListener('resize',f);})();
 <p style="margin:0;max-width:58ch;font-size:19px;line-height:1.6;color:#4B5661;text-wrap:pretty">Ce n'est pas un problème de volonté. C'est un système nerveux qui ne redescend plus jamais complètement.</p>
 <div style="margin-top:clamp(12px,2vw,28px);border-radius:28px;background:linear-gradient(135deg,#24546C,#12171B);color:#FFFFFF;padding:clamp(28px,4.5vw,64px);display:flex;justify-content:space-between;align-items:flex-end;gap:28px;flex-wrap:wrap;box-shadow:0 30px 60px -45px rgba(18,23,27,.4)">
 <p style="margin:0;font-size:clamp(30px,4.2vw,64px);font-weight:600;line-height:1.05;letter-spacing:-.04em;text-wrap:balance;max-width:17ch">Si une seule de ces heures te ressemble, <span style="color:#9CC7DC">la suite est pour toi.</span></p>
-<a href="#tristan" style="flex:none;background:#E6ECF0;color:#12171B;padding:15px 24px;border-radius:999px;font-weight:500;font-size:15px;transition:transform .3s" class="hv-11">Voir la suite ↓</a>
+<a href="#tristan" aria-label="Voir la suite" style="flex:none;display:flex;align-items:center;justify-content:center;width:60px;height:60px;border-radius:50%;border:1px solid rgba(156,199,220,.6);color:#9CC7DC;font-size:22px;animation:float 3.6s ease-in-out infinite" class="hv-13">↓</a>
 </div>
 </div>
 </section>
@@ -1325,6 +1339,7 @@ f();addEventListener('resize',f);})();
     var halo = one('[data-ex-halo]'), core = one('[data-ex-core]'), arc = one('[data-ex-arc]');
     var label = one('[data-ex-label]'), count = one('[data-ex-count]'), cycle = one('[data-ex-cycle]');
     var ripples = all('[data-ex-ripple]'), dots = all('[data-ex-dot]');
+    var idle = one('[data-ex-idle]'), hint = one('[data-ex-hint]');
     var on = false, et = 0, timer = null;
 
     function render() {
@@ -1339,7 +1354,9 @@ f();addEventListener('resize',f);})();
         d.style.background = i < cycles ? '#FFFFFF' : (on && i === cycles ? 'rgba(255,255,255,.55)' : 'rgba(255,255,255,.2)');
       });
       cycle.textContent = Math.min(6, cycles + (on ? 1 : 0));
-      btn.textContent = on ? 'Arrêter' : (done ? 'Recommencer' : 'Démarrer');
+      idle.hidden = on;
+      btn.setAttribute('aria-label', (on ? 'Arrêter' : (done ? 'Recommencer' : 'Démarrer')) + " l'exercice de respiration");
+      hint.textContent = 'Appuie sur le cercle pour ' + (on ? 'arrêter.' : (done ? 'recommencer.' : 'commencer.'));
     }
     function stop() { on = false; clearInterval(timer); render(); }
     btn.addEventListener('click', function () {
