@@ -260,6 +260,23 @@ img{max-width:100%}
   g[style*="spin"]{animation:none!important}
 }
 
+/* Étapes R·E·S·E·T : au doigt, un défilement piloté par script suit toujours avec
+   un temps de retard. Sur écran tactile, la frise devient un vrai carrousel que
+   l'on glisse, géré par le navigateur lui-même. */
+@media (max-width:760px),(hover:none){
+  .hz{height:auto!important}
+  .hz__pin{position:static!important;height:auto!important;padding-top:0!important}
+  .hz__track{
+    --bord:clamp(20px,4vw,56px);
+    margin:0 calc(-1*var(--bord));padding:0 var(--bord);scroll-padding-left:var(--bord);
+    overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;
+    scrollbar-width:none;transform:none!important;will-change:auto!important;
+  }
+  .hz__track::-webkit-scrollbar{display:none}
+  .hz__track>div{scroll-snap-align:start}
+  .hz__track>div:last-child{scroll-snap-align:none}
+}
+
 /* ================= Ajustements mobiles ================= */
 /* Les styles en ligne l'emportent sur une feuille : d'où les !important. */
 /* Parcours des offres : dès que les quatre étapes ne tiennent plus sur une ligne,
@@ -828,13 +845,13 @@ img{max-width:100%}
 <p data-reveal style="position:relative;margin:0;max-width:56ch;font-size:15px;line-height:1.6;color:#9AA7B2"><strong style="color:#FFFFFF;font-weight:600">Il n'est pas encore ouvert.</strong> La date de lancement n'est pas fixée. La liste d'attente sert à ça : tu l'apprends en premier, avant l'annonce publique.</p>
 </div>
 
-<div data-hz style="position:relative;height:360vh">
-<div style="position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;gap:clamp(24px,4vh,48px);padding-top:60px">
+<div class="hz" data-hz style="position:relative;height:360vh">
+<div class="hz__pin" style="position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;gap:clamp(24px,4vh,48px);padding-top:60px">
 <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap">
 <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:17px;color:#9AA7B2">Le mouvement intérieur, en cinq étapes qui se chevauchent :</span><span style="display:flex;gap:14px;font-size:clamp(32px,4vw,56px);font-weight:600;letter-spacing:.04em"><span data-hz-l style="color:#9CC7DC;transition:color .4s">R</span><span style="color:#3C4852">·</span><span data-hz-l style="color:#3C4852;transition:color .4s">E</span><span style="color:#3C4852">·</span><span data-hz-l style="color:#3C4852;transition:color .4s">S</span><span style="color:#3C4852">·</span><span data-hz-l style="color:#3C4852;transition:color .4s">E</span><span style="color:#3C4852">·</span><span data-hz-l style="color:#3C4852;transition:color .4s">T</span></span></div>
 <span style="width:min(240px,40vw);height:2px;border-radius:2px;background:rgba(230,236,240,.12);position:relative;overflow:hidden"><span data-hz-bar style="position:absolute;inset:0;background:#9CC7DC;transform-origin:left;transform:scaleX(0)"></span></span>
 </div>
-<div data-hz-track style="display:flex;gap:16px;will-change:transform">
+<div class="hz__track" data-hz-track style="display:flex;gap:16px;will-change:transform">
 <div style="flex:none;width:min(82vw,470px);min-height:min(62vh,520px);background:linear-gradient(160deg,#162630 0%,#10161B 60%);border:1px solid rgba(156,199,220,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.06);border-radius:28px;padding:clamp(28px,3vw,44px);display:flex;flex-direction:column;gap:16px">
 <span style="font-size:clamp(96px,14vh,150px);font-weight:200;line-height:.8;letter-spacing:-.05em;color:#9CC7DC">R</span>
 <h3 style="margin:16px 0 0;font-size:clamp(28px,2.6vw,38px);font-weight:600;letter-spacing:-.025em">Reconnecter</h3>
@@ -1370,17 +1387,36 @@ img{max-width:100%}
     });
   });
 
+  /* Étapes R·E·S·E·T. À la souris, la frise suit le défilement vertical, avec un
+     amorti pour lisser les crans de la molette. Au doigt, c'est un carrousel natif
+     (voir la feuille de style) et seuls la barre et les lettres sont mis à jour. */
+  var swipe = window.matchMedia('(max-width:760px),(hover:none)');
   all('[data-hz]').forEach(function (el) {
-    var tr = one('[data-hz-track]', el), bar = one('[data-hz-bar]', el), ls = all('[data-hz-l]', el), max = 0;
+    var tr = one('[data-hz-track]', el), bar = one('[data-hz-bar]', el), ls = all('[data-hz-l]', el);
+    var max = 0, cur = 0, target = 0, running = false;
     function measure() { max = Math.max(0, tr.scrollWidth - tr.parentElement.clientWidth); }
+    function mark(p) {
+      bar.style.transform = 'scaleX(' + p + ')';
+      ls.forEach(function (l, i) { l.style.color = p >= i / 5 - 0.02 ? '#9CC7DC' : '#3C4852'; });
+    }
+    function glide() {
+      cur += (target - cur) * 0.14;
+      if (reduce || Math.abs(target - cur) < 0.0005) cur = target;
+      tr.style.transform = 'translate3d(' + (-cur * max).toFixed(1) + 'px,0,0)';
+      mark(cur);
+      running = cur !== target;
+      if (running) requestAnimationFrame(glide);
+    }
     measure();
     window.addEventListener('resize', measure);
     window.addEventListener('load', measure);
+    tr.addEventListener('scroll', function () {
+      if (swipe.matches) mark(clamp(tr.scrollLeft / Math.max(1, tr.scrollWidth - tr.clientWidth)));
+    }, { passive: true });
     track(el, function (r, vh) {
-      var p = clamp(-r.top / (r.height - vh));
-      tr.style.transform = 'translate3d(' + (-p * max) + 'px,0,0)';
-      bar.style.transform = 'scaleX(' + p + ')';
-      ls.forEach(function (l, i) { l.style.color = p >= i / 5 - 0.02 ? '#9CC7DC' : '#3C4852'; });
+      if (swipe.matches) return;
+      target = clamp(-r.top / (r.height - vh));
+      if (!running) { running = true; requestAnimationFrame(glide); }
     });
   });
 
