@@ -92,7 +92,9 @@
    la fonte, les animations, les survols, la navigation et les ajustements mobiles. */
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-html,body{overflow-x:clip}
+/* clip plutôt que hidden : hidden sur <body> casserait les blocs collants (sticky) */
+html{overflow-x:hidden}
+@supports (overflow:clip){html,body{overflow-x:clip}}
 body{
   margin:0;background:#E8ECEF;color:#12171B;
   font-family:"Outfit",ui-sans-serif,-apple-system,"Segoe UI",system-ui,sans-serif;
@@ -1354,21 +1356,39 @@ img{max-width:100%}
      les positions, puis on écrit tous les styles : mélanger les deux oblige le
      navigateur à recalculer la page entre chaque effet, et le défilement saccade. */
   var fx = [];
+  /* Sur écran tactile, les effets pilotés par script suivent le doigt avec un temps
+     de retard, et la barre d'adresse qui se replie change la hauteur de la fenêtre
+     à chaque changement de sens. Trois règles y répondent :
+     - la hauteur de référence ne bouge que si la largeur change (rotation) ;
+     - une progression acquise le reste (avance), au lieu de se rejouer à l'envers ;
+     - pas de parallaxe ni de recul des cartes empilées. */
+  var swipe = window.matchMedia('(max-width:760px),(hover:none)');
+  var refW = window.innerWidth, refH = window.innerHeight;
+  function viewH() {
+    if (!swipe.matches || window.innerWidth !== refW) { refW = window.innerWidth; refH = window.innerHeight; }
+    return refH;
+  }
+  function avance(st, p) {
+    if (!swipe.matches) return p;
+    st.max = Math.max(st.max || 0, p);
+    return st.max;
+  }
   function track(el, apply, always) { if (el) fx.push({ el: el, apply: apply, always: always, r: null }); }
 
   track(one('[data-hero-word]'), function (r, vh, y) {
+    if (swipe.matches) return;
     if (y < vh * 1.2) this.el.style.transform = 'translate3d(0,' + (y * 0.35) + 'px,0)';
   }, true);
 
   var tlFill = one('[data-tl-fill]');
   track(one('[data-tl]'), function (r, vh) {
-    tlFill.style.transform = 'scaleY(' + clamp((vh * 0.6 - r.top) / r.height) + ')';
+    tlFill.style.transform = 'scaleY(' + avance(this, clamp((vh * 0.6 - r.top) / r.height)) + ')';
   });
 
   all('[data-words]').forEach(function (el) {
     var ws = all('[data-w]', el), last = -1;
     track(el, function (r, vh) {
-      var n = Math.ceil(clamp((vh * 0.85 - r.top) / (vh * 0.45)) * ws.length);
+      var n = Math.ceil(avance(this, clamp((vh * 0.85 - r.top) / (vh * 0.45))) * ws.length);
       if (n === last) return;
       last = n;
       ws.forEach(function (w, i) { w.style.color = i < n ? w.dataset.c : w.dataset.off; });
@@ -1378,19 +1398,18 @@ img{max-width:100%}
   all('[data-clip]').forEach(function (el) {
     var img = one('img', el), par = img && img.hasAttribute('data-par-img');
     track(el, function (r, vh) {
-      var p = clamp((vh - r.top) / (vh * 0.8));
+      var p = avance(this, clamp((vh - r.top) / (vh * 0.8)));
       var v = ((1 - p) * 12).toFixed(2) + '%';
       el.style.clipPath = 'inset(' + v + ' ' + v + ' ' + v + ' ' + v + ' round 28px)';
       if (!img) return;
       img.style.scale = String(1.2 - p * 0.2);
-      if (par) img.style.transform = 'translateY(' + (((r.top + r.height / 2) - vh / 2) * -0.1) + 'px)';
+      if (par && !swipe.matches) img.style.transform = 'translateY(' + (((r.top + r.height / 2) - vh / 2) * -0.1) + 'px)';
     });
   });
 
   /* Étapes R·E·S·E·T. À la souris, la frise suit le défilement vertical, avec un
      amorti pour lisser les crans de la molette. Au doigt, c'est un carrousel natif
      (voir la feuille de style) et seuls la barre et les lettres sont mis à jour. */
-  var swipe = window.matchMedia('(max-width:760px),(hover:none)');
   all('[data-hz]').forEach(function (el) {
     var tr = one('[data-hz-track]', el), bar = one('[data-hz-bar]', el), ls = all('[data-hz-l]', el);
     var max = 0, cur = 0, target = 0, running = false;
@@ -1424,6 +1443,7 @@ img{max-width:100%}
   var stack = all('[data-stack]').map(function (el) { return { el: el, top: parseFloat(el.style.top) || 110, r: null }; });
   stack.forEach(function (c, i) {
     track(c.el, function (r, vh) {
+      if (swipe.matches) return;
       var sum = 0;
       for (var j = i + 1; j < stack.length; j++) sum += clamp(1 - (stack[j].r.top - stack[j].top) / (vh * 0.5));
       c.el.style.transform = 'scale(' + (1 - sum * 0.035) + ')';
@@ -1434,7 +1454,7 @@ img{max-width:100%}
   all('[data-dots]').forEach(function (el) {
     var ds = el.children, last = -1;
     track(el, function (r, vh) {
-      var n = Math.round(clamp((vh * 0.9 - r.top) / (vh * 0.5)) * ds.length);
+      var n = Math.round(avance(this, clamp((vh * 0.9 - r.top) / (vh * 0.5))) * ds.length);
       if (n === last) return;
       last = n;
       for (var i = 0; i < ds.length; i++) {
@@ -1447,7 +1467,7 @@ img{max-width:100%}
   all('[data-strike]').forEach(function (el) {
     var i = all('[data-strike]', el.parentElement).indexOf(el);
     track(el, function (r, vh) {
-      var p = clamp((vh * 0.75 - r.top) / (vh * 0.2) - i * 0.4);
+      var p = avance(this, clamp((vh * 0.75 - r.top) / (vh * 0.2) - i * 0.4));
       el.style.setProperty('--p', p);
       el.style.color = p > 0.95 ? (el.dataset.after || '#5F6C78') : (el.dataset.before || '#E6ECF0');
     });
@@ -1455,7 +1475,7 @@ img{max-width:100%}
 
   all('[data-line]').forEach(function (el) {
     var fill = one('[data-line-fill]', el);
-    track(el, function (r, vh) { fill.style.transform = 'scaleY(' + clamp((vh * 0.7 - r.top) / r.height) + ')'; });
+    track(el, function (r, vh) { fill.style.transform = 'scaleY(' + avance(this, clamp((vh * 0.7 - r.top) / r.height)) + ')'; });
   });
 
   all('[data-energy]').forEach(function (el) {
@@ -1471,6 +1491,7 @@ img{max-width:100%}
   all('[data-par]').forEach(function (el) {
     var k = +el.dataset.par, shift = 0;
     track(el, function (r, vh) {
+      if (swipe.matches) return;
       shift = ((r.top - shift + r.height / 2) - vh / 2) * -k / (1 + k);
       el.style.translate = '0 ' + shift.toFixed(1) + 'px';
     });
@@ -1479,7 +1500,7 @@ img{max-width:100%}
   all('[data-rise]').forEach(function (el) {
     var ls = all('[data-l]', el);
     track(el, function (r, vh) {
-      var p = clamp((vh - r.top) / (r.height + vh * 0.3));
+      var p = avance(this, clamp((vh - r.top) / (r.height + vh * 0.3)));
       ls.forEach(function (l, i) {
         var q = clamp(p * 2.2 - i * 0.12);
         l.style.transform = 'translateY(' + ((1 - q) * 80) + '%)';
@@ -1508,7 +1529,7 @@ img{max-width:100%}
   }
 
   function update() {
-    var y = window.scrollY, vh = window.innerHeight, i, f;
+    var y = window.scrollY, vh = viewH(), i, f;
     nav.classList.toggle('is-scrolled', y > 40);
     for (i = 0; i < fx.length; i++) fx[i].r = fx[i].el.getBoundingClientRect();
     for (i = 0; i < stack.length; i++) stack[i].r = stack[i].el.getBoundingClientRect();
