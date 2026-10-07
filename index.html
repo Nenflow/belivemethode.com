@@ -165,7 +165,7 @@ img{max-width:100%}
 .nav__word span:last-child{font-weight:600}
 .nav__rec{display:inline-flex;align-items:center;justify-content:center;flex:none;width:18px;height:18px;border-radius:50%;border:1.5px solid currentColor}
 .nav__rec span{width:46%;height:46%;border-radius:50%;background:#9CC7DC;animation:recBlink 2s ease-in-out infinite}
-.nav__links{display:flex;align-items:center;gap:26px;margin-left:auto;font-size:14px}
+.nav__links{display:flex;align-items:center;gap:22px;margin-left:auto;font-size:14px}
 .nav__links a{color:#B9C5CE;transition:color .3s}
 .nav__links a:hover{color:#FFFFFF}
 .nav__cta{flex:none;background:#E6ECF0;color:#12171B;padding:11px 20px;border-radius:999px;font-size:14px;font-weight:500;transition:transform .3s}
@@ -180,7 +180,7 @@ img{max-width:100%}
 .nav.is-open .nav__burger span:first-child{transform:rotate(45deg)}
 .nav.is-open .nav__burger span:last-child{transform:rotate(-45deg)}
 
-@media (max-width:900px){
+@media (max-width:1040px){
   .nav{gap:10px;padding-left:20px}
   .nav__cta{margin-left:auto}
   .nav__burger{display:block}
@@ -315,6 +315,15 @@ img{max-width:100%}
   .hero__meta{gap:12px!important;font-size:10.5px!important;letter-spacing:.1em!important}
 }
 </style>
+<!-- Hauteur d'écran figée avant le premier rendu. Sur téléphone, 1vh change dans
+     certains navigateurs (ceux intégrés aux applications, surtout) quand la barre
+     d'adresse se replie : tout ce qui est dimensionné en vh se mettait à bouger. -->
+<script>
+(function(){var d=document.documentElement,w=0;
+function f(){var t=matchMedia('(max-width:760px),(hover:none)').matches;
+if(t&&innerWidth===w)return;w=innerWidth;d.style.setProperty('--vh',innerHeight/100+'px');}
+f();addEventListener('resize',f);})();
+</script>
 <noscript><style>[data-w]{color:inherit!important}</style></noscript>
 </head>
 <body>
@@ -330,11 +339,13 @@ img{max-width:100%}
 <span class="nav__rec" aria-hidden="true"><span></span></span>
 </a>
 <div class="nav__links" id="navLinks">
+<a href="#methode">Le souffle</a>
 <a href="#constat">Pour qui ?</a>
 <a href="#tristan">Tristan</a>
-<a href="#methode">La méthode</a>
-<a href="#offres">Sessions individuelles</a>
-<a href="#protocole">L'offre signature</a>
+<a href="#approche">La méthode</a>
+<a href="#groupe">En groupe</a>
+<a href="#offres">En individuel</a>
+<a href="#protocole">RESET 90 jours</a>
 </div>
 <a class="nav__cta" data-resa href="#offres" aria-haspopup="dialog">Réserver →</a>
 <button class="nav__burger" id="navBurger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Ouvrir le menu"><span></span><span></span></button>
@@ -343,7 +354,7 @@ img{max-width:100%}
 
 <main id="contenu">
 <section id="top" style="padding:14px;background:#E8ECEF">
-<div class="hero" style="position:relative;min-height:calc(100vh - 28px);border-radius:28px;overflow:hidden;background:linear-gradient(180deg,#F3F7F9 0%,#D9E8EF 48%,#A9CCDD 100%);color:#12171B;display:flex;flex-direction:column;padding:104px clamp(20px,4vw,56px) 24px">
+<div class="hero" style="position:relative;min-height:calc(calc(var(--vh,1vh)*100) - 28px);border-radius:28px;overflow:hidden;background:linear-gradient(180deg,#F3F7F9 0%,#D9E8EF 48%,#A9CCDD 100%);color:#12171B;display:flex;flex-direction:column;padding:104px clamp(20px,4vw,56px) 24px">
 <div aria-hidden="true" style="position:absolute;left:50%;top:54%;width:min(86vw,820px);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none">
 <div style="position:absolute;inset:0;border-radius:50%;border:1px solid rgba(255,255,255,.55);transform:scale(var(--r3));transition:transform 5s cubic-bezier(.45,0,.55,1)"></div>
 <div style="position:absolute;inset:12%;border-radius:50%;border:1px solid rgba(255,255,255,.7);transform:scale(var(--r2));transition:transform 5s cubic-bezier(.45,0,.55,1) .15s"></div>
@@ -384,7 +395,7 @@ img{max-width:100%}
 <span style="display:flex;flex-direction:column"><span>Breathwork</span><span>Système nerveux</span><span>Naturopathie</span></span>
 <span style="display:flex;flex-direction:column;align-items:flex-end;gap:6px"><span style="display:flex;align-items:center;gap:8px"><span style="padding:2px 7px;border-radius:999px;background:#12171B;color:#FFFFFF;font-size:10px;letter-spacing:.1em">FR</span>Chartres</span><span style="display:flex;align-items:center;gap:8px"><span style="padding:2px 7px;border-radius:999px;background:#33708F;color:#FFFFFF;font-size:10px;letter-spacing:.1em">BE</span>Brabant wallon</span><span>Et à distance</span></span>
 </div>
-<div style="flex:1;min-height:40vh"></div>
+<div style="flex:1;min-height:calc(var(--vh,1vh)*40)"></div>
 <div style="position:relative;width:100%;max-width:1240px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;pointer-events:none">
 <div style="display:flex;flex-direction:column;gap:20px;max-width:420px;pointer-events:auto;animation:fadeUp 1.2s 1.1s both">
 <h1 style="margin:0;font-size:clamp(30px,3vw,44px);font-weight:600;line-height:1.02;letter-spacing:-.03em;text-wrap:balance">C'est être en direct de ta vie.</h1>
@@ -554,7 +565,11 @@ img{max-width:100%}
 </div>
 <div data-reveal style="max-width:1240px;margin:clamp(80px,10vw,140px) auto 0;display:flex;flex-direction:column;gap:28px">
 <p data-words style="margin:0;font-size:clamp(38px,6.2vw,96px);font-weight:600;line-height:1;letter-spacing:-.04em;text-wrap:balance"><span data-w data-c="#12171B" data-off="#C9D2D9" style="color:#C9D2D9;transition:color .4s">Tu</span> <span data-w data-c="#12171B" data-off="#C9D2D9" style="color:#C9D2D9;transition:color .4s">ne</span> <span data-w data-c="#12171B" data-off="#C9D2D9" style="color:#C9D2D9;transition:color .4s">dors</span> <span data-w data-c="#12171B" data-off="#C9D2D9" style="color:#C9D2D9;transition:color .4s">pas</span> <span data-w data-c="#12171B" data-off="#C9D2D9" style="color:#C9D2D9;transition:color .4s">mal.</span><br><span data-w data-c="#33708F" data-off="#C9D2D9" style="color:#C9D2D9;transition:color .4s">Tu</span> <span data-w data-c="#33708F" data-off="#C9D2D9" style="color:#C9D2D9;transition:color .4s">ne</span> <span data-w data-c="#33708F" data-off="#C9D2D9" style="color:#C9D2D9;transition:color .4s">récupères</span> <span data-w data-c="#33708F" data-off="#C9D2D9" style="color:#C9D2D9;transition:color .4s">jamais.</span></p>
-<p style="margin:0;max-width:58ch;font-size:19px;line-height:1.6;color:#4B5661;text-wrap:pretty">Ce n'est pas un problème de volonté. C'est un système nerveux qui ne redescend plus jamais complètement. Si une seule de ces heures te ressemble, la suite est pour toi.</p>
+<p style="margin:0;max-width:58ch;font-size:19px;line-height:1.6;color:#4B5661;text-wrap:pretty">Ce n'est pas un problème de volonté. C'est un système nerveux qui ne redescend plus jamais complètement.</p>
+<div style="margin-top:clamp(12px,2vw,28px);border-radius:28px;background:linear-gradient(135deg,#24546C,#12171B);color:#FFFFFF;padding:clamp(28px,4.5vw,64px);display:flex;justify-content:space-between;align-items:flex-end;gap:28px;flex-wrap:wrap;box-shadow:0 30px 60px -45px rgba(18,23,27,.4)">
+<p style="margin:0;font-size:clamp(30px,4.2vw,64px);font-weight:600;line-height:1.05;letter-spacing:-.04em;text-wrap:balance;max-width:17ch">Si une seule de ces heures te ressemble, <span style="color:#9CC7DC">la suite est pour toi.</span></p>
+<a href="#tristan" style="flex:none;background:#E6ECF0;color:#12171B;padding:15px 24px;border-radius:999px;font-weight:500;font-size:15px;transition:transform .3s" class="hv-11">Voir la suite ↓</a>
+</div>
 </div>
 </section>
 
@@ -596,7 +611,7 @@ img{max-width:100%}
 </div>
 </section>
 
-<section style="position:relative;min-height:115vh;background:#E8ECEF;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:140px 20px">
+<section style="position:relative;min-height:calc(var(--vh,1vh)*115);background:#E8ECEF;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:140px 20px">
 <div aria-hidden="true" style="position:absolute;left:50%;top:50%;width:min(130vw,1400px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(18,23,27,.06)"></div>
 <div aria-hidden="true" style="position:absolute;left:50%;top:50%;width:min(95vw,1000px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(18,23,27,.07)"></div>
 <div aria-hidden="true" style="position:absolute;left:50%;top:50%;width:min(80vw,760px);aspect-ratio:1;margin:calc(min(80vw,760px) / -2) 0 0 calc(min(80vw,760px) / -2);border-radius:50%;background:radial-gradient(circle,rgba(127,175,198,.85) 0%,rgba(156,199,220,.45) 35%,rgba(232,236,239,0) 70%);transform:scale(var(--core));transition:transform 5s cubic-bezier(.45,0,.55,1)"></div>
@@ -611,7 +626,7 @@ img{max-width:100%}
 </div>
 </section>
 
-<section style="background:#E8ECEF;padding:clamp(80px,10vw,150px) clamp(20px,4vw,56px) clamp(96px,12vw,160px)">
+<section id="approche" style="background:#E8ECEF;padding:clamp(80px,10vw,150px) clamp(20px,4vw,56px) clamp(96px,12vw,160px)">
 <div style="max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(56px,7vw,96px)">
 <div style="display:flex;flex-direction:column;gap:28px">
 <span data-reveal style="font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#4B5661">Ce que c'est</span>
@@ -827,7 +842,7 @@ img{max-width:100%}
 <section id="protocole" style="background:radial-gradient(140% 50% at 50% 0%,#17313F 0%,#0B0E11 55%),#0B0E11;color:#E6ECF0;padding:clamp(96px,12vw,170px) clamp(20px,4vw,56px);position:relative;overflow-x:clip">
 
 <div style="position:relative;max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(72px,9vw,130px)">
-<div style="position:relative;min-height:88vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:28px">
+<div style="position:relative;min-height:calc(var(--vh,1vh)*88);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:28px">
 <div aria-hidden="true" style="position:absolute;left:50%;top:46%;width:min(120vw,1200px);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none">
 <svg viewBox="-500 -500 1000 1000" style="width:100%;height:100%;overflow:visible"><g style="transform-origin:0 0;animation:spin 160s linear infinite"><ellipse cx="0" cy="0" rx="480" ry="150" fill="none" stroke="rgba(156,199,220,.22)" stroke-width="1" transform="rotate(0)"/><ellipse cx="0" cy="0" rx="480" ry="150" fill="none" stroke="rgba(156,199,220,.22)" stroke-width="1" transform="rotate(60)"/><ellipse cx="0" cy="0" rx="480" ry="150" fill="none" stroke="rgba(156,199,220,.22)" stroke-width="1" transform="rotate(120)"/></g><circle cx="0" cy="0" r="260" fill="url(#resetGlow)"/><defs><radialGradient id="resetGlow"><stop offset="0%" stop-color="rgba(95,149,176,.35)"/><stop offset="100%" stop-color="rgba(95,149,176,0)"/></radialGradient></defs></svg>
 </div>
@@ -847,43 +862,43 @@ img{max-width:100%}
 <p data-reveal style="position:relative;margin:0;max-width:56ch;font-size:15px;line-height:1.6;color:#9AA7B2"><strong style="color:#FFFFFF;font-weight:600">Il n'est pas encore ouvert.</strong> La date de lancement n'est pas fixée. La liste d'attente sert à ça : tu l'apprends en premier, avant l'annonce publique.</p>
 </div>
 
-<div class="hz" data-hz style="position:relative;height:360vh">
-<div class="hz__pin" style="position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;gap:clamp(24px,4vh,48px);padding-top:60px">
+<div class="hz" data-hz style="position:relative;height:calc(var(--vh,1vh)*360)">
+<div class="hz__pin" style="position:sticky;top:0;height:calc(var(--vh,1vh)*100);display:flex;flex-direction:column;justify-content:center;gap:clamp(24px,calc(var(--vh,1vh)*4),48px);padding-top:60px">
 <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap">
 <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:17px;color:#9AA7B2">Le mouvement intérieur, en cinq étapes qui se chevauchent :</span><span style="display:flex;gap:14px;font-size:clamp(32px,4vw,56px);font-weight:600;letter-spacing:.04em"><span data-hz-l style="color:#9CC7DC;transition:color .4s">R</span><span style="color:#3C4852">·</span><span data-hz-l style="color:#3C4852;transition:color .4s">E</span><span style="color:#3C4852">·</span><span data-hz-l style="color:#3C4852;transition:color .4s">S</span><span style="color:#3C4852">·</span><span data-hz-l style="color:#3C4852;transition:color .4s">E</span><span style="color:#3C4852">·</span><span data-hz-l style="color:#3C4852;transition:color .4s">T</span></span></div>
 <span style="width:min(240px,40vw);height:2px;border-radius:2px;background:rgba(230,236,240,.12);position:relative;overflow:hidden"><span data-hz-bar style="position:absolute;inset:0;background:#9CC7DC;transform-origin:left;transform:scaleX(0)"></span></span>
 </div>
 <div class="hz__track" data-hz-track style="display:flex;gap:16px;will-change:transform">
-<div style="flex:none;width:min(82vw,470px);min-height:min(62vh,520px);background:linear-gradient(160deg,#162630 0%,#10161B 60%);border:1px solid rgba(156,199,220,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.06);border-radius:28px;padding:clamp(28px,3vw,44px);display:flex;flex-direction:column;gap:16px">
-<span style="font-size:clamp(96px,14vh,150px);font-weight:200;line-height:.8;letter-spacing:-.05em;color:#9CC7DC">R</span>
+<div style="flex:none;width:min(82vw,470px);min-height:min(calc(var(--vh,1vh)*62),520px);background:linear-gradient(160deg,#162630 0%,#10161B 60%);border:1px solid rgba(156,199,220,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.06);border-radius:28px;padding:clamp(28px,3vw,44px);display:flex;flex-direction:column;gap:16px">
+<span style="font-size:clamp(96px,calc(var(--vh,1vh)*14),150px);font-weight:200;line-height:.8;letter-spacing:-.05em;color:#9CC7DC">R</span>
 <h3 style="margin:16px 0 0;font-size:clamp(28px,2.6vw,38px);font-weight:600;letter-spacing:-.025em">Reconnecter</h3>
 <span style="color:#9AA7B2;font-size:16px">Revenir dans le corps</span>
 <span style="font-size:19px;font-weight:300;color:#FFFFFF;font-style:italic">« Je sens à nouveau des choses. »</span>
 <p style="margin:auto 0 0;font-size:16px;line-height:1.6;color:#B9C5CE">Sortir du brouillard. Diagnostic du corps et du système nerveux, identification des fuites systémiques : snooze, café, scroll compulsif. On revient à ce qui est réellement présent, par la respiration.</p>
 </div>
-<div style="flex:none;width:min(82vw,470px);min-height:min(62vh,520px);background:linear-gradient(160deg,#162630 0%,#10161B 60%);border:1px solid rgba(156,199,220,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.06);border-radius:28px;padding:clamp(28px,3vw,44px);display:flex;flex-direction:column;gap:16px">
-<span style="font-size:clamp(96px,14vh,150px);font-weight:200;line-height:.8;letter-spacing:-.05em;color:#9CC7DC">E</span>
+<div style="flex:none;width:min(82vw,470px);min-height:min(calc(var(--vh,1vh)*62),520px);background:linear-gradient(160deg,#162630 0%,#10161B 60%);border:1px solid rgba(156,199,220,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.06);border-radius:28px;padding:clamp(28px,3vw,44px);display:flex;flex-direction:column;gap:16px">
+<span style="font-size:clamp(96px,calc(var(--vh,1vh)*14),150px);font-weight:200;line-height:.8;letter-spacing:-.05em;color:#9CC7DC">E</span>
 <h3 style="margin:16px 0 0;font-size:clamp(28px,2.6vw,38px);font-weight:600;letter-spacing:-.025em">Équilibrer</h3>
 <span style="color:#9AA7B2;font-size:16px">Réguler le système nerveux</span>
 <span style="font-size:19px;font-weight:300;color:#FFFFFF;font-style:italic">« Je réagis moins fort, moins vite. »</span>
 <p style="margin:auto 0 0;font-size:16px;line-height:1.6;color:#B9C5CE">Sortir du mode survie. La séquence du matin à sa pleine durée, deux trainings par semaine, le froid en fin de douche. Le travail porte sur la réactivité du système nerveux, avec pour objectifs une énergie plus régulière et un sommeil de meilleure qualité.</p>
 </div>
-<div style="flex:none;width:min(82vw,470px);min-height:min(62vh,520px);background:linear-gradient(160deg,#162630 0%,#10161B 60%);border:1px solid rgba(156,199,220,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.06);border-radius:28px;padding:clamp(28px,3vw,44px);display:flex;flex-direction:column;gap:16px">
-<span style="font-size:clamp(96px,14vh,150px);font-weight:200;line-height:.8;letter-spacing:-.05em;color:#9CC7DC">S</span>
+<div style="flex:none;width:min(82vw,470px);min-height:min(calc(var(--vh,1vh)*62),520px);background:linear-gradient(160deg,#162630 0%,#10161B 60%);border:1px solid rgba(156,199,220,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.06);border-radius:28px;padding:clamp(28px,3vw,44px);display:flex;flex-direction:column;gap:16px">
+<span style="font-size:clamp(96px,calc(var(--vh,1vh)*14),150px);font-weight:200;line-height:.8;letter-spacing:-.05em;color:#9CC7DC">S</span>
 <h3 style="margin:16px 0 0;font-size:clamp(28px,2.6vw,38px);font-weight:600;letter-spacing:-.025em">Stabiliser</h3>
 <span style="color:#9AA7B2;font-size:16px">Installer dans la durée</span>
 <span style="font-size:19px;font-weight:300;color:#FFFFFF;font-style:italic">« Mes journées se ressemblent, dans le bon sens. »</span>
 <p style="margin:auto 0 0;font-size:16px;line-height:1.6;color:#B9C5CE">On arrête d'alterner entre fatigue, stress et surcharge. L'état tient tout seul, sans que tu aies à le tenir. Ce qu'on suit semaine après semaine : le creux de 15h, la durée de concentration, les décisions prises.</p>
 </div>
-<div style="flex:none;width:min(82vw,470px);min-height:min(62vh,520px);background:linear-gradient(160deg,#162630 0%,#10161B 60%);border:1px solid rgba(156,199,220,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.06);border-radius:28px;padding:clamp(28px,3vw,44px);display:flex;flex-direction:column;gap:16px">
-<span style="font-size:clamp(96px,14vh,150px);font-weight:200;line-height:.8;letter-spacing:-.05em;color:#9CC7DC">E</span>
+<div style="flex:none;width:min(82vw,470px);min-height:min(calc(var(--vh,1vh)*62),520px);background:linear-gradient(160deg,#162630 0%,#10161B 60%);border:1px solid rgba(156,199,220,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.06);border-radius:28px;padding:clamp(28px,3vw,44px);display:flex;flex-direction:column;gap:16px">
+<span style="font-size:clamp(96px,calc(var(--vh,1vh)*14),150px);font-weight:200;line-height:.8;letter-spacing:-.05em;color:#9CC7DC">E</span>
 <h3 style="margin:16px 0 0;font-size:clamp(28px,2.6vw,38px);font-weight:600;letter-spacing:-.025em">Élancer</h3>
 <span style="color:#9AA7B2;font-size:16px">Retrouver l'élan</span>
 <span style="font-size:19px;font-weight:300;color:#FFFFFF;font-style:italic">« J'ai envie, pas juste besoin. »</span>
 <p style="margin:auto 0 0;font-size:16px;line-height:1.6;color:#B9C5CE">Quand le système est stable, l'énergie revient naturellement. Autonomisation : l'accompagnant se retire progressivement, et tu écris ton propre Protocole de Vie Souveraine.</p>
 </div>
-<div style="flex:none;width:min(82vw,470px);min-height:min(62vh,520px);background:linear-gradient(160deg,#162630 0%,#10161B 60%);border:1px solid rgba(156,199,220,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.06);border-radius:28px;padding:clamp(28px,3vw,44px);display:flex;flex-direction:column;gap:16px">
-<span style="font-size:clamp(96px,14vh,150px);font-weight:200;line-height:.8;letter-spacing:-.05em;color:#9CC7DC">T</span>
+<div style="flex:none;width:min(82vw,470px);min-height:min(calc(var(--vh,1vh)*62),520px);background:linear-gradient(160deg,#162630 0%,#10161B 60%);border:1px solid rgba(156,199,220,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.06);border-radius:28px;padding:clamp(28px,3vw,44px);display:flex;flex-direction:column;gap:16px">
+<span style="font-size:clamp(96px,calc(var(--vh,1vh)*14),150px);font-weight:200;line-height:.8;letter-spacing:-.05em;color:#9CC7DC">T</span>
 <h3 style="margin:16px 0 0;font-size:clamp(28px,2.6vw,38px);font-weight:600;letter-spacing:-.025em">Transformer</h3>
 <span style="color:#9AA7B2;font-size:16px">Ancrer dans ta vie</span>
 <span style="font-size:19px;font-weight:300;color:#FFFFFF;font-style:italic">« Je ne reviendrai pas en arrière. »</span>
@@ -1084,9 +1099,9 @@ img{max-width:100%}
 </div>
 <span data-reveal style="font-size:15px;color:#4B5661">Cinq engagements, un par carte.</span>
 </div>
-<div style="display:flex;flex-direction:column;gap:22vh;padding-bottom:6vh">
+<div style="display:flex;flex-direction:column;gap:calc(var(--vh,1vh)*22);padding-bottom:calc(var(--vh,1vh)*6)">
 <div data-stack style="position:sticky;top:110px;transform-origin:50% 0;will-change:transform">
-<div style="min-height:min(56vh,460px);border-radius:28px;background:#FFFFFF;color:#12171B;padding:clamp(28px,4vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px clamp(32px,5vw,80px);align-content:space-between;box-shadow:0 -20px 60px -40px rgba(18,23,27,.35),0 30px 80px -60px rgba(18,23,27,.4);position:relative;overflow:hidden">
+<div style="min-height:min(calc(var(--vh,1vh)*56),460px);border-radius:28px;background:#FFFFFF;color:#12171B;padding:clamp(28px,4vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px clamp(32px,5vw,80px);align-content:space-between;box-shadow:0 -20px 60px -40px rgba(18,23,27,.35),0 30px 80px -60px rgba(18,23,27,.4);position:relative;overflow:hidden">
 <div aria-hidden="true" style="position:absolute;right:-12%;bottom:-40%;width:60%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(18,23,27,.08)"></div>
 <div aria-hidden="true" style="position:absolute;right:-4%;bottom:-24%;width:40%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(18,23,27,.08)"></div>
 <span style="font-size:clamp(90px,12vw,190px);font-weight:200;letter-spacing:-.06em;line-height:.8;color:#33708F">01</span>
@@ -1097,7 +1112,7 @@ img{max-width:100%}
 </div>
 </div>
 <div data-stack style="position:sticky;top:132px;transform-origin:50% 0;will-change:transform">
-<div style="min-height:min(56vh,460px);border-radius:28px;background:#F3F7F9;color:#12171B;padding:clamp(28px,4vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px clamp(32px,5vw,80px);align-content:space-between;box-shadow:0 -20px 60px -40px rgba(18,23,27,.35),0 30px 80px -60px rgba(18,23,27,.4);position:relative;overflow:hidden">
+<div style="min-height:min(calc(var(--vh,1vh)*56),460px);border-radius:28px;background:#F3F7F9;color:#12171B;padding:clamp(28px,4vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px clamp(32px,5vw,80px);align-content:space-between;box-shadow:0 -20px 60px -40px rgba(18,23,27,.35),0 30px 80px -60px rgba(18,23,27,.4);position:relative;overflow:hidden">
 <div aria-hidden="true" style="position:absolute;right:-12%;bottom:-40%;width:60%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(18,23,27,.08)"></div>
 <div aria-hidden="true" style="position:absolute;right:-4%;bottom:-24%;width:40%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(18,23,27,.08)"></div>
 <span style="font-size:clamp(90px,12vw,190px);font-weight:200;letter-spacing:-.06em;line-height:.8;color:#33708F">02</span>
@@ -1108,7 +1123,7 @@ img{max-width:100%}
 </div>
 </div>
 <div data-stack style="position:sticky;top:154px;transform-origin:50% 0;will-change:transform">
-<div style="min-height:min(56vh,460px);border-radius:28px;background:#DDE9EF;color:#12171B;padding:clamp(28px,4vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px clamp(32px,5vw,80px);align-content:space-between;box-shadow:0 -20px 60px -40px rgba(18,23,27,.35),0 30px 80px -60px rgba(18,23,27,.4);position:relative;overflow:hidden">
+<div style="min-height:min(calc(var(--vh,1vh)*56),460px);border-radius:28px;background:#DDE9EF;color:#12171B;padding:clamp(28px,4vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px clamp(32px,5vw,80px);align-content:space-between;box-shadow:0 -20px 60px -40px rgba(18,23,27,.35),0 30px 80px -60px rgba(18,23,27,.4);position:relative;overflow:hidden">
 <div aria-hidden="true" style="position:absolute;right:-12%;bottom:-40%;width:60%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(18,23,27,.1)"></div>
 <div aria-hidden="true" style="position:absolute;right:-4%;bottom:-24%;width:40%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(18,23,27,.1)"></div>
 <span style="font-size:clamp(90px,12vw,190px);font-weight:200;letter-spacing:-.06em;line-height:.8;color:#33708F">03</span>
@@ -1119,7 +1134,7 @@ img{max-width:100%}
 </div>
 </div>
 <div data-stack style="position:sticky;top:176px;transform-origin:50% 0;will-change:transform">
-<div style="min-height:min(56vh,460px);border-radius:28px;background:#BCD8E6;color:#12171B;padding:clamp(28px,4vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px clamp(32px,5vw,80px);align-content:space-between;box-shadow:0 -20px 60px -40px rgba(18,23,27,.35),0 30px 80px -60px rgba(18,23,27,.4);position:relative;overflow:hidden">
+<div style="min-height:min(calc(var(--vh,1vh)*56),460px);border-radius:28px;background:#BCD8E6;color:#12171B;padding:clamp(28px,4vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px clamp(32px,5vw,80px);align-content:space-between;box-shadow:0 -20px 60px -40px rgba(18,23,27,.35),0 30px 80px -60px rgba(18,23,27,.4);position:relative;overflow:hidden">
 <div aria-hidden="true" style="position:absolute;right:-12%;bottom:-40%;width:60%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(18,23,27,.12)"></div>
 <div aria-hidden="true" style="position:absolute;right:-4%;bottom:-24%;width:40%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(18,23,27,.12)"></div>
 <span style="font-size:clamp(90px,12vw,190px);font-weight:200;letter-spacing:-.06em;line-height:.8;color:#24546C">04</span>
@@ -1130,7 +1145,7 @@ img{max-width:100%}
 </div>
 </div>
 <div data-stack style="position:sticky;top:198px;transform-origin:50% 0;will-change:transform">
-<div style="min-height:min(56vh,460px);border-radius:28px;background:#33708F;color:#FFFFFF;padding:clamp(28px,4vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px clamp(32px,5vw,80px);align-content:space-between;box-shadow:0 -20px 60px -40px rgba(18,23,27,.35),0 30px 80px -60px rgba(18,23,27,.4);position:relative;overflow:hidden">
+<div style="min-height:min(calc(var(--vh,1vh)*56),460px);border-radius:28px;background:#33708F;color:#FFFFFF;padding:clamp(28px,4vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px clamp(32px,5vw,80px);align-content:space-between;box-shadow:0 -20px 60px -40px rgba(18,23,27,.35),0 30px 80px -60px rgba(18,23,27,.4);position:relative;overflow:hidden">
 <div aria-hidden="true" style="position:absolute;right:-12%;bottom:-40%;width:60%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(255,255,255,.2)"></div>
 <div aria-hidden="true" style="position:absolute;right:-4%;bottom:-24%;width:40%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(255,255,255,.2)"></div>
 <span style="font-size:clamp(90px,12vw,190px);font-weight:200;letter-spacing:-.06em;line-height:.8;color:#9CC7DC">05</span>
