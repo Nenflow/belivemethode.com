@@ -187,10 +187,12 @@ main{max-width:1100px;margin:0 auto;padding:4px 16px 116px}
 .call-quand strong{font-size:28px;font-weight:600;line-height:1.1;letter-spacing:-.02em}
 .call-quand span{font-size:15px;color:var(--on-dark-2)}
 .call-actes{display:flex;gap:10px;flex-wrap:wrap}
-.call-actes a{display:flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;
-  border-radius:999px;font-size:15px;font-weight:500}
+.call-actes a,.call-actes button{display:flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;
+  border:0;border-radius:999px;font-size:15px;font-weight:500}
+.call-tete{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.call .pastille{--pt:#BFD9E6;border-color:var(--dark-line);color:var(--on-dark)}
 .call-oui{flex:1 1 auto;background:var(--on-dark);color:var(--dark)}
-.call-non{flex:0 1 auto;border:1px solid var(--dark-line);color:var(--on-dark)}
+.call-actes .call-non{flex:0 1 auto;border:1px solid var(--dark-line);background:transparent;color:var(--on-dark)}
 
 .mesures{display:flex;flex-direction:column;gap:16px}
 .mesure{display:flex;flex-direction:column;gap:8px}
@@ -335,6 +337,14 @@ main{max-width:1100px;margin:0 auto;padding:4px 16px 116px}
 .lecteur iframe{width:100%;height:100%;border:0;display:block}
 .doc{display:flex;flex-direction:column;gap:10px}
 .doc .petit{text-align:center}
+.jours{display:flex;flex-direction:column;gap:14px}
+.jour{display:flex;flex-direction:column;gap:8px}
+.jour>span{font-size:14px;font-weight:500}
+.creneaux{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.creneaux button{min-height:46px;border-radius:999px;font-size:15px;font-weight:500;
+  border:1px solid var(--line);background:var(--panel);color:var(--ink)}
+.creneaux button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--panel)}
+.bouton[disabled]{background:var(--p2);color:var(--ink-3);cursor:default}
 .prepa{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
 .prepa li{position:relative;padding-left:18px;font-size:14.5px;line-height:1.5;text-wrap:pretty}
 .prepa li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--ice)}
@@ -403,9 +413,10 @@ main{max-width:1100px;margin:0 auto;padding:4px 16px 116px}
    Les calls :
      - VISIO : le lien de la visio. Vide, le bouton « Rejoindre » n'apparaît pas.
      - HEURE_CALL : "18:30" par exemple. Vide, aucune heure n'est affichée.
-     Le call tombe chaque semaine le même jour que le premier. Le déplacer
-     passe par WhatsApp : la page n'a pas de serveur, elle ne peut prévenir
-     personne toute seule.
+     - CRENEAUX : les trois heures proposées quand le client déplace un call.
+     Le call tombe chaque semaine le même jour que le premier. Pour le
+     déplacer, le client choisit un créneau et la demande part sur WhatsApp :
+     la page n'a pas de serveur, elle ne peut prévenir personne toute seule.
 
    Pour ajouter une vidéo :
      - copie une ligne, colle l'identifiant YouTube dans id
@@ -425,6 +436,7 @@ main{max-width:1100px;margin:0 auto;padding:4px 16px 116px}
 const WHATSAPP = '32493847434';
 const VISIO = '';
 const HEURE_CALL = '';
+const CRENEAUX = ['08:00', '12:30', '18:30'];
 
 const VIDEOS = [
   { phase:1, semaine:1,  titre:"La lumière au réveil et la caféine déplacée", duree:"", id:"" },
@@ -736,7 +748,7 @@ function momentActuel(){
 /* ========================== État de l'écran ========================== */
 const VUES = ['jour', 'parcours', 'journal', 'ressources'];
 const ecran = { vue:'jour', moment:null, courbe:'energie', filtre:'ouvertes', mot:'', tousCalls:false,
-                changerDate:false, feuille:null };
+                changerDate:false, feuille:null, creneau:null };
 const main = document.getElementById('main');
 const feuille = document.getElementById('feuille');
 
@@ -776,14 +788,15 @@ function carteCall(c){
   const quand = reste === 0 ? "Aujourd'hui" : reste === 1 ? 'Demain' : maj(texteDate(d));
   const detail = [HEURE_CALL, reste > 1 ? 'dans ' + reste + ' jours' : '', 'visio', n >= 12 ? 'tu le mènes' : '']
     .filter(Boolean).join(' · ');
-  const msg = 'Bonjour Tristan, je voudrais déplacer le call ' + n + ' du ' + texteDate(d) + '.';
+  const dem = journal.demande && journal.demande.n === n ? journal.demande : null;
   return '<section class="call">'
-    + '<span class="label">Prochain call · ' + n + ' sur 13</span>'
+    + '<div class="call-tete"><span class="label">Prochain call · ' + n + ' sur 13</span>'
+    + (dem ? '<span class="pastille">Demandé : ' + echap(texteDate(dateDu(dem.jour), { weekday:'short', day:'numeric', month:'short' }))
+        + ' ' + echap(dem.heure) + '</span>' : '') + '</div>'
     + '<div class="call-quand"><strong>' + echap(quand) + '</strong><span>' + echap(detail) + '</span></div>'
     + '<div class="call-actes">'
     + (VISIO ? '<a class="call-oui" href="' + echap(VISIO) + '" target="_blank" rel="noopener noreferrer">Rejoindre la visio</a>' : '')
-    + '<a class="' + (VISIO ? 'call-non' : 'call-oui') + '" href="' + echap(wa(msg))
-    + '" target="_blank" rel="noopener noreferrer">Demander à le déplacer</a>'
+    + (reste > 0 ? '<button class="' + (VISIO ? 'call-non' : 'call-oui') + '" type="button" data-act="deplacer" data-n="' + n + '">Déplacer</button>' : '')
     + '</div></section>';
 }
 
@@ -1127,10 +1140,32 @@ function feuilleSession(n){
     + '<span class="label">Ce que tu prépares</span>'
     + '<ul class="prepa">' + PREPA.map(t => '<li>' + echap(t) + '</li>').join('') + '</ul>';
 }
+/* Les créneaux : la veille, le jour prévu et les deux jours suivants, pour
+   rester dans la même semaine. Confirmer ouvre WhatsApp avec la demande
+   écrite ; c'est Tristan qui valide. */
+function feuilleCall(n, c){
+  const base = jourDuCall(n);
+  const jours = [base - 1, base, base + 1, base + 2].filter(j => j > c.j && j <= 91);
+  const k = ecran.creneau;
+  const msg = k ? 'Bonjour Tristan, je voudrais déplacer le call ' + n + ' du ' + texteDate(dateDu(base))
+    + ' au ' + texteDate(dateDu(k.jour)) + ' à ' + k.heure + '.' : '';
+  return '<div class="feuille-tete"><span class="label">Déplacer le call ' + n + '</span>'
+    + '<h2 id="feuille-titre">Choisis un autre créneau.</h2>'
+    + '<p class="petit" style="font-size:14.5px">Même semaine, pour que la phase garde son rythme. '
+    + 'Ta demande part à Tristan sur WhatsApp, et il te confirme.</p></div>'
+    + '<div class="jours">' + jours.map(j => '<div class="jour"><span>' + echap(maj(texteDate(dateDu(j)))) + '</span>'
+        + '<div class="creneaux">' + CRENEAUX.map(h => '<button type="button" data-act="creneau" data-jour="' + j
+            + '" data-heure="' + echap(h) + '" aria-pressed="' + !!(k && k.jour === j && k.heure === h) + '">' + echap(h) + '</button>').join('')
+        + '</div></div>').join('') + '</div>'
+    + (k ? '<a class="bouton" data-act="demande" data-n="' + n + '" href="' + echap(wa(msg)) + '" target="_blank" rel="noopener noreferrer">'
+            + 'Confirmer ' + echap(texteDate(dateDu(k.jour), { weekday:'long' })) + ' ' + echap(k.heure) + '</a>'
+         : '<button class="bouton" type="button" disabled>Choisis un créneau</button>');
+}
 let avantFeuille = null;
 function rendreFeuille(){
   const f = ecran.feuille;
-  const h = !f ? '' : f.type === 'res' ? feuilleRes(f.cle, situation()) : feuilleSession(f.n);
+  const h = !f ? '' : f.type === 'res' ? feuilleRes(f.cle, situation())
+    : f.type === 'call' ? feuilleCall(f.n, situation()) : feuilleSession(f.n);
   if(!h){ feuille.innerHTML = ''; document.body.style.overflow = ''; return; }
   feuille.innerHTML = '<div class="feuille"><button class="voile" type="button" data-act="fermer" aria-label="Fermer"></button>'
     + '<div class="feuille-corps" role="dialog" aria-modal="true" aria-labelledby="feuille-titre" tabindex="-1">'
@@ -1223,6 +1258,20 @@ document.addEventListener('click', e => {
       vus[d.cle] = !vus[d.cle];
       ecrire(CLE_VU, vus);
       rendreFeuille();
+      break;
+    case 'deplacer': ecran.creneau = null; ouvrirFeuille({ type:'call', n:+d.n }); break;
+    case 'creneau': {
+      ecran.creneau = { jour:+d.jour, heure:d.heure };
+      rendreFeuille();
+      const b2 = feuille.querySelector('[data-act="demande"]'); if(b2) b2.focus();
+      break;
+    }
+    /* Le lien s'ouvre tout seul dans WhatsApp ; on garde seulement la trace
+       de ce qui a été demandé. */
+    case 'demande':
+      journal.demande = { n:+d.n, jour:ecran.creneau.jour, heure:ecran.creneau.heure };
+      ecrire(CLE_JOURNAL, journal);
+      fermerFeuille();
       break;
     case 'fermer': fermerFeuille(); break;
   }
