@@ -230,50 +230,175 @@ img{max-width:100%}
 .faq__q[aria-expanded="true"] .faq__icon{background:#12171B;color:#FFFFFF}
 .faq__a{display:flex;flex-direction:column;gap:12px;padding:0 56px 28px 0;animation:fadeUp .5s both}
 
-/* ================= Réserver ================= */
-/* Panneau ouvert par les boutons « Réserver » : toutes les réservations au même endroit.
-   Sans JavaScript, ces boutons restent de simples liens vers #offres. */
-.resa{
-  width:min(600px,calc(100vw - 28px));max-height:calc(100dvh - 28px);margin:auto;padding:0;border:0;
-  border-radius:28px;background:#F3F7F9;color:#12171B;overflow:auto;overscroll-behavior:contain;
-  box-shadow:0 50px 120px -40px rgba(11,14,17,.6);
+/* ================= Panneaux ================= */
+/* Deux panneaux s'ouvrent par-dessus la page : « Réserver » et « Me contacter ».
+   Sans JavaScript, leurs boutons restent de simples liens vers #offres et #coordonnees. */
+.panneau{
+  max-height:calc(100dvh - 28px);margin:auto;padding:0;border:0;border-radius:28px;
+  color:#12171B;overflow:hidden;box-shadow:0 50px 120px -40px rgba(11,14,17,.6);
 }
-.resa::backdrop{background:rgba(11,14,17,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-.resa[open]{animation:fadeUp .45s cubic-bezier(.2,.7,.2,1) both}
-.resa__in{display:flex;flex-direction:column;gap:22px;padding:clamp(22px,4vw,36px)}
-.resa__head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
-.resa__label{margin:0;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#4B5661}
-.resa__head h2{margin:10px 0 0;font-size:clamp(28px,5vw,40px);font-weight:600;line-height:1;letter-spacing:-.035em}
-.resa__close{
-  flex:none;display:flex;align-items:center;justify-content:center;width:40px;height:40px;padding:0;
-  border:0;border-radius:50%;background:rgba(18,23,27,.06);color:#12171B;cursor:pointer;transition:background .3s;
+.panneau::backdrop{background:rgba(11,14,17,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+/* display seulement une fois ouvert : posé sur .panneau, il afficherait le panneau fermé */
+.panneau[open]{display:flex;flex-direction:column;animation:fadeUp .45s cubic-bezier(.2,.7,.2,1) both}
+/* Le contenu défile ici, en simple bloc : dans une grille ou une colonne flexible
+   contrainte en hauteur, un bloc à débordement masqué s'écrase au lieu de défiler. */
+.panneau__in{min-height:0;overflow:auto;overscroll-behavior:contain}
+/* Le bouton tient au panneau, pas au contenu : il reste en place quand ça défile */
+.panneau__close{
+  position:absolute;top:24px;right:24px;z-index:2;display:flex;align-items:center;justify-content:center;
+  width:40px;height:40px;padding:0;border:0;border-radius:50%;background:#FFFFFF;color:#12171B;cursor:pointer;
+  box-shadow:0 0 0 1px rgba(18,23,27,.08);transition:background .3s,color .3s;
 }
-.resa__close:hover{background:rgba(18,23,27,.12)}
-.resa__close svg{width:14px;height:14px}
-.resa__group{display:flex;flex-direction:column;gap:8px}
-.resa__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-.resa__opt{
-  display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:2px 16px;
-  padding:16px 18px;border-radius:18px;background:#FFFFFF;color:#12171B;
-  transition:transform .4s cubic-bezier(.2,.7,.2,1),background .3s;
-}
-.resa__opt:hover{transform:translateY(-2px)}
-.resa__name{grid-column:1;font-size:17px;font-weight:600;letter-spacing:-.01em}
-.resa__meta{grid-column:1;font-size:14px;line-height:1.45;color:#4B5661}
-.resa__price{grid-column:2;grid-row:1/span 2;font-size:22px;font-weight:300;letter-spacing:-.03em;white-space:nowrap}
-.resa__arrow{grid-column:3;grid-row:1/span 2;font-size:18px;color:#33708F}
-.resa__tag{
+.panneau__close svg{width:14px;height:14px}
+.panneau__label{margin:0;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#4B5661}
+/* à hauteur du bouton de fermeture, avec le point « en direct » */
+.panneau__label--live{display:flex;align-items:center;gap:10px;height:40px}
+.panneau__label--live::before{content:"";width:7px;height:7px;border-radius:50%;background:#33708F;animation:recBlink 2s ease-in-out infinite}
+.panneau__tag{
   display:inline-block;margin-right:8px;padding:2px 7px;border-radius:999px;background:#12171B;color:#FFFFFF;
   font-size:10px;font-weight:500;letter-spacing:.1em;vertical-align:.15em;
 }
-.resa__tag--be{background:#33708F}
-.resa__opt--reset{background:linear-gradient(160deg,#16303D,#0B0E11);color:#E6ECF0}
-.resa__opt--reset .resa__meta{color:#B9C5CE}
-.resa__opt--reset .resa__arrow{color:#9CC7DC}
-.resa__note{margin:0;font-size:15px;line-height:1.6;color:#4B5661}
+.panneau__tag--be{background:#33708F}
+/* le pastillage rond du logo : un anneau, un point qui bat */
+.panneau__rec{
+  display:inline-flex;align-items:center;justify-content:center;align-self:flex-start;flex:none;
+  width:.3em;height:.3em;margin:.02em 0 0 .06em;border-radius:50%;border:max(3px,.028em) solid currentColor;
+}
+.panneau__rec span{width:46%;height:46%;border-radius:50%;background:#33708F;animation:recFade 2s ease-in-out infinite}
+
+/* ---------- Réserver ---------- */
+.resa{width:min(1040px,calc(100vw - 28px));background:#F3F7F9}
+.resa .panneau__in{padding:14px}
+/* L'en-tête rejoue le héros de la page : le mot BELIVE, ses orbites, ses électrons,
+   et le halo qui respire au rythme de la page (voir --core) */
+.resa__hero{
+  position:relative;display:flex;flex-direction:column;align-items:center;gap:clamp(12px,1.6vw,18px);overflow:hidden;
+  padding:46px 20px clamp(26px,3vw,34px);border-radius:20px;text-align:center;
+  background:linear-gradient(180deg,#D5E6EE 0%,#A6CDE0 44%,#74AAC4 100%);
+}
+.resa__hero>*{position:relative}
+.resa__sky{position:absolute;inset:0;pointer-events:none}
+.resa__glow{
+  position:absolute;left:50%;top:44%;width:min(64%,480px);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.55),rgba(255,255,255,0) 68%);
+  transform:translate(-50%,-50%) scale(var(--core));transition:transform 5s cubic-bezier(.45,0,.55,1);
+}
+.resa__sky svg{position:absolute;left:50%;top:50%;width:clamp(480px,74%,720px);aspect-ratio:1;transform:translate(-50%,-50%);overflow:visible}
+.resa__orbits{transform-origin:0 0;animation:spin 140s linear infinite}
+.resa__orbits ellipse{fill:none;stroke:rgba(255,255,255,.8);stroke-width:1.4}
+.resa__hero .panneau__label{position:absolute;left:24px;top:10px;color:#2B343C}
+.resa__word{
+  display:flex;align-items:center;gap:.08em;margin:0;font-size:clamp(64px,22vw,148px);font-weight:700;
+  letter-spacing:-.06em;line-height:.8;color:#FFFFFF;text-shadow:0 8px 40px rgba(36,84,108,.4);
+}
+.resa__letters{display:flex}
+.resa__letters span{display:inline-block}
+/* les lettres arrivent une à une, comme en haut de page */
+.panneau[open] .resa__letters span,.panneau[open] .resa__word .panneau__rec{animation:wordIn 1.1s calc(var(--i)*70ms + 120ms) cubic-bezier(.2,.7,.2,1) both}
+.resa__hero h2{margin:0;font-size:clamp(22px,2.6vw,30px);font-weight:600;line-height:1.05;letter-spacing:-.03em}
+
+/* Les réservations : groupe et individuel côte à côte, l'offre signature sur toute la largeur */
+.resa__offers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 20px;padding:22px clamp(8px,1.2vw,14px) 0}
+.resa__group{display:flex;flex-direction:column;gap:10px}
+.resa__sep{display:flex;align-items:center;gap:14px}
+.resa__sep::after{content:"";flex:1;height:1px;background:rgba(18,23,27,.14)}
+.resa__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.resa__opt{
+  display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:2px 14px;
+  padding:16px 16px 16px 20px;border-radius:18px;background:#FFFFFF;color:#12171B;
+  transition:transform .4s cubic-bezier(.2,.7,.2,1);
+}
+.resa__name{grid-column:1;font-size:17px;font-weight:600;letter-spacing:-.01em}
+.resa__meta{grid-column:1;font-size:14px;line-height:1.45;color:#4B5661}
+.resa__price{grid-column:2;grid-row:1/span 2;font-size:22px;font-weight:300;letter-spacing:-.03em;white-space:nowrap}
+.resa__arrow{
+  grid-column:3;grid-row:1/span 2;display:flex;align-items:center;justify-content:center;width:34px;height:34px;
+  border-radius:50%;background:rgba(18,23,27,.06);font-size:16px;transition:background .3s,color .3s;
+}
+/* L'offre signature reprend la carte du héros : sur-titre, pastille « À venir », fond nuit */
+.resa__opt--reset{
+  grid-column:1/-1;padding-top:14px;color:#E6ECF0;box-shadow:inset 0 0 0 1px rgba(156,199,220,.3);
+  background:radial-gradient(60% 140% at 100% 0,rgba(156,199,220,.2),rgba(156,199,220,0) 62%),linear-gradient(160deg,#16303D,#0B0E11);
+}
+.resa__over{
+  grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;
+  font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#9CC7DC;
+}
+.resa__pill{padding:3px 8px;border-radius:999px;border:1px solid rgba(156,199,220,.4);font-weight:400;letter-spacing:0;text-transform:none}
+.resa__opt--reset .resa__name{grid-row:2}
+.resa__opt--reset .resa__meta{grid-row:3;color:#B9C5CE}
+.resa__opt--reset .resa__price,.resa__opt--reset .resa__arrow{grid-row:2/span 2}
+.resa__opt--reset .resa__arrow{background:rgba(230,236,240,.1)}
+.resa__note{margin:0;padding:18px 0 8px;text-align:center;font-size:15px;line-height:1.6;color:#4B5661}
 .resa__note a{color:#12171B;text-decoration:underline;text-underline-offset:3px}
+
+/* ---------- Me contacter ---------- */
+/* Le bleu de la section « Le souffle », et le mot du pied de page qui affleure en bas */
+.contact{
+  width:min(460px,calc(100vw - 28px));color:#FFFFFF;
+  background:radial-gradient(90% 38% at 50% 100%,rgba(156,199,220,.36),rgba(156,199,220,0) 72%),linear-gradient(165deg,#2F6A89 0%,#24546C 55%,#1B4459 100%);
+}
+.contact .panneau__in{--bord:clamp(22px,6vw,32px);padding:24px var(--bord) 0}
+.contact :focus-visible{outline-color:#FFFFFF}
+.contact .panneau__label{color:#DDE9EF}
+.contact .panneau__label--live::before{background:#9CC7DC}
+.contact h2{margin:16px 0 0;font-size:clamp(38px,10vw,48px);font-weight:600;line-height:1;letter-spacing:-.035em}
+.contact__lead{margin:12px 0 0;font-size:16px;line-height:1.5;color:#DDE9EF}
+.contact__way{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:3px 14px;padding:14px 0;color:#FFFFFF}
+.contact__way .panneau__label{grid-column:1;height:auto;font-size:11px}
+.contact__val{grid-column:1;font-size:17px;font-weight:500;letter-spacing:-.01em;overflow-wrap:anywhere}
+.contact__go{grid-column:2;grid-row:1/span 2;font-size:18px;color:#9CC7DC;transition:transform .4s cubic-bezier(.2,.7,.2,1)}
+/* WhatsApp d'abord, en carte blanche : c'est par là que tout passe */
+.contact__way--main{
+  margin-top:24px;padding:16px 16px 16px 20px;border-radius:18px;background:#FFFFFF;color:#12171B;
+  transition:transform .4s cubic-bezier(.2,.7,.2,1);
+}
+.contact__way--main .panneau__label{color:#4B5661}
+.contact__way--main .contact__val{font-size:21px;font-weight:600;letter-spacing:-.02em}
+.contact__way--main .contact__go{
+  display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;
+  background:#12171B;color:#FFFFFF;font-size:16px;
+}
+.contact__ways{list-style:none;margin:8px 0 0;padding:0}
+.contact__ways li+li{border-top:1px solid rgba(255,255,255,.2)}
+.contact__lieux{display:flex;flex-direction:column;gap:8px;padding-top:14px;font-size:15px;line-height:1.45}
+.contact__lieux p{margin:0}
+.contact__lieux .panneau__label{font-size:11px}
+.contact__lieu{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:baseline;gap:8px}
+.contact__lieu .panneau__tag{margin:0;background:#FFFFFF;color:#12171B}
+.contact__lieu .panneau__tag--be{background:#9CC7DC}
+/* le code postal et la ville restent sur la même ligne */
+.contact__lieu span span{white-space:nowrap}
+/* le mot, en filigrane, coupé par le bas du panneau */
+.contact__word{
+  display:flex;justify-content:center;height:.62em;margin:28px calc(-1*var(--bord)) 0;overflow:hidden;
+  font-size:min(30vw,138px);font-weight:700;letter-spacing:-.065em;line-height:.85;color:rgba(255,255,255,.14);
+}
+.contact__word .panneau__rec{width:.24em;height:.24em;margin:.12em 0 0 .04em;border-width:max(3px,.022em)}
+.contact__word .panneau__rec span{background:#9CC7DC}
+
+@media (hover:hover){
+  .panneau__close:hover{background:#12171B;color:#FFFFFF}
+  .resa__opt:hover,.contact__way--main:hover{transform:translateY(-2px)}
+  .resa__opt:hover .resa__arrow{background:#12171B;color:#FFFFFF}
+  .resa__opt--reset:hover .resa__arrow{background:#E6ECF0;color:#12171B}
+  .contact__way:hover .contact__go{transform:translateX(4px)}
+}
+/* « réduire les animations » : les électrons sont animés dans le SVG, hors de portée
+   de la règle générale, on les retire */
+@media (prefers-reduced-motion:reduce){.resa__electron{display:none}}
+/* comme en haut de page, les orbites ne tournent pas sur téléphone */
+@media (max-width:760px),(hover:none){.resa__orbits{animation:none}}
+/* Plus la place pour deux colonnes de réservations */
+@media (max-width:940px){
+  .resa{width:min(620px,calc(100vw - 28px))}
+  /* le mot occupe toute la largeur : il passe sous le libellé */
+  .resa__hero{padding-top:56px}
+  .resa__offers{grid-template-columns:minmax(0,1fr)}
+}
 @media (max-width:520px){
-  .resa{width:100vw;max-width:100vw;margin:auto 0 0;border-radius:28px 28px 0 0}
+  .panneau{width:100vw;max-width:100vw;margin:auto 0 0;border-radius:28px 28px 0 0}
+  .resa__opt{gap:2px 12px;padding:14px 14px 14px 16px}
   .resa__arrow{display:none}
 }
 
@@ -377,7 +502,7 @@ f();addEventListener('resize',f);})();
 <a href="#offres">En individuel</a>
 <a href="#protocole">RESET 90 jours</a>
 </div>
-<a class="nav__cta" data-resa href="#offres" aria-haspopup="dialog">Réserver →</a>
+<a class="nav__cta" data-panneau="resa" href="#offres" aria-haspopup="dialog">Réserver →</a>
 <button class="nav__burger" id="navBurger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Ouvrir le menu"><span></span><span></span></button>
 </nav>
 </header>
@@ -432,8 +557,8 @@ f();addEventListener('resize',f);})();
 <p style="margin:0;font-size:16px;line-height:1.6;color:#2B343C;text-wrap:pretty">Pas en différé. Pas en pilote automatique. En direct de l'expérience, et libre de choisir celle que tu veux vivre.</p>
 <p style="margin:0;font-size:14px;line-height:1.6;color:#2B343C;text-wrap:pretty">La méthode qui s'adapte à toi. Celle qui va te permettre de sortir du pilote automatique et de reprendre les commandes de ta propre vie, en passant par le souffle, le corps et le système nerveux.</p>
 <div style="display:flex;gap:10px;flex-wrap:wrap">
-<a data-resa href="#offres" aria-haspopup="dialog" style="background:#12171B;color:#FFFFFF;padding:15px 24px;border-radius:999px;font-weight:500;font-size:15px;transition:transform .3s" class="hv-1">Réserver →</a>
-<a href="#methode" style="background:rgba(255,255,255,.6);color:#12171B;padding:15px 24px;border-radius:999px;font-size:15px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:background .3s" class="hv-2">Comment ça marche ? →</a>
+<a data-panneau="resa" href="#offres" aria-haspopup="dialog" style="background:#12171B;color:#FFFFFF;padding:15px 24px;border-radius:999px;font-weight:500;font-size:15px;transition:transform .3s" class="hv-1">Réserver →</a>
+<a data-panneau="contact" href="#coordonnees" aria-haspopup="dialog" style="background:rgba(255,255,255,.6);color:#12171B;padding:15px 24px;border-radius:999px;font-size:15px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:background .3s" class="hv-2">Me contacter →</a>
 </div>
 </div>
 <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end;pointer-events:auto">
@@ -615,7 +740,7 @@ f();addEventListener('resize',f);})();
 <p data-reveal style="margin:0;font-size:clamp(20px,1.8vw,26px);font-weight:500;line-height:1.3;letter-spacing:-.01em;color:#12171B">Mon travail est de te rendre autonome, puis de devenir inutile.</p>
 <p data-reveal data-delay="100" style="margin:0;font-size:16px;line-height:1.65;color:#4B5661">Moi aussi je suis passé par là. Une vie de salarié remplie de sécurité, mais sans conviction réelle. Une fourmi de plus dans la fourmilière.</p>
 <p data-reveal data-delay="200" style="margin:0;font-size:16px;line-height:1.65;color:#4B5661">Ma reconstruction ne s'est pas faite par une illumination, mais par un apprentissage : celui du fonctionnement de la haute technologie qu'est notre corps. J'ai bâti une discipline du corps par la respiration.</p>
-<a data-reveal data-resa href="#offres" aria-haspopup="dialog" style="align-self:flex-start;display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;background:#12171B;color:#FFFFFF;font-size:14px;font-weight:500" class="hv-7">Travailler avec moi <span>→</span></a>
+<a data-reveal data-panneau="resa" href="#offres" aria-haspopup="dialog" style="align-self:flex-start;display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;background:#12171B;color:#FFFFFF;font-size:14px;font-weight:500" class="hv-7">Travailler avec moi <span>→</span></a>
 </div>
 </div>
 <div data-clip class="qui__photo" style="position:relative;flex:1 1 340px;max-width:640px;margin-left:auto;margin-top:calc(-1 * clamp(10px,1.5vw,28px));aspect-ratio:4/3;border-radius:24px;overflow:hidden;background:#DDE9EF;clip-path:inset(12% 12% 12% 12% round 24px);box-shadow:0 50px 90px -50px rgba(18,23,27,.55)">
@@ -1200,7 +1325,7 @@ f();addEventListener('resize',f);})();
 <span data-reveal style="display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#4B5661"><span style="width:7px;height:7px;border-radius:50%;background:#33708F;animation:recBlink 2s ease-in-out infinite"></span>En direct de ta vie</span>
 <p data-words style="margin:0;font-size:clamp(40px,6vw,96px);font-weight:300;line-height:1.02;letter-spacing:-.045em;text-wrap:balance;max-width:16ch"><span data-w data-c="#12171B" data-off="#BFD0DA" style="color:#BFD0DA;transition:color .4s">Le</span> <span data-w data-c="#12171B" data-off="#BFD0DA" style="color:#BFD0DA;transition:color .4s">changement</span> <span data-w data-c="#12171B" data-off="#BFD0DA" style="color:#BFD0DA;transition:color .4s">ne</span> <span data-w data-c="#12171B" data-off="#BFD0DA" style="color:#BFD0DA;transition:color .4s">commence</span> <span data-w data-c="#12171B" data-off="#BFD0DA" style="color:#BFD0DA;transition:color .4s">pas</span> <span data-w data-c="#12171B" data-off="#BFD0DA" style="color:#BFD0DA;transition:color .4s">dans</span> <span data-w data-c="#12171B" data-off="#BFD0DA" style="color:#BFD0DA;transition:color .4s">la</span> <span data-w data-c="#12171B" data-off="#BFD0DA" style="color:#BFD0DA;transition:color .4s">tête.</span> <span style="font-weight:600"><span data-w data-c="#33708F" data-off="#BFD0DA" style="color:#BFD0DA;transition:color .4s">Il</span> <span data-w data-c="#33708F" data-off="#BFD0DA" style="color:#BFD0DA;transition:color .4s">commence</span> <span data-w data-c="#33708F" data-off="#BFD0DA" style="color:#BFD0DA;transition:color .4s">dans</span> <span data-w data-c="#33708F" data-off="#BFD0DA" style="color:#BFD0DA;transition:color .4s">le</span> <span data-w data-c="#33708F" data-off="#BFD0DA" style="color:#BFD0DA;transition:color .4s">souffle.</span></span></p>
 <div data-reveal style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
-<a data-resa href="#lieux" aria-haspopup="dialog" style="background:#12171B;color:#FFFFFF;padding:18px 30px;border-radius:999px;font-weight:500;font-size:17px;transition:transform .3s" class="hv-1">Réserver ma séance →</a>
+<a data-panneau="resa" href="#lieux" aria-haspopup="dialog" style="background:#12171B;color:#FFFFFF;padding:18px 30px;border-radius:999px;font-weight:500;font-size:17px;transition:transform .3s" class="hv-1">Réserver ma séance →</a>
 <a href="https://docs.google.com/forms/d/e/1FAIpQLSfj11kIlWgP47-O8oDt12YvOwmYfR5KPWXMzn8iG9LAzuwBDQ/viewform" target="_blank" rel="noopener" style="background:rgba(255,255,255,.7);color:#12171B;padding:18px 30px;border-radius:999px;font-size:17px;border:1px solid rgba(255,255,255,.9)" class="hv-2">Liste d'attente RESET →</a>
 </div>
 </div>
@@ -1212,7 +1337,7 @@ f();addEventListener('resize',f);})();
 <span style="font-size:18px;letter-spacing:.32em;display:flex;align-items:center;gap:10px"><span style="display:flex"><span style="font-weight:250">BE</span><span style="font-weight:600">LIVE</span></span><span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;border:1.5px solid currentColor"><span style="width:46%;height:46%;border-radius:50%;background:#33708F;animation:recFade 2s ease-in-out infinite"></span></span></span>
 <p style="margin:0;font-size:15px;line-height:1.6;color:#2B343C">Réhabilitation Énergétique et Identitaire. Tristan, facilitateur Breathwork &amp; Énergétique, naturopathe en formation.</p>
 </div>
-<div style="display:flex;flex-direction:column;gap:10px;font-size:15px">
+<div id="coordonnees" style="display:flex;flex-direction:column;gap:10px;font-size:15px">
 <span style="font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;margin-bottom:6px">Contact</span>
 <a href="https://wa.me/32493847434" target="_blank" rel="noopener" style="color:#2B343C" class="hv-5">WhatsApp : +32 493 84 74 34</a>
 <a href="mailto:tristanvang.contact@gmail.com" style="color:#2B343C" class="hv-5">E-mail : tristanvang.contact@gmail.com</a>
@@ -1236,29 +1361,41 @@ f();addEventListener('resize',f);})();
 </div>
 </footer>
 
-<dialog class="resa" id="resa" aria-labelledby="resaTitle">
-<div class="resa__in">
-<div class="resa__head">
-<div>
-<p class="resa__label">Réserver</p>
-<h2 id="resaTitle">Par où tu commences&nbsp;?</h2>
-</div>
-<button class="resa__close" id="resaClose" type="button" aria-label="Fermer">
+<dialog class="panneau resa" id="resa" aria-labelledby="resaTitle">
+<button class="panneau__close" type="button" aria-label="Fermer">
 <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3,3 L13,13 M13,3 L3,13" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
 </button>
+<div class="panneau__in">
+
+<div class="resa__hero">
+<div class="resa__sky" aria-hidden="true">
+<span class="resa__glow"></span>
+<svg viewBox="-500 -500 1000 1000">
+<defs><radialGradient id="resaHalo"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".85"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient></defs>
+<g class="resa__orbits">
+<g transform="rotate(0)"><ellipse rx="470" ry="150"/><g class="resa__electron"><circle r="22" fill="url(#resaHalo)"/><circle r="8" fill="#FFFFFF"/><animateMotion dur="13s" begin="0s" repeatCount="indefinite" path="M470,0A470,150 0 1 1 -470,0A470,150 0 1 1 470,0"/></g></g>
+<g transform="rotate(60)"><ellipse rx="470" ry="150"/><g class="resa__electron"><circle r="22" fill="url(#resaHalo)"/><circle r="8" fill="#FFFFFF"/><animateMotion dur="17s" begin="-6s" repeatCount="indefinite" path="M470,0A470,150 0 1 1 -470,0A470,150 0 1 1 470,0"/></g></g>
+<g transform="rotate(120)"><ellipse rx="470" ry="150"/><g class="resa__electron"><circle r="22" fill="url(#resaHalo)"/><circle r="8" fill="#FFFFFF"/><animateMotion dur="15s" begin="-11s" repeatCount="indefinite" path="M470,0A470,150 0 1 1 -470,0A470,150 0 1 1 470,0"/></g></g>
+</g>
+</svg>
+</div>
+<p class="panneau__label panneau__label--live">Réserver</p>
+<p class="resa__word" role="img" aria-label="BELIVE"><span class="resa__letters"><span style="--i:0">B</span><span style="--i:1">E</span><span style="--i:2">L</span><span style="--i:3">I</span><span style="--i:4">V</span><span style="--i:5">E</span></span><span class="panneau__rec" style="--i:7"><span></span></span></p>
+<h2 id="resaTitle">Par où tu commences&nbsp;?</h2>
 </div>
 
+<div class="resa__offers">
 <div class="resa__group">
-<p class="resa__label">Breathwork en groupe</p>
+<p class="panneau__label resa__sep">Breathwork en groupe</p>
 <ul class="resa__list">
 <li><a class="resa__opt" href="https://luma.com/user/usr-RFau2gA8XZpVvCu" target="_blank" rel="noopener">
-<span class="resa__name"><span class="resa__tag">FR</span>Thivars, près de Chartres</span>
+<span class="resa__name"><span class="panneau__tag">FR</span>Thivars, près de Chartres</span>
 <span class="resa__meta">Environ 2 h · 44 rue de Bel Air · prochaines dates</span>
 <span class="resa__price">50&nbsp;€</span>
 <span class="resa__arrow" aria-hidden="true">→</span>
 </a></li>
 <li><a class="resa__opt" href="https://luma.com/user/usr-RFau2gA8XZpVvCu" target="_blank" rel="noopener">
-<span class="resa__name"><span class="resa__tag resa__tag--be">BE</span>Nil-Saint-Vincent, Brabant wallon</span>
+<span class="resa__name"><span class="panneau__tag panneau__tag--be">BE</span>Nil-Saint-Vincent, Brabant wallon</span>
 <span class="resa__meta">Environ 2 h · Espace Eaurigine · prochaines dates</span>
 <span class="resa__price">50&nbsp;€</span>
 <span class="resa__arrow" aria-hidden="true">→</span>
@@ -1267,7 +1404,7 @@ f();addEventListener('resize',f);})();
 </div>
 
 <div class="resa__group">
-<p class="resa__label">En individuel</p>
+<p class="panneau__label resa__sep">En individuel</p>
 <ul class="resa__list">
 <li><a class="resa__opt" href="https://cal.com/tristan-vangoidtsenhoven-3wuqnf/30min" target="_blank" rel="noopener">
 <span class="resa__name">BELIVE Alignement</span>
@@ -1284,19 +1421,51 @@ f();addEventListener('resize',f);})();
 </ul>
 </div>
 
-<div class="resa__group">
-<p class="resa__label">L'offre signature, à venir</p>
-<ul class="resa__list">
-<li><a class="resa__opt resa__opt--reset" href="https://docs.google.com/forms/d/e/1FAIpQLSfj11kIlWgP47-O8oDt12YvOwmYfR5KPWXMzn8iG9LAzuwBDQ/viewform" target="_blank" rel="noopener">
+<a class="resa__opt resa__opt--reset" href="https://docs.google.com/forms/d/e/1FAIpQLSfj11kIlWgP47-O8oDt12YvOwmYfR5KPWXMzn8iG9LAzuwBDQ/viewform" target="_blank" rel="noopener">
+<span class="resa__over"><span>L'offre signature</span><span class="resa__pill">À venir</span></span>
 <span class="resa__name">BELIVE RESET, 90 jours</span>
 <span class="resa__meta">Tarif fondateur, trois places · pas encore ouvert, rejoins la liste d'attente</span>
 <span class="resa__price">1&nbsp;777&nbsp;€</span>
 <span class="resa__arrow" aria-hidden="true">→</span>
-</a></li>
-</ul>
+</a>
 </div>
 
-<p class="resa__note">Une question avant de choisir&nbsp;? <a href="https://wa.me/32493847434?text=Bonjour%20Tristan%2C%20j%27ai%20une%20question%20sur%20BELIVE%20%3A%20" target="_blank" rel="noopener">Écris-moi sur WhatsApp.</a></p>
+<p class="resa__note">Une question avant de choisir&nbsp;? <a data-panneau="contact" href="#coordonnees" aria-haspopup="dialog">Écris-moi →</a></p>
+
+</div>
+</dialog>
+
+<dialog class="panneau contact" id="contact" aria-labelledby="contactTitle">
+<button class="panneau__close" type="button" aria-label="Fermer">
+<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3,3 L13,13 M13,3 L3,13" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+</button>
+<div class="panneau__in">
+<p class="panneau__label panneau__label--live">Contact</p>
+<h2 id="contactTitle">Écris-moi.</h2>
+<p class="contact__lead">Une question avant de réserver&nbsp;?<br>Le plus direct, c'est WhatsApp.</p>
+<a class="contact__way contact__way--main" href="https://wa.me/32493847434?text=Bonjour%20Tristan%2C%20j%27ai%20une%20question%20sur%20BELIVE%20%3A%20" target="_blank" rel="noopener">
+<span class="panneau__label">WhatsApp</span>
+<span class="contact__val">+32 493 84 74 34</span>
+<span class="contact__go" aria-hidden="true">→</span>
+</a>
+<ul class="contact__ways">
+<li><a class="contact__way" href="mailto:tristanvang.contact@gmail.com">
+<span class="panneau__label">E-mail</span>
+<span class="contact__val">tristanvang.contact@gmail.com</span>
+<span class="contact__go" aria-hidden="true">→</span>
+</a></li>
+<li><a class="contact__way" href="https://www.instagram.com/tristan.belive/" target="_blank" rel="noopener">
+<span class="panneau__label">Instagram</span>
+<span class="contact__val">@tristan.belive</span>
+<span class="contact__go" aria-hidden="true">→</span>
+</a></li>
+<li class="contact__lieux">
+<p class="panneau__label">Lieux</p>
+<p class="contact__lieu"><span class="panneau__tag">FR</span><span>44 rue de Bel Air, <span>28630 Thivars</span></span></p>
+<p class="contact__lieu"><span class="panneau__tag panneau__tag--be">BE</span><span>Espace Eaurigine, Val d'Alvaux 26, <span>1457 Nil-Saint-Vincent</span></span></p>
+</li>
+</ul>
+<p class="contact__word" aria-hidden="true">belive<span class="panneau__rec"><span></span></span></p>
 </div>
 </dialog>
 
@@ -1362,23 +1531,31 @@ f();addEventListener('resize',f);})();
   window.addEventListener('load', measureNav);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureNav);
 
-  /* ---------- Réserver : toutes les réservations dans un panneau ---------- */
-  var resa = document.getElementById('resa');
-  if (resa && typeof resa.showModal === 'function') {
-    all('[data-resa]').forEach(function (btn) {
+  /* ---------- Panneaux : réserver, me contacter ---------- */
+  /* Chaque bouton [data-panneau] ouvre le panneau du même nom. */
+  var panneaux = all('dialog.panneau');
+  if (panneaux.length && typeof panneaux[0].showModal === 'function') {
+    all('[data-panneau]').forEach(function (btn) {
       btn.addEventListener('click', function (e) {
+        var dlg = document.getElementById(btn.getAttribute('data-panneau'));
         e.preventDefault();
         setMenu(false);
-        resa.showModal();
+        /* un seul panneau à la fois : « Écris-moi », dans Réserver, passe de l'un à l'autre */
+        panneaux.forEach(function (p) { if (p.open) p.close(); });
+        dlg.showModal();
+        one('.panneau__in', dlg).scrollTop = 0;
       });
     });
-    document.getElementById('resaClose').addEventListener('click', function () { resa.close(); });
-    /* clic sur le fond : on ferme, sauf si le geste a commencé dans le panneau */
-    var downOnBackdrop = false;
-    resa.addEventListener('mousedown', function (e) { downOnBackdrop = e.target === resa; });
-    resa.addEventListener('click', function (e) {
-      if (e.target === resa && downOnBackdrop) resa.close();
-      else if (e.target.closest('.resa__opt')) resa.close();
+    panneaux.forEach(function (p) {
+      one('.panneau__close', p).addEventListener('click', function () { p.close(); });
+      /* clic sur le fond : on ferme, sauf si le geste a commencé dans le panneau.
+         Une réservation choisie ferme aussi ; les coordonnées restent, le temps de les copier. */
+      var downOnBackdrop = false;
+      p.addEventListener('mousedown', function (e) { downOnBackdrop = e.target === p; });
+      p.addEventListener('click', function (e) {
+        if (e.target === p && downOnBackdrop) p.close();
+        else if (e.target.closest('.resa__opt')) p.close();
+      });
     });
   }
 
