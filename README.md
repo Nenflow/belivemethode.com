@@ -32,7 +32,7 @@ assets/
   legal.css             Feuille de style commune aux trois pages légales
   fonts/Outfit.woff2    Police variable 100-900, sous-ensemble latin (35 Ko)
   img/                  Photos en AVIF / WebP / JPEG, favicons, image de partage
-  gen_brand.py          Regénère favicons et og.jpg depuis le logotype
+  gen_brand.py          Regénère les icônes (depuis img/logo-b.png) et og.jpg
   gen_photos.py         Regénère les déclinaisons AVIF / WebP / JPEG des photos
 ```
 
@@ -68,8 +68,11 @@ python3 assets/gen_brand.py
 python3 assets/gen_photos.py
 ```
 
-`gen_brand.py` redessine le wordmark avec les mêmes coordonnées que le SVG inclus
-dans le site : en cas de modification du logotype, mettre les deux à jour.
+`gen_brand.py` découpe les icônes (onglet du navigateur, écran d'accueil) dans
+`assets/img/logo-b.png` : pour changer d'icône, remplacer ce fichier et relancer le
+script. Pour l'image de partage, il redessine le wordmark avec les mêmes coordonnées
+que le SVG inclus dans le site : en cas de modification du logotype, mettre les deux
+à jour.
 
 ## Déploiement
 

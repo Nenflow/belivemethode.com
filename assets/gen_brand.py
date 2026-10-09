@@ -1,7 +1,8 @@
 """Génère les assets de marque BELIVE : favicons PNG + image de partage (Open Graph).
 
-Le wordmark est redessiné ici avec les mêmes coordonnées que le SVG du site
-(grille : hauteur de capitale = 100, épaisseur de trait = 5).
+Les icônes sont tirées du logo `logo-b.png` (le « B » et sa pastille sur fond nuit).
+Le wordmark de l'image de partage est redessiné ici avec les mêmes coordonnées que
+le SVG du site (grille : hauteur de capitale = 100, épaisseur de trait = 5).
 """
 import io, math, os
 from PIL import Image, ImageDraw, ImageFont
@@ -9,6 +10,7 @@ from fontTools.ttLib import TTFont
 
 SITE = "/Volumes/T7/PRO/Claude Code/Site web V2"
 IMG = os.path.join(SITE, "assets/img")
+LOGO = os.path.join(IMG, "logo-b.png")  # 800 × 800, source des icônes
 SS = 4  # supersampling
 
 INK = (18, 23, 27)
@@ -55,30 +57,22 @@ def draw_wordmark(d, ox, oy, scale, color, stroke=5, dot=True, dot_color=None):
                   fill=dot_color or color)
 
 
-def rounded_icon(size, radius_ratio=0.22):
-    """Carré arrondi encre + « B » en filet fin, centré."""
-    S = size * SS
-    im = Image.new("RGBA", (S, S), (0, 0, 0, 0))
-    d = ImageDraw.Draw(im)
-    d.rounded_rectangle([0, 0, S - 1, S - 1], radius=S * radius_ratio, fill=INK + (255,))
+def logo_icon(size, side, rounded=True):
+    """Icône tirée du logo : un carré de `side` px centré sur le B et sa pastille.
 
-    # le B seul : largeur 65, hauteur 100 en unités de grille
-    cap = S * 0.56
-    scale = cap / 100
-    bw = 65 * scale
-    ox = (S - bw) / 2
-    oy = (S - cap) / 2
-    lines, arcs, _ = wordmark_paths(dot=False)
-    w = max(1, round(7 * scale))  # trait épaissi : un filet à 5 disparaît en 16 px
-    for x1, y1, x2, y2 in lines[:5]:
-        d.line([ox + x1 * scale, oy + y1 * scale, ox + x2 * scale, oy + y2 * scale],
-               fill=ON_DARK, width=w)
-    e = w / 2
-    for cx, cy, r, a0, a1 in arcs:
-        d.arc([ox + (cx - r) * scale - e, oy + (cy - r) * scale - e,
-               ox + (cx + r) * scale + e, oy + (cy + r) * scale + e],
-              a0, a1, fill=ON_DARK, width=w)
-    return im.resize((size, size), Image.LANCZOS)
+    Plus le carré est serré, plus le B reste lisible en petit : 530 pour l'onglet
+    du navigateur, 640 pour l'écran d'accueil, qui garde les orbites entières.
+    """
+    cx, cy = 414, 398  # centre du B et de sa pastille dans la source
+    h = side / 2
+    im = Image.open(LOGO).convert("RGB")
+    im = im.resize((size, size), Image.LANCZOS, box=(cx - h, cy - h, cx + h, cy + h))
+    if rounded:
+        S = size * SS
+        mask = Image.new("L", (S, S), 0)
+        ImageDraw.Draw(mask).rounded_rectangle([0, 0, S - 1, S - 1], radius=S * 0.22, fill=255)
+        im.putalpha(mask.resize((size, size), Image.LANCZOS))
+    return im
 
 
 def load_font(px, weight=400):
@@ -129,10 +123,12 @@ def og_image():
 
 
 os.makedirs(IMG, exist_ok=True)
-rounded_icon(32).save(os.path.join(IMG, "favicon-32.png"), optimize=True)
-rounded_icon(180).save(os.path.join(IMG, "apple-touch-icon.png"), optimize=True)
+logo_icon(32, 530).save(os.path.join(IMG, "favicon-32.png"), optimize=True)
+logo_icon(192, 530).save(os.path.join(IMG, "favicon-192.png"), optimize=True)
+# iOS arrondit lui-même les coins : pleine surface, sans transparence
+logo_icon(180, 640, rounded=False).save(os.path.join(IMG, "apple-touch-icon.png"), optimize=True)
 og_image().save(os.path.join(IMG, "og.jpg"), quality=88, optimize=True, progressive=True)
 print("ok")
-for n in ("favicon-32.png", "apple-touch-icon.png", "og.jpg"):
+for n in ("favicon-32.png", "favicon-192.png", "apple-touch-icon.png", "og.jpg"):
     p = os.path.join(IMG, n)
     print(f"  {n:24} {os.path.getsize(p)/1024:6.1f} Ko")
