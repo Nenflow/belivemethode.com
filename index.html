@@ -168,6 +168,21 @@ img{max-width:100%}
 .nav__links{display:flex;align-items:center;gap:22px;margin-left:auto;font-size:14px}
 .nav__links a{color:#B9C5CE;transition:color .3s}
 .nav__links a:hover{color:#FFFFFF}
+/* Le lien de la section à l'écran. Sur ordinateur, une pastille glisse de l'un à
+   l'autre : le script la crée et la déplace. Dans le menu déroulant, un simple fond. */
+.nav__links a[aria-current]{color:#FFFFFF}
+.nav__here{display:none}
+@media (min-width:1041px){
+  /* l'écart entre les liens passe dans leur marge intérieure, pour que la pastille
+     déborde du texte sans rien déplacer */
+  .nav__links{position:relative;gap:0;margin-right:-11px}
+  .nav__links a{position:relative;padding:8px 11px}
+  .nav__here{
+    display:block;position:absolute;left:0;top:0;bottom:0;border-radius:999px;
+    background:rgba(230,236,240,.14);opacity:0;pointer-events:none;
+    transition:transform .5s cubic-bezier(.2,.7,.2,1),width .5s cubic-bezier(.2,.7,.2,1),opacity .3s;
+  }
+}
 .nav__cta{flex:none;background:#E6ECF0;color:#12171B;padding:11px 20px;border-radius:999px;font-size:14px;font-weight:500;transition:transform .3s}
 .nav__cta:hover{transform:translateY(-1px)}
 .nav__burger{
@@ -191,6 +206,7 @@ img{max-width:100%}
   }
   .nav.is-open .nav__links{display:flex}
   .nav__links a{padding:14px 16px;border-radius:14px;color:#E6ECF0}
+  .nav__links a[aria-current]{background:rgba(230,236,240,.08)}
 }
 
 /* ================= Exercice du souffle ================= */
@@ -1309,6 +1325,43 @@ f();addEventListener('resize',f);})();
   });
   document.addEventListener('click', function (e) { if (!nav.contains(e.target)) setMenu(false); });
 
+  /* ---------- Navigation : la section à l'écran ---------- */
+  /* Le lien de la section en cours est marqué, et sur ordinateur une pastille glisse
+     derrière lui. La place de chaque lien est mesurée à part (chargement, fonte,
+     redimensionnement) : au défilement, il ne reste qu'à écrire. */
+  var links = document.getElementById('navLinks');
+  var spy = all('a', links).map(function (a) {
+    return { a: a, el: document.getElementById(a.getAttribute('href').slice(1)), r: null, x: 0, w: 0 };
+  });
+  var here = links.insertBefore(document.createElement('span'), links.firstChild);
+  here.className = 'nav__here';
+  here.setAttribute('aria-hidden', 'true');
+  /* spied : le lien marqué ; at : là où la pastille s'est posée en dernier,
+     pour qu'elle s'efface sur place quand plus aucune section du menu n'est à l'écran */
+  var spied = null, at = spy[0];
+  function placeHere() {
+    here.style.width = at.w + 'px';
+    here.style.transform = 'translateX(' + at.x + 'px)';
+    here.style.opacity = spied ? 1 : 0;
+  }
+  function measureNav() {
+    spy.forEach(function (s) { s.x = s.a.offsetLeft; s.w = s.a.offsetWidth; });
+    placeHere();
+  }
+  function markNav(vh) {
+    var line = vh * 0.4, cur = null, i;
+    for (i = 0; i < spy.length; i++) if (spy[i].r.top <= line && spy[i].r.bottom > line) cur = spy[i];
+    if (cur === spied) return;
+    if (spied) spied.a.removeAttribute('aria-current');
+    if (cur) { cur.a.setAttribute('aria-current', 'true'); at = cur; }
+    spied = cur;
+    placeHere();
+  }
+  measureNav();
+  window.addEventListener('resize', measureNav);
+  window.addEventListener('load', measureNav);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureNav);
+
   /* ---------- Réserver : toutes les réservations dans un panneau ---------- */
   var resa = document.getElementById('resa');
   if (resa && typeof resa.showModal === 'function') {
@@ -1566,11 +1619,13 @@ f();addEventListener('resize',f);})();
     nav.classList.toggle('is-scrolled', y > 40);
     for (i = 0; i < fx.length; i++) fx[i].r = fx[i].el.getBoundingClientRect();
     for (i = 0; i < stack.length; i++) stack[i].r = stack[i].el.getBoundingClientRect();
+    for (i = 0; i < spy.length; i++) spy[i].r = spy[i].el.getBoundingClientRect();
     for (i = 0; i < fx.length; i++) {
       f = fx[i];
       /* loin de l'écran, rien à mettre à jour */
       if (f.always || (f.r.bottom > -vh && f.r.top < vh * 2)) f.apply(f.r, vh, y);
     }
+    markNav(vh);
   }
 
   var queued = false;
