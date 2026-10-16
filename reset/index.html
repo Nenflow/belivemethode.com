@@ -365,7 +365,7 @@ b,strong{font-weight:500}
 .scene__orbites .tourne{transform-origin:0 0;animation:spin 140s linear infinite}
 .scene__orbites circle{fill:var(--mot)}
 .scene__mot{
-  inset:auto 0 47.5% 0;display:flex;justify-content:center;
+  inset:auto 0 50% 0;display:flex;justify-content:center;
   font-size:20vw;font-size:23cqw;font-weight:700;letter-spacing:-.06em;line-height:.74;
   color:var(--mot);text-shadow:var(--mot-ombre);will-change:transform;
 }
@@ -415,8 +415,12 @@ b,strong{font-weight:500}
 .notifs{
   --nh:68px;--ng:10px;
   position:relative;flex:none;width:min(100%,360px);height:calc(3*var(--nh) + 2*var(--ng));
-  animation:fadeUp 1.2s 1.4s both;
 }
+/* à l'ouverture, les trois premières tombent tout de suite, l'une après l'autre */
+.notif--depart{animation:notifEntre .7s cubic-bezier(.34,1.3,.64,1) both}
+.notif--depart:nth-child(2){animation-delay:.25s}
+.notif--depart:nth-child(1){animation-delay:.5s}
+@keyframes notifEntre{from{opacity:0;transform:translateY(calc(var(--i,0) * (var(--nh) + var(--ng)) - 18px)) scale(.94)}}
 .notif{
   position:absolute;left:0;right:0;top:0;height:var(--nh);
   display:flex;align-items:center;gap:12px;padding:0 16px 0 14px;border-radius:20px;
@@ -776,15 +780,24 @@ b,strong{font-weight:500}
 .arbre .planche__mot{cursor:pointer;pointer-events:auto}
 
 /* ================= Graphique ================= */
-/* Un curseur avance semaine après semaine pendant qu'on descend, et la courbe se
-   dessine derrière lui. La lecture au-dessus dit où l'on en est. */
+/* On choisit une phase (les boutons au-dessus, ou la barre sous le graphique) :
+   ses semaines restent pleines, le reste s'efface, la lecture dit ce qu'elle demande. */
+.courbe__phases{display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 1.1rem}
+.phase-choix{
+  font:inherit;font-size:.86rem;font-weight:500;line-height:1;cursor:pointer;
+  padding:.62rem 1rem;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink-2);
+  transition:background .25s,color .25s,border-color .25s;
+}
+.phase-choix:hover{border-color:var(--ink-3);color:var(--ink)}
+.phase-choix[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--panel)}
+.phase-choix:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.voile-phase{fill:var(--panel);opacity:.72;pointer-events:none}
+.phase-g{cursor:pointer}
 .courbe__lecture{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem 1.1rem;margin:0 0 1rem;font-size:var(--t-small);color:var(--ink-2);font-variant-numeric:lining-nums tabular-nums}
 .courbe__lecture b{font-size:clamp(1.3rem,2.6vw,1.8rem);font-weight:300;letter-spacing:-.03em;color:var(--ink)}
 .courbe__lecture [data-lec-min]{color:var(--accent);font-weight:600}
-.curseur line{stroke:var(--accent);stroke-width:1.5}
-.curseur circle{fill:var(--accent)}
-.curseur .curseur__halo{fill:var(--accent);opacity:.18}
 .phasebar,.phasetxt{transition:fill .35s ease}
+.phase-g:hover .phasebar{fill:color-mix(in srgb,var(--accent) 12%,var(--panel-3))}
 .phase-on .phasebar{fill:color-mix(in srgb,var(--accent) 22%,var(--panel-3))}
 .phase-on .phasetxt{fill:var(--ink)}
 .chart-scroll{overflow-x:auto;overscroll-behavior-x:contain}
@@ -1085,9 +1098,9 @@ footer a:hover{color:var(--ink)}
       </div>
       <p class="lecteur">Ce que ta petite voix te répète : J'ai peur du regard des autres. Je doute de moi. J'ai peur de ne pas y arriver. Je commencerai lundi. J'ai peur de ne pas être capable. Je n'ai pas le temps. C'est pas pour moi, cette vie-là.</p>
       <div class="notifs" data-notifs data-doutes="J'ai peur du regard des autres.|Je doute de moi.|J'ai peur de ne pas y arriver.|Je commencerai lundi.|J'ai peur de ne pas être capable.|Je n'ai pas le temps.|C'est pas pour moi, cette vie-là." aria-hidden="true">
-        <div class="notif" style="--i:0"><span class="notif__app"><svg viewBox="0 0 24 24"><path d="M6.6 18.6h10.9a4 4 0 0 0 .5-7.97 6 6 0 0 0-11.4-1.7 4.85 4.85 0 0 0 0 9.67z"/></svg></span><span class="notif__corps"><span class="notif__haut"><b>Ta petite voix</b><i>maintenant</i></span><span class="notif__texte">C'est pas pour moi, cette vie-là.</span></span></div>
-        <div class="notif" style="--i:1"><span class="notif__app"><svg viewBox="0 0 24 24"><path d="M6.6 18.6h10.9a4 4 0 0 0 .5-7.97 6 6 0 0 0-11.4-1.7 4.85 4.85 0 0 0 0 9.67z"/></svg></span><span class="notif__corps"><span class="notif__haut"><b>Ta petite voix</b><i>maintenant</i></span><span class="notif__texte">Je doute de moi.</span></span></div>
-        <div class="notif" style="--i:2"><span class="notif__app"><svg viewBox="0 0 24 24"><path d="M6.6 18.6h10.9a4 4 0 0 0 .5-7.97 6 6 0 0 0-11.4-1.7 4.85 4.85 0 0 0 0 9.67z"/></svg></span><span class="notif__corps"><span class="notif__haut"><b>Ta petite voix</b><i>maintenant</i></span><span class="notif__texte">J'ai peur du regard des autres.</span></span></div>
+        <div class="notif notif--depart" style="--i:0"><span class="notif__app"><svg viewBox="0 0 24 24"><path d="M6.6 18.6h10.9a4 4 0 0 0 .5-7.97 6 6 0 0 0-11.4-1.7 4.85 4.85 0 0 0 0 9.67z"/></svg></span><span class="notif__corps"><span class="notif__haut"><b>Ta petite voix</b><i>maintenant</i></span><span class="notif__texte">J'ai peur de ne pas y arriver.</span></span></div>
+        <div class="notif notif--depart" style="--i:1"><span class="notif__app"><svg viewBox="0 0 24 24"><path d="M6.6 18.6h10.9a4 4 0 0 0 .5-7.97 6 6 0 0 0-11.4-1.7 4.85 4.85 0 0 0 0 9.67z"/></svg></span><span class="notif__corps"><span class="notif__haut"><b>Ta petite voix</b><i>maintenant</i></span><span class="notif__texte">Je doute de moi.</span></span></div>
+        <div class="notif notif--depart" style="--i:2"><span class="notif__app"><svg viewBox="0 0 24 24"><path d="M6.6 18.6h10.9a4 4 0 0 0 .5-7.97 6 6 0 0 0-11.4-1.7 4.85 4.85 0 0 0 0 9.67z"/></svg></span><span class="notif__corps"><span class="notif__haut"><b>Ta petite voix</b><i>maintenant</i></span><span class="notif__texte">J'ai peur du regard des autres.</span></span></div>
       </div>
     </div>
   </section>
@@ -1344,7 +1357,13 @@ footer a:hover{color:var(--ink)}
     </div>
 
     <figure class="courbe" style="margin:0">
-      <p class="courbe__lecture" aria-hidden="true"><b data-lec-sem>Semaine 13</b><span data-lec-phase>L'Intégration</span><span data-lec-min>85 min par jour</span></p>
+      <div class="courbe__phases" role="group" aria-label="Choisis une phase">
+        <button type="button" class="phase-choix" data-phase="0" aria-pressed="true">I · Rencontre Intérieure</button>
+        <button type="button" class="phase-choix" data-phase="1" aria-pressed="false">II · La Traversée</button>
+        <button type="button" class="phase-choix" data-phase="2" aria-pressed="false">III · La Reconstruction</button>
+        <button type="button" class="phase-choix" data-phase="3" aria-pressed="false">IV · L'Intégration</button>
+      </div>
+      <p class="courbe__lecture" aria-live="polite"><b data-lec-sem>Semaines 1 à 4</b><span data-lec-min>de 18 à 58 min par jour</span></p>
       <div class="chart-scroll">
         <svg id="courbe" viewBox="0 0 1000 400" role="img"
              aria-label="Aire empilée des minutes quotidiennes par pilier, de la semaine 1 à la semaine 13. Le total passe de 18 minutes en semaine 1 à 58 en semaine 4, environ 80 pendant la Traversée, puis 85 de la semaine 8 à la fin. Le mouvement est le pilier le plus lourd, 49 minutes par jour au plus haut."></svg>
@@ -1636,10 +1655,10 @@ footer a:hover{color:var(--ink)}
       v===90 ? "90 min" : String(v)));
   });
 
-  /* Les bandes, découvertes par le curseur à mesure qu'il avance */
+  /* Les bandes, dessinées en entier */
   var defs = svg.appendChild(el("defs", {}));
   var cp = defs.appendChild(el("clipPath", {id:"courbe-clip"}));
-  var clipRect = cp.appendChild(el("rect", {x:M.l - 2, y:0, width:pw + 4, height:400}));
+  cp.appendChild(el("rect", {x:M.l - 2, y:0, width:pw + 4, height:400}));
   var bandes = svg.appendChild(el("g", {"clip-path":"url(#courbe-clip)"}));
   var cum = new Array(N).fill(0);
   PILIERS.forEach(function(b, k){
@@ -1653,6 +1672,11 @@ footer a:hover{color:var(--ink)}
     b._fin = b.v[N-1];
     cum = haut;
   });
+
+  /* Le voile : deux rectangles qui recouvrent les semaines hors de la phase choisie */
+  var voileG = svg.appendChild(el("g", {}));
+  var voileA = voileG.appendChild(el("rect", {x:M.l, y:M.t - 10, width:0, height:ph + 10, class:"voile-phase"}));
+  var voileB = voileG.appendChild(el("rect", {x:M.l + pw, y:M.t - 10, width:0, height:ph + 10, class:"voile-phase"}));
 
   /* Les libellés, à droite, écartés s'ils se touchent */
   var pos = PILIERS.map(function(b){ return {y:b._y, ancre:b._y, nom:b.nom, val:b._fin, p:b.p}; });
@@ -1682,20 +1706,15 @@ footer a:hover{color:var(--ink)}
       "S" + (i+1)));
   }
 
-  /* La barre des phases : celle du curseur s'éclaire */
-  var phasesG = PHASES.map(function(p){
+  /* La barre des phases : on clique dessus pour la choisir */
+  var phasesG = PHASES.map(function(p, k){
     var x0 = x(p.de)+1.5, w = (p.a-p.de)*bw-3;
-    var g = svg.appendChild(el("g", {}));
+    var g = svg.appendChild(el("g", {class:"phase-g"}));
+    g.addEventListener('click', function(){ choisir(k, true); });
     g.appendChild(el("rect", {x:x0, y:bas+32, width:w, height:26, rx:13, class:"phasebar"}));
     g.appendChild(el("text", {x:x0+w/2, y:bas+49, "text-anchor":"middle", class:"phasetxt"}, p.txt));
     return g;
   });
-
-  /* Le curseur : un trait, et un point posé sur le haut de la courbe */
-  var curseur = svg.appendChild(el("g", {class:"curseur"}));
-  curseur.appendChild(el("line", {x1:0, y1:M.t - 8, x2:0, y2:bas}));
-  var pointHalo = curseur.appendChild(el("circle", {class:"curseur__halo", cx:0, cy:y(85), r:11}));
-  var point = curseur.appendChild(el("circle", {cx:0, cy:y(85), r:4.5}));
 
   /* Le repère de défilement, seulement si le graphique déborde pour de bon */
   function mesure(){
@@ -1704,35 +1723,38 @@ footer a:hover{color:var(--ink)}
   mesure();
   window.addEventListener("resize", mesure);
 
-  var lecSem = one('[data-lec-sem]'), lecPhase = one('[data-lec-phase]'), lecMin = one('[data-lec-min]');
-  var semaine = -1, manuel = false, minuteur = null;
-  ['touchstart', 'pointerdown', 'wheel'].forEach(function(t){
-    boite.addEventListener(t, function(){ manuel = true; clearTimeout(minuteur); minuteur = setTimeout(function(){ manuel = false; }, 2500); }, { passive:true });
-  });
-  function majCourbe(vh){
-    var r = boite.getBoundingClientRect();
-    if (r.bottom < -100 || r.top > vh + 100) return;
-    var p = reduce ? 1 : clamp((vh * 0.88 - r.top) / (vh * 0.52));
-    var xc = M.l + p * pw;
-    clipRect.setAttribute('width', (xc - M.l + 2).toFixed(1));
-    var w = Math.max(0, Math.min(N - 1, Math.ceil(p * N) - 1));
-    var yc = y(TOTAUX[w]);
-    curseur.setAttribute('transform', 'translate(' + xc.toFixed(1) + ' 0)');
-    point.setAttribute('cy', yc.toFixed(1)); pointHalo.setAttribute('cy', yc.toFixed(1));
-    if (w !== semaine) {
-      semaine = w;
-      var k = PHASES.findIndex(function(f){ return w >= f.de && w < f.a; });
-      lecSem.textContent = 'Semaine ' + (w + 1);
-      lecPhase.textContent = 'Phase ' + PHASES[k].txt;
-      lecMin.textContent = Math.round(TOTAUX[w]) + ' min par jour';
-      phasesG.forEach(function(g, j){ g.classList.toggle('phase-on', j === k); });
-    }
-    /* sur téléphone, le graphique défile de côté pour garder le curseur en vue */
-    if (boite.classList.contains('est-large') && !manuel) {
+  /* Choisir une phase : le voile glisse sur les autres semaines, la lecture change */
+  var lecSem = one('[data-lec-sem]'), lecMin = one('[data-lec-min]');
+  var choix = all('.phase-choix'), courante = 0, va = {a:0, b:pw}, anim = 0;
+  function poserVoile(xa, xb){
+    voileA.setAttribute('width', Math.max(0, xa - M.l).toFixed(1));
+    voileB.setAttribute('x', xb.toFixed(1)); voileB.setAttribute('width', Math.max(0, M.l + pw - xb).toFixed(1));
+  }
+  function choisir(k, voir){
+    courante = k;
+    var f = PHASES[k], t = TOTAUX.slice(f.de, f.a).map(Math.round);
+    var lo = Math.min.apply(null, t), hi = Math.max.apply(null, t);
+    lecSem.textContent = 'Semaines ' + (f.de + 1) + ' à ' + f.a;
+    lecMin.textContent = lo === hi ? lo + ' min par jour' : 'de ' + lo + ' à ' + hi + ' min par jour';
+    choix.forEach(function(c, j){ c.setAttribute('aria-pressed', j === k ? 'true' : 'false'); });
+    phasesG.forEach(function(g, j){ g.classList.toggle('phase-on', j === k); });
+    var de = {a:va.a, b:va.b}, vers = {a:x(f.de), b:x(f.a)}, t0 = performance.now();
+    cancelAnimationFrame(anim);
+    (function pas(now){
+      var q = reduce ? 1 : Math.min(1, (now - t0) / 450), e = 1 - Math.pow(1 - q, 3);
+      va = {a:de.a + (vers.a - de.a) * e, b:de.b + (vers.b - de.b) * e};
+      poserVoile(va.a, va.b);
+      if (q < 1) anim = requestAnimationFrame(pas);
+    })(t0);
+    /* sur téléphone, le graphique glisse pour montrer la phase choisie */
+    if (voir && boite.classList.contains('est-large')) {
       var echelle = svg.getBoundingClientRect().width / 1000;
-      boite.scrollLeft = xc * echelle - boite.clientWidth * 0.5;
+      boite.scrollTo({ left:(x(f.de) + x(f.a)) / 2 * echelle - boite.clientWidth / 2, behavior: reduce ? 'auto' : 'smooth' });
     }
   }
+  va = {a:M.l, b:M.l + pw};
+  choix.forEach(function(c, j){ c.addEventListener('click', function(){ choisir(j, true); }); });
+  choisir(0, false);
 
   /* ---------- Les piliers : ce qu'on survole s'allume ---------- */
   var pil = document.getElementById('piliers'), verrou = null;
@@ -1778,8 +1800,8 @@ footer a:hover{color:var(--ink)}
   var notifs = reduce ? null : one('[data-notifs]');
   if (notifs) {
     var doutes = notifs.getAttribute('data-doutes').split('|');
-    var modele = one('.notif', notifs).cloneNode(true), pile = [], prochain = 0, minuteur = 0, premiere = true;
-    all('.notif', notifs).forEach(function(n){ n.parentNode.removeChild(n); });
+    var modele = one('.notif', notifs).cloneNode(true), pile = all('.notif', notifs), prochain = pile.length % doutes.length, minuteur = 0, premiere = true;
+    modele.classList.remove('notif--depart'); modele.removeAttribute('style');
     var arrive = function(){
       var n = modele.cloneNode(true);
       one('.notif__texte', n).textContent = doutes[prochain];
@@ -1797,7 +1819,7 @@ footer a:hover{color:var(--ink)}
     };
     var lancer = function(){
       if (minuteur) return;
-      minuteur = setTimeout(function pas(){ arrive(); minuteur = setTimeout(pas, 2600); }, premiere ? Math.max(300, 1700 - performance.now()) : 600);
+      minuteur = setTimeout(function pas(){ arrive(); minuteur = setTimeout(pas, 2600); }, premiere ? 2600 : 900);
       premiere = false;
     };
     var arreter = function(){ clearTimeout(minuteur); minuteur = 0; };
@@ -1893,7 +1915,6 @@ footer a:hover{color:var(--ink)}
     if (identite) majFreins(vh);
     if (jour) majJour(vh);
     if (voyage) majVoyage(vh);
-    majCourbe(vh);
     markNav(vh);
   }
   var queued = false;
