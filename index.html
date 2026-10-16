@@ -1875,9 +1875,11 @@ f();addEventListener('resize',f);})();
   all('[data-rise]').forEach(function (el) {
     var ls = all('[data-l]', el);
     track(el, function (r, vh) {
-      var p = avance(this, clamp((vh - r.top) / (r.height + vh * 0.3)));
+      /* les lettres sont toutes posées dès que le mot est entier à l'écran : avant,
+         la fin du défilement n'y suffisait pas sur un grand écran, et le mot restait de travers */
+      var p = avance(this, clamp((vh - r.top) / r.height));
       ls.forEach(function (l, i) {
-        var q = clamp(p * 2.2 - i * 0.12);
+        var q = clamp(p * 1.6 - i * 0.1);
         l.style.transform = 'translateY(' + ((1 - q) * 80) + '%)';
         l.style.opacity = q;
       });
