@@ -1,0 +1,337 @@
+<!doctype html>
+<html><head><meta charset="utf-8"></head>
+<body style="margin:0;background:#888">
+<pre id="log"></pre>
+<script id="vs" type="x-shader/x-vertex">#version 300 es
+in vec2 a; void main(){ gl_Position = vec4(a,0.,1.); }
+</script>
+<script id="fs" type="x-shader/x-fragment">#version 300 es
+precision highp float;
+uniform vec2  uRes;
+uniform float uSeed;
+uniform vec3  uSun;
+uniform float uCamY, uPitch, uYaw, uFov, uShiftY;
+uniform vec4  uTow[40];     // sphères des cumulus : x, y, z, rayon
+uniform int   uNTow;
+uniform float uTowS;        // étirement vertical des sphères
+uniform float uSea, uSeaAmp, uSeaFreq;
+uniform float uMode;        // 0 : ciel + nuages ; 1 : nuages proches seuls (calque alpha)
+uniform float uCut;         // profondeur du calque proche
+uniform vec3  uZen, uHor, uSunCol, uAmbHi, uAmbLo, uFog, uGlow, uRockLit, uRockDark, uRim;
+uniform float uFogK, uSunK, uAmbK, uDensK, uGlowK, uRimK;
+uniform vec4  uRock;        // x, z, rayon de base, hauteur du sommet (0 = pas de rocher)
+uniform float uFig;         // hauteur du personnage (0 = personne)
+uniform vec4  uPeak[3];     // sommets lointains : x, z, rayon, hauteur
+uniform int   uNPeak;
+uniform float uCirrus;      // opacité des voiles d'altitude
+uniform float uHaze;        // brume d'horizon
+uniform vec3  uCirCol;
+out vec4 o;
+
+/* ---------- bruit ---------- */
+float h13(vec3 p){ p = fract(p*.1031); p += dot(p, p.zyx + 31.32); return fract((p.x + p.y)*p.z); }
+float h12(vec2 p){ vec3 q = fract(vec3(p.xyx)*.1031); q += dot(q, q.yzx + 33.33); return fract((q.x + q.y)*q.z); }
+float vn3(vec3 x){
+  vec3 i = floor(x), f = fract(x); vec3 u = f*f*f*(f*(f*6.-15.)+10.);
+  float a = h13(i), b = h13(i+vec3(1,0,0)), c = h13(i+vec3(0,1,0)), d = h13(i+vec3(1,1,0));
+  float e = h13(i+vec3(0,0,1)), f1 = h13(i+vec3(1,0,1)), g = h13(i+vec3(0,1,1)), h = h13(i+vec3(1,1,1));
+  return mix(mix(mix(a,b,u.x),mix(c,d,u.x),u.y), mix(mix(e,f1,u.x),mix(g,h,u.x),u.y), u.z);
+}
+float vn2(vec2 x){
+  vec2 i = floor(x), f = fract(x); vec2 u = f*f*(3.-2.*f);
+  return mix(mix(h12(i),h12(i+vec2(1,0)),u.x), mix(h12(i+vec2(0,1)),h12(i+vec2(1,1)),u.x), u.y);
+}
+float fbm2(vec2 p){ float s=0., a=.5; for(int i=0;i<5;i++){ s += a*vn2(p); p = p*2.03 + vec2(5.1,1.7); a *= .5; } return s/.97; }
+/* une rotation entre deux octaves : sans elle, la grille du bruit dessine des rayures */
+const mat3 RM = mat3( .00,  .80,  .60,
+                     -.80,  .36, -.48,
+                     -.60, -.48,  .64);
+float fbm3(vec3 p, int oct){
+  float s = 0., a = .5, n = 0.;
+  for(int i=0;i<7;i++){ if(i>=oct) break; s += a*vn3(p); n += a; p = RM*p*2.04 + vec3(1.7,9.2,3.1); a *= .5; }
+  return s/n;
+}
+/* billow : les volutes rondes */
+float billow(vec3 p, int oct){
+  float s = 0., a = .5, n = 0.;
+  p = RM*p;
+  for(int i=0;i<7;i++){ if(i>=oct) break; s += a*(1.-abs(vn3(p)*2.-1.)); n += a; p = RM*p*2.07 + vec3(4.3,1.1,7.9); a *= .52; }
+  return s/n;
+}
+
+/* ---------- la mer de nuages et les cumulus ---------- */
+float seaTop(vec2 q){
+  return uSea + uSeaAmp*(fbm2(q*.07*uSeaFreq + uSeed) - .5) + .45*uSeaAmp*(fbm2(q*.29*uSeaFreq - uSeed) - .5);
+}
+float towerSd(vec3 p){
+  float d = 1e5;
+  for(int i=0;i<40;i++){
+    if(i>=uNTow) break;
+    vec4 T = uTow[i];
+    vec3 q = p - T.xyz; q.y /= uTowS;
+    float s = length(q) - T.w;
+    float k = .9 + .25*T.w;
+    float h = clamp(.5 + .5*(d - s)/k, 0., 1.);
+    d = mix(d, s, h) - k*h*(1. - h);
+  }
+  return d;
+}
+float maxTop(){
+  float m = uSea + uSeaAmp + 1.6;
+  for(int i=0;i<40;i++){ if(i>=uNTow) break; m = max(m, uTow[i].y + uTow[i].w*uTowS + 3.); }
+  return m;
+}
+float dens(vec3 p, int oct){
+  float top = seaTop(p.xz);
+  float ts = uNTow > 0 ? towerSd(p) : 1e5;
+  if(p.y > top + 1.4 && ts > 3.2) return 0.;
+  if(p.y < -2.5) return 0.;
+  vec3 q = p*.42 + vec3(uSeed*13.1, 0., uSeed*7.7);
+  float b = billow(q, oct);
+  float sea = (top - p.y)*.95 + (b - .55)*2.4;
+  float tow = -1e5;
+  if(ts < 3.2){
+    float big = billow(p*.19 + vec3(7.3, uSeed, 2.1), 4);
+    tow = -ts*.85 + (big - .5)*2.5 + (b - .55)*1.6;
+  }
+  return clamp(max(sea, tow), 0., 1.5)*uDensK;
+}
+
+/* ---------- le rocher, le personnage, les sommets ---------- */
+float sdCap(vec3 p, vec3 a, vec3 b, float r){ vec3 pa = p-a, ba = b-a; float h = clamp(dot(pa,ba)/dot(ba,ba),0.,1.); return length(pa - ba*h) - r; }
+float rockSd(vec3 p){
+  if(uRock.w <= 0.) return 1e5;
+  vec3 q = p - vec3(uRock.x, -2.5, uRock.y);
+  float H = uRock.w + 2.5;
+  float y = clamp(q.y/H, 0., 1.);
+  float r = uRock.z*pow(1. - y, .85) + .1*uRock.z;
+  vec3 pr = p/max(uRock.z, .3);
+  float n = fbm3(pr*vec3(1.9, 1.1, 1.9), 5) - .5;
+  float facet = abs(vn3(pr*vec3(3.1, .8, 3.1)) - .5);       /* arêtes verticales */
+  float d = (length(q.xz) - r - n*.5*uRock.z + facet*.22*uRock.z)*.45;
+  d = max(d, q.y - H + .08*n*uRock.z);
+  return d;
+}
+float figSd(vec3 p){
+  if(uFig <= 0. || uRock.w <= 0.) return 1e5;
+  float H = uFig;
+  vec3 q = p - vec3(uRock.x, uRock.w - .02*uRock.z, uRock.y);
+  float head = length(q - vec3(0., .915*H, 0.)) - .078*H;
+  float neck = sdCap(q, vec3(0., .8*H, 0.), vec3(0., .87*H, 0.), .04*H);
+  float body = sdCap(q, vec3(0., .53*H, 0.), vec3(0., .76*H, 0.), .1*H);
+  float sho  = sdCap(q, vec3(-.1*H, .77*H, 0.), vec3(.1*H, .77*H, 0.), .055*H);
+  float legL = sdCap(q, vec3(-.05*H, .03*H, 0.), vec3(-.042*H, .5*H, 0.), .05*H);
+  float legR = sdCap(q, vec3( .05*H, .03*H, 0.), vec3( .042*H, .5*H, 0.), .05*H);
+  float armL = sdCap(q, vec3(-.14*H, .76*H, 0.), vec3(-.165*H, .46*H, .01*H), .034*H);
+  float armR = sdCap(q, vec3( .14*H, .76*H, 0.), vec3( .165*H, .46*H, .01*H), .034*H);
+  return min(min(min(head, neck), min(body, sho)), min(min(legL, legR), min(armL, armR)));
+}
+float peakSd(vec3 p){
+  float d = 1e5;
+  for(int i=0;i<3;i++){
+    if(i>=uNPeak) break;
+    vec4 P = uPeak[i];
+    vec3 q = p - vec3(P.x, -4., P.y);
+    float H = P.w + 4.;
+    float y = clamp(q.y/H, 0., 1.);
+    float r = P.z*pow(1.-y, 1.1);
+    float n = fbm3(p*vec3(.16,.09,.16) + float(i)*7., 5) - .5;
+    d = min(d, (length(q.xz) - r - n*P.z*.5)*.45);
+  }
+  return d;
+}
+float solid(vec3 p, out float id){
+  float a = rockSd(p), b = figSd(p), c = uNPeak > 0 ? peakSd(p) : 1e5;
+  id = 0.;
+  float d = a;
+  if(b < d){ d = b; id = 1.; }
+  if(c < d){ d = c; id = 2.; }
+  return d;
+}
+vec3 solidN(vec3 p, float e0){
+  float id; vec2 e = vec2(e0, 0.);
+  return normalize(vec3(solid(p+e.xyy,id)-solid(p-e.xyy,id), solid(p+e.yxy,id)-solid(p-e.yxy,id), solid(p+e.yyx,id)-solid(p-e.yyx,id)));
+}
+
+/* ---------- lumière ---------- */
+float lightT(vec3 p){
+  float s = 0., dt = .12; vec3 q = p;
+  for(int i=0;i<6;i++){ q += uSun*dt; s += dens(q, 3)*dt; dt *= 1.75; }
+  /* diffusion multiple, approchée par octaves : la lumière pénètre plus loin */
+  return .55*exp(-s*uSunK) + .3*exp(-s*uSunK*.3) + .15*exp(-s*uSunK*.08);
+}
+float hg(float c, float g){ float g2 = g*g; return (1.-g2)/(4.*3.14159*pow(1.+g2-2.*g*c, 1.5)); }
+
+vec3 sky(vec3 rd){
+  float y = max(rd.y, 0.);
+  vec3 c = mix(uHor, uZen, pow(y, .55));
+  float sd = max(dot(rd, uSun), 0.);
+  c += uGlow*uGlowK*(.16*pow(sd, 5.) + .3*pow(sd, 40.));
+  if(uCirrus > 0. && rd.y > .01){
+    vec2 q = rd.xz/rd.y*1.2 + vec2(uSeed*3.,0.);
+    /* le vent courbe les voiles : on déforme deux fois le domaine */
+    vec2 wq = q*vec2(.7, 1.6);
+    wq += 1.6*vec2(fbm2(wq*.45 + 3.1), fbm2(wq*.45 + 8.7)) - .8;
+    wq += .5*vec2(fbm2(wq*1.3 + 1.3), fbm2(wq*1.3 + 5.9));
+    float w = fbm2(wq*vec2(.5, 1.9));
+    w = smoothstep(.55, .9, w)*smoothstep(.02, .14, rd.y)*(1. - smoothstep(.4, .9, rd.y));
+    c = mix(c, uCirCol, w*uCirrus);
+  }
+  return c;
+}
+
+void main(){
+  vec2 fc = gl_FragCoord.xy;
+  vec2 uv = (fc - .5*uRes)/uRes.y;
+  uv.y += uShiftY;
+  float th = tan(radians(uFov)*.5);
+  vec3 rd = normalize(vec3(uv.x*th*2., uv.y*th*2., 1.));
+  float cp = cos(uPitch), sp = sin(uPitch);
+  rd = vec3(rd.x, rd.y*cp + rd.z*sp, -rd.y*sp + rd.z*cp);
+  float cy = cos(uYaw), sy = sin(uYaw);
+  rd = vec3(rd.x*cy + rd.z*sy, rd.y, -rd.x*sy + rd.z*cy);
+  vec3 ro = vec3(0., uCamY, 0.);
+
+  float yMax = max(maxTop(), uRock.w + uFig + 1.);
+  float tFar = 420.;
+  vec3 col = vec3(0.); float T = 1.;
+  float t0 = 0., t1 = tFar;
+  if(abs(rd.y) > 1e-5){
+    float ta = (-2.5 - ro.y)/rd.y, tb = (yMax - ro.y)/rd.y;
+    t0 = max(0., min(ta, tb)); t1 = min(tFar, max(ta, tb));
+  }
+  if(uNPeak > 0) { t0 = 0.; t1 = tFar; }
+  float jit = h12(fc + uSeed*91.7);
+  float t = t0 + max(.03, t0*.0068)*jit;
+  float cosT = dot(rd, uSun);
+  float ph = mix(hg(cosT, .55), hg(cosT, -.2), .5)*4.*3.14159;
+  for(int i=0;i<1000;i++){
+    if(t > t1 || T < .006) break;
+    vec3 p = ro + rd*t;
+    float dt = max(.03, t*.0052);
+    /* solides */
+    float id; float sd = solid(p, id);
+    float eps = .0015*max(1., t*.25);
+    if(sd < eps){
+      if(uMode > .5 && t > uCut) break;
+      vec3 n = solidN(p, max(.002, t*.0012));
+      float lam = max(dot(n, uSun), 0.)*lightT(p + n*.08);
+      float up = .5 + .5*n.y;
+      float rim = pow(1. - max(dot(n, -rd), 0.), 3.)*max(dot(-rd, uSun)*.5 + .5, 0.);
+      vec3 sc = uRockDark*(.45 + .55*up)*uAmbK + uRockLit*lam + uRim*rim*uRimK;
+      if(id > .5 && id < 1.5) sc = uRockDark*.85 + uRim*rim*uRimK*.6;
+      float fog = 1. - exp(-t*uFogK);
+      sc = mix(sc, uFog, fog);
+      col += T*sc; T = 0.; break;
+    }
+    dt = min(dt, max(sd*.85, .003));
+    /* nuages */
+    float top = seaTop(p.xz);
+    float ts = uNTow > 0 ? towerSd(p) : 1e5;
+    float free = min(p.y - top - 1.35, ts - 3.1);
+    if(free > 0.){ dt = max(dt, min(free*.55, max(sd*.85, .003))); }
+    else {
+      int oct = t < 25. ? 6 : (t < 70. ? 5 : 4);
+      float d = dens(p, oct);
+      if(d > .002){
+        if(uMode > .5 && t > uCut) break;
+        dt *= .7;
+        float a = 1. - exp(-d*dt*3.);
+        float lt = lightT(p);
+        float depth = ts < 0. ? clamp(-ts/2.2, 0., 1.) : clamp((top - p.y)/1.8, 0., 1.);
+        vec3 amb = mix(uAmbHi, uAmbLo, depth)*uAmbK;
+        float powder = mix(1., 1. - exp(-d*2.), .45);
+        vec3 c = uSunCol*lt*ph*powder + amb;
+        c = c/(1. + .22*max(c.r, max(c.g, c.b)))*1.22;
+        float fog = 1. - exp(-t*uFogK);
+        c = mix(c, uFog, fog);
+        col += T*a*c; T *= 1. - a;
+      }
+    }
+    t += dt*(.7 + .6*h12(fc*.7319 + vec2(float(i)*17.13, float(i)*-9.71) + uSeed));
+  }
+  if(uMode > .5){
+    float a = 1. - T, a2 = smoothstep(.1, .55, a);
+    o = vec4(col*(a2/max(a, 1e-4)), a2); return;
+  }
+  vec3 bg;
+  if(rd.y < 0. && t >= tFar - 1.) bg = uFog;
+  else bg = sky(rd);
+  float hz = exp(-max(rd.y, 0.)*16.);
+  bg = mix(bg, uFog, hz*uHaze);
+  col += T*bg;
+  col += (h12(fc*1.37 + 11.) - .5)/255.*1.5;
+  o = vec4(col, 1.);
+}
+</script>
+<script>
+"use strict";
+try{
+const hex = h => { h = h.replace('#',''); return [0,2,4].map(i => parseInt(h.substr(i,2),16)/255); };
+const P = new URLSearchParams(location.search);
+const cfg = JSON.parse(atob(P.get('c')));
+const W = cfg.w, H = cfg.h;
+const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+const gl = cv.getContext('webgl2', {preserveDrawingBuffer:true, premultipliedAlpha:true, alpha:true, antialias:false});
+function sh(t, s){ const x = gl.createShader(t); gl.shaderSource(x, s); gl.compileShader(x); if(!gl.getShaderParameter(x, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(x)); return x; }
+const pr = gl.createProgram();
+gl.attachShader(pr, sh(gl.VERTEX_SHADER, document.getElementById('vs').textContent.trim()));
+gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, document.getElementById('fs').textContent.trim()));
+gl.linkProgram(pr); if(!gl.getProgramParameter(pr, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(pr));
+gl.useProgram(pr);
+const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+const al = gl.getAttribLocation(pr, 'a'); gl.enableVertexAttribArray(al); gl.vertexAttribPointer(al, 2, gl.FLOAT, false, 0, 0);
+const U = n => gl.getUniformLocation(pr, n);
+const sun = cfg.sun; const sl = Math.hypot(...sun);
+gl.uniform2f(U('uRes'), W, H);
+gl.uniform1f(U('uSeed'), cfg.seed);
+gl.uniform3f(U('uSun'), sun[0]/sl, sun[1]/sl, sun[2]/sl);
+gl.uniform1f(U('uCamY'), cfg.camY); gl.uniform1f(U('uPitch'), cfg.pitch*Math.PI/180);
+gl.uniform1f(U('uYaw'), (cfg.yaw||0)*Math.PI/180); gl.uniform1f(U('uFov'), cfg.fov); gl.uniform1f(U('uShiftY'), cfg.shiftY||0);
+/* les cumulus : chaque tour est une grappe de sphères décrite par [x, z, base, hauteur, largeur, graine] */
+const sph = [];
+(cfg.cumulus||[]).forEach(c => {
+  const [x, z, y0, h, w, sd] = c;
+  let r = w, y = y0, k = 0;
+  const rnd = s => { const v = Math.sin(s*127.1 + sd*311.7)*43758.5453; return v - Math.floor(v); };
+  while (y < y0 + h && sph.length < 30){
+    const dx = (rnd(k+1) - .5)*w*.9, dz = (rnd(k+2) - .5)*w*.6;
+    sph.push([x + dx, y, z + dz, r]);
+    if (rnd(k+3) > .45 && sph.length < 30) sph.push([x + dx + (rnd(k+4) > .5 ? 1 : -1)*r*.85, y - r*.25, z + dz*.5, r*.72]);
+    y += r*.95; r *= .86; k += 5;
+  }
+});
+(cfg.spheres||[]).forEach(s => { if (sph.length < 40) sph.push(s); });
+const tw = new Float32Array(160); sph.forEach((s,i) => tw.set(s, i*4));
+gl.uniform4fv(U('uTow[0]'), tw); gl.uniform1i(U('uNTow'), sph.length); gl.uniform1f(U('uTowS'), cfg.towS||1.15);
+const pk = new Float32Array(12); (cfg.peaks||[]).forEach((t,i) => pk.set(t, i*4));
+gl.uniform4fv(U('uPeak[0]'), pk); gl.uniform1i(U('uNPeak'), (cfg.peaks||[]).length);
+gl.uniform1f(U('uSea'), cfg.sea); gl.uniform1f(U('uSeaAmp'), cfg.seaAmp); gl.uniform1f(U('uSeaFreq'), cfg.seaFreq||1);
+gl.uniform1f(U('uMode'), cfg.mode||0); gl.uniform1f(U('uCut'), cfg.cut||0);
+for (const k of ['Zen','Hor','SunCol','AmbHi','AmbLo','Fog','Glow','RockLit','RockDark','Rim']){
+  const v = cfg.pal[k] || '#000000'; const c = hex(v); const m = (cfg.palK && cfg.palK[k]) || 1;
+  gl.uniform3f(U('u'+k), c[0]*m, c[1]*m, c[2]*m);
+}
+gl.uniform1f(U('uFogK'), cfg.fogK); gl.uniform1f(U('uSunK'), cfg.sunK); gl.uniform1f(U('uAmbK'), cfg.ambK); gl.uniform1f(U('uDensK'), cfg.densK||1);
+gl.uniform1f(U('uGlowK'), cfg.glowK == null ? 1 : cfg.glowK); gl.uniform1f(U('uRimK'), cfg.rimK||0);
+gl.uniform1f(U('uCirrus'), cfg.cirrus||0);
+gl.uniform1f(U('uHaze'), cfg.haze == null ? .75 : cfg.haze);
+{ const c = hex(cfg.pal.Cir || '#FFFFFF'); gl.uniform3f(U('uCirCol'), c[0], c[1], c[2]); }
+gl.uniform4f(U('uRock'), ...(cfg.rock || [0,0,0,0])); gl.uniform1f(U('uFig'), cfg.fig||0);
+
+gl.viewport(0, 0, W, H);
+gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
+gl.enable(gl.SCISSOR_TEST);
+const TS = 128;
+for (let y = 0; y < H; y += TS) for (let x = 0; x < W; x += TS){
+  gl.scissor(x, y, TS, TS);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  gl.finish();
+}
+const out = document.createElement('pre'); out.id = 'png'; out.textContent = cv.toDataURL('image/png'); document.body.appendChild(out);
+const out2 = document.createElement('pre'); out2.id = 'webp'; out2.textContent = cv.toDataURL('image/webp', cfg.q || .86); document.body.appendChild(out2);
+document.getElementById('log').textContent = 'ok ' + sph.length + ' sphères';
+}catch(e){ document.getElementById('log').textContent = 'ERR ' + e.message; }
+</script>
+</body></html>

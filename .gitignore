@@ -9,3 +9,6 @@ NOTES-INTERNES.md
 
 # Configuration locale des outils
 .claude/
+
+# Rendus intermédiaires du générateur de nuages
+assets/nuages/rendus/

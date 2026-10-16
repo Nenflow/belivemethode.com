@@ -25,6 +25,7 @@ cgv.html                Conditions générales de vente
 confidentialite.html    Politique de confidentialité (RGPD)
 mentions-legales.html   Mentions légales
 404.html                Page d'erreur servie par GitHub Pages, chemins absolus
+reset/index.html        La page du protocole RESET : mer de nuages, planches au trait
 CNAME                   Domaine personnalisé lu par GitHub Pages
 robots.txt              Indexation ouverte, pointe vers le sitemap
 sitemap.xml             Une seule URL : la page d'accueil
@@ -32,6 +33,8 @@ assets/
   legal.css             Feuille de style commune aux trois pages légales
   fonts/Outfit.woff2    Police variable 100-900, sous-ensemble latin (35 Ko)
   img/                  Photos en AVIF / WebP / JPEG, favicons, image de partage
+  img/nuages/           Nuages calculés pour le site, en AVIF / WebP
+  nuages/               Le générateur des nuages et des planches au trait
   gen_brand.py          Regénère les icônes (depuis img/logo-b.png) et og.jpg
   gen_photos.py         Regénère les déclinaisons AVIF / WebP / JPEG des photos
 ```
@@ -73,6 +76,31 @@ python3 assets/gen_photos.py
 script. Pour l'image de partage, il redessine le wordmark avec les mêmes coordonnées
 que le SVG inclus dans le site : en cas de modification du logotype, mettre les deux
 à jour.
+
+## Les nuages
+
+Les nuages du site ne sont pas des photos : ils sont calculés, donc libres de
+droits. `assets/nuages/gen.html` est un lanceur de rayons WebGL (mer de nuages,
+cumulus, rocher et silhouette) que Chrome exécute sans interface, sur la puce
+graphique ; chaque image est décrite dans `assets/nuages/reglages.json`
+(caméra, soleil, couleurs, tours de cumulus). Pour en refaire une, ou toutes :
+
+```bash
+python3 assets/nuages/rendu.py ciel-jour
+```
+
+```bash
+python3 assets/nuages/rendu.py
+```
+
+Les hauts de page empilent deux images du même rendu : le ciel derrière le mot,
+puis les nuages proches (fichiers `-avant`, sur fond transparent) devant. Elles
+doivent garder exactement le même cadrage. Les dimensions restent paires : un
+AVIF de hauteur impaire écrit par `sips` s'affiche transparent dans Chrome.
+
+Les planches au trait de la page RESET (l'onde du souffle, la course du jour,
+l'arbre-poumon) sont des tracés SVG calculés par `assets/nuages/planches.py`
+puis recopiés dans la page.
 
 ## Déploiement
 

@@ -4,16 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Le protocole RESET, en détail | BELIVE</title>
-<meta name="description" content="Treize semaines, quatre phases, cinq piliers. Ce que le protocole RESET demande chaque jour, comment il se déroule, et ce qu'il coûte en temps.">
+<title>RESET, 90 jours pour reprendre les commandes | BELIVE</title>
+<meta name="description" content="Un protocole de 90 jours pour changer d'identité et vivre la vie dont tu rêves. Treize semaines, quatre phases, cinq piliers : ce qu'il demande chaque jour, et le temps qu'il prend.">
 <link rel="canonical" href="https://belivemethode.com/reset/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="BELIVE">
 <meta property="og:locale" content="fr_BE">
 <meta property="og:url" content="https://belivemethode.com/reset/">
-<meta property="og:title" content="Le protocole RESET, en détail">
-<meta property="og:description" content="Treize semaines, quatre phases, cinq piliers. Ce que le protocole demande, quand il le demande, et ce qu'il coûte.">
+<meta property="og:title" content="RESET, 90 jours pour reprendre les commandes">
+<meta property="og:description" content="Un protocole de 90 jours pour changer d'identité et vivre la vie dont tu rêves. Ce qu'il demande, quand il le demande, et le temps qu'il prend.">
 <meta property="og:image" content="https://belivemethode.com/assets/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -58,6 +58,28 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
      Sur panneau clair c'est --ice-deep ; sur anthracite, --ice-2. */
   --accent:    var(--ice-deep);
 
+  /* Le haut de page, de jour : texte encre sur la mer de nuages */
+  --o-ink:     #12171B;
+  --o-ink-2:   #2B343C;
+  --o-ink-3:   #4B5661;
+  --o-line:    rgba(18,23,27,.2);
+  --o-fond:    linear-gradient(180deg,#E7F0F3 0%,#D6E0E4 100%);
+  --o-voile:   linear-gradient(180deg,rgba(214,224,228,0) 55%,rgba(214,224,228,.35) 100%);
+  --o-bas:     #DAE2E6;
+  --o-horizon: #EEF3F5;
+  --mer-k:     1;
+  --notif:     rgba(255,255,255,.6);
+  --notif-plein: rgba(255,255,255,.86);
+  --o-verre:   rgba(255,255,255,.58);
+  --o-verre-bord: rgba(255,255,255,.8);
+  --mot:       #FFFFFF;
+  --mot-ombre: 0 8px 40px rgba(44,107,147,.42),0 2px 6px rgba(44,107,147,.22);
+  --orbite:    rgba(255,255,255,.85);
+  --halo:      rgba(255,255,255,.4);
+  --etat-ink:  #12171B;
+  --o-btn:     #12171B;
+  --o-btn-ink: #FFFFFF;
+
   --r-lg:28px;
   --r-md:18px;
   --r-sm:12px;
@@ -74,15 +96,20 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
   --gap:clamp(.7rem,1.2vw,1rem);
   --col:clamp(1.2rem,2.5vw,2rem);
   --maxw:1240px;
+
+  /* Le souffle de la page : cinq secondes d'inspiration, cinq d'expiration.
+     Le script bascule .exhale sur <html>, les transitions font le reste. */
+  --core:1.08;
 }
+:root.exhale{--core:.9}
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     --page:      #0B0E11;
     --panel:     #14191E;
     --panel-2:   #1A2026;
     --panel-3:   #20272E;
-    --dark:      #080B0E;
-    --dark-2:    #121820;
+    --dark:      #12171C;
+    --dark-2:    #1B222A;
     --ink:       #EDF2F6;
     --ink-2:     #9CAAB6;
     --ink-3:     #8A98A5;
@@ -91,6 +118,27 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
     --ice:       #3E5F75;
     --ice-2:     #5D8CA8;
     --ice-deep:  #9DCBE4;
+
+    --o-ink:     #EEF3F6;
+    --o-ink-2:   #CBD5DC;
+    --o-ink-3:   #A9B7C2;
+    --o-line:    rgba(230,236,240,.22);
+    --o-fond:    linear-gradient(180deg,#46555F 0%,#37444D 100%);
+    --o-voile:   linear-gradient(180deg,rgba(8,11,14,0) 38%,rgba(8,11,14,.55) 62%,rgba(8,11,14,.72) 100%);
+  --o-bas:     #1A2025;
+  --o-horizon: #25313A;
+  --mer-k:     .5;
+  --notif:     rgba(16,21,26,.62);
+  --notif-plein: rgba(22,28,34,.9);
+    --o-verre:   rgba(14,19,24,.55);
+    --o-verre-bord: rgba(230,236,240,.16);
+    --mot:       #E6ECF0;
+    --mot-ombre: 0 0 70px rgba(156,199,220,.28);
+    --orbite:    rgba(156,199,220,.5);
+    --halo:      rgba(156,199,220,.3);
+    --etat-ink:  #EEF3F6;
+    --o-btn:     #E6ECF0;
+    --o-btn-ink: #12171B;
   }
 }
 :root[data-theme="dark"]{
@@ -98,8 +146,8 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
   --panel:     #14191E;
   --panel-2:   #1A2026;
   --panel-3:   #20272E;
-  --dark:      #080B0E;
-  --dark-2:    #121820;
+  --dark:      #12171C;
+  --dark-2:    #1B222A;
   --ink:       #EDF2F6;
   --ink-2:     #9CAAB6;
   --ink-3:     #8A98A5;
@@ -108,12 +156,34 @@ if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)
   --ice:       #3E5F75;
   --ice-2:     #5D8CA8;
   --ice-deep:  #9DCBE4;
+
+  --o-ink:     #EEF3F6;
+  --o-ink-2:   #CBD5DC;
+  --o-ink-3:   #A9B7C2;
+  --o-line:    rgba(230,236,240,.22);
+  --o-fond:    linear-gradient(180deg,#46555F 0%,#37444D 100%);
+  --o-voile:   linear-gradient(180deg,rgba(8,11,14,0) 38%,rgba(8,11,14,.55) 62%,rgba(8,11,14,.72) 100%);
+  --o-bas:     #1A2025;
+  --o-horizon: #25313A;
+  --mer-k:     .5;
+  --notif:     rgba(16,21,26,.62);
+  --notif-plein: rgba(22,28,34,.9);
+  --o-verre:   rgba(14,19,24,.55);
+  --o-verre-bord: rgba(230,236,240,.16);
+  --mot:       #E6ECF0;
+  --mot-ombre: 0 0 70px rgba(156,199,220,.28);
+  --orbite:    rgba(156,199,220,.5);
+  --halo:      rgba(156,199,220,.3);
+  --etat-ink:  #EEF3F6;
+  --o-btn:     #E6ECF0;
+  --o-btn-ink: #12171B;
 }
 :root[data-theme="light"]{color-scheme:light}
 :root[data-theme="dark"] {color-scheme:dark}
 
 /* ================= Base ================= */
 *,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
   margin:0;background:var(--page);color:var(--ink);
   font-family:"Outfit",ui-sans-serif,-apple-system,"Segoe UI",system-ui,sans-serif;
@@ -127,6 +197,8 @@ h1,h2,h3{margin:0;font-weight:600;line-height:1.05;letter-spacing:-.025em;text-w
 p{margin:0}
 b,strong{font-weight:500}
 .num{font-variant-numeric:lining-nums tabular-nums}
+/* les ancres s'arrêtent sous la barre de navigation, pas dessous */
+[id]{scroll-margin-top:96px}
 
 .saut{
   position:absolute;left:-9999px;top:0;
@@ -148,7 +220,7 @@ b,strong{font-weight:500}
 /* ================= Le fil du haut ================= */
 /* Un trait de 2 px qui avance avec la lecture. Là où les animations liées au
    défilement n'existent pas, il reste simplement invisible. */
-.fil{position:fixed;inset:0 0 auto 0;height:2px;z-index:50;pointer-events:none}
+.fil{position:fixed;inset:0 0 auto 0;height:2px;z-index:55;pointer-events:none}
 .fil::after{
   content:"";display:block;height:100%;
   background:linear-gradient(to right,var(--ice-deep),var(--ice-2));
@@ -158,6 +230,72 @@ b,strong{font-weight:500}
   .fil::after{animation:filAvance linear both;animation-timeline:scroll(root block)}
 }
 @keyframes filAvance{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* ================= Navigation ================= */
+/* La pilule sombre de l'accueil. Les liens mènent aux chapitres de la page ;
+   le mot BELIVE ramène à l'accueil. */
+.nav-wrap{position:fixed;top:14px;left:14px;right:14px;z-index:50;display:flex;justify-content:center;pointer-events:none}
+.nav{
+  pointer-events:auto;position:relative;width:100%;max-width:1240px;
+  display:flex;align-items:center;gap:26px;padding:10px 10px 10px 22px;border-radius:999px;
+  background:rgba(11,14,17,.9);border:1px solid rgba(230,236,240,0);
+  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  transition:background .5s,border-color .5s;
+}
+.nav.is-scrolled{background:rgba(11,14,17,.82);border-color:rgba(230,236,240,.08)}
+.nav__brand{display:flex;align-items:center;gap:12px;color:#E6ECF0;text-decoration:none}
+.nav__word{display:flex;font-size:15px;letter-spacing:.32em;line-height:1}
+.nav__word span:first-child{font-weight:250}
+.nav__word span:last-child{font-weight:600}
+.nav__rec{display:inline-flex;align-items:center;justify-content:center;flex:none;width:18px;height:18px;border-radius:50%;border:1.5px solid currentColor}
+.nav__rec span{width:46%;height:46%;border-radius:50%;background:#9CC7DC;animation:recBlink 2s ease-in-out infinite}
+@keyframes recBlink{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(156,199,220,.45)}50%{opacity:.35;box-shadow:0 0 0 6px rgba(156,199,220,0)}}
+.nav__links{display:flex;align-items:center;gap:22px;margin-left:auto;font-size:14px}
+.nav__links a{color:#B9C5CE;text-decoration:none;transition:color .3s}
+.nav__links a:hover{color:#FFFFFF}
+.nav__links a[aria-current]{color:#FFFFFF}
+.nav__here{display:none}
+@media (min-width:1041px){
+  .nav__links{position:relative;gap:0;margin-right:-11px}
+  .nav__links a{position:relative;padding:8px 11px}
+  .nav__here{
+    display:block;position:absolute;left:0;top:0;bottom:0;border-radius:999px;
+    background:rgba(230,236,240,.14);opacity:0;pointer-events:none;
+    transition:transform .5s cubic-bezier(.2,.7,.2,1),width .5s cubic-bezier(.2,.7,.2,1),opacity .3s;
+  }
+}
+.nav__cta{flex:none;background:#E6ECF0;color:#12171B!important;padding:11px 20px;border-radius:999px;font-size:14px;font-weight:500;text-decoration:none;transition:transform .3s}
+.nav__cta:hover{transform:translateY(-1px)}
+.nav__burger{
+  display:none;flex:none;position:relative;width:40px;height:40px;padding:0;border-radius:50%;
+  border:1px solid rgba(230,236,240,.22);background:none;color:#E6ECF0;cursor:pointer;
+}
+.nav__burger span{position:absolute;left:12px;right:12px;top:50%;height:1.5px;margin-top:-.75px;border-radius:2px;background:currentColor;transition:transform .3s}
+.nav__burger span:first-child{transform:translateY(-3.5px)}
+.nav__burger span:last-child{transform:translateY(3.5px)}
+.nav.is-open .nav__burger span:first-child{transform:rotate(45deg)}
+.nav.is-open .nav__burger span:last-child{transform:rotate(-45deg)}
+.nav :focus-visible{outline-color:#9CC7DC}
+@media (max-width:1040px){
+  .nav{gap:10px;padding-left:20px}
+  .nav__cta{margin-left:auto}
+  .nav__burger{display:block}
+  .nav__links{
+    display:none;position:absolute;left:0;right:0;top:calc(100% + 8px);margin:0;
+    flex-direction:column;align-items:stretch;gap:0;padding:10px;border-radius:24px;
+    background:rgba(11,14,17,.96);border:1px solid rgba(230,236,240,.08);font-size:17px;
+  }
+  .nav.is-open .nav__links{display:flex}
+  .nav__links a{padding:14px 16px;border-radius:14px;color:#E6ECF0}
+  .nav__links a[aria-current]{background:rgba(230,236,240,.08)}
+}
+@media (max-width:420px){
+  .nav__word{font-size:13px;letter-spacing:.26em}
+  .nav__cta{padding:10px 15px;font-size:13px}
+}
+@media (max-width:760px),(hover:none){
+  .nav,.nav.is-scrolled{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(11,14,17,.96)}
+}
 
 /* ================= Libellé de chapitre ================= */
 .label{
@@ -191,22 +329,140 @@ b,strong{font-weight:500}
 .panel--dark .btn--ghost{background:transparent;color:var(--on-dark);border-color:var(--line-dark)}
 .panel--dark .btn--ghost:hover{background:var(--dark-2)}
 
-/* ================= En-tête ================= */
-.masthead{display:flex;align-items:center;justify-content:space-between;gap:1rem;
-  padding:.2rem .4rem 1.4rem;color:var(--ink-2)}
-.masthead a{color:inherit;text-decoration:none}
-.masthead svg{height:.78rem;width:auto}
-.retour{font-size:var(--t-small)}
-.retour:hover{color:var(--ink)}
+/* ================= Le haut de page ================= */
+/* Le héros de l'accueil, posé sur une mer de nuages : le mot RESET émerge de
+   la couche, entre le ciel (derrière) et les nuages proches (devant). Les deux
+   images viennent du même rendu et se superposent au pixel près, à condition
+   de garder la scène au rapport de l'image : 16/10 en paysage, 3/5 en portrait. */
+.ouverture{
+  position:relative;isolation:isolate;overflow:hidden;
+  display:flex;flex-direction:column;
+  min-height:calc(100vh - 2*var(--pad));min-height:calc(100svh - 2*var(--pad));
+  --bord:clamp(20px,4vw,56px);
+  padding:104px var(--bord) clamp(22px,3vw,34px);
+  border-radius:var(--r-lg) var(--r-lg) 0 0;background:var(--o-fond);color:var(--o-ink);
+  container-type:inline-size;
+}
+.ouverture::after{content:"";position:absolute;inset:0;z-index:-1;background:var(--o-voile);pointer-events:none}
+/* par-dessus le voile, sous le texte : le bas finit sur la couleur où commence la suite */
+.ouverture__fondu{position:absolute;left:0;right:0;bottom:0;height:clamp(80px,13vh,140px);background:linear-gradient(transparent,var(--o-bas));pointer-events:none}
+.scene{position:absolute;inset:0;z-index:-2;overflow:hidden;pointer-events:none;container-type:size}
+.scene__cadre{
+  position:absolute;left:50%;top:38%;width:100%;height:100%;
+  width:max(100cqw,160cqh);height:max(100cqh,62.5cqw);
+  transform:translate(-50%,-38%);container-type:size;
+}
+.scene__cadre > *{position:absolute;inset:0}
+.scene img{width:100%;height:100%;object-fit:cover;display:block;max-width:none}
+.scene__halo{
+  inset:auto;left:50%;top:39%;width:62cqw;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,var(--halo),transparent 68%);
+  transform:translate(-50%,-50%) scale(var(--core));transition:transform 5s cubic-bezier(.45,0,.55,1);
+}
+.scene__orbites{inset:auto;left:50%;top:39%;width:84cqw;aspect-ratio:1;transform:translate(-50%,-50%);overflow:visible}
+.scene__orbites svg{width:100%;height:100%;overflow:visible;animation:fadeUp 2s .2s both}
+.scene__orbites ellipse{fill:none;stroke:var(--orbite);stroke-width:1.4}
+.scene__orbites .tourne{transform-origin:0 0;animation:spin 140s linear infinite}
+.scene__orbites circle{fill:var(--mot)}
+.scene__mot{
+  inset:auto 0 47.5% 0;display:flex;justify-content:center;
+  font-size:20vw;font-size:23cqw;font-weight:700;letter-spacing:-.06em;line-height:.74;
+  color:var(--mot);text-shadow:var(--mot-ombre);will-change:transform;
+}
+.scene__mot span{display:inline-block;animation:monte 1.8s calc(var(--i)*90ms + 250ms) cubic-bezier(.2,.7,.2,1) both}
+/* les lettres montent de la couche de nuages, qui les cache à leur départ */
+@keyframes monte{from{opacity:0;transform:translateY(.42em);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 
-/* ================= Ouverture ================= */
-.ouverture{display:grid;gap:1.4rem}
-.ouverture h1{font-size:var(--t-h1);letter-spacing:-.038em;max-width:15ch}
-.ouverture .lead{color:var(--ink-2);max-width:var(--measure);font-size:clamp(1rem,1.5vw,1.15rem)}
+.ouverture__meta{
+  position:relative;width:100%;max-width:1240px;margin:0 auto;
+  display:flex;justify-content:space-between;gap:24px;
+  font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;line-height:1.7;
+  color:var(--o-ink-3);animation:fadeUp 1s .9s both;
+}
+.ouverture__meta > span{display:flex;flex-direction:column}
+.ouverture__meta > span:last-child{align-items:flex-end;text-align:right}
+.ouverture__pastille{
+  display:inline-flex;align-items:center;gap:7px;align-self:flex-end;margin-bottom:4px;
+  padding:2px 9px;border-radius:999px;border:1px solid var(--o-line);
+  font-size:10.5px;letter-spacing:.1em;color:var(--o-ink-2);
+}
+.ouverture__pastille::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ice-deep);animation:recBlink 2s ease-in-out infinite}
+.ouverture__vide{flex:1;min-height:clamp(220px,33vh,400px)}
+.ouverture__bas{
+  position:relative;width:100%;max-width:1240px;margin:0 auto;
+  display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;
+}
+/* Le bloc est calé en bas : des espaces serrés font descendre le libellé, loin des nuages */
+.ouverture__texte{display:flex;flex-direction:column;gap:12px;max-width:440px;animation:fadeUp 1.2s 1.1s both}
+.ouverture__texte .label{color:var(--o-ink-3)}
+.ouverture h1{font-size:clamp(30px,3.1vw,44px);font-weight:600;line-height:1;letter-spacing:-.03em}
+.ouverture__lead{font-size:16px;line-height:1.6;color:var(--o-ink-2);text-wrap:pretty}
+.ouverture__note{font-size:14px;line-height:1.6;color:var(--o-ink-2);text-wrap:pretty}
+@media (min-width:761px){.titre__n{display:block}}
+.ouverture .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.ouverture .btn{padding:15px 24px;font-size:15px;background:var(--o-btn);color:var(--o-btn-ink)}
+.btn--verre{
+  background:var(--o-verre)!important;color:var(--o-ink)!important;border-color:var(--o-verre-bord)!important;
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+}
 
-.chiffres{display:grid;grid-template-columns:minmax(0,1fr);
-  gap:1.6rem var(--col);margin:clamp(2.6rem,6vw,4.4rem) 0 0;
-  padding-top:clamp(1.8rem,3vw,2.4rem);border-top:1px solid var(--line)}
+/* Les doutes, en notifications : « ta petite voix » envoie, la plus récente arrive en
+   haut et pousse les autres, trois à la fois. Sans script, trois restent posées. */
+.lecteur{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.notifs{
+  --nh:68px;--ng:10px;
+  position:relative;flex:none;width:min(100%,360px);height:calc(3*var(--nh) + 2*var(--ng));
+  animation:fadeUp 1.2s 1.4s both;
+}
+.notif{
+  position:absolute;left:0;right:0;top:0;height:var(--nh);
+  display:flex;align-items:center;gap:12px;padding:0 16px 0 14px;border-radius:20px;
+  background:var(--notif);border:1px solid var(--o-verre-bord);color:var(--o-ink);
+  -webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);
+  box-shadow:0 18px 40px -22px rgba(18,23,27,.5);
+  transform:translateY(calc(var(--i,0) * (var(--nh) + var(--ng))));
+  transition:transform .8s cubic-bezier(.34,1.25,.64,1),opacity .6s ease;
+}
+.notif.est-neuve{opacity:0;transform:translateY(-18px) scale(.94)}
+.notif.est-partie{opacity:0;transform:translateY(calc(var(--i,2) * (var(--nh) + var(--ng)))) scale(.9)}
+.notif__app{flex:none;display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:linear-gradient(160deg,#9AA7B2,#4B5661);color:#FFFFFF}
+.notif__app svg{width:21px;height:21px;fill:currentColor}
+.notif__corps{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;text-align:left}
+.notif__haut{display:flex;justify-content:space-between;gap:10px;font-size:12px;line-height:1.2;color:var(--o-ink-3)}
+.notif__haut b{font-weight:600;color:var(--o-ink-2)}
+.notif__haut i{font-style:normal}
+.notif__texte{font-size:15px;font-weight:500;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Portrait : la scène se pose en haut, sur toute la largeur, au rapport 3/5,
+   et se fond dans le dégradé du bas ; le texte passe sous le mot. */
+@media (max-aspect-ratio:1/1){
+  /* la largeur de la scène est celle du bloc entier, marges comprises : d'où le
+     rapport porté par la scène elle-même, et --bord rajouté au calcul du vide */
+  .scene{
+    inset:0 0 auto 0;height:auto;aspect-ratio:3/5;
+    -webkit-mask-image:linear-gradient(#000 74%,transparent 98%);mask-image:linear-gradient(#000 74%,transparent 98%);
+  }
+  .scene__cadre{top:0;width:max(100cqw,60cqh);height:max(100cqh,166.667cqw);transform:translate(-50%,0)}
+  .scene__mot{bottom:61.5%;font-size:26cqw}
+  .scene__halo{top:31.5%;width:100cqw}
+  .scene__orbites{top:31.5%;width:104cqw}
+  .ouverture__meta{position:absolute;top:92px;left:var(--bord);right:var(--bord);width:auto}
+  .ouverture__vide{flex:none;min-height:0;height:calc((100cqw + 2*var(--bord))*.6417 + 34px - 104px)}
+  .ouverture__bas{flex-direction:column;align-items:stretch}
+  .ouverture__texte{max-width:34rem}
+  .notifs{width:min(100%,400px)}
+  .identite{padding-top:clamp(2rem,6vh,3.5rem)}
+}
+@media (max-width:560px){
+  .ouverture__meta{top:84px;font-size:10.5px;letter-spacing:.1em;line-height:1.5;gap:12px}
+  .ouverture__pastille{margin-bottom:2px}
+}
+
+/* ================= Les chiffres ================= */
+.chiffres{display:grid;grid-template-columns:minmax(0,1fr);gap:1.6rem var(--col);margin:0}
 .chiffre dt{font-size:var(--t-label);font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
 .chiffre dd{margin:.6rem 0 0;display:grid;gap:.6rem}
 .chiffre__v{font-size:clamp(1.8rem,3vw,2.3rem);font-weight:300;letter-spacing:-.04em;line-height:1;
@@ -214,23 +470,152 @@ b,strong{font-weight:500}
 .chiffre__d{font-size:var(--t-small);color:var(--ink-3);line-height:1.45;max-width:26ch}
 @media (min-width:520px){.chiffres{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (min-width:960px){.chiffres{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.panel--chiffres{padding-block:clamp(1.8rem,3.4vw,2.8rem)}
 
-/* ================= Les moments de respiration ================= */
-/* Ni panneau ni fond : c'est le vide qui fait l'effet. */
-.souffle{
-  display:grid;place-items:center;
-  padding-block:clamp(4rem,13vh,9rem);padding-inline:var(--pad);
+/* ================= Les planches ================= */
+/* Le trait scientifique de la page : un filet fin, des repères, une légende
+   numérotée comme dans un traité. Le dessin prend la couleur de l'accent. */
+.tete{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(1.6rem,4vw,3rem);align-items:center;margin-bottom:clamp(2.4rem,5vw,4rem)}
+.tete .head{margin-bottom:0}
+@media (min-width:900px){.tete{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)}}
+.planche{margin:0;color:var(--accent)}
+.planche svg{width:100%;height:auto;overflow:visible}
+.planche__dessin{position:relative}
+.planche__mot{
+  position:absolute;white-space:nowrap;
+  font-size:var(--t-label);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);
 }
-.souffle p{
-  margin:0;max-width:22ch;text-align:center;text-wrap:balance;
-  font-size:clamp(1.8rem,5vw,3.6rem);font-weight:500;
-  letter-spacing:-.038em;line-height:1.08;
+.planche__legende{
+  display:flex;gap:.7rem;align-items:baseline;flex-wrap:wrap;margin-top:1.1rem;padding-top:.9rem;border-top:1px solid var(--line);
+  font-size:var(--t-label);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);
+  max-width:none;
 }
-.souffle--long p{max-width:26ch;font-size:clamp(1.55rem,4vw,2.9rem)}
+.planche__fig{color:var(--accent);font-weight:600}
+.panel--dark .planche__legende{border-color:var(--line-dark);color:var(--on-dark-2)}
+
+/* Fig. 01 : l'onde */
+.onde{margin:0 0 clamp(2.2rem,4vw,3.2rem)}
+.onde .trace{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.onde .axe{stroke:var(--line-dark);vector-effect:non-scaling-stroke}
+.onde__bouts{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:.4rem}
+.onde__bouts p{max-width:26ch;font-size:var(--t-small);line-height:1.45;color:var(--on-dark-2)}
+.onde__bouts p:last-child{justify-self:end;text-align:right;color:var(--on-dark)}
+.onde__quand{display:block;margin-bottom:.3rem;font-size:var(--t-label);font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--on-dark-2)}
+.onde__bouts p:last-child .onde__quand{color:var(--accent)}
+.onde__dessin{position:relative}
+.onde svg{height:clamp(72px,13vw,150px);clip-path:inset(0 calc((1 - var(--t,1))*100%) 0 0)}
+.onde__point{
+  position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 20%,transparent),0 0 24px color-mix(in srgb,var(--accent) 60%,transparent);
+  left:var(--px,100%);top:var(--py,50%);opacity:var(--po,0);pointer-events:none;
+}
+
+/* Fig. 04 : l'arbre */
+.arbre .branches path,.arbre .branches g{fill:none;stroke:currentColor;stroke-linecap:round}
+.arbre .racines{fill:none;stroke:currentColor;stroke-width:1.2;stroke-opacity:.7;stroke-linecap:round}
+.arbre .pointes circle{fill:var(--panel);stroke:currentColor;stroke-width:1.2}
+.arbre .planche__mot{font-weight:600;color:var(--accent);letter-spacing:.16em;transform:translate(-50%,-50%)}
+@supports (stroke-dashoffset:1){
+  .arbre .tronc,.arbre .n1,.arbre .n2,.arbre .n3,.arbre .n4,.arbre .racines{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.1s cubic-bezier(.45,0,.2,1),opacity .35s ease}
+  .arbre .n1{transition-delay:.45s,0s}
+  .arbre .n2{transition-delay:.9s,0s;transition-duration:1.3s,.35s}
+  .arbre .n3{transition-delay:1.4s,0s;transition-duration:1.5s,.35s}
+  .arbre .n4{transition-delay:1.9s,0s;transition-duration:1.6s,.35s}
+  .arbre .racines{transition-delay:.2s,0s;transition-duration:1.6s,.35s}
+  .arbre .pointes circle{opacity:0;transition:opacity .8s 2.8s}
+  .arbre.is-in .tronc,.arbre.is-in .n1,.arbre.is-in .n2,.arbre.is-in .n3,.arbre.is-in .n4,.arbre.is-in .racines{stroke-dashoffset:0}
+  .arbre.is-in .pointes circle{opacity:1}
+}
+
+/* ================= Ce que RESET change ================= */
+/* La vie qu'on ne s'autorise pas, puis les trois freins : un trait les barre l'un après
+   l'autre à mesure qu'on descend (le script pose --b sur chacun), et « d'y croire »
+   s'allume quand le dernier est barré. Sans script, tout est lisible d'emblée. */
+.identite{
+  position:relative;isolation:isolate;overflow:hidden;margin-bottom:var(--gap);
+  display:grid;justify-items:center;text-align:center;gap:clamp(1.7rem,3.8vw,2.8rem);
+  padding:clamp(3.5rem,10vh,7rem) var(--pad) clamp(8rem,22vh,14rem);
+  border-radius:0 0 var(--r-lg) var(--r-lg);
+  background:linear-gradient(180deg,var(--o-bas) 0%,var(--o-horizon) 58%);
+}
+/* la mer de nuages monte derrière la fin : « c'est ici que ça commence » et le bouton */
+.identite > .identite__mer{position:absolute;z-index:-1;left:0;right:0;bottom:0;height:46%;opacity:var(--mer-k);pointer-events:none}
+.identite__mer img{display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:50% 0}
+.identite__titre{max-width:15ch;font-size:clamp(2.2rem,6.4vw,4.8rem);letter-spacing:-.045em;line-height:1}
+.identite__titre span{display:block;margin-top:.12em;color:var(--ink-3)}
+.freins{list-style:none;margin:0;padding:0;display:grid;justify-items:center;gap:clamp(.45rem,1.1vw,.75rem)}
+.frein{font-size:clamp(1.25rem,3.1vw,2.3rem);font-weight:500;letter-spacing:-.025em;line-height:1.3;text-wrap:balance}
+/* le trait est un fond : sur deux lignes, il barre la première puis continue sur la seconde */
+.frein span{
+  background:linear-gradient(var(--accent),var(--accent)) 0 60% / calc(var(--b,0) * 100%) .085em no-repeat;
+  transition:color .7s ease;
+}
+.frein.est-barre span{color:var(--ink-3)}
+.identite__chute{
+  position:relative;isolation:isolate;margin:clamp(.6rem,2vw,1.4rem) 0 0;max-width:22ch;text-wrap:balance;
+  font-size:clamp(1.45rem,3.2vw,2.5rem);font-weight:500;letter-spacing:-.03em;line-height:1.1;
+}
+.identite__chute em{display:block;margin-top:.04em;font-size:2.15em;font-style:normal;font-weight:600;letter-spacing:-.05em;line-height:1;color:var(--accent)}
+.identite__chute::before{
+  content:"";position:absolute;left:50%;top:58%;z-index:-1;width:min(130vw,44rem);aspect-ratio:1;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,color-mix(in srgb,var(--ice) 80%,transparent) 0%,transparent 62%);
+  transform:translate(-50%,-50%) scale(var(--core));transition:transform 5s cubic-bezier(.45,0,.55,1);
+}
+.identite.est-pilote .identite__chute{opacity:.14;transform:translateY(10px);transition:opacity 1.1s ease,transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.identite.est-pilote.est-libre .identite__chute{opacity:1;transform:none}
+.identite > *{position:relative;z-index:1}
+.identite > .identite__chute{z-index:0}
+.identite__ligne{display:block}
+/* la première action : juste après « c'est ici que ça commence » */
+.identite__depart{margin-top:clamp(.4rem,1.4vw,1rem);font-size:clamp(1.35rem,2.6vw,2rem);font-weight:600;letter-spacing:-.03em;line-height:1.1}
+.identite__action{display:grid;justify-items:center;gap:.85rem;margin-top:calc(-1 * clamp(.6rem,1.4vw,1.2rem))}
+.identite__action .btn{padding:17px 30px;font-size:16px;box-shadow:0 18px 40px -18px color-mix(in srgb,var(--accent) 70%,transparent)}
+.identite__note{max-width:40ch;font-size:var(--t-small);line-height:1.5;color:var(--ink)}
+.identite__suite{max-width:42ch;color:var(--ink-2);font-size:clamp(1.02rem,1.6vw,1.2rem);line-height:1.55}
+
+/* ================= Le choc ================= */
+/* La phrase s'allume mot à mot au défilement (le script pose .est-pilote ;
+   sans lui, tout est lisible d'emblée), puis le dessin des deux courbes se trace. */
+.choc{display:grid;justify-items:center;gap:clamp(1.8rem,4vw,2.8rem);padding:clamp(4rem,12vh,8rem) var(--pad) clamp(3rem,9vh,6rem)}
+.choc__phrase{margin:0;max-width:17ch;text-align:center;text-wrap:balance;font-size:clamp(2.2rem,6.4vw,4.8rem);font-weight:600;letter-spacing:-.045em;line-height:1}
+.choc__chute{display:block;margin-top:.12em;color:var(--accent)}
+[data-mots].est-pilote .m{opacity:.14;transition:opacity .4s ease}
+[data-mots].est-pilote .m.on{opacity:1}
+.choc__dessin{width:min(100%,700px)}
+.choc__dessin .planche__dessin{clip-path:inset(0 calc((1 - var(--t,1))*100%) 0 0)}
+.choc__axe{stroke:var(--ink-3);stroke-opacity:.45;stroke-width:1}
+.choc__jours line{stroke:var(--ink-3);stroke-opacity:.35;stroke-width:1}
+.choc__a{fill:none;stroke:var(--ink-2);stroke-width:2;stroke-dasharray:5 6;stroke-linecap:round}
+.choc__b{fill:none;stroke:var(--accent);stroke-width:3.2;stroke-linecap:round}
+.choc__pt--a{fill:var(--page);stroke:var(--ink-2);stroke-width:2}
+.choc__pt--b{fill:var(--accent)}
+.choc__mot-b{color:var(--accent)}
+.choc__dessin .planche__legende{border-color:color-mix(in srgb,var(--ink-3) 30%,transparent)}
+.choc__suite{max-width:44ch;text-align:center;color:var(--ink-2);font-size:clamp(1.02rem,1.6vw,1.2rem);line-height:1.55}
+
+/* Les autres respirations : ni panneau ni fond, c'est le vide qui fait l'effet */
 .hl{
   background:var(--ice);
   border-radius:6px;padding:0 .22em;
   box-decoration-break:clone;-webkit-box-decoration-break:clone;
+}
+
+/* ================= L'autre état ================= */
+/* La silhouette au-dessus de la mer de nuages. Sur ordinateur la phrase se pose
+   dans le ciel de l'image ; sur téléphone elle passe au-dessus, l'image en carré. */
+.etat{position:relative;margin:0;border-radius:var(--r-lg);overflow:hidden;background:var(--panel-2)}
+.etat picture,.etat img{display:block;width:100%;height:auto}
+.etat img{aspect-ratio:21/9;object-fit:cover}
+.etat__texte{
+  position:absolute;left:clamp(1.8rem,5vw,4.5rem);top:clamp(1.8rem,5vw,4rem);max-width:21ch;
+  font-size:clamp(1.55rem,3.4vw,2.9rem);font-weight:500;letter-spacing:-.038em;line-height:1.08;text-wrap:balance;
+  color:var(--etat-ink);
+}
+@media (max-width:760px){
+  .etat{display:flex;flex-direction:column;background:none;overflow:visible}
+  .etat__texte{order:-1}
+  .etat__texte{position:static;max-width:22ch;margin:0 auto;padding:clamp(3.4rem,10vw,5rem) var(--pad) clamp(1.8rem,6vw,2.4rem);text-align:center;font-size:clamp(1.55rem,6.6vw,2.4rem);color:var(--ink)}
+  .etat img{aspect-ratio:1;border-radius:var(--r-lg)}
 }
 
 /* ================= Les cinq lettres ================= */
@@ -261,63 +646,94 @@ b,strong{font-weight:500}
 }
 
 /* ================= La journée ================= */
-.jour{
-  position:relative;
-  --rail:6.5rem;--gapx:clamp(1.2rem,3vw,2.6rem);
-  --railx:calc(var(--rail) + var(--gapx)/2);
+/* Un ciel qui suit l'heure : pendant que les quatre moments défilent, le soleil
+   monte, passe, se couche, puis la lune et les étoiles arrivent. Le ciel reste en
+   place (sticky) ; le script règle sa position et le mélange des quatre ciels. */
+.jour{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(1.2rem,3vw,2.4rem);align-items:start}
+.jour__ciel{
+  position:sticky;top:84px;z-index:2;height:clamp(200px,56vw,300px);
+  border-radius:var(--r-lg);overflow:hidden;isolation:isolate;color:#12171B;
+  /* fond opaque : pendant les fondus entre deux ciels, rien ne transparaît dessous */
+  background:#8DB3C8;box-shadow:0 18px 40px -30px rgba(18,23,27,.45);
 }
-.jour__rail{position:absolute;left:var(--railx);top:.7rem;bottom:0;width:1px;background:var(--line);overflow:hidden}
-.jour__rail::after{
-  content:"";position:absolute;inset:0;transform-origin:top;transform:scaleY(1);
-  background:linear-gradient(to bottom,var(--ice-deep),var(--ice-2));
+.jour__ciel.est-sombre{color:#EEF3F6}
+.ciel{position:absolute;inset:0;opacity:0;z-index:-2}
+.ciel--midi{opacity:1}
+.ciel--lever{background:linear-gradient(180deg,#B8D1E0 0%,#E0EBF1 55%,#F5F6F2 100%)}
+.ciel--midi{background:linear-gradient(180deg,#6FA6C6 0%,#B2D4E6 58%,#E6F1F6 100%)}
+.ciel--soir{background:linear-gradient(180deg,#24485F 0%,#55839F 58%,#9EBFD2 100%)}
+.ciel--nuit{background:linear-gradient(180deg,#060C12 0%,#10202C 58%,#1C3142 100%)}
+.jour__etoiles{
+  position:absolute;inset:0 0 35% 0;z-index:-1;opacity:0;pointer-events:none;
+  background-image:
+    radial-gradient(1.4px 1.4px at 8% 22%,#fff 50%,transparent 52%),radial-gradient(1px 1px at 17% 9%,#fff 50%,transparent 52%),
+    radial-gradient(1.2px 1.2px at 28% 31%,#fff 50%,transparent 52%),radial-gradient(1.6px 1.6px at 39% 12%,#fff 50%,transparent 52%),
+    radial-gradient(1px 1px at 47% 40%,#fff 50%,transparent 52%),radial-gradient(1.3px 1.3px at 58% 18%,#fff 50%,transparent 52%),
+    radial-gradient(1px 1px at 66% 34%,#fff 50%,transparent 52%),radial-gradient(1.5px 1.5px at 74% 8%,#fff 50%,transparent 52%),
+    radial-gradient(1.1px 1.1px at 83% 27%,#fff 50%,transparent 52%),radial-gradient(1.4px 1.4px at 92% 15%,#fff 50%,transparent 52%),
+    radial-gradient(1px 1px at 35% 52%,#fff 50%,transparent 52%),radial-gradient(1.2px 1.2px at 88% 47%,#fff 50%,transparent 52%);
 }
-/* Là où les animations de défilement existent, le filet se remplit à mesure
-   que la section traverse l'écran ; ailleurs il reste plein, sans JavaScript. */
-@supports (animation-timeline:view()){
-  .jour__rail::after{
-    transform:scaleY(0);
-    animation:railFill linear both;
-    animation-timeline:view(block);
-    animation-range:entry 85% exit 25%;
-  }
+.jour__lecture{position:absolute;left:clamp(1rem,3vw,1.8rem);top:clamp(.9rem,2.6vw,1.6rem);display:grid;gap:.35rem}
+.jour__quand{font-size:clamp(1.5rem,4.2vw,2.6rem);font-weight:200;letter-spacing:-.04em;line-height:1}
+.jour__sorte{justify-self:start;padding:2px 10px;border-radius:999px;border:1px solid currentColor;font-size:var(--t-label);font-weight:500;letter-spacing:.14em;text-transform:uppercase;opacity:.8}
+.jour__trace{position:absolute;left:0;right:0;bottom:0;width:100%;height:auto;max-height:100%;overflow:visible}
+.jour__trace *{vector-effect:non-scaling-stroke}
+.jour__trace .course{fill:none;stroke:currentColor;stroke-opacity:.5;stroke-width:1.2;stroke-dasharray:3 5}
+.jour__trace .grad line{stroke:currentColor;stroke-opacity:.35;stroke-width:1}
+.jour__trace .horizon{stroke:currentColor;stroke-opacity:.6;stroke-width:1.2}
+.jour__trace .nuage1{fill:none;stroke:currentColor;stroke-opacity:.55;stroke-width:1.2}
+.jour__trace .nuage2{fill:none;stroke:currentColor;stroke-opacity:.3;stroke-width:1.2}
+.astre__disque{fill:#FFFFFF}
+.jour__ciel:not(.est-sombre) .astre__disque{fill:#FFFFFF;stroke:rgba(44,107,147,.35);stroke-width:1}
+.lune{opacity:0}
+.lune__disque{fill:#E6EEF3}
+.lune__ombre{fill:#10202C}
+.jour__fig{position:absolute;right:clamp(1rem,3vw,1.6rem);top:clamp(1rem,2.6vw,1.6rem);margin:0;font-size:var(--t-label);font-weight:500;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+.jour__fig .planche__fig{color:inherit;margin-right:.4em}
+@media (max-width:899px){.jour__fig{top:auto;bottom:.75rem}}
+@media (min-width:900px){
+  .jour{grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr)}
+  .jour__ciel{top:104px;height:min(560px,calc(100vh - 150px))}
 }
-@keyframes railFill{from{transform:scaleY(0)}to{transform:scaleY(1)}}
 
-.jour__liste{list-style:none;margin:0;padding:0;display:grid;gap:clamp(2rem,4vw,3.2rem)}
-.moment{
-  position:relative;
-  display:grid;grid-template-columns:var(--rail) minmax(0,1fr);
-  gap:var(--gapx);align-items:start;
+.jour__liste{list-style:none;margin:0;padding:0;display:grid;gap:clamp(1rem,2.4vw,1.6rem)}
+.mom{
+  background:var(--panel);border-radius:var(--r-md);padding:clamp(1.2rem,3vw,1.8rem);
+  display:grid;gap:.85rem;border:1px solid transparent;
+  transition:border-color .4s ease,transform .5s cubic-bezier(.2,.7,.2,1),opacity .4s ease;
 }
-.moment::before{
-  content:"";position:absolute;
-  left:calc(var(--railx) - 3.5px);top:.6rem;
-  width:8px;height:8px;border-radius:50%;
-  background:var(--panel-2);box-shadow:0 0 0 1px var(--line) inset;
-  transition:background .5s ease,box-shadow .5s ease;
+.jour.est-pilote .mom{opacity:.5}
+.jour.est-pilote .mom.is-on{opacity:1;border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
+@media (min-width:900px){
+  .jour.est-pilote .mom{transform:translateX(12px)}
+  .jour.est-pilote .mom.is-on{transform:none}
+  .jour__liste{padding-top:clamp(2rem,10vh,6rem);padding-bottom:clamp(2rem,22vh,12rem)}
 }
-.moment.is-in::before{
-  background:var(--accent);
-  box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 18%,transparent);
-}
-.moment__quand{
-  text-align:right;font-size:clamp(1.15rem,2.2vw,1.5rem);
-  font-weight:200;letter-spacing:-.035em;line-height:1.1;
-  color:var(--ink-3);transition:color .5s ease;
-}
-.moment.is-in .moment__quand{color:var(--ink)}
-.moment__corps{display:grid;gap:.9rem;max-width:54ch}
-.moment__corps h3{font-size:var(--t-h3);letter-spacing:-.02em}
+.mom__haut{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap}
+.mom__quand{font-size:clamp(1.35rem,2.6vw,1.8rem);font-weight:200;letter-spacing:-.035em;line-height:1}
+.mom__total{display:flex;align-items:center;gap:.6rem;font-size:var(--t-small);color:var(--ink-2);font-variant-numeric:lining-nums tabular-nums}
+.mom__sorte{padding:1px 8px;border-radius:999px;border:1px solid var(--line);font-size:.68rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.mom__sorte--ancre{border-color:color-mix(in srgb,var(--accent) 50%,transparent);color:var(--accent)}
+.mom h3{font-size:var(--t-h3);letter-spacing:-.02em}
+.mom__note{font-size:var(--t-small);color:var(--ink-3);line-height:1.5}
 
 .gestes{list-style:none;margin:0;padding:0;display:grid}
 .geste{
-  display:flex;gap:1rem;align-items:baseline;justify-content:space-between;
+  display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:1rem;row-gap:.45rem;align-items:baseline;
   padding:.62rem 0;border-top:1px solid var(--line);font-size:var(--t-small);
 }
 .geste:first-child{border-top:0;padding-top:0}
-.geste .duree{color:var(--accent);font-weight:600;white-space:nowrap;
-  font-variant-numeric:lining-nums tabular-nums}
-.moment__note{font-size:var(--t-small);color:var(--ink-3);line-height:1.5}
+.geste::after{
+  content:"";grid-column:1/-1;height:3px;border-radius:2px;width:calc(var(--d)*100%/35);
+  background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 45%,transparent));
+  transform-origin:left;transition:transform .9s cubic-bezier(.2,.7,.2,1);
+}
+.jour.est-pilote .geste::after{transform:scaleX(0)}
+.jour.est-pilote .mom.is-on .geste::after{transform:scaleX(1)}
+.jour.est-pilote .mom.is-on .geste:nth-child(2)::after{transition-delay:.08s}
+.jour.est-pilote .mom.is-on .geste:nth-child(3)::after{transition-delay:.16s}
+.jour.est-pilote .mom.is-on .geste:nth-child(4)::after{transition-delay:.24s}
+.geste .duree{color:var(--accent);font-weight:600;white-space:nowrap;font-variant-numeric:lining-nums tabular-nums}
 
 .releve{
   margin-top:clamp(2.2rem,4vw,3.2rem);padding-top:1.4rem;border-top:1px solid var(--line);
@@ -341,13 +757,36 @@ b,strong{font-weight:500}
 }
 @media (min-width:640px){.piliers{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (min-width:1120px){.piliers{grid-template-columns:repeat(5,minmax(0,1fr))}}
-.pilier{border-top:1px solid var(--line);padding:1.3rem 0 1.5rem}
+.pilier{border-top:1px solid var(--line);padding:1.3rem .9rem 1.5rem;margin:0 -.9rem;border-radius:0 0 var(--r-md) var(--r-md);cursor:pointer;transition:background .35s ease,opacity .35s ease,border-color .35s ease}
+.pilier:focus-visible{outline-offset:-2px}
+@media (hover:hover){.pilier:hover{background:var(--panel-2)}}
 .pilier__code{font-size:var(--t-label);font-weight:600;letter-spacing:.16em;color:var(--accent)}
 .pilier h3{font-size:var(--t-h3);margin:.5rem 0 .55rem;letter-spacing:-.02em}
 .pilier p{font-size:var(--t-small);color:var(--ink-2)}
-.pilier .entree{margin-top:.7rem;color:var(--ink-3)}
+
+/* Survoler (ou toucher) un pilier allume sa branche dans l'arbre, sa bande dans
+   la courbe, et éteint le reste. Le script pose data-actif sur la section. */
+#piliers [data-p]{transition:opacity .35s ease}
+#piliers[data-actif] [data-p]{opacity:.16}
+#piliers[data-actif="SO"] [data-p="SO"],#piliers[data-actif="NU"] [data-p="NU"],#piliers[data-actif="MO"] [data-p="MO"],
+#piliers[data-actif="RE"] [data-p="RE"],#piliers[data-actif="ME"] [data-p="ME"]{opacity:1}
+#piliers[data-actif] .pilier[data-p]{opacity:.45}
+#piliers[data-actif="SO"] .pilier[data-p="SO"],#piliers[data-actif="NU"] .pilier[data-p="NU"],#piliers[data-actif="MO"] .pilier[data-p="MO"],
+#piliers[data-actif="RE"] .pilier[data-p="RE"],#piliers[data-actif="ME"] .pilier[data-p="ME"]{opacity:1;background:var(--panel-2);border-color:var(--accent)}
+.arbre .planche__mot{cursor:pointer;pointer-events:auto}
 
 /* ================= Graphique ================= */
+/* Un curseur avance semaine après semaine pendant qu'on descend, et la courbe se
+   dessine derrière lui. La lecture au-dessus dit où l'on en est. */
+.courbe__lecture{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem 1.1rem;margin:0 0 1rem;font-size:var(--t-small);color:var(--ink-2);font-variant-numeric:lining-nums tabular-nums}
+.courbe__lecture b{font-size:clamp(1.3rem,2.6vw,1.8rem);font-weight:300;letter-spacing:-.03em;color:var(--ink)}
+.courbe__lecture [data-lec-min]{color:var(--accent);font-weight:600}
+.curseur line{stroke:var(--accent);stroke-width:1.5}
+.curseur circle{fill:var(--accent)}
+.curseur .curseur__halo{fill:var(--accent);opacity:.18}
+.phasebar,.phasetxt{transition:fill .35s ease}
+.phase-on .phasebar{fill:color-mix(in srgb,var(--accent) 22%,var(--panel-3))}
+.phase-on .phasetxt{fill:var(--ink)}
 .chart-scroll{overflow-x:auto;overscroll-behavior-x:contain}
 .chart-scroll svg{min-width:700px}
 /* Sous ~800 px le graphique ne tient plus : sans repère, on croit qu'il est
@@ -368,6 +807,16 @@ b,strong{font-weight:500}
 figcaption{color:var(--ink-3);font-size:var(--t-small);margin-top:1.6rem;max-width:var(--measure)}
 
 /* ================= Les quatre phases ================= */
+/* Un ciel de nuit en tête du panneau : les tours de cumulus, et l'obscurité
+   qui monte avant la première phase. */
+.deroule{position:relative;overflow:hidden;isolation:isolate}
+.ciel-bande{
+  position:absolute;inset:0 0 auto 0;height:clamp(300px,40vw,520px);z-index:-1;pointer-events:none;
+  -webkit-mask-image:linear-gradient(#000 30%,transparent 96%);mask-image:linear-gradient(#000 30%,transparent 96%);
+}
+.ciel-bande img{width:100%;height:100%;object-fit:cover;object-position:50% 24%;opacity:.9}
+.deroule .head{padding-top:clamp(5rem,15vw,12rem)}
+
 .voyage{
   position:relative;
   --rail:4.4rem;--gapx:clamp(1.2rem,3vw,2.6rem);
@@ -375,17 +824,17 @@ figcaption{color:var(--ink-3);font-size:var(--t-small);margin-top:1.6rem;max-wid
   display:grid;gap:clamp(2.8rem,6vw,4.6rem);
 }
 .voyage__rail{position:absolute;left:var(--railx);top:.9rem;bottom:0;width:1px;background:var(--line-dark);overflow:hidden}
+/* Le trait se remplit à mesure qu'on descend (le script règle --p) ; quand il
+   atteint une phase, son point et son chiffre s'allument. Sans script : plein. */
 .voyage__rail::after{
-  content:"";position:absolute;inset:0;transform-origin:top;transform:scaleY(1);
+  content:"";position:absolute;inset:0;transform-origin:top;transform:scaleY(var(--p,1));
   background:linear-gradient(to bottom,var(--ice-2),var(--ice));
 }
-@supports (animation-timeline:view()){
-  .voyage__rail::after{
-    transform:scaleY(0);
-    animation:railFill linear both;
-    animation-timeline:view(block);
-    animation-range:entry 90% exit 15%;
-  }
+.voyage__tete{
+  position:absolute;left:calc(var(--railx) - 6px);top:calc(.9rem + (100% - .9rem)*var(--p,1));
+  width:13px;height:13px;margin-top:-6px;border-radius:50%;background:var(--accent);pointer-events:none;
+  box-shadow:0 0 0 7px color-mix(in srgb,var(--accent) 18%,transparent),0 0 30px color-mix(in srgb,var(--accent) 70%,transparent);
+  opacity:var(--o,0);transition:opacity .4s ease;
 }
 .etape{
   position:relative;
@@ -399,7 +848,7 @@ figcaption{color:var(--ink-3);font-size:var(--t-small);margin-top:1.6rem;max-wid
   background:var(--dark);box-shadow:0 0 0 1px var(--line-dark) inset;
   transition:background .5s ease,box-shadow .5s ease;
 }
-.etape.is-in::before{
+.etape.est-atteinte::before{
   background:var(--accent);
   box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 18%,transparent);
 }
@@ -408,13 +857,11 @@ figcaption{color:var(--ink-3);font-size:var(--t-small);margin-top:1.6rem;max-wid
   font-weight:200;letter-spacing:-.04em;line-height:1;
   color:var(--on-dark-2);transition:color .5s ease;
 }
-.etape.is-in .etape__n{color:var(--accent)}
+.etape.est-atteinte .etape__n{color:var(--accent)}
 .etape__corps{display:grid;gap:.55rem;max-width:52ch}
 .etape__quand{font-size:var(--t-label);font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--on-dark-2)}
 .etape__corps h3{font-size:clamp(1.25rem,2.4vw,1.7rem);letter-spacing:-.03em}
-.etape__txt{display:grid;gap:.6rem;margin-top:.7rem}
-.etape__txt p{font-size:var(--t-small);color:var(--on-dark-2)}
-.etape__txt b{color:var(--on-dark)}
+.etape__txt{margin-top:.7rem;max-width:52ch;color:var(--on-dark-2)}
 
 /* Le creux : le seul encart de la page, parce que c'est le seul endroit où
    le protocole prévient d'avance de ce qui va faire mal. */
@@ -434,12 +881,9 @@ figcaption{color:var(--ink-3);font-size:var(--t-small);margin-top:1.6rem;max-wid
 /* Trop étroit pour une colonne de repères : le filet passe à gauche,
    le moment et le chiffre romain montent au-dessus du titre. */
 @media (max-width:600px){
-  .jour,.voyage{--rail:0;--railx:.3rem}
-  .jour__rail,.voyage__rail{left:.3rem}
-  .moment,.etape{grid-template-columns:minmax(0,1fr);padding-left:1.6rem}
-  .moment{gap:.6rem}
-  .etape{gap:.5rem}
-  .moment__quand{text-align:left}
+  .voyage{--rail:0;--railx:.3rem}
+  .voyage__rail{left:.3rem}
+  .etape{grid-template-columns:minmax(0,1fr);padding-left:1.6rem;gap:.5rem}
   .etape__n{text-align:left;font-size:1.2rem}
   /* Les capitales espacées mangent la largeur : on resserre plutôt que de
      laisser un mot seul sur sa ligne. */
@@ -478,11 +922,30 @@ figcaption{color:var(--ink-3);font-size:var(--t-small);margin-top:1.6rem;max-wid
 .urgence a{font-weight:500;white-space:nowrap}
 
 /* ================= La suite ================= */
+/* La silhouette sur son rocher, de nuit, à contre-jour : sur ordinateur elle se tient
+   à droite et un voile retient le ciel à gauche, sous le texte ; sur téléphone elle
+   passe en bandeau au-dessus du texte et se fond dans le panneau. */
+.suite{position:relative;overflow:hidden;isolation:isolate}
+.suite__ciel{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.suite__ciel img{width:100%;height:100%;object-fit:cover;object-position:50% 56%}
+.suite__ciel::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,var(--dark) 0%,color-mix(in srgb,var(--dark) 80%,transparent) 36%,color-mix(in srgb,var(--dark) 12%,transparent) 68%,transparent 100%);
+}
+@media (max-width:760px){
+  .suite__ciel{
+    inset:0 0 auto 0;height:min(100vw,460px);
+    -webkit-mask-image:linear-gradient(#000 45%,transparent 92%);mask-image:linear-gradient(#000 45%,transparent 92%);
+  }
+  .suite__ciel img{object-position:50% 50%}
+  .suite__ciel::after{background:none}
+  .suite .head{padding-top:clamp(15rem,72vw,19rem)}
+}
 .suite p{color:var(--on-dark-2);max-width:var(--measure);font-size:var(--t-small)}
 .suite p + p{margin-top:.75rem}
 .actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2rem}
 
-footer{display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;padding:2.4rem .4rem .8rem;color:var(--ink-3);font-size:var(--t-small)}
+footer{display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;max-width:var(--maxw);margin-inline:auto;padding:2.4rem .4rem .8rem;color:var(--ink-3);font-size:var(--t-small)}
 footer a{color:inherit}
 footer a:hover{color:var(--ink)}
 
@@ -500,74 +963,228 @@ footer a:hover{color:var(--ink)}
 .stagger.is-in > *:nth-child(4){transition-delay:270ms}
 .stagger.is-in > *:nth-child(5){transition-delay:360ms}
 
+/* Une section hors écran n'anime plus rien : le script pose .is-off dessus. */
+.is-off,.is-off *{animation-play-state:paused!important}
+/* Sur téléphone, les orbites ne tournent pas (140 s le tour, invisible à cette taille) */
+@media (max-width:760px),(hover:none){
+  .scene__orbites .tourne{animation:none}
+  .btn--verre,.notif{-webkit-backdrop-filter:none;backdrop-filter:none}
+  .notif{background:var(--notif-plein)}
+}
+
 @media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
   *{animation:none!important;transition:none!important}
   .btn:hover,.btn:hover .btn__arrow{transform:none}
   .reveal{opacity:1;transform:none}
   .stagger > *{opacity:1;transform:none}
-  .jour__rail::after,.voyage__rail::after{transform:scaleY(1)}
+  .voyage__rail::after{transform:scaleY(1)}
+  .voyage__tete,.onde__point{display:none}
+  .onde svg,.choc__dessin .planche__dessin{clip-path:none}
+  [data-mots].est-pilote .m{opacity:1}
+  .frein span{background-size:100% .085em;color:var(--ink-3)}
+  .jour.est-pilote .mom{opacity:1;transform:none}
+  .jour.est-pilote .geste::after{transform:none}
+  .arbre .tronc,.arbre .n1,.arbre .n2,.arbre .n3,.arbre .n4,.arbre .racines{stroke-dashoffset:0}
+  .arbre .pointes circle{opacity:1}
+  .scene__electron{display:none}
 }
 </style>
+<!-- Sans JavaScript, rien n'apparaît au défilement : tout est montré d'emblée -->
+<noscript><style>
+.reveal,.stagger > *{opacity:1;transform:none}
+.onde svg,.choc__dessin .planche__dessin{clip-path:none}
+.arbre .tronc,.arbre .n1,.arbre .n2,.arbre .n3,.arbre .n4,.arbre .racines{stroke-dashoffset:0}
+.arbre .pointes circle{opacity:1}
+</style></noscript>
 </head>
 <body>
 
 <a class="saut" href="#contenu">Aller au contenu</a>
 <div class="fil" aria-hidden="true"></div>
 
+<header class="nav-wrap">
+<nav class="nav" id="nav" aria-label="Navigation de la page RESET">
+  <a class="nav__brand" href="/" aria-label="BELIVE, retour à l'accueil">
+    <span class="nav__word"><span>BE</span><span>LIVE</span></span>
+    <span class="nav__rec" aria-hidden="true"><span></span></span>
+  </a>
+  <div class="nav__links" id="navLinks">
+    <a href="#mouvements">Les mouvements</a>
+    <a href="#journee">La journée</a>
+    <a href="#piliers">Les piliers</a>
+    <a href="#deroule">Le déroulé</a>
+    <a href="#avant">Avant de commencer</a>
+  </div>
+  <a class="nav__cta" href="#suite">Liste d'attente →</a>
+  <button class="nav__burger" id="navBurger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Ouvrir le menu"><span></span><span></span></button>
+</nav>
+</header>
+
+<main id="contenu" tabindex="-1">
+
+  <!-- ===== Haut de page ===== -->
+  <section class="ouverture" id="haut" aria-labelledby="titre">
+    <div class="scene" aria-hidden="true">
+      <div class="scene__cadre">
+        <picture>
+          <source data-sombre media="(prefers-color-scheme: dark) and (max-aspect-ratio: 1/1)" type="image/avif" srcset="/assets/img/nuages/ciel-nuit-haut.avif">
+          <source data-sombre media="(prefers-color-scheme: dark) and (max-aspect-ratio: 1/1)" type="image/webp" srcset="/assets/img/nuages/ciel-nuit-haut.webp">
+          <source data-sombre media="(prefers-color-scheme: dark)" type="image/avif" srcset="/assets/img/nuages/ciel-nuit.avif">
+          <source data-sombre media="(prefers-color-scheme: dark)" type="image/webp" srcset="/assets/img/nuages/ciel-nuit.webp">
+          <source media="(max-aspect-ratio: 1/1)" type="image/avif" srcset="/assets/img/nuages/ciel-jour-haut.avif">
+          <source media="(max-aspect-ratio: 1/1)" type="image/webp" srcset="/assets/img/nuages/ciel-jour-haut.webp">
+          <source type="image/avif" srcset="/assets/img/nuages/ciel-jour.avif">
+          <img src="/assets/img/nuages/ciel-jour.webp" alt="" width="2400" height="1500" fetchpriority="high" decoding="async">
+        </picture>
+        <div class="scene__halo"></div>
+        <div class="scene__orbites">
+          <svg viewBox="-500 -500 1000 1000">
+            <g class="tourne">
+              <ellipse rx="470" ry="150"/>
+              <ellipse rx="470" ry="150" transform="rotate(60)"/>
+              <ellipse rx="470" ry="150" transform="rotate(120)"/>
+            </g>
+            <circle class="scene__electron" data-electron data-rot="0" data-speed="0.55" data-phase="0" cx="470" cy="0" r="8"/>
+            <circle class="scene__electron" data-electron data-rot="60" data-speed="0.42" data-phase="2.1" cx="-237" cy="0" r="8"/>
+            <circle class="scene__electron" data-electron data-rot="120" data-speed="0.5" data-phase="4.2" cx="-230" cy="0" r="8"/>
+          </svg>
+        </div>
+        <div class="scene__mot" data-mot><span style="--i:0">R</span><span style="--i:1">E</span><span style="--i:2">S</span><span style="--i:3">E</span><span style="--i:4">T</span></div>
+        <picture>
+          <source data-sombre media="(prefers-color-scheme: dark) and (max-aspect-ratio: 1/1)" type="image/avif" srcset="/assets/img/nuages/ciel-nuit-haut-avant.avif">
+          <source data-sombre media="(prefers-color-scheme: dark) and (max-aspect-ratio: 1/1)" type="image/webp" srcset="/assets/img/nuages/ciel-nuit-haut-avant.webp">
+          <source data-sombre media="(prefers-color-scheme: dark)" type="image/avif" srcset="/assets/img/nuages/ciel-nuit-avant.avif">
+          <source data-sombre media="(prefers-color-scheme: dark)" type="image/webp" srcset="/assets/img/nuages/ciel-nuit-avant.webp">
+          <source media="(max-aspect-ratio: 1/1)" type="image/avif" srcset="/assets/img/nuages/ciel-jour-haut-avant.avif">
+          <source media="(max-aspect-ratio: 1/1)" type="image/webp" srcset="/assets/img/nuages/ciel-jour-haut-avant.webp">
+          <source type="image/avif" srcset="/assets/img/nuages/ciel-jour-avant.avif">
+          <img src="/assets/img/nuages/ciel-jour-avant.webp" alt="" width="2400" height="1500" decoding="async">
+        </picture>
+      </div>
+    </div>
+
+    <div class="ouverture__fondu" aria-hidden="true"></div>
+    <div class="ouverture__meta">
+      <span><span>Protocole individuel</span><span>Treize semaines</span><span>À distance</span></span>
+      <span><span class="ouverture__pastille">À venir</span><span>Tarif fondateur</span><span>Trois places</span></span>
+    </div>
+
+    <div class="ouverture__vide"></div>
+
+    <div class="ouverture__bas">
+      <div class="ouverture__texte">
+        <p class="label">BELIVE RESET</p>
+        <h1 id="titre"><span class="titre__n">90 jours</span> pour reprendre les commandes.</h1>
+        <p class="ouverture__lead">Un protocole pour changer d'identité, t'aligner et vivre enfin la vie que tu ne t'autorisais pas.</p>
+        <p class="ouverture__note">Quatre phases, cinq piliers, et des outils qui t'accompagnent chaque jour. À&nbsp;la fin, tu tiens sans moi.</p>
+        <div class="actions">
+          <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfj11kIlWgP47-O8oDt12YvOwmYfR5KPWXMzn8iG9LAzuwBDQ/viewform" target="_blank" rel="noopener">Rejoindre la liste d'attente <span class="btn__arrow">→</span></a>
+          <a class="btn btn--verre" href="https://wa.me/32493847434?text=Bonjour%20Tristan%2C%20j%27ai%20une%20question%20sur%20RESET%20%3A%20" target="_blank" rel="noopener">Une question&nbsp;? <span class="btn__arrow">→</span></a>
+        </div>
+      </div>
+      <p class="lecteur">Ce que ta petite voix te répète : J'ai peur du regard des autres. Je doute de moi. J'ai peur de ne pas y arriver. Je commencerai lundi. J'ai peur de ne pas être capable. Je n'ai pas le temps. C'est pas pour moi, cette vie-là.</p>
+      <div class="notifs" data-notifs data-doutes="J'ai peur du regard des autres.|Je doute de moi.|J'ai peur de ne pas y arriver.|Je commencerai lundi.|J'ai peur de ne pas être capable.|Je n'ai pas le temps.|C'est pas pour moi, cette vie-là." aria-hidden="true">
+        <div class="notif" style="--i:0"><span class="notif__app"><svg viewBox="0 0 24 24"><path d="M6.6 18.6h10.9a4 4 0 0 0 .5-7.97 6 6 0 0 0-11.4-1.7 4.85 4.85 0 0 0 0 9.67z"/></svg></span><span class="notif__corps"><span class="notif__haut"><b>Ta petite voix</b><i>maintenant</i></span><span class="notif__texte">C'est pas pour moi, cette vie-là.</span></span></div>
+        <div class="notif" style="--i:1"><span class="notif__app"><svg viewBox="0 0 24 24"><path d="M6.6 18.6h10.9a4 4 0 0 0 .5-7.97 6 6 0 0 0-11.4-1.7 4.85 4.85 0 0 0 0 9.67z"/></svg></span><span class="notif__corps"><span class="notif__haut"><b>Ta petite voix</b><i>maintenant</i></span><span class="notif__texte">Je doute de moi.</span></span></div>
+        <div class="notif" style="--i:2"><span class="notif__app"><svg viewBox="0 0 24 24"><path d="M6.6 18.6h10.9a4 4 0 0 0 .5-7.97 6 6 0 0 0-11.4-1.7 4.85 4.85 0 0 0 0 9.67z"/></svg></span><span class="notif__corps"><span class="notif__haut"><b>Ta petite voix</b><i>maintenant</i></span><span class="notif__texte">J'ai peur du regard des autres.</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Ce que RESET change ===== -->
+  <!-- Le message de fond : la vie qu'on ne s'autorise pas, les trois freins qu'un trait
+       barre l'un après l'autre au défilement, puis ce qui compte le plus. -->
+  <section class="identite" aria-labelledby="identite-titre">
+    <div class="identite__mer" aria-hidden="true">
+      <picture>
+        <source data-sombre media="(prefers-color-scheme: dark)" type="image/avif" srcset="/assets/img/nuages/mer-nuit.avif">
+        <source data-sombre media="(prefers-color-scheme: dark)" type="image/webp" srcset="/assets/img/nuages/mer-nuit.webp">
+        <source type="image/avif" srcset="/assets/img/nuages/mer.avif">
+        <img src="/assets/img/nuages/mer.webp" alt="" width="2400" height="1100" loading="lazy" decoding="async">
+      </picture>
+    </div>
+    <h2 class="identite__titre reveal" id="identite-titre">La vie dont tu rêves, <span>tu ne te l'autorises pas.</span></h2>
+    <ul class="freins" aria-label="Ce qui t'en empêche">
+      <li class="frein"><span>Tu vis en pilote automatique.</span></li>
+      <li class="frein"><span>Tes peurs décident à ta place.</span></li>
+      <li class="frein"><span>Tu doutes de pouvoir y arriver.</span></li>
+    </ul>
+    <p class="identite__chute">Le plus fondamental, c'est <em>d'y croire.</em></p>
+    <p class="identite__suite reveal">Ça ne dépend que de toi. <span class="identite__ligne">Personne ne pourra croire en toi à ta place, ni prendre les décisions et faire les actions à&nbsp;ta&nbsp;place.</span></p>
+    <p class="identite__depart reveal">C'est ici que ça commence.</p>
+    <div class="identite__action reveal">
+      <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfj11kIlWgP47-O8oDt12YvOwmYfR5KPWXMzn8iG9LAzuwBDQ/viewform" target="_blank" rel="noopener">Je passe à l'action <span class="btn__arrow">→</span></a>
+      <p class="identite__note">Ta première action&nbsp;: rejoindre la liste d'attente. Tu sauras en premier quand RESET ouvre.</p>
+    </div>
+  </section>
+
 <div class="shell">
 
-  <header class="masthead">
-    <a href="/" aria-label="BELIVE, retour à l'accueil">
-      <svg viewBox="-3 -3 671 111" aria-hidden="true">
-        <g fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="butt">
-          <path d="M0,0 V100"/><path d="M0,0 H40 A25,25 0 0 1 40,50 H0"/>
-          <path d="M0,50 H40 A25,25 0 0 1 40,100 H0"/>
-          <path d="M135,0 H197 M135,50 H197 M135,100 H197"/>
-          <path d="M267,0 V100 H322"/><path d="M392,0 V100"/>
-          <path d="M462,0 L495,100 L528,0"/>
-          <path d="M598,0 H660 M598,50 H660 M598,100 H660"/>
-        </g>
-      </svg>
-    </a>
-    <a class="retour" href="/#protocole">← Retour au site</a>
-  </header>
-
-  <main class="shell" style="max-width:none" id="contenu" tabindex="-1">
-
-  <!-- ===== Ouverture ===== -->
-  <section class="panel">
-    <div class="ouverture stagger">
-      <p class="label">Le protocole RESET</p>
-      <h1>Treize semaines. À la fin, tu tiens sans moi.</h1>
-      <p class="lead">Quatre phases, cinq piliers, trois ancres par jour. Voici ce que le protocole demande, quand il le demande, et ce qu'il coûte vraiment.</p>
-    </div>
+  <!-- ===== Les chiffres ===== -->
+  <section class="panel panel--chiffres" aria-label="Le protocole en chiffres">
     <dl class="chiffres stagger">
       <div class="chiffre"><dt>Durée</dt>
-        <dd><span class="chiffre__v"><span class="num">13</span> semaines</span><span class="chiffre__d">91 jours, du premier call au dernier.</span></dd></div>
+        <dd><span class="chiffre__v"><span class="num" data-compte="13">13</span> semaines</span><span class="chiffre__d">91 jours, du premier call au dernier.</span></dd></div>
       <div class="chiffre"><dt>Rythme</dt>
-        <dd><span class="chiffre__v"><span class="num">3</span> ancres</span><span class="chiffre__d">Matin, midi, soir. Tous les jours.</span></dd></div>
+        <dd><span class="chiffre__v"><span class="num" data-compte="3">3</span> moments</span><span class="chiffre__d">Matin, midi, soir. Tous les jours.</span></dd></div>
       <div class="chiffre"><dt>Rendez-vous</dt>
-        <dd><span class="chiffre__v"><span class="num">13 + 4</span></span><span class="chiffre__d">Un call par semaine, et quatre sessions Breathwork encadrées d'une heure trente.</span></dd></div>
-      <div class="chiffre"><dt>Ce que ça coûte</dt>
-        <dd><span class="chiffre__v"><span class="num">98</span> heures</span><span class="chiffre__d">De pratique sur les 91 jours. Le chiffre est dit avant, pas après.</span></dd></div>
+        <dd><span class="chiffre__v"><span class="num"><span data-compte="13">13</span> + <span data-compte="4">4</span></span></span><span class="chiffre__d">Un call par semaine, et quatre sessions Breathwork encadrées d'une heure trente.</span></dd></div>
+      <div class="chiffre"><dt>Temps de pratique</dt>
+        <dd><span class="chiffre__v"><span class="num" data-compte="98">98</span> heures</span><span class="chiffre__d">Sur les 91 jours. En moyenne, un peu plus d'une heure par jour.</span></dd></div>
     </dl>
   </section>
 
-  <!-- ===== Respiration ===== -->
-  <section class="souffle">
-    <p class="reveal">Rien n'arrive à pleine dose le premier jour. Une pratique qui y arriverait serait la <span class="hl">première à tomber.</span></p>
+  <!-- ===== Le choc ===== -->
+  <!-- La phrase que le lecteur s'est déjà dite, puis le dessin qui la rend évidente :
+       l'élan du lundi s'effondre le jeudi, la dose qui monte par paliers tient. -->
+  <section class="choc" aria-labelledby="choc-titre">
+    <p class="choc__phrase" id="choc-titre" data-mots><span class="m">Tu</span> <span class="m">as</span> <span class="m">déjà</span> <span class="m">tout</span> <span class="m">changé</span> <span class="m">un</span> <span class="m">lundi.</span> <span class="choc__chute"><span class="m">Et</span> <span class="m">tout</span> <span class="m">lâché</span> <span class="m">le</span> <span class="m">jeudi.</span></span></p>
+    <figure class="planche choc__dessin" data-trace>
+      <div class="planche__dessin" aria-hidden="true">
+        <svg viewBox="0 0 620 230">
+          <line class="choc__axe" x1="40" y1="196" x2="580" y2="196"/>
+          <g class="choc__jours"><line x1="40.0" y1="196" x2="40.0" y2="208"/><line x1="67.0" y1="196" x2="67.0" y2="202"/><line x1="94.0" y1="196" x2="94.0" y2="202"/><line x1="121.0" y1="196" x2="121.0" y2="202"/><line x1="148.0" y1="196" x2="148.0" y2="202"/><line x1="175.0" y1="196" x2="175.0" y2="202"/><line x1="202.0" y1="196" x2="202.0" y2="202"/><line x1="229.0" y1="196" x2="229.0" y2="208"/><line x1="256.0" y1="196" x2="256.0" y2="202"/><line x1="283.0" y1="196" x2="283.0" y2="202"/><line x1="310.0" y1="196" x2="310.0" y2="202"/><line x1="337.0" y1="196" x2="337.0" y2="202"/><line x1="364.0" y1="196" x2="364.0" y2="202"/><line x1="391.0" y1="196" x2="391.0" y2="202"/><line x1="418.0" y1="196" x2="418.0" y2="208"/><line x1="445.0" y1="196" x2="445.0" y2="202"/><line x1="472.0" y1="196" x2="472.0" y2="202"/><line x1="499.0" y1="196" x2="499.0" y2="202"/><line x1="526.0" y1="196" x2="526.0" y2="202"/><line x1="553.0" y1="196" x2="553.0" y2="202"/><line x1="580.0" y1="196" x2="580.0" y2="202"/></g>
+          <path class="choc__a" d="M40.0 64.0 C44.5 64.9 58.0 63.6 67.0 69.3 C76.0 75.0 85.0 82.9 94.0 98.3 C103.0 113.7 112.0 148.3 121.0 161.7 C130.0 175.1 139.0 175.1 148.0 178.8 C157.0 182.6 166.0 182.8 175.0 184.1 C184.0 185.4 193.0 186.1 202.0 186.8 C211.0 187.4 220.0 187.6 229.0 188.1 C238.0 188.5 247.0 189.2 256.0 189.4 C265.0 189.6 274.0 189.2 283.0 189.4 C292.0 189.6 301.0 190.5 310.0 190.7 C319.0 190.9 328.0 190.7 337.0 190.7 C346.0 190.7 355.0 190.7 364.0 190.7 C373.0 190.7 382.0 190.7 391.0 190.7 C400.0 190.7 409.0 190.5 418.0 190.7 C427.0 190.9 436.0 191.8 445.0 192.0 C454.0 192.3 463.0 192.0 472.0 192.0 C481.0 192.0 490.0 192.0 499.0 192.0 C508.0 192.0 517.0 192.0 526.0 192.0 C535.0 192.0 544.0 192.0 553.0 192.0 C562.0 192.0 575.5 192.0 580.0 192.0"/>
+          <path class="choc__b" d="M40.0 169.6 C44.5 169.6 58.0 169.6 67.0 169.6 C76.0 169.6 85.0 169.6 94.0 169.6 C103.0 169.6 112.0 170.4 121.0 169.6 C130.0 168.8 139.0 168.1 148.0 164.8 C157.0 161.4 166.0 153.6 175.0 149.6 C184.0 145.5 193.0 142.1 202.0 140.6 C211.0 139.1 220.0 140.6 229.0 140.6 C238.0 140.6 247.0 140.6 256.0 140.6 C265.0 140.6 274.0 140.6 283.0 140.6 C292.0 140.6 301.0 141.4 310.0 140.6 C319.0 139.8 328.0 139.1 337.0 135.7 C346.0 132.4 355.0 124.6 364.0 120.5 C373.0 116.5 382.0 113.0 391.0 111.5 C400.0 110.0 409.0 111.5 418.0 111.5 C427.0 111.5 436.0 111.5 445.0 111.5 C454.0 111.5 463.0 111.5 472.0 111.5 C481.0 111.5 490.0 112.2 499.0 111.5 C508.0 110.9 517.0 110.3 526.0 107.6 C535.0 104.8 544.0 98.4 553.0 95.1 C562.0 91.8 575.5 89.0 580.0 87.8"/>
+          <circle class="choc__pt choc__pt--a" cx="121.0" cy="161.7" r="5.5"/>
+          <circle class="choc__pt choc__pt--b" cx="580.0" cy="87.8" r="6"/>
+        </svg>
+        <span class="planche__mot" style="left:6.45%;top:27.83%;transform:translate(-2px,-190%)">Lundi, tout à fond</span>
+        <span class="planche__mot" style="left:19.52%;top:70.3%;transform:translate(14px,-210%)">Jeudi</span>
+        <span class="planche__mot choc__mot-b" style="left:93.55%;top:38.17%;transform:translate(-100%,-190%)">Par paliers, ça tient</span>
+        <span class="planche__mot" style="left:93.55%;top:85.22%;transform:translate(-100%,70%)">Trois semaines</span>
+      </div>
+      <figcaption class="planche__legende"><span class="planche__fig">Fig. 01</span><span>En pointillé, tout changer d'un coup. En trait plein, une dose qui monte.</span></figcaption>
+    </figure>
+    <p class="choc__suite reveal">Ce n'est pas la volonté qui a manqué. C'est la dose. Ici, chaque pratique entre petit, puis monte semaine après semaine. C'est pour ça qu'elle tient.</p>
   </section>
 
   <!-- ===== 01. Le mouvement intérieur ===== -->
   <!-- Cinq lignes, pas cinq cartes : les lettres se lisent de haut en bas comme
        elles se traversent. Elles ne portent pas de semaines, le calendrier c'est
-       les quatre phases, plus bas. -->
-  <section class="panel panel--dark">
+       les quatre phases, plus bas. L'onde, au-dessus, dit la même chose en un trait :
+       le souffle qui passe de court à ample. -->
+  <section class="panel panel--dark" id="mouvements">
     <div class="head">
       <p class="label"><span class="label__n num">01</span> Le mouvement intérieur</p>
       <h2>RESET, ce sont cinq mouvements, et ils se chevauchent.</h2>
-      <p>Chacun arrive quand le précédent a fait de la place, et aucun ne s'arrête quand le suivant commence. Voici, pour chacun, la phrase que tu diras le jour où il sera là.</p>
+      <p>Pour chacun, la phrase que tu diras le jour où il sera là.</p>
     </div>
+    <figure class="planche onde" data-trace>
+      <div class="onde__bouts">
+        <p><span class="onde__quand">Jour 1</span>Un souffle court, rapide, en haut de la poitrine.</p>
+        <p><span class="onde__quand">Jour 90</span>Un souffle lent, ample, que tu sens descendre.</p>
+      </div>
+      <div class="onde__dessin" aria-hidden="true">
+        <svg viewBox="0 0 1000 150" preserveAspectRatio="none">
+          <line class="axe" x1="20" y1="75" x2="980" y2="75"/>
+          <path class="trace" d="M20.0 75.0 L21.9 74.9 L23.8 74.0 L25.8 72.2 L27.7 69.9 L29.6 68.2 L31.5 68.0 L33.4 69.8 L35.4 73.3 L37.3 77.3 L39.2 81.1 L41.1 84.3 L43.0 86.3 L45.0 86.7 L46.9 85.5 L48.8 82.8 L50.7 78.9 L52.6 74.4 L54.6 69.9 L56.5 66.2 L58.4 63.6 L60.3 62.7 L62.2 63.5 L64.2 65.9 L66.1 69.4 L68.0 73.7 L69.9 78.0 L71.8 81.7 L73.8 84.3 L75.7 85.6 L77.6 85.3 L79.5 83.7 L81.4 81.0 L83.4 77.6 L85.3 74.1 L87.2 70.9 L89.1 68.5 L91.0 67.2 L93.0 66.9 L94.9 67.8 L96.8 69.5 L98.7 71.9 L100.6 74.5 L102.6 77.1 L104.5 79.3 L106.4 80.8 L108.3 81.5 L110.2 81.4 L112.2 80.4 L114.1 78.7 L116.0 76.5 L117.9 74.0 L119.8 71.7 L121.8 69.8 L123.7 68.5 L125.6 68.0 L127.5 68.5 L129.4 69.9 L131.4 72.1 L133.3 74.8 L135.2 77.7 L137.1 80.3 L139.0 82.3 L141.0 83.4 L142.9 83.3 L144.8 82.1 L146.7 79.9 L148.6 76.9 L150.6 73.6 L152.5 70.4 L154.4 67.8 L156.3 66.1 L158.2 65.7 L160.2 66.5 L162.1 68.4 L164.0 71.3 L165.9 74.5 L167.8 77.8 L169.8 80.6 L171.7 82.5 L173.6 83.4 L175.5 83.2 L177.4 81.9 L179.4 79.7 L181.3 77.1 L183.2 74.4 L185.1 72.0 L187.0 70.0 L189.0 68.9 L190.9 68.6 L192.8 69.1 L194.7 70.2 L196.6 71.9 L198.6 73.9 L200.5 75.9 L202.4 77.8 L204.3 79.3 L206.2 80.2 L208.2 80.5 L210.1 80.2 L212.0 79.3 L213.9 77.8 L215.8 75.8 L217.8 73.6 L219.7 71.4 L221.6 69.4 L223.5 67.9 L225.4 67.1 L227.4 67.3 L229.3 68.5 L231.2 70.7 L233.1 73.7 L235.0 77.2 L237.0 80.9 L238.9 84.1 L240.8 86.6 L242.7 87.8 L244.6 87.6 L246.6 85.7 L248.5 82.3 L250.4 77.8 L252.3 72.6 L254.2 67.4 L256.2 62.7 L258.1 59.3 L260.0 57.6 L261.9 57.8 L263.8 60.1 L265.8 64.1 L267.7 69.5 L269.6 75.6 L271.5 81.7 L273.4 87.1 L275.4 91.2 L277.3 93.5 L279.2 93.8 L281.1 92.1 L283.0 88.6 L285.0 83.6 L286.9 77.9 L288.8 72.0 L290.7 66.5 L292.6 62.0 L294.6 58.9 L296.5 57.5 L298.4 57.9 L300.3 60.0 L302.2 63.5 L304.2 68.1 L306.1 73.3 L308.0 78.6 L309.9 83.5 L311.8 87.5 L313.8 90.5 L315.7 91.9 L317.6 91.8 L319.5 90.2 L321.4 87.0 L323.4 82.7 L325.3 77.5 L327.2 72.0 L329.1 66.4 L331.0 61.5 L333.0 57.6 L334.9 55.1 L336.8 54.3 L338.7 55.4 L340.6 58.3 L342.6 62.9 L344.5 68.7 L346.4 75.4 L348.3 82.2 L350.2 88.7 L352.2 94.2 L354.1 98.1 L356.0 100.1 L357.9 100.1 L359.8 97.9 L361.8 93.7 L363.7 87.9 L365.6 81.1 L367.5 73.8 L369.4 66.6 L371.4 60.2 L373.3 55.0 L375.2 51.5 L377.1 50.0 L379.0 50.4 L381.0 52.7 L382.9 56.6 L384.8 61.7 L386.7 67.6 L388.6 73.8 L390.6 79.7 L392.5 85.0 L394.4 89.3 L396.3 92.4 L398.2 94.1 L400.2 94.4 L402.1 93.4 L404.0 91.2 L405.9 88.1 L407.8 84.3 L409.8 80.1 L411.7 75.6 L413.6 71.3 L415.5 67.3 L417.4 63.8 L419.4 61.0 L421.3 59.0 L423.2 57.9 L425.1 57.8 L427.0 58.7 L429.0 60.6 L430.9 63.4 L432.8 67.1 L434.7 71.4 L436.6 76.1 L438.6 81.1 L440.5 86.0 L442.4 90.6 L444.3 94.5 L446.2 97.5 L448.2 99.4 L450.1 100.0 L452.0 99.2 L453.9 97.0 L455.8 93.5 L457.8 88.7 L459.7 83.0 L461.6 76.6 L463.5 69.9 L465.4 63.2 L467.4 57.0 L469.3 51.6 L471.2 47.2 L473.1 44.1 L475.0 42.6 L477.0 42.6 L478.9 44.2 L480.8 47.2 L482.7 51.5 L484.6 56.9 L486.6 63.1 L488.5 69.8 L490.4 76.6 L492.3 83.3 L494.2 89.5 L496.2 95.1 L498.1 99.7 L500.0 103.3 L501.9 105.8 L503.8 106.9 L505.8 106.9 L507.7 105.6 L509.6 103.2 L511.5 99.8 L513.4 95.5 L515.4 90.5 L517.3 85.0 L519.2 79.0 L521.1 72.9 L523.0 66.8 L525.0 60.8 L526.9 55.2 L528.8 50.2 L530.7 45.8 L532.6 42.3 L534.6 39.8 L536.5 38.3 L538.4 37.9 L540.3 38.7 L542.2 40.6 L544.2 43.7 L546.1 47.8 L548.0 52.8 L549.9 58.7 L551.8 65.2 L553.8 72.2 L555.7 79.4 L557.6 86.7 L559.5 93.8 L561.4 100.4 L563.4 106.5 L565.3 111.8 L567.2 116.1 L569.1 119.4 L571.0 121.6 L573.0 122.5 L574.9 122.3 L576.8 120.8 L578.7 118.3 L580.6 114.7 L582.6 110.3 L584.5 105.1 L586.4 99.3 L588.3 93.0 L590.2 86.5 L592.2 79.9 L594.1 73.3 L596.0 66.9 L597.9 60.9 L599.8 55.2 L601.8 50.2 L603.7 45.7 L605.6 41.8 L607.5 38.7 L609.4 36.3 L611.4 34.6 L613.3 33.6 L615.2 33.3 L617.1 33.7 L619.0 34.7 L621.0 36.3 L622.9 38.4 L624.8 41.0 L626.7 44.1 L628.6 47.6 L630.6 51.5 L632.5 55.6 L634.4 60.0 L636.3 64.6 L638.2 69.3 L640.2 74.2 L642.1 79.0 L644.0 83.9 L645.9 88.6 L647.8 93.3 L649.8 97.7 L651.7 101.9 L653.6 105.9 L655.5 109.5 L657.4 112.7 L659.4 115.5 L661.3 117.9 L663.2 119.8 L665.1 121.2 L667.0 122.1 L669.0 122.6 L670.9 122.5 L672.8 121.9 L674.7 120.9 L676.6 119.4 L678.6 117.5 L680.5 115.2 L682.4 112.5 L684.3 109.6 L686.2 106.3 L688.2 102.8 L690.1 99.1 L692.0 95.2 L693.9 91.3 L695.8 87.2 L697.8 83.1 L699.7 79.0 L701.6 74.9 L703.5 70.9 L705.4 67.0 L707.4 63.2 L709.3 59.4 L711.2 55.9 L713.1 52.4 L715.0 49.2 L717.0 46.1 L718.9 43.2 L720.8 40.4 L722.7 37.9 L724.6 35.6 L726.6 33.4 L728.5 31.5 L730.4 29.8 L732.3 28.2 L734.2 26.9 L736.2 25.8 L738.1 24.9 L740.0 24.2 L741.9 23.8 L743.8 23.5 L745.8 23.4 L747.7 23.6 L749.6 24.0 L751.5 24.5 L753.4 25.3 L755.4 26.2 L757.3 27.3 L759.2 28.6 L761.1 30.1 L763.0 31.7 L765.0 33.5 L766.9 35.4 L768.8 37.4 L770.7 39.6 L772.6 41.9 L774.6 44.2 L776.5 46.6 L778.4 49.2 L780.3 51.7 L782.2 54.3 L784.2 57.0 L786.1 59.6 L788.0 62.3 L789.9 65.0 L791.8 67.7 L793.8 70.3 L795.7 73.0 L797.6 75.6 L799.5 78.2 L801.4 80.7 L803.4 83.2 L805.3 85.7 L807.2 88.1 L809.1 90.4 L811.0 92.7 L813.0 95.0 L814.9 97.2 L816.8 99.3 L818.7 101.3 L820.6 103.3 L822.6 105.2 L824.5 107.1 L826.4 108.9 L828.3 110.7 L830.2 112.3 L832.2 113.9 L834.1 115.5 L836.0 116.9 L837.9 118.4 L839.8 119.7 L841.8 121.0 L843.7 122.2 L845.6 123.3 L847.5 124.4 L849.4 125.4 L851.4 126.4 L853.3 127.3 L855.2 128.1 L857.1 128.8 L859.0 129.5 L861.0 130.1 L862.9 130.7 L864.8 131.2 L866.7 131.6 L868.6 132.0 L870.6 132.3 L872.5 132.5 L874.4 132.7 L876.3 132.8 L878.2 132.9 L880.2 132.9 L882.1 132.9 L884.0 132.8 L885.9 132.6 L887.8 132.4 L889.8 132.1 L891.7 131.8 L893.6 131.5 L895.5 131.0 L897.4 130.6 L899.4 130.1 L901.3 129.5 L903.2 128.9 L905.1 128.2 L907.0 127.5 L909.0 126.8 L910.9 126.0 L912.8 125.1 L914.7 124.2 L916.6 123.3 L918.6 122.3 L920.5 121.3 L922.4 120.2 L924.3 119.1 L926.2 118.0 L928.2 116.8 L930.1 115.6 L932.0 114.3 L933.9 113.0 L935.8 111.7 L937.8 110.4 L939.7 109.0 L941.6 107.6 L943.5 106.1 L945.4 104.6 L947.4 103.1 L949.3 101.6 L951.2 100.1 L953.1 98.5 L955.0 96.9 L957.0 95.3 L958.9 93.7 L960.8 92.0 L962.7 90.4 L964.6 88.7 L966.6 87.0 L968.5 85.3 L970.4 83.6 L972.3 81.9 L974.2 80.2 L976.2 78.5 L978.1 76.7 L980.0 75.0"/>
+        </svg>
+        <i class="onde__point"></i>
+      </div>
+      <figcaption class="planche__legende"><span class="planche__fig">Fig. 02</span><span>Ton souffle, du premier jour au dernier</span></figcaption>
+    </figure>
     <div class="lettres stagger">
       <article class="lettre">
         <p class="lettre__l" aria-hidden="true">R</p>
@@ -598,129 +1215,143 @@ footer a:hover{color:var(--ink)}
   </section>
 
   <!-- ===== 02. La journée ===== -->
-  <section class="panel panel--tint">
+  <section class="panel panel--tint" id="journee">
     <div class="head">
       <p class="label"><span class="label__n num">02</span> La journée</p>
-      <h2>Trois ancres. Le reste s'accroche dessus.</h2>
-      <p>C'est ce qui tient la journée, de la semaine 4 à la semaine 13. Les durées sont celles de la pleine charge&nbsp;; la phase I en demande beaucoup moins.</p>
+      <h2>Trois moments par jour, et des outils simples pour chacun.</h2>
+      <p>Fais défiler, le jour passe.</p>
     </div>
 
-    <div class="jour">
-      <div class="jour__rail" aria-hidden="true"></div>
+    <div class="jour" data-jour>
+      <div class="jour__ciel" aria-hidden="true">
+        <i class="ciel ciel--lever"></i><i class="ciel ciel--midi"></i><i class="ciel ciel--soir"></i><i class="ciel ciel--nuit"></i>
+        <i class="jour__etoiles"></i>
+        <div class="jour__lecture">
+          <p class="jour__quand" data-jour-quand>À midi</p>
+          <p class="jour__sorte" data-jour-sorte>Chaque jour</p>
+        </div>
+        <svg class="jour__trace" viewBox="0 0 480 300">
+          <defs>
+            <radialGradient id="halo-astre"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".9"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>
+            <clipPath id="sous-horizon"><rect x="0" y="-60" width="480" height="260"/></clipPath>
+          </defs>
+          <path class="course" d="M72.0 200.0 A168 168 0 0 1 408.0 200.0"/>
+          <g class="grad"><line x1="412.0" y1="200.0" x2="421.0" y2="200.0"/><line x1="409.4" y1="170.1" x2="414.3" y2="169.3"/><line x1="401.6" y1="141.2" x2="406.3" y2="139.5"/><line x1="389.0" y1="114.0" x2="396.8" y2="109.5"/><line x1="371.8" y1="89.4" x2="375.6" y2="86.2"/><line x1="350.6" y1="68.2" x2="353.8" y2="64.4"/><line x1="326.0" y1="51.0" x2="330.5" y2="43.2"/><line x1="298.8" y1="38.4" x2="300.5" y2="33.7"/><line x1="269.9" y1="30.6" x2="270.7" y2="25.7"/><line x1="240.0" y1="28.0" x2="240.0" y2="19.0"/><line x1="210.1" y1="30.6" x2="209.3" y2="25.7"/><line x1="181.2" y1="38.4" x2="179.5" y2="33.7"/><line x1="154.0" y1="51.0" x2="149.5" y2="43.2"/><line x1="129.4" y1="68.2" x2="126.2" y2="64.4"/><line x1="108.2" y1="89.4" x2="104.4" y2="86.2"/><line x1="91.0" y1="114.0" x2="83.2" y2="109.5"/><line x1="78.4" y1="141.2" x2="73.7" y2="139.5"/><line x1="70.6" y1="170.1" x2="65.7" y2="169.3"/><line x1="68.0" y1="200.0" x2="59.0" y2="200.0"/></g>
+          <g clip-path="url(#sous-horizon)">
+            <g class="astre" data-astre transform="translate(240 32)">
+              <circle r="46" fill="url(#halo-astre)" class="astre__halo"/>
+              <circle r="15" class="astre__disque"/>
+            </g>
+          </g>
+          <g class="lune" data-lune transform="translate(118 74)"><circle r="12" class="lune__disque"/><circle r="12" cx="6" cy="-4" class="lune__ombre"/></g>
+          <line class="horizon" x1="16" y1="200" x2="464" y2="200"/>
+          <path class="nuage1" d="M26.0 222.0 A16.5 13.5 0 0 1 59.0 222.0 A13.0 10.7 0 0 1 85.0 222.0 A23.0 18.9 0 0 1 131.0 222.0 A11.4 9.4 0 0 1 153.9 222.0 A20.7 17.0 0 0 1 195.4 222.0 A17.3 14.2 0 0 1 230.0 222.0 A11.2 9.2 0 0 1 252.3 222.0 A20.1 16.5 0 0 1 292.6 222.0 A10.7 8.8 0 0 1 314.1 222.0 A18.7 15.3 0 0 1 351.4 222.0 A11.4 9.3 0 0 1 374.2 222.0 A11.8 9.7 0 0 1 397.9 222.0 A18.5 15.2 0 0 1 434.9 222.0 A9.6 7.9 0 0 1 454.0 222.0"/>
+          <path class="nuage2" d="M70.0 258.0 A16.5 13.5 0 0 1 103.0 258.0 A18.5 15.1 0 0 1 139.9 258.0 A26.5 21.8 0 0 1 193.0 258.0 A33.0 27.0 0 0 1 258.9 258.0 A25.5 20.9 0 0 1 310.0 258.0 A21.9 18.0 0 0 1 353.8 258.0 A28.1 23.0 0 0 1 410.0 258.0"/>
+        </svg>
+        <p class="jour__fig"><span class="planche__fig">Fig. 03</span> La course du jour</p>
+      </div>
       <ol class="jour__liste">
-
-        <li class="moment reveal">
-          <p class="moment__quand">Au lever</p>
-          <div class="moment__corps">
-            <h3>Lumière, assise, mouvement</h3>
-            <ul class="gestes">
-              <li class="geste"><span>Dehors, à la lumière, sans téléphone</span><span class="duree">10 min</span></li>
-              <li class="geste"><span>L'assise du matin, avant le café</span><span class="duree">10 min</span></li>
-              <li class="geste"><span>La séquence du matin</span><span class="duree">10 à 15 min</span></li>
-              <li class="geste"><span>La douche, froide sur la fin</span><span class="duree">1 à 2 min</span></li>
-            </ul>
-            <p class="moment__note">L'assise du matin est l'ancre qui ne saute jamais. Un jour de catastrophe&nbsp;: trois minutes, jamais zéro.</p>
-          </div>
+        <li class="mom" data-angle="170" data-quand="Au lever" data-sorte="Chaque jour">
+          <div class="mom__haut"><p class="mom__quand">Au lever</p><p class="mom__total"><span class="mom__sorte mom__sorte--ancre">Chaque jour</span>≈ 35 min</p></div>
+          <h3>Lumière, assise, mouvement</h3>
+          <ul class="gestes">
+            <li class="geste" style="--d:10"><span>Dehors, à la lumière, sans téléphone</span><span class="duree">10 min</span></li>
+            <li class="geste" style="--d:10"><span>L'assise du matin, avant le café</span><span class="duree">10 min</span></li>
+            <li class="geste" style="--d:15"><span>La séquence du matin</span><span class="duree">10 à 15 min</span></li>
+            <li class="geste" style="--d:2"><span>La douche, froide sur la fin</span><span class="duree">1 à 2 min</span></li>
+          </ul>
         </li>
-
-        <li class="moment reveal">
-          <p class="moment__quand">À midi</p>
-          <div class="moment__corps">
-            <h3>La reprise, puis la marche</h3>
-            <ul class="gestes">
-              <li class="geste"><span>À la fin du repas, assis&nbsp;: la reprise</span><span class="duree">2 à 5 min</span></li>
-              <li class="geste"><span>Juste après, une marche lente</span><span class="duree">10 min</span></li>
-            </ul>
-            <p class="moment__note">La pièce la plus fragile du protocole. Elle s'accroche à un geste qui a déjà lieu, jamais à une heure.</p>
-          </div>
+        <li class="mom" data-angle="90" data-quand="À midi" data-sorte="Chaque jour">
+          <div class="mom__haut"><p class="mom__quand">À midi</p><p class="mom__total"><span class="mom__sorte mom__sorte--ancre">Chaque jour</span>≈ 15 min</p></div>
+          <h3>La reprise, puis la marche</h3>
+          <ul class="gestes">
+            <li class="geste" style="--d:5"><span>À la fin du repas, assis&nbsp;: la reprise</span><span class="duree">2 à 5 min</span></li>
+            <li class="geste" style="--d:10"><span>Juste après, une marche lente</span><span class="duree">10 min</span></li>
+          </ul>
         </li>
-
-        <li class="moment reveal">
-          <p class="moment__quand">En soirée</p>
-          <div class="moment__corps">
-            <h3>Une fenêtre, pas une quatrième ancre</h3>
-            <ul class="gestes">
-              <li class="geste"><span>Le training, deux fois par semaine</span><span class="duree">25 à 35 min</span></li>
-              <li class="geste"><span>Le stretching, une fois par semaine</span><span class="duree">25 min</span></li>
-            </ul>
-            <p class="moment__note">À partir de la semaine 5. Les autres soirs, la fenêtre reste vide, et c'est voulu.</p>
-          </div>
+        <li class="mom" data-angle="30" data-quand="En soirée" data-sorte="3 soirs sur 7">
+          <div class="mom__haut"><p class="mom__quand">En soirée</p><p class="mom__total"><span class="mom__sorte mom__sorte--fenetre">3 soirs sur 7</span></p></div>
+          <h3>Le corps, trois soirs par semaine</h3>
+          <ul class="gestes">
+            <li class="geste" style="--d:35"><span>Le training, deux fois par semaine</span><span class="duree">25 à 35 min</span></li>
+            <li class="geste" style="--d:25"><span>Le stretching, une fois par semaine</span><span class="duree">25 min</span></li>
+          </ul>
         </li>
-
-        <li class="moment reveal">
-          <p class="moment__quand">Au coucher</p>
-          <div class="moment__corps">
-            <h3>Marche, jambes au mur, assise</h3>
-            <ul class="gestes">
-              <li class="geste"><span>Après le repas du soir, une marche lente</span><span class="duree">5 à 10 min</span></li>
-              <li class="geste"><span>Allongé, jambes au mur</span><span class="duree">5 min</span></li>
-              <li class="geste"><span>L'assise du soir, une demi-heure avant</span><span class="duree">10 min</span></li>
-            </ul>
-            <p class="moment__note">Jamais de stretching dans l'heure qui précède&nbsp;: le sommeil passe avant la séance.</p>
-          </div>
+        <li class="mom" data-angle="-16" data-quand="Au coucher" data-sorte="Chaque jour">
+          <div class="mom__haut"><p class="mom__quand">Au coucher</p><p class="mom__total"><span class="mom__sorte mom__sorte--ancre">Chaque jour</span>≈ 25 min</p></div>
+          <h3>Marche, jambes au mur, assise</h3>
+          <ul class="gestes">
+            <li class="geste" style="--d:10"><span>Après le repas du soir, une marche lente</span><span class="duree">5 à 10 min</span></li>
+            <li class="geste" style="--d:5"><span>Allongé, jambes au mur</span><span class="duree">5 min</span></li>
+            <li class="geste" style="--d:10"><span>L'assise du soir, une demi-heure avant</span><span class="duree">10 min</span></li>
+          </ul>
         </li>
-
       </ol>
-    </div>
-
-    <p class="releve">Et matin et soir, quatre-vingt-dix secondes pour le relevé du journal. C'est le geste le plus prédictif de tout le protocole&nbsp;: qui relève tient.</p>
-
-    <div class="regles">
-      <div class="regle">
-        <h3>Quand la journée déborde</h3>
-        <p>On sacrifie dans cet ordre, jamais un autre&nbsp;: la soirée, puis le midi, puis l'assise du soir. <b>L'assise du matin ne saute pas.</b> Sous pression, les ancres se réduisent en durée, jamais en nombre&nbsp;: trois ancres à trois minutes valent mieux qu'une seule à trente.</p>
-      </div>
-      <div class="regle">
-        <h3>Ce qui ne se fait jamais</h3>
-        <p><b>Rattraper.</b> Une journée ratée ne se rattrape pas&nbsp;: pas de séance doublée le lendemain, pas de moyenne à combler, aucune note sur une assise. Manquer est normal. Faire est le résultat.</p>
-      </div>
     </div>
   </section>
 
   <!-- ===== 03. Les cinq piliers ===== -->
-  <section class="panel">
-    <div class="head">
-      <p class="label"><span class="label__n num">03</span> Les cinq piliers</p>
-      <h2>Les lettres disent ce que tu vis. Les piliers disent ce que tu fais.</h2>
-      <p>Ils ne se travaillent pas l'un après l'autre&nbsp;: ils montent ensemble, à des vitesses différentes, et chacun a sa semaine d'entrée.</p>
+  <section class="panel" id="piliers">
+    <div class="tete">
+      <div class="head">
+        <p class="label"><span class="label__n num">03</span> Les cinq piliers</p>
+        <h2>Les lettres disent ce que tu vis. Les piliers disent ce que tu fais.</h2>
+        <p>Ils ne se travaillent pas l'un après l'autre&nbsp;: ils montent ensemble, à des vitesses différentes.</p>
+      </div>
+      <figure class="planche arbre">
+        <div class="planche__dessin">
+          <svg viewBox="-20.3 15.0 463.8 518.8" aria-hidden="true">
+            <g class="branches">
+              <path class="tronc" pathLength="1" d="M220.0 410.0L220.0 330.0" stroke-width="5.5"/>
+              <g data-p="NU"><path class="n1" pathLength="1" d="M220.0 330.0L142.0 281.2" stroke-width="3.4"/><path class="n2" pathLength="1" d="M142.0 281.2L75.2 271.2 M142.0 281.2L107.0 226.1" stroke-width="2.3"/><path class="n3" pathLength="1" d="M75.2 271.2L29.2 284.1 M75.2 271.2L36.5 248.2 M107.0 226.1L67.9 202.3 M107.0 226.1L97.5 179.6" stroke-width="1.6"/><path class="n4" pathLength="1" d="M29.2 284.1L2.2 304.5 M29.2 284.1L-2.3 279.1 M36.5 248.2L6.7 245.4 M36.5 248.2L21.3 218.6 M67.9 202.3L37.0 198.1 M67.9 202.3L46.2 178.9 M97.5 179.6L78.5 152.4 M97.5 179.6L105.9 147.7" stroke-width="1.15"/><g class="pointes"><circle cx="2.2" cy="304.5" r="3.6"/><circle cx="-2.3" cy="279.1" r="3.6"/><circle cx="6.7" cy="245.4" r="3.6"/><circle cx="21.3" cy="218.6" r="3.6"/><circle cx="37.0" cy="198.1" r="3.6"/><circle cx="46.2" cy="178.9" r="3.6"/><circle cx="78.5" cy="152.4" r="3.6"/><circle cx="105.9" cy="147.7" r="3.6"/></g></g>
+              <g data-p="MO"><path class="n1" pathLength="1" d="M220.0 330.0L175.8 220.6" stroke-width="3.4"/><path class="n2" pathLength="1" d="M175.8 220.6L120.2 153.3 M175.8 220.6L176.1 133.5" stroke-width="2.3"/><path class="n3" pathLength="1" d="M120.2 153.3L66.0 128.0 M120.2 153.3L111.3 93.6 M176.1 133.5L147.4 78.6 M176.1 133.5L202.0 81.2" stroke-width="1.6"/><path class="n4" pathLength="1" d="M66.0 128.0L26.2 127.4 M66.0 128.0L39.3 96.4 M111.3 93.6L89.3 60.5 M111.3 93.6L124.4 51.4 M147.4 78.6L112.8 56.1 M147.4 78.6L145.5 33.0 M202.0 81.2L202.1 42.4 M202.0 81.2L232.8 56.7" stroke-width="1.15"/><g class="pointes"><circle cx="26.2" cy="127.4" r="3.6"/><circle cx="39.3" cy="96.4" r="3.6"/><circle cx="89.3" cy="60.5" r="3.6"/><circle cx="124.4" cy="51.4" r="3.6"/><circle cx="112.8" cy="56.1" r="3.6"/><circle cx="145.5" cy="33.0" r="3.6"/><circle cx="202.1" cy="42.4" r="3.6"/><circle cx="232.8" cy="56.7" r="3.6"/></g></g>
+              <g data-p="RE"><path class="n1" pathLength="1" d="M220.0 330.0L234.5 227.0" stroke-width="3.4"/><path class="n2" pathLength="1" d="M234.5 227.0L213.3 160.1 M234.5 227.0L271.8 159.8" stroke-width="2.3"/><path class="n3" pathLength="1" d="M213.3 160.1L176.3 126.5 M213.3 160.1L223.3 113.1 M271.8 159.8L276.3 104.5 M271.8 159.8L312.5 123.7" stroke-width="1.6"/><path class="n4" pathLength="1" d="M176.3 126.5L144.5 114.8 M176.3 126.5L158.3 94.3 M223.3 113.1L212.6 81.6 M223.3 113.1L246.9 88.3 M276.3 104.5L263.5 69.9 M276.3 104.5L292.0 68.6 M312.5 123.7L329.2 87.2 M312.5 123.7L348.9 111.5" stroke-width="1.15"/><g class="pointes"><circle cx="144.5" cy="114.8" r="3.6"/><circle cx="158.3" cy="94.3" r="3.6"/><circle cx="212.6" cy="81.6" r="3.6"/><circle cx="246.9" cy="88.3" r="3.6"/><circle cx="263.5" cy="69.9" r="3.6"/><circle cx="292.0" cy="68.6" r="3.6"/><circle cx="329.2" cy="87.2" r="3.6"/><circle cx="348.9" cy="111.5" r="3.6"/></g></g>
+              <g data-p="ME"><path class="n1" pathLength="1" d="M220.0 330.0L286.7 260.9" stroke-width="3.4"/><path class="n2" pathLength="1" d="M286.7 260.9L301.2 198.1 M286.7 260.9L349.4 242.8" stroke-width="2.3"/><path class="n3" pathLength="1" d="M301.2 198.1L292.1 155.1 M301.2 198.1L333.6 165.8 M349.4 242.8L382.3 212.5 M349.4 242.8L394.2 254.6" stroke-width="1.6"/><path class="n4" pathLength="1" d="M292.1 155.1L275.4 127.6 M292.1 155.1L295.9 123.0 M333.6 165.8L342.6 136.8 M333.6 165.8L363.3 156.9 M382.3 212.5L396.3 186.3 M382.3 212.5L411.1 199.9 M394.2 254.6L425.5 252.6 M394.2 254.6L420.9 271.5" stroke-width="1.15"/><g class="pointes"><circle cx="275.4" cy="127.6" r="3.6"/><circle cx="295.9" cy="123.0" r="3.6"/><circle cx="342.6" cy="136.8" r="3.6"/><circle cx="363.3" cy="156.9" r="3.6"/><circle cx="396.3" cy="186.3" r="3.6"/><circle cx="411.1" cy="199.9" r="3.6"/><circle cx="425.5" cy="252.6" r="3.6"/><circle cx="420.9" cy="271.5" r="3.6"/></g></g>
+            </g>
+            <path class="racines" data-p="SO" pathLength="1" d="M220.0 410.0L179.4 431.6 M179.4 431.6L150.9 431.9 M150.9 431.9L135.3 423.5 M150.9 431.9L135.6 440.7 M179.4 431.6L164.8 456.1 M164.8 456.1L149.6 465.1 M164.8 456.1L164.9 473.8 M220.0 410.0L203.7 446.5 M203.7 446.5L186.4 464.3 M186.4 464.3L172.0 469.6 M186.4 464.3L182.9 479.3 M203.7 446.5L205.4 471.3 M205.4 471.3L198.4 485.0 M205.4 471.3L211.9 485.2 M220.0 410.0L235.7 448.9 M235.7 448.9L234.1 474.9 M234.1 474.9L226.9 489.4 M234.1 474.9L240.4 489.8 M235.7 448.9L255.4 466.1 M255.4 466.1L263.1 480.2 M255.4 466.1L270.7 471.2 M220.0 410.0L261.6 434.0 M261.6 434.0L279.3 457.9 M279.3 457.9L281.1 476.2 M279.3 457.9L296.2 465.4 M261.6 434.0L291.0 438.2 M291.0 438.2L305.6 449.5 M291.0 438.2L309.0 433.9"/>
+          </svg>
+          <span class="planche__mot" data-p="SO" style="left:51.81%;top:95.76%">SO</span>
+          <span class="planche__mot" data-p="NU" style="left:27.92%;top:47.38%">NU</span>
+          <span class="planche__mot" data-p="MO" style="left:38.27%;top:30.76%">MO</span>
+          <span class="planche__mot" data-p="RE" style="left:56.25%;top:32.54%">RE</span>
+          <span class="planche__mot" data-p="ME" style="left:72.23%;top:41.81%">ME</span>
+        </div>
+        <figcaption class="planche__legende"><span class="planche__fig">Fig. 04</span><span>Le sommeil en racines, quatre branches qui montent ensemble. Survole un pilier.</span></figcaption>
+      </figure>
     </div>
 
     <div class="piliers stagger">
-      <div class="pilier">
+      <div class="pilier" data-p="SO" tabindex="0">
         <p class="pilier__code">SO</p><h3>Sommeil</h3>
-        <p>La lumière au réveil, le téléphone plus tard, une heure de lever stable. C'est la fondation&nbsp;: tout le reste s'appuie dessus.</p>
-        <p class="entree">Entre en semaine 1</p>
+        <p>La lumière au réveil, une heure de lever stable. Tout le reste s'appuie dessus.</p>
       </div>
-      <div class="pilier">
+      <div class="pilier" data-p="NU" tabindex="0">
         <p class="pilier__code">NU</p><h3>Nutrition</h3>
-        <p>La caféine déplacée, puis des repas à heures fixes. Le seul pilier qui ne coûte pas de minutes&nbsp;: il coûte des décisions.</p>
-        <p class="entree">Entre en semaine 1</p>
+        <p>La caféine déplacée, des repas à heures fixes. Ça ne prend pas de temps, ça demande des décisions.</p>
       </div>
-      <div class="pilier">
+      <div class="pilier" data-p="MO" tabindex="0">
         <p class="pilier__code">MO</p><h3>Mouvement</h3>
-        <p>Les marches après les repas, la séquence du matin, puis les trainings, le stretching et le froid. Le pilier le plus lourd en temps.</p>
-        <p class="entree">Entre en semaine 2, à pleine taille en semaine 8</p>
+        <p>Des marches, une séquence le matin, puis des trainings. Le pilier le plus lourd en temps.</p>
       </div>
-      <div class="pilier">
+      <div class="pilier" data-p="RE" tabindex="0">
         <p class="pilier__code">RE</p><h3>Respiration</h3>
-        <p>Deux à trois minutes après le repas de midi. Et quatre sessions longues, toujours encadrées&nbsp;: la longue ne se fait jamais seul.</p>
-        <p class="entree">Entre en semaine 1, quatre sessions datées</p>
+        <p>Quelques minutes par jour, et quatre sessions longues, encadrées en direct.</p>
       </div>
-      <div class="pilier">
+      <div class="pilier" data-p="ME" tabindex="0">
         <p class="pilier__code">ME</p><h3>Méditation</h3>
-        <p>Deux assises, une le matin avant le café, une avant le coucher. Elles perdent leur compte, jamais leur durée.</p>
-        <p class="entree">Entre en semaine 1, complète en semaine 4</p>
+        <p>Deux assises par jour, le matin et le soir.</p>
       </div>
     </div>
 
-    <figure style="margin:0">
+    <figure class="courbe" style="margin:0">
+      <p class="courbe__lecture" aria-hidden="true"><b data-lec-sem>Semaine 13</b><span data-lec-phase>L'Intégration</span><span data-lec-min>85 min par jour</span></p>
       <div class="chart-scroll">
         <svg id="courbe" viewBox="0 0 1000 400" role="img"
              aria-label="Aire empilée des minutes quotidiennes par pilier, de la semaine 1 à la semaine 13. Le total passe de 18 minutes en semaine 1 à 58 en semaine 4, environ 80 pendant la Traversée, puis 85 de la semaine 8 à la fin. Le mouvement est le pilier le plus lourd, 49 minutes par jour au plus haut."></svg>
       </div>
       <p class="chart-glisse">Fais glisser le graphique pour le voir en entier.</p>
       <figcaption>
-        Chaque bande est un pilier&nbsp;; sa hauteur, le temps qu'il demande par jour. La bande Sommeil, c'est la lumière du matin&nbsp;: elle se combine avec ce que tu fais déjà. La nutrition n'a pas de bande, elle ne coûte pas de minutes.
+        Chaque bande est un pilier&nbsp;; sa hauteur, le temps qu'il demande par jour.
       </figcaption>
     </figure>
   </section>
@@ -729,29 +1360,29 @@ footer a:hover{color:var(--ink)}
   <!-- Les trois creux sont rendus à la phase où ils tombent, plutôt que réunis
        dans une section à part : annoncés à leur place, ils se lisent comme
        faisant partie du chemin. -->
-  <section class="panel panel--dark">
+  <section class="panel panel--dark deroule" id="deroule">
+    <div class="ciel-bande" aria-hidden="true">
+      <picture>
+        <source type="image/avif" srcset="/assets/img/nuages/ciel-nuit.avif">
+        <img src="/assets/img/nuages/ciel-nuit.webp" alt="" width="2400" height="1500" loading="lazy" decoding="async">
+      </picture>
+    </div>
     <div class="head">
       <p class="label"><span class="label__n num">04</span> Le déroulé</p>
       <h2>Quatre phases. Trois ajoutent, la dernière retire.</h2>
-      <p>Une phase s'ouvre au call qui la commence, jamais avant. Tu n'as jamais plus d'un mois devant toi. Les trois creux sont datés d'avance, parce qu'un creux annoncé se traverse, quand un creux découvert se lit comme un échec personnel.</p>
+      <p>Une phase par mois, environ. Chacune se termine par une session de Breathwork encadrée, et tu n'as jamais plus d'un mois devant toi.</p>
     </div>
 
-    <div class="voyage">
+    <div class="voyage" data-voyage>
       <div class="voyage__rail" aria-hidden="true"></div>
+      <i class="voyage__tete" aria-hidden="true"></i>
 
       <article class="etape reveal">
         <p class="etape__n">I</p>
         <div class="etape__corps">
           <p class="etape__quand">Semaines 1 à 4 · le verbe est&nbsp;voir</p>
           <h3>Rencontre Intérieure</h3>
-          <div class="etape__txt">
-            <p><b>Ce qui s'installe.</b> La lumière au réveil et la caféine déplacée, les deux seuls comportements qu'on change d'emblée. Puis les trois ancres, les marches après les repas, et la première session encadrée au jour 24.</p>
-            <p><b>Ce qui disparaît.</b> Rien. C'est la seule phase des quatre qui n'enlève pas.</p>
-          </div>
-          <div class="creux">
-            <p class="creux__quand">Le creux · jours 10&nbsp;à&nbsp;15</p>
-            <p>La nouveauté retombe, les résultats ne sont pas encore là, et le sevrage de caféine peut mordre. C'est le pic d'abandon de tout le protocole. On baisse la durée, jamais le nombre d'ancres.</p>
-          </div>
+          <p class="etape__txt">Tu prends en main tes premiers outils&nbsp;: la lumière au réveil, l'assise, la marche après les repas.</p>
           <p class="etape__palier">«&nbsp;Ma journée a une structure.&nbsp;»</p>
         </div>
       </article>
@@ -761,14 +1392,7 @@ footer a:hover{color:var(--ink)}
         <div class="etape__corps">
           <p class="etape__quand">Semaines 5 à 7 · le verbe est&nbsp;tenir</p>
           <h3>La Traversée</h3>
-          <div class="etape__txt">
-            <p><b>Ce qui s'installe.</b> Le mouvement prend sa taille&nbsp;: deux trainings par semaine, une séance de stretching, puis le froid en fin de douche. Le but n'est pas d'endurer, c'est de rester calme pendant un stress que tu as choisi.</p>
-            <p><b>Ce qui disparaît.</b> Le support de l'assise du soir, en semaine 7. Même durée, même créneau, plus de compte ni de ratio. C'est le premier retrait du protocole, et il est plus dur qu'un ajout.</p>
-          </div>
-          <div class="creux">
-            <p class="creux__quand">Le creux · semaine&nbsp;7</p>
-            <p>Le vide devient conscient&nbsp;: les fuites ne fonctionnent plus et rien ne les a remplacées. Rien n'est ajouté cette semaine-là, marches comprises. Une solution offerte ici deviendrait la fuite suivante.</p>
-          </div>
+          <p class="etape__txt">Le corps monte en charge&nbsp;: training, stretching, froid. Tu apprends à rester calme dans un stress que tu as choisi.</p>
           <p class="etape__palier">«&nbsp;Je traverse sans fuir.&nbsp;»</p>
         </div>
       </article>
@@ -778,11 +1402,7 @@ footer a:hover{color:var(--ink)}
         <div class="etape__corps">
           <p class="etape__quand">Semaines 8 à 10 · le verbe est&nbsp;choisir</p>
           <h3>La Reconstruction</h3>
-          <div class="etape__txt">
-            <p><b>Ce qui s'installe.</b> Trois gestes, un par semaine, et chacun dans le réel&nbsp;: un inventaire de ce que tu portes sans l'avoir choisi, une décision que quelqu'un d'autre pourrait vérifier, une demande adressée à une personne vivante.</p>
-            <p><b>Ce qui disparaît.</b> Le compte de l'assise du matin, à son tour.</p>
-            <p>Ce que tu vas trouver&nbsp;: que ce qui n'est pas daté n'a pas lieu. Réfléchir à ses injonctions est agréable et ne coûte rien. Le non se dit à une date, la demande se fait à une date.</p>
-          </div>
+          <p class="etape__txt">Tu passes aux actes&nbsp;: une décision, un non, une demande. Chacun à une date, dans ta vraie vie.</p>
           <p class="etape__palier">«&nbsp;Je décide, et je le prouve.&nbsp;»</p>
         </div>
       </article>
@@ -792,14 +1412,7 @@ footer a:hover{color:var(--ink)}
         <div class="etape__corps">
           <p class="etape__quand">Semaines 11 à 13 · le verbe est&nbsp;ancrer</p>
           <h3>L'Intégration</h3>
-          <div class="etape__txt">
-            <p><b>Ce qui s'installe.</b> Ton Protocole de Vie, écrit à la main, une section par jour. Ta carte de rechute, ta direction à douze mois, et deux ou trois personnes prévenues.</p>
-            <p><b>Ce qui disparaît, et c'est l'essentiel.</b> L'éventail passe de treize pratiques à trois. La consigne s'arrête pendant sept jours. Le coach se retire&nbsp;: c'est toi qui mènes les deux derniers calls.</p>
-          </div>
-          <div class="creux">
-            <p class="creux__quand">Le creux · semaines 11&nbsp;et&nbsp;12</p>
-            <p>La peur de la fin. Les anciens réflexes reviennent tester la structure, au moment exact où l'accompagnement se retire. Le retrait est annoncé dès la semaine 10, jamais subi.</p>
-          </div>
+          <p class="etape__txt">Tu gardes trois pratiques sur treize, tu écris ton Protocole de Vie, et c'est toi qui mènes les derniers calls.</p>
           <p class="etape__palier">«&nbsp;Je tiens sans toi.&nbsp;»</p>
         </div>
       </article>
@@ -808,31 +1421,42 @@ footer a:hover{color:var(--ink)}
   </section>
 
   <!-- ===== Respiration : la promesse ===== -->
-  <section class="souffle souffle--long">
-    <p class="reveal">À la fin des 90 jours, tu ne prends plus les mêmes décisions, parce&nbsp;que <span class="hl">tu n'es plus dans le même état.</span></p>
-  </section>
+  <!-- De jour, la silhouette sur son rocher ; de nuit, la mer de nuages seule :
+       la silhouette de nuit est gardée pour « La suite », plus bas. -->
+  <figure class="etat">
+    <picture>
+      <source data-sombre media="(prefers-color-scheme: dark) and (max-width: 760px)" type="image/avif" srcset="/assets/img/nuages/nuages-nuit-carre.avif">
+      <source data-sombre media="(prefers-color-scheme: dark) and (max-width: 760px)" type="image/webp" srcset="/assets/img/nuages/nuages-nuit-carre.webp">
+      <source data-sombre media="(prefers-color-scheme: dark)" type="image/avif" srcset="/assets/img/nuages/nuages-nuit.avif">
+      <source data-sombre media="(prefers-color-scheme: dark)" type="image/webp" srcset="/assets/img/nuages/nuages-nuit.webp">
+      <source media="(max-width: 760px)" type="image/avif" srcset="/assets/img/nuages/rocher-jour-carre.avif">
+      <source media="(max-width: 760px)" type="image/webp" srcset="/assets/img/nuages/rocher-jour-carre.webp">
+      <source type="image/avif" srcset="/assets/img/nuages/rocher-jour.avif">
+      <img src="/assets/img/nuages/rocher-jour.webp" alt="Une mer de nuages, vue d'en haut." width="2400" height="1028" loading="lazy" decoding="async">
+    </picture>
+    <figcaption class="etat__texte reveal">À la fin des 90 jours, tu ne prends plus les mêmes décisions, parce&nbsp;que <span class="hl">tu n'es plus dans le même état.</span></figcaption>
+  </figure>
 
   <!-- ===== 05. Avant de commencer ===== -->
-  <section class="panel panel--tint">
+  <section class="panel panel--tint" id="avant">
     <div class="head">
       <p class="label"><span class="label__n num">05</span> Avant de commencer</p>
       <h2>Ce que le protocole n'est pas, et pour qui il n'est pas fait.</h2>
-      <p>Tout commence par un questionnaire d'admission. Une réponse négative se donne sur ce que tu as écrit, et elle se donne avant de commencer, pas au bout de trois semaines.</p>
+      <p>Tout commence par un questionnaire d'admission. Si c'est non, je te le dis avant de commencer.</p>
     </div>
 
     <div class="avant">
       <div class="cas">
         <h3>Ni remise en forme, ni thérapie</h3>
-        <p>Une remise en forme change ce que le corps peut faire. Une thérapie change le rapport au passé. RESET change l'état dans lequel tu te lèves le matin&nbsp;: ta physiologie, ton état intérieur, tes décisions, et ton lien à toi-même et aux autres. Les quatre bougent ensemble, ou aucun ne tient.</p>
+        <p>Une remise en forme change ce que le corps peut faire. Une thérapie change le rapport au passé. RESET change l'état dans lequel tu te lèves le matin.</p>
       </div>
       <div class="cas">
         <h3>Ce qu'il ne promet pas</h3>
-        <p>Pas de guérison, pas de résultat garanti, pas de disparition de la voix qui te critique de l'intérieur.</p>
-        <p>Ce qu'il donne à la place&nbsp;: un cadre de sécurité écrit, des critères de passage identiques pour tous et annoncés d'avance, et son coût réel, dit avant l'achat.</p>
+        <p>Pas de guérison, pas de résultat garanti. À la place, un cadre écrit, et son coût réel dit avant l'achat.</p>
       </div>
       <div class="cas">
         <h3>Du temps, vraiment disponible</h3>
-        <p>Il te faut au moins cent minutes libres par jour pour les semaines 8 à 13, où le protocole en demande quatre-vingt-cinq. Sans cette marge, la première semaine chargée fait tout tomber. En dessous, ce n'est pas un refus&nbsp;: c'est un report à la cohorte suivante.</p>
+        <p>Compte cent minutes libres par jour sur la fin du protocole. Sans cette marge, mieux vaut attendre la cohorte suivante.</p>
       </div>
       <div class="cas">
         <h3>Ta santé, d'abord</h3>
@@ -863,7 +1487,15 @@ footer a:hover{color:var(--ink)}
   </section>
 
   <!-- ===== 06. La suite ===== -->
-  <section class="panel panel--dark suite">
+  <section class="panel panel--dark suite" id="suite">
+    <div class="suite__ciel" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 760px)" type="image/avif" srcset="/assets/img/nuages/suite-nuit-carre.avif">
+        <source media="(max-width: 760px)" type="image/webp" srcset="/assets/img/nuages/suite-nuit-carre.webp">
+        <source type="image/avif" srcset="/assets/img/nuages/suite-nuit.avif">
+        <img src="/assets/img/nuages/suite-nuit.webp" alt="" width="2400" height="1000" loading="lazy" decoding="async">
+      </picture>
+    </div>
     <div class="head" style="margin-bottom:1.4rem">
       <p class="label"><span class="label__n num">06</span> La suite</p>
       <h2>RESET n'est pas encore ouvert.</h2>
@@ -876,34 +1508,88 @@ footer a:hover{color:var(--ink)}
     </div>
   </section>
 
-  </main>
-
-  <footer>
-    <p>BELIVE, protocole RESET</p>
-    <a href="/mentions-legales.html">Mentions légales</a>
-    <a href="/confidentialite.html">Confidentialité</a>
-  </footer>
-
 </div>
+</main>
+
+<footer>
+  <p>BELIVE, protocole RESET</p>
+  <a href="/">Accueil</a>
+  <a href="/mentions-legales.html">Mentions légales</a>
+  <a href="/confidentialite.html">Confidentialité</a>
+</footer>
 
 <script>
 (function(){
   "use strict";
 
+  var root = document.documentElement;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var cibles = document.querySelectorAll('.reveal, .stagger, .moment, .etape');
+  var all = function(sel, ctx){ return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); };
+  var one = function(sel, ctx){ return (ctx || document).querySelector(sel); };
+  var clamp = function(v){ return Math.max(0, Math.min(1, v)); };
 
-  if (!reduce && 'IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function(entrees){
-      entrees.forEach(function(e){
-        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
-      });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
-    cibles.forEach(function(el){ io.observe(el); });
-  } else {
-    cibles.forEach(function(el){ el.classList.add('is-in'); });
+  /* Thème choisi à la main (depuis l'espace client) : les images de nuit ne suivent
+     que le réglage du système, on corrige leurs sources pour qu'elles suivent le choix. */
+  var theme = root.getAttribute('data-theme');
+  if (theme) {
+    all('source[data-sombre]').forEach(function(s){
+      if (theme === 'light') s.parentNode.removeChild(s);
+      else s.media = s.media.replace('(prefers-color-scheme: dark)', 'all');
+    });
   }
 
+  /* ---------- Navigation ---------- */
+  var nav = document.getElementById('nav');
+  var burger = document.getElementById('navBurger');
+  function setMenu(open){
+    nav.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+  }
+  burger.addEventListener('click', function(){ setMenu(!nav.classList.contains('is-open')); });
+  nav.addEventListener('click', function(e){ if (e.target.closest('a')) setMenu(false); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && nav.classList.contains('is-open')) { setMenu(false); burger.focus(); }
+  });
+  document.addEventListener('click', function(e){ if (!nav.contains(e.target)) setMenu(false); });
+
+  /* La section à l'écran : son lien est marqué, et sur ordinateur une pastille
+     glisse derrière lui, comme sur l'accueil. */
+  var links = document.getElementById('navLinks');
+  var spy = all('a', links).map(function(a){
+    return { a:a, el:document.getElementById(a.getAttribute('href').slice(1)), x:0, w:0 };
+  });
+  var here = links.insertBefore(document.createElement('span'), links.firstChild);
+  here.className = 'nav__here';
+  here.setAttribute('aria-hidden', 'true');
+  var spied = null, at = spy[0];
+  function placeHere(){
+    here.style.width = at.w + 'px';
+    here.style.transform = 'translateX(' + at.x + 'px)';
+    here.style.opacity = spied ? 1 : 0;
+  }
+  function measureNav(){
+    spy.forEach(function(s){ s.x = s.a.offsetLeft; s.w = s.a.offsetWidth; });
+    placeHere();
+  }
+  function markNav(vh){
+    var line = vh * 0.4, cur = null, i, r;
+    for (i = 0; i < spy.length; i++) {
+      r = spy[i].el.getBoundingClientRect();
+      if (r.top <= line && r.bottom > line) cur = spy[i];
+    }
+    if (cur === spied) return;
+    if (spied) spied.a.removeAttribute('aria-current');
+    if (cur) { cur.a.setAttribute('aria-current', 'true'); at = cur; }
+    spied = cur;
+    placeHere();
+  }
+  measureNav();
+  window.addEventListener('resize', measureNav);
+  window.addEventListener('load', measureNav);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureNav);
+
+  /* ---------- Le graphique des piliers ---------- */
   /* Minutes par jour et par pilier, semaine 1 à 13. Source : la grille du
      06 §4 et les hypothèses du 06 §10 (lumière 10, relevé 3, ancre de midi
      2 puis 3, séquence du matin 3 puis 12, trainings 2 x 30 en S5 puis
@@ -911,13 +1597,12 @@ footer a:hover{color:var(--ink)}
      Totaux : 18 · 38 · 56,6 · 58 · 80,1 · 79,9 · 79,9 · puis 85 jusqu'à la S13.
      La S3 porte les trois marches de 20 min sans stimulation, lissées sur 7 jours. */
   var PILIERS = [
-    {nom:"Sommeil",     v:[10, 10, 10,   10, 10,   10,   10,   10, 10, 10, 10, 10, 10]},
-    {nom:"Le relevé",   v:[ 3,  3,  3,    3,  3,    3,    3,    3,  3,  3,  3,  3,  3]},
-    {nom:"Méditation",  v:[ 5, 10, 15,   20, 20,   20,   20,   20, 20, 20, 20, 20, 20]},
-    {nom:"Respiration", v:[ 0,  2,  2,    2,  3,    3,    3,    3,  3,  3,  3,  3,  3]},
-    {nom:"Mouvement",   v:[ 0, 13, 26.6, 23, 44.1, 43.9, 43.9, 49, 49, 49, 49, 49, 49]}
+    {nom:"Sommeil",     p:"SO", v:[10, 10, 10,   10, 10,   10,   10,   10, 10, 10, 10, 10, 10]},
+    {nom:"Le relevé",   p:"RL", v:[ 3,  3,  3,    3,  3,    3,    3,    3,  3,  3,  3,  3,  3]},
+    {nom:"Méditation",  p:"ME", v:[ 5, 10, 15,   20, 20,   20,   20,   20, 20, 20, 20, 20, 20]},
+    {nom:"Respiration", p:"RE", v:[ 0,  2,  2,    2,  3,    3,    3,    3,  3,  3,  3,  3,  3]},
+    {nom:"Mouvement",   p:"MO", v:[ 0, 13, 26.6, 23, 44.1, 43.9, 43.9, 49, 49, 49, 49, 49, 49]}
   ];
-
   var PHASES = [
     {de:0, a:4,  txt:"I · Rencontre Intérieure"},
     {de:4, a:7,  txt:"II · La Traversée"},
@@ -942,6 +1627,7 @@ footer a:hover{color:var(--ink)}
   var x = function(i){ return M.l + i*bw; };
   var y = function(v){ return M.t + ph * (1 - v/yMax); };
   var bas = M.t + ph;
+  var TOTAUX = PILIERS[0].v.map(function(_, i){ return PILIERS.reduce(function(s, b){ return s + b.v[i]; }, 0); });
 
   /* Grille */
   [0,30,60,90].forEach(function(v){
@@ -950,14 +1636,18 @@ footer a:hover{color:var(--ink)}
       v===90 ? "90 min" : String(v)));
   });
 
-  /* Les bandes */
+  /* Les bandes, découvertes par le curseur à mesure qu'il avance */
+  var defs = svg.appendChild(el("defs", {}));
+  var cp = defs.appendChild(el("clipPath", {id:"courbe-clip"}));
+  var clipRect = cp.appendChild(el("rect", {x:M.l - 2, y:0, width:pw + 4, height:400}));
+  var bandes = svg.appendChild(el("g", {"clip-path":"url(#courbe-clip)"}));
   var cum = new Array(N).fill(0);
   PILIERS.forEach(function(b, k){
     var haut = cum.map(function(v,i){ return v + b.v[i]; });
     var d = "M" + x(0) + " " + y(haut[0]);
     for (var i=0;i<N;i++) d += " L" + x(i) + " " + y(haut[i]) + " L" + x(i+1) + " " + y(haut[i]);
     for (var j=N-1;j>=0;j--) d += " L" + x(j+1) + " " + y(cum[j]) + " L" + x(j) + " " + y(cum[j]);
-    svg.appendChild(el("path", {d:d + " Z", class:"band", fill:"var(--ice-deep)",
+    bandes.appendChild(el("path", {d:d + " Z", class:"band", "data-p":b.p, fill:"var(--ice-deep)",
       "fill-opacity":(0.9 - k*0.165).toFixed(3)}));
     b._y = y((haut[N-1] + cum[N-1]) / 2);
     b._fin = b.v[N-1];
@@ -965,19 +1655,20 @@ footer a:hover{color:var(--ink)}
   });
 
   /* Les libellés, à droite, écartés s'ils se touchent */
-  var pos = PILIERS.map(function(b){ return {y:b._y, ancre:b._y, nom:b.nom, val:b._fin}; });
+  var pos = PILIERS.map(function(b){ return {y:b._y, ancre:b._y, nom:b.nom, val:b._fin, p:b.p}; });
   pos.sort(function(a,b){ return a.y - b.y; });
   for (var i=1;i<pos.length;i++){
     if (pos[i].y - pos[i-1].y < 19) pos[i].y = pos[i-1].y + 19;
   }
   pos.forEach(function(p){
-    svg.appendChild(el("polyline", {
+    var g = svg.appendChild(el("g", {"data-p":p.p}));
+    g.appendChild(el("polyline", {
       points:[M.l+pw, p.ancre, M.l+pw+10, p.ancre, M.l+pw+18, p.y, M.l+pw+24, p.y].join(" "),
       class:"leader"
     }));
     var t = el("text", {x:M.l+pw+30, y:p.y+4.5, class:"bandlabel"}, p.nom + " ");
     t.appendChild(el("tspan", {}, fr(p.val)));
-    svg.appendChild(t);
+    g.appendChild(t);
   });
 
   /* Le maximum, atteint en S8 et tenu jusqu'à la fin */
@@ -991,12 +1682,20 @@ footer a:hover{color:var(--ink)}
       "S" + (i+1)));
   }
 
-  /* La barre des phases */
-  PHASES.forEach(function(p){
+  /* La barre des phases : celle du curseur s'éclaire */
+  var phasesG = PHASES.map(function(p){
     var x0 = x(p.de)+1.5, w = (p.a-p.de)*bw-3;
-    svg.appendChild(el("rect", {x:x0, y:bas+32, width:w, height:26, rx:13, class:"phasebar"}));
-    svg.appendChild(el("text", {x:x0+w/2, y:bas+49, "text-anchor":"middle", class:"phasetxt"}, p.txt));
+    var g = svg.appendChild(el("g", {}));
+    g.appendChild(el("rect", {x:x0, y:bas+32, width:w, height:26, rx:13, class:"phasebar"}));
+    g.appendChild(el("text", {x:x0+w/2, y:bas+49, "text-anchor":"middle", class:"phasetxt"}, p.txt));
+    return g;
   });
+
+  /* Le curseur : un trait, et un point posé sur le haut de la courbe */
+  var curseur = svg.appendChild(el("g", {class:"curseur"}));
+  curseur.appendChild(el("line", {x1:0, y1:M.t - 8, x2:0, y2:bas}));
+  var pointHalo = curseur.appendChild(el("circle", {class:"curseur__halo", cx:0, cy:y(85), r:11}));
+  var point = curseur.appendChild(el("circle", {cx:0, cy:y(85), r:4.5}));
 
   /* Le repère de défilement, seulement si le graphique déborde pour de bon */
   function mesure(){
@@ -1004,6 +1703,262 @@ footer a:hover{color:var(--ink)}
   }
   mesure();
   window.addEventListener("resize", mesure);
+
+  var lecSem = one('[data-lec-sem]'), lecPhase = one('[data-lec-phase]'), lecMin = one('[data-lec-min]');
+  var semaine = -1, manuel = false, minuteur = null;
+  ['touchstart', 'pointerdown', 'wheel'].forEach(function(t){
+    boite.addEventListener(t, function(){ manuel = true; clearTimeout(minuteur); minuteur = setTimeout(function(){ manuel = false; }, 2500); }, { passive:true });
+  });
+  function majCourbe(vh){
+    var r = boite.getBoundingClientRect();
+    if (r.bottom < -100 || r.top > vh + 100) return;
+    var p = reduce ? 1 : clamp((vh * 0.88 - r.top) / (vh * 0.52));
+    var xc = M.l + p * pw;
+    clipRect.setAttribute('width', (xc - M.l + 2).toFixed(1));
+    var w = Math.max(0, Math.min(N - 1, Math.ceil(p * N) - 1));
+    var yc = y(TOTAUX[w]);
+    curseur.setAttribute('transform', 'translate(' + xc.toFixed(1) + ' 0)');
+    point.setAttribute('cy', yc.toFixed(1)); pointHalo.setAttribute('cy', yc.toFixed(1));
+    if (w !== semaine) {
+      semaine = w;
+      var k = PHASES.findIndex(function(f){ return w >= f.de && w < f.a; });
+      lecSem.textContent = 'Semaine ' + (w + 1);
+      lecPhase.textContent = 'Phase ' + PHASES[k].txt;
+      lecMin.textContent = Math.round(TOTAUX[w]) + ' min par jour';
+      phasesG.forEach(function(g, j){ g.classList.toggle('phase-on', j === k); });
+    }
+    /* sur téléphone, le graphique défile de côté pour garder le curseur en vue */
+    if (boite.classList.contains('est-large') && !manuel) {
+      var echelle = svg.getBoundingClientRect().width / 1000;
+      boite.scrollLeft = xc * echelle - boite.clientWidth * 0.5;
+    }
+  }
+
+  /* ---------- Les piliers : ce qu'on survole s'allume ---------- */
+  var pil = document.getElementById('piliers'), verrou = null;
+  function activer(c){ if (c) pil.setAttribute('data-actif', c); else pil.removeAttribute('data-actif'); }
+  all('.pilier[data-p], .arbre .planche__mot[data-p]', pil).forEach(function(e){
+    var c = e.getAttribute('data-p');
+    e.addEventListener('mouseenter', function(){ activer(c); });
+    e.addEventListener('mouseleave', function(){ activer(verrou); });
+    e.addEventListener('focus', function(){ activer(c); });
+    e.addEventListener('blur', function(){ activer(verrou); });
+    e.addEventListener('click', function(){ verrou = verrou === c ? null : c; activer(verrou); });
+    e.addEventListener('keydown', function(ev){ if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); e.click(); } });
+  });
+  document.addEventListener('click', function(e){
+    if (verrou && !e.target.closest('#piliers [data-p]')) { verrou = null; activer(null); }
+  });
+
+  /* ---------- Ce qui suit le défilement ---------- */
+  var mot = one('[data-mot]');
+  var swipe = window.matchMedia('(max-width:760px),(hover:none)');
+
+  /* La phrase s'allume mot à mot */
+  var phrases = reduce ? [] : all('[data-mots]').map(function(e){ e.classList.add('est-pilote'); return { el:e, m:all('.m', e) }; });
+
+  /* Ce que RESET change : un trait barre les trois freins l'un après l'autre,
+     puis « d'y croire » s'allume */
+  var identite = reduce ? null : one('.identite'), freins = identite ? all('.frein', identite) : [], liste = identite && one('.freins', identite);
+  if (identite) identite.classList.add('est-pilote');
+  function majFreins(vh){
+    var r = liste.getBoundingClientRect();
+    if (r.bottom < -vh || r.top > vh * 1.5) return;
+    var P = clamp((vh * 0.74 - r.top) / (vh * 0.42)) * freins.length;
+    freins.forEach(function(f, i){
+      var b = clamp(P - i);
+      f.style.setProperty('--b', b.toFixed(3));
+      f.classList.toggle('est-barre', b > 0.98);
+    });
+    identite.classList.toggle('est-libre', P > freins.length - 0.02);
+  }
+
+  /* Les doutes arrivent comme des notifications, la plus récente en haut, trois à la fois.
+     Elles ne tournent que quand on les voit ; sans mouvement, les trois du HTML restent. */
+  var notifs = reduce ? null : one('[data-notifs]');
+  if (notifs) {
+    var doutes = notifs.getAttribute('data-doutes').split('|');
+    var modele = one('.notif', notifs).cloneNode(true), pile = [], prochain = 0, minuteur = 0, premiere = true;
+    all('.notif', notifs).forEach(function(n){ n.parentNode.removeChild(n); });
+    var arrive = function(){
+      var n = modele.cloneNode(true);
+      one('.notif__texte', n).textContent = doutes[prochain];
+      prochain = (prochain + 1) % doutes.length;
+      n.classList.add('est-neuve');
+      notifs.insertBefore(n, notifs.firstChild);
+      pile.unshift(n);
+      pile.splice(3).forEach(function(v){
+        v.style.setProperty('--i', 2.2); v.classList.add('est-partie');
+        setTimeout(function(){ if (v.parentNode) v.parentNode.removeChild(v); }, 900);
+      });
+      n.getBoundingClientRect();
+      n.classList.remove('est-neuve');
+      pile.forEach(function(v, i){ v.style.setProperty('--i', i); });
+    };
+    var lancer = function(){
+      if (minuteur) return;
+      minuteur = setTimeout(function pas(){ arrive(); minuteur = setTimeout(pas, 2600); }, premiere ? Math.max(300, 1700 - performance.now()) : 600);
+      premiere = false;
+    };
+    var arreter = function(){ clearTimeout(minuteur); minuteur = 0; };
+    if ('IntersectionObserver' in window) new IntersectionObserver(function(e){ if (e[0].isIntersecting) lancer(); else arreter(); }, { rootMargin:'0px 0px 15% 0px' }).observe(notifs);
+    else lancer();
+  }
+
+  /* Les dessins se tracent à mesure qu'on descend */
+  var traces = all('[data-trace]');
+  var onde = one('.onde'), ondeTrace = onde && one('.trace', onde), ondePoint = onde && one('.onde__point', onde), table = [];
+  if (ondeTrace) {
+    /* table des points de l'onde, pour poser le point à l'abscisse du tracé */
+    var L = ondeTrace.getTotalLength();
+    for (var s = 0; s <= 400; s++) { var q = ondeTrace.getPointAtLength(L * s / 400); table.push([q.x, q.y]); }
+  }
+  function surOnde(xv){
+    for (var i = 1; i < table.length; i++) if (table[i][0] >= xv) {
+      var a = table[i-1], b = table[i], f = (xv - a[0]) / Math.max(1e-6, b[0] - a[0]);
+      return [xv, a[1] + (b[1] - a[1]) * f];
+    }
+    return table[table.length - 1];
+  }
+
+  /* La journée : le ciel suit l'heure du moment lu */
+  var jour = one('[data-jour]'), jourActif = -1, moms, cieux, etoiles, ciel, astre, lune, quand, sorte, ANG;
+  var deuxColonnes = window.matchMedia('(min-width:900px)');
+  if (jour) {
+    moms = all('.mom', jour); cieux = all('.ciel', jour); etoiles = one('.jour__etoiles', jour); ciel = one('.jour__ciel', jour);
+    astre = one('[data-astre]', jour); lune = one('[data-lune]', jour);
+    quand = one('[data-jour-quand]', jour); sorte = one('[data-jour-sorte]', jour);
+    ANG = moms.map(function(m){ return +m.getAttribute('data-angle'); });
+    jour.classList.add('est-pilote');
+  }
+  function majJour(vh){
+    var r = jour.getBoundingClientRect();
+    if (r.bottom < -100 || r.top > vh + 100) return;
+    /* sur une colonne, le ciel est épinglé en haut : on lit sous lui, pas derrière */
+    var cielBas = ciel.getBoundingClientRect().bottom;
+    var ref = deuxColonnes.matches ? vh * 0.55 : cielBas + (vh - cielBas) * 0.42;
+    var cs = moms.map(function(m){ var b = m.getBoundingClientRect(); return b.top + b.height / 2; }), t = 0;
+    if (ref >= cs[cs.length - 1]) t = cs.length - 1;
+    else if (ref > cs[0]) for (var i = 0; i < cs.length - 1; i++) if (ref < cs[i + 1]) { t = i + (ref - cs[i]) / (cs[i + 1] - cs[i]); break; }
+    var i0 = Math.min(Math.floor(t), ANG.length - 2), f = t - i0;
+    var a = (ANG[i0] + (ANG[i0 + 1] - ANG[i0]) * f) * Math.PI / 180;
+    astre.setAttribute('transform', 'translate(' + (240 + 168 * Math.cos(a)).toFixed(1) + ' ' + (200 - 168 * Math.sin(a)).toFixed(1) + ')');
+    cieux.forEach(function(c, k){ c.style.opacity = Math.max(0, 1 - Math.abs(t - k)).toFixed(3); });
+    var nuit = clamp(t - 2);
+    etoiles.style.opacity = nuit.toFixed(3); lune.style.opacity = nuit.toFixed(3);
+    var k = Math.round(t);
+    if (k !== jourActif) {
+      jourActif = k;
+      moms.forEach(function(m, j){ m.classList.toggle('is-on', j === k); });
+      quand.textContent = moms[k].getAttribute('data-quand');
+      sorte.textContent = moms[k].getAttribute('data-sorte');
+      ciel.classList.toggle('est-sombre', k >= 2);
+    }
+  }
+
+  /* Le déroulé : le trait descend, chaque phase s'allume quand il l'atteint */
+  var voyage = one('[data-voyage]'), etapes = voyage ? all('.etape', voyage) : [];
+  function majVoyage(vh){
+    var r = voyage.getBoundingClientRect();
+    if (r.bottom < -vh || r.top > vh * 2) return;
+    var p = clamp((vh * 0.55 - r.top) / r.height), h = p * r.height;
+    voyage.style.setProperty('--p', p.toFixed(4));
+    voyage.style.setProperty('--o', p > 0.002 && p < 0.998 ? 1 : 0);
+    etapes.forEach(function(e){ e.classList.toggle('est-atteinte', e.offsetTop + 12 <= h + 2); });
+  }
+
+  function update(){
+    var yy = window.scrollY, vh = window.innerHeight;
+    nav.classList.toggle('is-scrolled', yy > 40);
+    /* sur ordinateur, le mot RESET s'enfonce dans la mer de nuages */
+    if (mot && !reduce && !swipe.matches && yy < vh * 1.3) mot.style.transform = 'translate3d(0,' + (yy * 0.32).toFixed(1) + 'px,0)';
+    phrases.forEach(function(o){
+      var r = o.el.getBoundingClientRect();
+      if (r.bottom < -50 || r.top > vh) return;
+      var n = Math.round(clamp((vh * 0.86 - r.top) / (vh * 0.42)) * o.m.length);
+      o.m.forEach(function(m, i){ m.classList.toggle('on', i < n); });
+    });
+    traces.forEach(function(f){
+      var r = f.getBoundingClientRect();
+      if (r.bottom < -50 || r.top > vh + 50) return;
+      var t = reduce ? 1 : clamp((vh * 0.92 - r.top) / (vh * 0.55));
+      f.style.setProperty('--t', t.toFixed(3));
+      if (f === onde && table.length) {
+        var pt = surOnde(20 + t * 960);
+        f.style.setProperty('--px', (pt[0] / 10).toFixed(2) + '%');
+        f.style.setProperty('--py', (pt[1] / 1.5).toFixed(2) + '%');
+        f.style.setProperty('--po', t > 0.01 ? 1 : 0);
+      }
+    });
+    if (identite) majFreins(vh);
+    if (jour) majJour(vh);
+    if (voyage) majVoyage(vh);
+    majCourbe(vh);
+    markNav(vh);
+  }
+  var queued = false;
+  function onScroll(){
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(function(){ queued = false; update(); });
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  window.addEventListener('resize', onScroll);
+  update();
+
+  /* ---------- Apparitions ---------- */
+  function compter(e){
+    var n = +e.getAttribute('data-compte'), t0 = performance.now();
+    e.textContent = '0';
+    requestAnimationFrame(function pas(now){
+      var k = clamp((now - t0) / 1300);
+      e.textContent = String(Math.round(n * (1 - Math.pow(1 - k, 3))));
+      if (k < 1) requestAnimationFrame(pas);
+    });
+  }
+  var cibles = all('.reveal, .stagger, .etape, .planche');
+  if (!reduce && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entrees){
+      entrees.forEach(function(e){
+        if (!e.isIntersecting) return;
+        e.target.classList.add('is-in');
+        if (e.target.classList.contains('chiffres')) all('[data-compte]', e.target).forEach(compter);
+        io.unobserve(e.target);
+      });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:0.08 });
+    cibles.forEach(function(e){ io.observe(e); });
+
+    /* Une section hors écran n'anime plus rien */
+    var onScreen = new IntersectionObserver(function(entrees){
+      entrees.forEach(function(e){ e.target.classList.toggle('is-off', !e.isIntersecting); });
+    }, { rootMargin:'200px 0px' });
+    all('main > section, .shell > section').forEach(function(e){ onScreen.observe(e); });
+  } else {
+    cibles.forEach(function(e){ e.classList.add('is-in'); });
+  }
+
+  /* ---------- Le souffle de la page : 5 s / 5 s ---------- */
+  if (!reduce) setInterval(function(){ root.classList.toggle('exhale'); }, 5000);
+
+  /* ---------- Électrons du haut de page ---------- */
+  var electrons = all('[data-electron]').map(function(e){
+    return { el:e, rot:+e.dataset.rot * Math.PI / 180, speed:+e.dataset.speed, phase:+e.dataset.phase };
+  });
+  if (!reduce && electrons.length) {
+    var t0 = performance.now();
+    requestAnimationFrame(function tick(now){
+      if (window.scrollY < window.innerHeight * 1.3) {
+        var s = (now - t0) / 1000;
+        electrons.forEach(function(e){
+          var a = s * e.speed + e.phase;
+          var xx = 470 * Math.cos(a), yy = 150 * Math.sin(a);
+          e.el.setAttribute('cx', (xx * Math.cos(e.rot) - yy * Math.sin(e.rot)).toFixed(1));
+          e.el.setAttribute('cy', (xx * Math.sin(e.rot) + yy * Math.cos(e.rot)).toFixed(1));
+        });
+      }
+      requestAnimationFrame(tick);
+    });
+  }
 })();
 </script>
 

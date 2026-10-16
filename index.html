@@ -144,7 +144,6 @@ img{max-width:100%}
   .hv-9:hover{background:#2B343C!important;color:#FFFFFF!important}
   .hv-10:hover{background:#E6ECF0!important;color:#12171B!important}
   .hv-11:hover{transform:translateY(-2px)!important;color:#12171B!important}
-  .hv-12:hover{border-color:rgba(230,236,240,.6)!important;color:#FFFFFF!important}
   .hv-13:hover{color:#FFFFFF!important}
   .hv-14:hover{transform:translateY(-4px)!important;background:#FFFFFF!important;color:#12171B!important}
 }
@@ -402,6 +401,72 @@ img{max-width:100%}
   .resa__arrow{display:none}
 }
 
+/* ================= La mer de nuages ================= */
+/* Une mer de nuages calculée pour le site (assets/img/nuages, sans droits
+   d'auteur) : en bas du haut de page, sur l'horizon de « La nature » et sous le
+   grand mot du pied de page. Posée devant les mots, elle les laisse s'y enfoncer
+   ou en sortir au défilement. */
+.hero__mer{position:absolute;left:0;right:0;bottom:0;height:62%;pointer-events:none;animation:fadeUp 2s .4s both}
+.hero__mer img,.nature__mer img,.pied__mer img{display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:50% 100%}
+.nature__mer{position:absolute;left:-30%;right:-30%;top:41%;height:27%;pointer-events:none;-webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}
+.nature__mer img{object-position:50% 34%}
+.pied__mer{position:absolute;left:0;right:0;bottom:0;height:calc(46px + clamp(64px,8vw,110px) + clamp(100px,24vw,360px)*.24);pointer-events:none}
+.pied__mer img{object-position:50% 46%}
+/* Le verre du bouton et de la carte se perd sur le blanc des nuages : un filet le redessine */
+.hero .hv-2,.hero .hv-4{outline:1px solid rgba(18,23,27,.1);outline-offset:-1px}
+/* Sur téléphone, la mer passe en bandeau sous le mot BELIVE et s'efface avant le texte */
+@media (max-width:760px){
+  .hero__mer{top:26.5%;bottom:auto;height:14%;-webkit-mask-image:linear-gradient(#000 48%,transparent);mask-image:linear-gradient(#000 48%,transparent)}
+  .hero__mer img{object-position:50% 0}
+}
+
+/* ================= Découvrir la méthode ================= */
+/* Le lien vers la page RESET, en vitrine : le mot RESET dans la mer de nuages, comme en
+   haut de la page qu'il ouvre (ciel derrière, nuages proches devant). Le mot respire
+   avec la page, et sort des nuages au survol. */
+.decouvrir{
+  position:relative;isolation:isolate;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;
+  width:100%;min-height:clamp(340px,36vw,470px);padding:clamp(22px,3vw,36px);
+  border-radius:28px;overflow:hidden;text-align:left;color:#12171B!important;
+  box-shadow:0 0 0 1px rgba(156,199,220,.35),0 40px 90px -40px rgba(156,199,220,.5);
+  transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s;
+}
+.decouvrir::after{content:"";position:absolute;inset:auto 0 0 0;height:60%;z-index:-1;background:linear-gradient(rgba(243,247,249,0),rgba(243,247,249,.6));pointer-events:none}
+.decouvrir__scene{position:absolute;inset:0;z-index:-1;overflow:hidden;container-type:size}
+.decouvrir__cadre{
+  position:absolute;left:50%;top:42%;width:100%;height:100%;
+  width:max(100cqw,160cqh);height:max(100cqh,62.5cqw);transform:translate(-50%,-42%);container-type:size;
+}
+.decouvrir__cadre picture,.decouvrir__cadre img{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;object-fit:cover}
+.decouvrir__mot{
+  position:absolute;left:0;right:0;bottom:50.5%;display:flex;justify-content:center;
+  font-size:20vw;font-size:23cqw;font-weight:700;letter-spacing:-.06em;line-height:.74;color:#FFFFFF;
+  text-shadow:0 8px 40px rgba(44,107,147,.42),0 2px 6px rgba(44,107,147,.22);
+  transform:translateY(calc((1.08 - var(--core)) * 45%));transition:transform 5s cubic-bezier(.45,0,.55,1);
+}
+.decouvrir__texte{position:relative;display:flex;flex-direction:column;gap:8px;max-width:540px}
+.decouvrir__sur{font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#2B343C}
+.decouvrir__titre{font-size:clamp(26px,2.8vw,38px);font-weight:600;letter-spacing:-.03em;line-height:1.04;text-wrap:balance}
+.decouvrir__liste{font-size:15px;line-height:1.5;color:#2B343C}
+.decouvrir__fleche{
+  position:relative;flex:none;display:flex;align-items:center;justify-content:center;width:66px;height:66px;
+  border-radius:50%;background:#12171B;color:#FFFFFF;font-size:24px;
+  box-shadow:0 0 0 8px rgba(18,23,27,.08);transition:transform .4s cubic-bezier(.2,.7,.2,1);
+}
+.decouvrir:focus-visible{outline:2px solid #9CC7DC;outline-offset:4px}
+@media (hover:hover){
+  .decouvrir:hover{transform:translateY(-4px);box-shadow:0 0 0 1px rgba(156,199,220,.7),0 50px 110px -40px rgba(156,199,220,.65)}
+  .decouvrir:hover .decouvrir__mot{transform:translateY(-12%);transition-duration:.9s}
+  .decouvrir:hover .decouvrir__fleche{transform:translateX(6px)}
+}
+@media (max-width:760px){
+  .decouvrir{flex-direction:column;align-items:stretch;justify-content:flex-end;gap:18px;min-height:min(156vw,580px)}
+  .decouvrir__cadre{top:0;width:max(100cqw,60cqh);height:max(100cqh,166.667cqw);transform:translate(-50%,0)}
+  .decouvrir__mot{bottom:63.5%;font-size:26cqw}
+  .decouvrir__fleche{align-self:flex-end;width:58px;height:58px}
+}
+@media (prefers-reduced-motion:reduce){.decouvrir__mot{transform:none}}
+
 /* ================= Performance ================= */
 /* Une section hors écran n'anime plus rien : le script pose .is-off dessus. */
 .is-off,.is-off *{animation-play-state:paused!important}
@@ -416,22 +481,31 @@ img{max-width:100%}
   g[style*="spin"]{animation:none!important}
 }
 
-/* Étapes R·E·S·E·T : au doigt, un défilement piloté par script suit toujours avec
-   un temps de retard. Sur écran tactile, la frise devient un vrai carrousel que
-   l'on glisse, géré par le navigateur lui-même. */
-@media (max-width:760px),(hover:none){
-  .hz{height:auto!important}
-  .hz__pin{position:static!important;height:auto!important;padding-top:0!important}
-  .hz__track{
-    --bord:clamp(20px,4vw,56px);
-    margin:0 calc(-1*var(--bord));padding:0 var(--bord);scroll-padding-left:var(--bord);
-    overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;
-    scrollbar-width:none;transform:none!important;will-change:auto!important;
-  }
-  .hz__track::-webkit-scrollbar{display:none}
-  .hz__track>div{scroll-snap-align:start}
-  .hz__track>div:last-child{scroll-snap-align:none}
+/* Étapes R·E·S·E·T : une frise que l'on fait défiler vers la droite, séparée du
+   défilement de la page. Au doigt et au pavé tactile, le navigateur la gère lui-même ;
+   à la souris, on la tire, ou on passe par les flèches et les lettres. */
+.hz__track{
+  /* la frise file jusqu'aux bords de l'écran ; la première carte reste alignée sur le texte */
+  margin:0 calc(50% - 50vw);padding:0 calc(50vw - 50%) 4px;scroll-padding-left:calc(50vw - 50%);
+  overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;
+  scrollbar-width:none;cursor:grab;
 }
+.hz__track.is-drag{cursor:grabbing;scroll-snap-type:none;user-select:none}
+.hz__track::-webkit-scrollbar{display:none}
+.hz__track>div{scroll-snap-align:start}
+.hz__track>div:last-child{scroll-snap-align:none}
+.hz__nav{display:flex;align-items:center;gap:14px}
+.hz__indice{margin:0;font-size:14px;color:#9AA7B2;white-space:nowrap}
+.hz__fleche{
+  display:flex;align-items:center;justify-content:center;flex:none;width:44px;height:44px;padding:0;border-radius:50%;
+  border:1px solid rgba(230,236,240,.22);background:transparent;color:#E6ECF0;font:inherit;font-size:18px;cursor:pointer;
+  transition:background .3s,color .3s,opacity .3s;
+}
+.hz__fleche:disabled{opacity:.3;cursor:default}
+.hz__fleche:focus-visible{outline:2px solid #9CC7DC;outline-offset:3px}
+[data-hz-l]{cursor:pointer}
+@media (hover:hover){.hz__fleche:not(:disabled):hover{background:#E6ECF0;color:#12171B}}
+@media (max-width:760px){.hz__indice{display:none}.hz__fleche{width:40px;height:40px}}
 
 /* ================= Ajustements mobiles ================= */
 /* Les styles en ligne l'emportent sur une feuille : d'où les !important. */
@@ -545,6 +619,7 @@ f();addEventListener('resize',f);})();
 </span>
 </div>
 </div>
+<div class="hero__mer" aria-hidden="true"><picture><source type="image/avif" srcset="assets/img/nuages/mer.avif"><img src="assets/img/nuages/mer.webp" alt="" width="2400" height="1100" decoding="async"></picture></div>
 <div aria-hidden="true" style="position:absolute;left:0;right:0;bottom:0;height:26%;background:linear-gradient(180deg,rgba(169,204,221,0),rgba(169,204,221,.9));pointer-events:none"></div>
 <div class="hero__meta" style="position:relative;width:100%;max-width:1240px;margin:0 auto;display:flex;justify-content:space-between;gap:24px;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#4B5661;line-height:1.7;pointer-events:none;animation:fadeUp 1s .9s both">
 <span style="display:flex;flex-direction:column"><span>Breathwork</span><span>Système nerveux</span><span>Naturopathie</span></span>
@@ -802,6 +877,7 @@ f();addEventListener('resize',f);})();
 <div style="position:absolute;left:50%;top:58%;width:44%;aspect-ratio:1;margin-left:-22%;margin-top:-22%;border-radius:50%;background:#FFFFFF;box-shadow:0 0 0 18px rgba(255,255,255,.35),0 0 90px 30px rgba(255,255,255,.6);animation:float 9s ease-in-out infinite"></div>
 <div style="position:absolute;left:0;right:0;top:58%;bottom:0;background:linear-gradient(180deg,#5F95B0 0%,#33708F 100%)"></div>
 <div style="position:absolute;left:0;right:0;top:58%;height:2px;background:#FFFFFF"></div>
+<div class="nature__mer" aria-hidden="true"><picture><source type="image/avif" srcset="assets/img/nuages/mer.avif"><img src="assets/img/nuages/mer.webp" alt="" width="2400" height="1100" loading="lazy" decoding="async"></picture></div>
 <div style="position:absolute;left:18%;right:18%;top:64%;height:2px;border-radius:2px;background:rgba(255,255,255,.55)"></div>
 <div style="position:absolute;left:30%;right:30%;top:70%;height:2px;border-radius:2px;background:rgba(255,255,255,.35)"></div>
 <div style="position:absolute;left:40%;right:40%;top:76%;height:2px;border-radius:2px;background:rgba(255,255,255,.2)"></div></div>
@@ -1009,22 +1085,37 @@ f();addEventListener('resize',f);})();
 </div>
 <h2 aria-label="RESET" style="position:relative;margin:0;display:flex;font-size:clamp(110px,21vw,320px);font-weight:700;letter-spacing:-.05em;line-height:.85"><span data-reveal data-delay="0" style="display:inline-block;background:linear-gradient(180deg,#FFFFFF 0%,#9CC7DC 100%);-webkit-background-clip:text;background-clip:text;color:transparent">R</span><span data-reveal data-delay="90" style="display:inline-block;background:linear-gradient(180deg,#FFFFFF 0%,#9CC7DC 100%);-webkit-background-clip:text;background-clip:text;color:transparent">E</span><span data-reveal data-delay="180" style="display:inline-block;background:linear-gradient(180deg,#FFFFFF 0%,#9CC7DC 100%);-webkit-background-clip:text;background-clip:text;color:transparent">S</span><span data-reveal data-delay="270" style="display:inline-block;background:linear-gradient(180deg,#FFFFFF 0%,#9CC7DC 100%);-webkit-background-clip:text;background-clip:text;color:transparent">E</span><span data-reveal data-delay="360" style="display:inline-block;background:linear-gradient(180deg,#FFFFFF 0%,#9CC7DC 100%);-webkit-background-clip:text;background-clip:text;color:transparent">T</span></h2>
 <p data-reveal style="position:relative;margin:0;font-size:clamp(26px,3vw,42px);font-weight:300;letter-spacing:-.02em">BELIVE RESET, <span style="font-weight:600">90 jours.</span></p>
-<p data-reveal style="position:relative;margin:0;max-width:62ch;font-size:18px;line-height:1.65;color:#B9C5CE;text-wrap:pretty">Le protocole complet, en individuel et à distance, sur treize semaines : un call par semaine, un protocole quotidien, un canal de suivi entre les calls, et quatre sessions de Breathwork d'une heure trente, encadrées en direct par visio, une à la fin de chacune des quatre phases.</p>
+<p data-reveal style="position:relative;margin:0;max-width:52ch;font-size:clamp(18px,1.6vw,21px);line-height:1.6;color:#B9C5CE;text-wrap:pretty">Un protocole pour changer d'identité. Pour t'aligner, et vivre enfin la vie dont tu rêves mais que tu ne t'autorises pas. Parce que tu vis en pilote automatique, que tes peurs décident à ta place, et que tu doutes de pouvoir y arriver.</p>
+<p data-reveal style="position:relative;margin:0;font-size:clamp(24px,2.6vw,36px);font-weight:600;letter-spacing:-.03em;line-height:1.1;color:#FFFFFF;text-wrap:balance">Le plus fondamental, c'est <span style="color:#9CC7DC">d'y croire.</span></p>
 <div data-reveal style="position:relative;display:flex;flex-wrap:wrap;justify-content:center;gap:20px 0;padding:8px 0"><span style="display:flex;flex-direction:column;gap:4px;padding:0 clamp(14px,2.4vw,32px);border-left:1px solid rgba(230,236,240,.14)"><span style="font-size:clamp(28px,3vw,40px);font-weight:300;letter-spacing:-.03em;color:#FFFFFF">13</span><span style="font-size:13px;color:#9AA7B2">semaines</span></span><span style="display:flex;flex-direction:column;gap:4px;padding:0 clamp(14px,2.4vw,32px);border-left:1px solid rgba(230,236,240,.14)"><span style="font-size:clamp(28px,3vw,40px);font-weight:300;letter-spacing:-.03em;color:#FFFFFF">13</span><span style="font-size:13px;color:#9AA7B2">calls</span></span><span style="display:flex;flex-direction:column;gap:4px;padding:0 clamp(14px,2.4vw,32px);border-left:1px solid rgba(230,236,240,.14)"><span style="font-size:clamp(28px,3vw,40px);font-weight:300;letter-spacing:-.03em;color:#FFFFFF">4</span><span style="font-size:13px;color:#9AA7B2">sessions Breathwork</span></span><span style="display:flex;flex-direction:column;gap:4px;padding:0 clamp(14px,2.4vw,32px);border-left:1px solid rgba(230,236,240,.14)"><span style="font-size:clamp(28px,3vw,40px);font-weight:300;letter-spacing:-.03em;color:#FFFFFF">39</span><span style="font-size:13px;color:#9AA7B2">supports</span></span></div>
 <div data-reveal style="position:relative;display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
 <a href="https://docs.google.com/forms/d/e/1FAIpQLSfj11kIlWgP47-O8oDt12YvOwmYfR5KPWXMzn8iG9LAzuwBDQ/viewform" target="_blank" rel="noopener" style="background:linear-gradient(180deg,#FFFFFF,#DDE9EF);color:#12171B;padding:17px 28px;border-radius:999px;font-weight:500;font-size:16px;box-shadow:0 0 40px rgba(156,199,220,.35);transition:transform .3s" class="hv-11">Rejoindre la liste d'attente →</a>
-<a href="reset/" style="color:#E6ECF0;padding:17px 28px;border-radius:999px;font-size:16px;border:1px solid rgba(230,236,240,.22)" class="hv-12">En savoir plus sur la méthode →</a>
 </div>
 <p data-reveal style="position:relative;margin:0;max-width:56ch;font-size:15px;line-height:1.6;color:#9AA7B2"><strong style="color:#FFFFFF;font-weight:600">Il n'est pas encore ouvert.</strong> La date de lancement n'est pas fixée. La liste d'attente sert à ça : tu l'apprends en premier, avant l'annonce publique.</p>
+<div data-reveal style="position:relative;width:100%;max-width:1040px;margin-top:clamp(12px,2vw,28px)">
+<a href="reset/" class="decouvrir" aria-label="En savoir plus sur la méthode : découvre ce que tu vas vivre pendant 90 jours">
+<span class="decouvrir__scene" aria-hidden="true"><span class="decouvrir__cadre">
+<picture><source media="(max-width:760px)" type="image/avif" srcset="assets/img/nuages/ciel-jour-haut.avif"><source media="(max-width:760px)" type="image/webp" srcset="assets/img/nuages/ciel-jour-haut.webp"><source type="image/avif" srcset="assets/img/nuages/ciel-jour.avif"><img src="assets/img/nuages/ciel-jour.webp" alt="" width="2400" height="1500" loading="lazy" decoding="async"></picture>
+<span class="decouvrir__mot">RESET</span>
+<picture><source media="(max-width:760px)" type="image/avif" srcset="assets/img/nuages/ciel-jour-haut-avant.avif"><source media="(max-width:760px)" type="image/webp" srcset="assets/img/nuages/ciel-jour-haut-avant.webp"><source type="image/avif" srcset="assets/img/nuages/ciel-jour-avant.avif"><img src="assets/img/nuages/ciel-jour-avant.webp" alt="" width="2400" height="1500" loading="lazy" decoding="async"></picture>
+</span></span>
+<span class="decouvrir__texte">
+<span class="decouvrir__sur">En savoir plus sur la méthode</span>
+<span class="decouvrir__titre">Découvre ce que tu vas vivre pendant 90 jours</span>
+<span class="decouvrir__liste">La journée type · les cinq piliers · les quatre phases · ce qui change en toi</span>
+</span>
+<span class="decouvrir__fleche" aria-hidden="true">→</span>
+</a>
+</div>
 </div>
 
-<div class="hz" data-hz style="position:relative;height:calc(var(--vh,1vh)*360)">
-<div class="hz__pin" style="position:sticky;top:0;height:calc(var(--vh,1vh)*100);display:flex;flex-direction:column;justify-content:center;gap:clamp(24px,calc(var(--vh,1vh)*4),48px);padding-top:60px">
+<div class="hz" data-hz style="position:relative">
+<div class="hz__pin" style="display:flex;flex-direction:column;gap:clamp(24px,3vw,40px)">
 <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap">
 <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:17px;color:#9AA7B2">Le mouvement intérieur, en cinq étapes qui se chevauchent :</span><span style="display:flex;gap:14px;font-size:clamp(32px,4vw,56px);font-weight:600;letter-spacing:.04em"><span data-hz-l style="color:#9CC7DC;transition:color .4s">R</span><span style="color:#3C4852">·</span><span data-hz-l style="color:#3C4852;transition:color .4s">E</span><span style="color:#3C4852">·</span><span data-hz-l style="color:#3C4852;transition:color .4s">S</span><span style="color:#3C4852">·</span><span data-hz-l style="color:#3C4852;transition:color .4s">E</span><span style="color:#3C4852">·</span><span data-hz-l style="color:#3C4852;transition:color .4s">T</span></span></div>
-<span style="width:min(240px,40vw);height:2px;border-radius:2px;background:rgba(230,236,240,.12);position:relative;overflow:hidden"><span data-hz-bar style="position:absolute;inset:0;background:#9CC7DC;transform-origin:left;transform:scaleX(0)"></span></span>
+<div class="hz__nav"><p class="hz__indice">Fais défiler vers la droite</p><button type="button" class="hz__fleche" data-hz-prev aria-label="Étape précédente">←</button><span style="width:min(160px,28vw);height:2px;border-radius:2px;background:rgba(230,236,240,.12);position:relative;overflow:hidden"><span data-hz-bar style="position:absolute;inset:0;background:#9CC7DC;transform-origin:left;transform:scaleX(0)"></span></span><button type="button" class="hz__fleche" data-hz-next aria-label="Étape suivante">→</button></div>
 </div>
-<div class="hz__track" data-hz-track style="display:flex;gap:16px;will-change:transform">
+<div class="hz__track" data-hz-track tabindex="0" aria-label="Les cinq étapes, à faire défiler vers la droite" style="display:flex;gap:16px">
 <div style="flex:none;width:min(82vw,470px);min-height:min(calc(var(--vh,1vh)*62),520px);background:linear-gradient(160deg,#162630 0%,#10161B 60%);border:1px solid rgba(156,199,220,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.06);border-radius:28px;padding:clamp(28px,3vw,44px);display:flex;flex-direction:column;gap:16px">
 <span style="font-size:clamp(96px,calc(var(--vh,1vh)*14),150px);font-weight:200;line-height:.8;letter-spacing:-.05em;color:#9CC7DC">R</span>
 <h3 style="margin:16px 0 0;font-size:clamp(28px,2.6vw,38px);font-weight:600;letter-spacing:-.025em">Reconnecter</h3>
@@ -1350,6 +1441,7 @@ f();addEventListener('resize',f);})();
 </div>
 </div>
 <div data-rise aria-hidden="true" style="position:relative;display:flex;justify-content:center;align-items:flex-start;overflow:hidden;font-size:clamp(100px,24vw,360px);font-weight:700;letter-spacing:-.065em;line-height:.85;color:#FFFFFF;margin:0 -.02em -.06em"><span data-l style="display:inline-block">b</span><span data-l style="display:inline-block">e</span><span data-l style="display:inline-block">l</span><span data-l style="display:inline-block">i</span><span data-l style="display:inline-block">v</span><span data-l style="display:inline-block">e</span><span data-l style="display:inline-flex;margin:.12em 0 0 .04em;color:#FFFFFF"><span style="display:inline-flex;align-items:center;justify-content:center;width:.24em;height:.24em;border-radius:50%;border:max(3px,.022em) solid currentColor"><span style="width:46%;height:46%;border-radius:50%;background:#33708F;animation:recFade 2s ease-in-out infinite"></span></span></span></div>
+<div class="pied__mer" aria-hidden="true"><picture><source type="image/avif" srcset="assets/img/nuages/mer.avif"><img src="assets/img/nuages/mer.webp" alt="" width="2400" height="1100" loading="lazy" decoding="async"></picture></div>
 <div style="position:relative;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13px;color:#12171B">
 <span>© BELIVE</span>
 <div style="display:flex;gap:20px;flex-wrap:wrap">
@@ -1670,36 +1762,54 @@ f();addEventListener('resize',f);})();
     });
   });
 
-  /* Étapes R·E·S·E·T. À la souris, la frise suit le défilement vertical, avec un
-     amorti pour lisser les crans de la molette. Au doigt, c'est un carrousel natif
-     (voir la feuille de style) et seuls la barre et les lettres sont mis à jour. */
+  /* Étapes R·E·S·E·T : une frise qui défile vers la droite, séparée de la page.
+     Le navigateur gère le doigt et le pavé tactile ; à la souris on la tire, et les
+     flèches comme les lettres mènent à une étape. La barre et les lettres suivent. */
   all('[data-hz]').forEach(function (el) {
     var tr = one('[data-hz-track]', el), bar = one('[data-hz-bar]', el), ls = all('[data-hz-l]', el);
-    var max = 0, cur = 0, target = 0, running = false;
-    function measure() { max = Math.max(0, tr.scrollWidth - tr.parentElement.clientWidth); }
-    function mark(p) {
+    var prev = one('[data-hz-prev]', el), next = one('[data-hz-next]', el);
+    var cartes = Array.prototype.slice.call(tr.children).filter(function (c) { return c.offsetWidth > 4; });
+    function gauche(c) { return c.getBoundingClientRect().left - tr.getBoundingClientRect().left + tr.scrollLeft - parseFloat(getComputedStyle(tr).paddingLeft); }
+    function courant() {
+      var best = 0;
+      cartes.forEach(function (c, i) { if (Math.abs(gauche(c) - tr.scrollLeft) < Math.abs(gauche(cartes[best]) - tr.scrollLeft)) best = i; });
+      return best;
+    }
+    function aller(i) {
+      i = Math.max(0, Math.min(cartes.length - 1, i));
+      tr.scrollTo({ left: gauche(cartes[i]), behavior: reduce ? 'auto' : 'smooth' });
+    }
+    function mark() {
+      var max = tr.scrollWidth - tr.clientWidth, p = clamp(tr.scrollLeft / Math.max(1, max));
       bar.style.transform = 'scaleX(' + p + ')';
       ls.forEach(function (l, i) { l.style.color = p >= i / 5 - 0.02 ? '#9CC7DC' : '#3C4852'; });
+      prev.disabled = tr.scrollLeft < 4;
+      next.disabled = tr.scrollLeft > max - 4;
     }
-    function glide() {
-      cur += (target - cur) * 0.14;
-      if (reduce || Math.abs(target - cur) < 0.0005) cur = target;
-      tr.style.transform = 'translate3d(' + (-cur * max).toFixed(1) + 'px,0,0)';
-      mark(cur);
-      running = cur !== target;
-      if (running) requestAnimationFrame(glide);
-    }
-    measure();
-    window.addEventListener('resize', measure);
-    window.addEventListener('load', measure);
-    tr.addEventListener('scroll', function () {
-      if (swipe.matches) mark(clamp(tr.scrollLeft / Math.max(1, tr.scrollWidth - tr.clientWidth)));
-    }, { passive: true });
-    track(el, function (r, vh) {
-      if (swipe.matches) return;
-      target = clamp(-r.top / (r.height - vh));
-      if (!running) { running = true; requestAnimationFrame(glide); }
+    prev.addEventListener('click', function () { aller(courant() - 1); });
+    next.addEventListener('click', function () { aller(courant() + 1); });
+    ls.forEach(function (l, i) { l.addEventListener('click', function () { aller(i); }); });
+    tr.addEventListener('scroll', mark, { passive: true });
+    window.addEventListener('resize', mark);
+    mark();
+    /* à la souris : tirer la frise, puis la laisser se caler sur l'étape la plus proche */
+    var tient = false, bouge = false, x0 = 0, s0 = 0;
+    tr.addEventListener('pointerdown', function (e) {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      tient = true; bouge = false; x0 = e.clientX; s0 = tr.scrollLeft;
     });
+    window.addEventListener('pointermove', function (e) {
+      if (!tient) return;
+      var dx = e.clientX - x0;
+      if (!bouge && Math.abs(dx) > 5) { bouge = true; tr.classList.add('is-drag'); }
+      if (bouge) tr.scrollLeft = s0 - dx;
+    });
+    window.addEventListener('pointerup', function () {
+      if (!tient) return;
+      tient = false;
+      if (bouge) { tr.classList.remove('is-drag'); aller(courant()); }
+    });
+    tr.addEventListener('click', function (e) { if (bouge) { e.preventDefault(); e.stopPropagation(); bouge = false; } }, true);
   });
 
   /* Cartes empilées : chaque carte recule à mesure que les suivantes la recouvrent */
