@@ -403,15 +403,12 @@ img{max-width:100%}
 
 /* ================= La mer de nuages ================= */
 /* Une mer de nuages calculée pour le site (assets/img/nuages, sans droits
-   d'auteur) : en bas du haut de page, sur l'horizon de « La nature » et sous le
-   grand mot du pied de page. Posée devant les mots, elle les laisse s'y enfoncer
-   ou en sortir au défilement. */
+   d'auteur) : en bas du haut de page et sur l'horizon de « La nature ». Posée
+   devant les mots, elle les laisse s'y enfoncer ou en sortir au défilement. */
 .hero__mer{position:absolute;left:0;right:0;bottom:0;height:62%;pointer-events:none;animation:fadeUp 2s .4s both}
-.hero__mer img,.nature__mer img,.pied__mer img{display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:50% 100%}
+.hero__mer img,.nature__mer img{display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:50% 100%}
 .nature__mer{position:absolute;left:-30%;right:-30%;top:41%;height:27%;pointer-events:none;-webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}
 .nature__mer img{object-position:50% 34%}
-.pied__mer{position:absolute;left:0;right:0;bottom:0;height:calc(46px + clamp(64px,8vw,110px) + clamp(100px,24vw,360px)*.24);pointer-events:none}
-.pied__mer img{object-position:50% 46%}
 /* Le verre du bouton et de la carte se perd sur le blanc des nuages : un filet le redessine */
 .hero .hv-2,.hero .hv-4{outline:1px solid rgba(18,23,27,.1);outline-offset:-1px}
 /* Sur téléphone, la mer passe en bandeau sous le mot BELIVE et s'efface avant le texte */
@@ -1443,7 +1440,6 @@ f();addEventListener('resize',f);})();
 </div>
 </div>
 <div data-rise aria-hidden="true" style="position:relative;display:flex;justify-content:center;align-items:flex-start;overflow:hidden;font-size:clamp(100px,24vw,360px);font-weight:700;letter-spacing:-.065em;line-height:.85;color:#FFFFFF;margin:0 -.02em -.06em"><span data-l style="display:inline-block">b</span><span data-l style="display:inline-block">e</span><span data-l style="display:inline-block">l</span><span data-l style="display:inline-block">i</span><span data-l style="display:inline-block">v</span><span data-l style="display:inline-block">e</span><span data-l style="display:inline-flex;margin:.12em 0 0 .04em;color:#FFFFFF"><span style="display:inline-flex;align-items:center;justify-content:center;width:.24em;height:.24em;border-radius:50%;border:max(3px,.022em) solid currentColor"><span style="width:46%;height:46%;border-radius:50%;background:#33708F;animation:recFade 2s ease-in-out infinite"></span></span></span></div>
-<div class="pied__mer" aria-hidden="true"><picture><source type="image/avif" srcset="assets/img/nuages/mer.avif"><img src="assets/img/nuages/mer.webp" alt="" width="2400" height="1100" loading="lazy" decoding="async"></picture></div>
 <div style="position:relative;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13px;color:#12171B">
 <span>© BELIVE</span>
 <div style="display:flex;gap:20px;flex-wrap:wrap">
