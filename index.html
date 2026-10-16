@@ -406,6 +406,27 @@ img{max-width:100%}
    d'auteur) : en bas du haut de page et sur l'horizon de « La nature ». Posée
    devant les mots, elle les laisse s'y enfoncer ou en sortir au défilement. */
 .hero__mer{position:absolute;left:0;right:0;bottom:0;height:62%;pointer-events:none;animation:fadeUp 2s .4s both}
+/* ================= Le plan ================= */
+/* La phrase de fin des trois voies, posée comme un plan d'ingénieur : fond bleu
+   quadrillé, repères dans les coins, « un aveu de faiblesse » barré au défilement
+   et un trait de cote sous « ingénierie ». */
+.plan{position:relative;isolation:isolate;overflow:hidden;margin-top:clamp(8px,2vw,24px);border-radius:28px;padding:clamp(72px,9vw,130px) clamp(22px,5vw,72px);background:linear-gradient(160deg,#33708F 0%,#1D4B62 100%);color:#FFFFFF;text-align:center}
+.plan__grille{position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.09) 1px,transparent 1px);background-size:32px 32px;background-position:center;
+  -webkit-mask-image:radial-gradient(ellipse 70% 80% at 50% 50%,#000 35%,transparent 100%);mask-image:radial-gradient(ellipse 70% 80% at 50% 50%,#000 35%,transparent 100%)}
+.plan__coin{position:absolute;width:18px;height:18px;border:0 solid rgba(255,255,255,.55)}
+.plan__coin--hg{left:20px;top:20px;border-width:1px 0 0 1px}
+.plan__coin--hd{right:20px;top:20px;border-width:1px 1px 0 0}
+.plan__coin--bg{left:20px;bottom:20px;border-width:0 0 1px 1px}
+.plan__coin--bd{right:20px;bottom:20px;border-width:0 1px 1px 0}
+.plan__note{position:absolute;top:26px;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.plan__note--g{left:50px}
+.plan__note--d{right:50px}
+.plan__phrase{margin:0 auto;max-width:22ch;font-size:clamp(30px,4.4vw,66px);font-weight:300;line-height:1.12;letter-spacing:-.035em;text-wrap:balance}
+.plan__chute{display:block;margin-top:.4em;font-weight:600}
+.plan__cote{position:relative;white-space:nowrap}
+.plan__cote::after{content:"";position:absolute;left:0;right:0;bottom:-.14em;height:.3em;border:solid #9CC7DC;border-width:0 1.5px 1.5px}
+@media (max-width:560px){.plan__note{top:24px;font-size:9.5px;letter-spacing:.12em}.plan__note--g{left:44px}.plan__note--d{right:44px}}
 .hero__mer img,.nature__mer img{display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:50% 100%}
 .nature__mer{position:absolute;left:-30%;right:-30%;top:41%;height:27%;pointer-events:none;-webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}
 .nature__mer img{object-position:50% 34%}
@@ -891,7 +912,12 @@ f();addEventListener('resize',f);})();
 </div>
 </div>
 </div>
-<p data-reveal style="margin:clamp(24px,4vw,56px) 0 0;font-size:clamp(30px,4.2vw,64px);font-weight:300;line-height:1.08;letter-spacing:-.035em;color:#12171B;max-width:20ch;text-wrap:balance">Venir chercher de l'aide n'est pas un aveu de faiblesse. <span style="font-weight:600;color:#33708F">C'est de l'ingénierie appliquée à sa propre vie.</span></p>
+<div data-reveal class="plan">
+<span class="plan__grille" aria-hidden="true"></span>
+<span class="plan__coin plan__coin--hg" aria-hidden="true"></span><span class="plan__coin plan__coin--hd" aria-hidden="true"></span><span class="plan__coin plan__coin--bg" aria-hidden="true"></span><span class="plan__coin plan__coin--bd" aria-hidden="true"></span>
+<span class="plan__note plan__note--g" aria-hidden="true">Plan · ta propre vie</span><span class="plan__note plan__note--d" aria-hidden="true">Échelle 1:1</span>
+<p class="plan__phrase">Venir chercher de l'aide n'est pas <span data-strike data-before="#FFFFFF" data-after="rgba(255,255,255,.45)" style="white-space:nowrap;color:#FFFFFF;transition:color .4s;background:linear-gradient(#9CC7DC,#9CC7DC) no-repeat 0 58%/calc(var(--p,0)*100%) max(3px,.07em)">un aveu de faiblesse</span>. <span class="plan__chute">C'est de l'<span class="plan__cote">ingénierie</span> appliquée à sa propre vie.</span></p>
+</div>
 </div>
 </section>
 
