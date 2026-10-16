@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>RESET, 90 jours pour reprendre les commandes | BELIVE</title>
-<meta name="description" content="Un protocole de 90 jours pour changer d'identité et vivre la vie dont tu rêves. Treize semaines, quatre phases, cinq piliers : ce qu'il demande chaque jour, et le temps qu'il prend.">
+<meta name="description" content="Un protocole de 90 jours pour changer d'identité et vivre la vie dont tu rêves. 13 semaines, 4 phases, 5 piliers : ce qu'il demande chaque jour, et le temps qu'il prend.">
 <link rel="canonical" href="https://belivemethode.com/reset/">
 
 <meta property="og:type" content="website">
@@ -251,6 +251,14 @@ b,strong{font-weight:500}
 .nav__rec span{width:46%;height:46%;border-radius:50%;background:#9CC7DC;animation:recBlink 2s ease-in-out infinite}
 @keyframes recBlink{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(156,199,220,.45)}50%{opacity:.35;box-shadow:0 0 0 6px rgba(156,199,220,0)}}
 .nav__links{display:flex;align-items:center;gap:22px;margin-left:auto;font-size:14px}
+/* le retour au site principal : une pastille à côté du logo, et dans le menu sur téléphone */
+.nav__retour{
+  flex:none;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;
+  border:1px solid rgba(230,236,240,.2);color:#B9C5CE;font-size:13px;text-decoration:none;
+  transition:color .3s,border-color .3s;
+}
+.nav__retour:hover{color:#FFFFFF;border-color:rgba(230,236,240,.5)}
+.nav__links .nav__accueil{display:none}
 .nav__links a{color:#B9C5CE;text-decoration:none;transition:color .3s}
 .nav__links a:hover{color:#FFFFFF}
 .nav__links a[aria-current]{color:#FFFFFF}
@@ -288,6 +296,8 @@ b,strong{font-weight:500}
   .nav.is-open .nav__links{display:flex}
   .nav__links a{padding:14px 16px;border-radius:14px;color:#E6ECF0}
   .nav__links a[aria-current]{background:rgba(230,236,240,.08)}
+  .nav__retour{display:none}
+  .nav__links .nav__accueil{display:block;margin-top:6px;border-top:1px solid rgba(230,236,240,.08);border-radius:0 0 14px 14px;color:#9CC7DC}
 }
 @media (max-width:420px){
   .nav__word{font-size:13px;letter-spacing:.26em}
@@ -472,9 +482,40 @@ b,strong{font-weight:500}
 .chiffre__v{font-size:clamp(1.8rem,3vw,2.3rem);font-weight:300;letter-spacing:-.04em;line-height:1;
   font-variant-numeric:lining-nums tabular-nums}
 .chiffre__d{font-size:var(--t-small);color:var(--ink-3);line-height:1.45;max-width:26ch}
+.chiffre__en-tout{font-size:.5em;font-weight:500;letter-spacing:0;color:var(--ink-2)}
 @media (min-width:520px){.chiffres{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (min-width:960px){.chiffres{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .panel--chiffres{padding-block:clamp(1.8rem,3.4vw,2.8rem)}
+/* Chaque chiffre a son petit dessin : les 13 semaines en 4 phases, les 3 moments,
+   les calls et les 4 Breathwork posés sur les mêmes semaines, le temps qui monte.
+   Les pièces apparaissent l'une après l'autre quand le bloc entre à l'écran. */
+.vis{display:block;max-width:15rem}
+.vis__ligne{display:flex;align-items:flex-end;gap:3px;height:24px}
+.vis i{display:block;transition:opacity .5s ease,transform .6s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--k,0) * 45ms + 250ms)}
+.chiffres.stagger:not(.is-in) .vis i{opacity:0;transform:scale(.4)}
+.vis--semaines i{flex:1;height:12px;border-radius:3px;background:var(--c)}
+.vis--semaines i.debut:not(:first-child){margin-left:5px}
+.vis--semaines .p1{--c:color-mix(in srgb,var(--accent) 28%,var(--panel-3))}
+.vis--semaines .p2{--c:color-mix(in srgb,var(--accent) 50%,var(--panel-3))}
+.vis--semaines .p3{--c:color-mix(in srgb,var(--accent) 74%,var(--panel-3))}
+.vis--semaines .p4{--c:var(--accent)}
+.vis__phases{display:flex;gap:5px;margin-top:6px;font-size:10.5px;font-weight:600;letter-spacing:.08em;color:var(--ink-3)}
+.vis--moments{display:flex;gap:16px;height:24px;align-items:center}
+.vis--moments > span{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:500;color:var(--ink-2)}
+.vis--moments i{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--accent)}
+.vis--moments .m-matin{background:linear-gradient(transparent 50%,var(--accent) 50%)}
+.vis--moments .m-midi{background:var(--accent)}
+.vis--moments .m-soir{box-shadow:inset -4px -1px 0 0 var(--accent)}
+.vis--rdv .vis__ligne{align-items:center}
+.vis--rdv i{flex:1;display:flex;justify-content:center}
+.vis--rdv i::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ink-3)}
+.vis--rdv i.bw::before{width:14px;height:14px;background:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
+.vis--temps .vis__ligne{height:30px}
+.vis--temps i{flex:1;height:var(--h);border-radius:2px 2px 0 0;background:color-mix(in srgb,var(--accent) 70%,var(--panel-3));transform-origin:50% 100%}
+.chiffres.stagger:not(.is-in) .vis--temps i{transform:scaleY(0)}
+.leg{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.leg i{flex:none;width:6px;height:6px;border-radius:50%;background:var(--ink-3)}
+.leg--bw i{width:10px;height:10px;background:var(--accent)}
 
 /* ================= Les planches ================= */
 /* Le trait scientifique de la page : un filet fin, des repères, une légende
@@ -904,14 +945,24 @@ figcaption{color:var(--ink-3);font-size:var(--t-small);margin-top:1.6rem;max-wid
 }
 
 /* ================= Avant de commencer ================= */
-.avant{display:grid;grid-template-columns:minmax(0,1fr);gap:1.6rem var(--col)}
-@media (min-width:720px){.avant{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.cas{border-top:1px solid var(--line);padding-top:1.3rem}
-.cas h3{font-size:var(--t-h3);letter-spacing:-.02em}
-/* Sans ce plafond, la colonne unique des tablettes donnait des lignes de
-   88 signes : le double de ce que --measure autorise ailleurs. */
-.cas p{margin-top:.6rem;font-size:var(--t-small);color:var(--ink-2);max-width:var(--measure)}
-.cas p + p{margin-top:.55rem}
+/* D'abord ce que RESET n'est pas, en trois cases côte à côte ; puis ce qu'il
+   demande, en trois cartes à gros chiffre. La liste santé reste dépliable. */
+.compare{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--gap)}
+.compare__c{padding:1.2rem 1.3rem;border-radius:var(--r-md);background:var(--panel);border:1px solid var(--line)}
+.compare__nom{font-size:var(--t-label);font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.compare__fait{margin-top:.45rem;font-size:1.05rem;font-weight:500;letter-spacing:-.01em;line-height:1.35;color:var(--ink-2)}
+/* la case RESET s'inverse : sombre le jour, claire la nuit */
+.compare__c--reset{background:var(--ink);border-color:var(--ink)}
+.compare__c--reset .compare__nom{color:var(--ice-2)}
+.compare__c--reset .compare__fait{color:var(--panel)}
+.verifs{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--gap);margin-top:clamp(1.6rem,3vw,2.2rem)}
+@media (min-width:760px){.compare,.verifs{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.verif{display:flex;flex-direction:column;gap:.35rem;padding:1.4rem 1.4rem 1.5rem;border-radius:var(--r-md);background:var(--panel)}
+.verif__gros{display:flex;align-items:baseline;gap:.35rem;margin-bottom:.35rem;font-size:clamp(2.2rem,4vw,3rem);font-weight:300;letter-spacing:-.04em;line-height:1;color:var(--ink);font-variant-numeric:lining-nums tabular-nums}
+.verif__gros .num{color:var(--accent)}
+.verif__gros--icone svg{width:.95em;height:.95em;fill:none;stroke:var(--accent);stroke-width:2.4;stroke-linecap:round}
+.verif h3{font-size:var(--t-h3);letter-spacing:-.02em}
+.verif p:not(.verif__gros){font-size:var(--t-small);color:var(--ink-2);line-height:1.5}
 
 .depli{margin-top:clamp(2rem,4vw,2.8rem);border-top:1px solid var(--line)}
 .depli summary{
@@ -922,7 +973,9 @@ figcaption{color:var(--ink-3);font-size:var(--t-small);margin-top:1.6rem;max-wid
 .depli summary::-webkit-details-marker{display:none}
 .depli summary::after{content:"+";color:var(--accent);font-size:1.15rem;font-weight:400;line-height:1}
 .depli[open] summary::after{content:"–"}
-.depli__corps{padding-bottom:1.4rem;display:grid;gap:1rem;max-width:var(--measure)}
+.depli__corps{padding-bottom:1.4rem;display:grid;gap:1.6rem var(--col)}
+.depli__col{display:grid;gap:1rem;align-content:start;max-width:var(--measure)}
+@media (min-width:900px){.depli__corps{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .depli__corps p{font-size:var(--t-small);color:var(--ink-2)}
 .liste{list-style:none;margin:0;padding:0;display:grid;gap:.45rem}
 .liste li{position:relative;padding-left:1.1rem;font-size:var(--t-small);color:var(--ink-2)}
@@ -955,6 +1008,13 @@ figcaption{color:var(--ink-3);font-size:var(--t-small);margin-top:1.6rem;max-wid
   .suite .head{padding-top:clamp(15rem,72vw,19rem)}
 }
 .suite p{color:var(--on-dark-2);max-width:var(--measure);font-size:var(--t-small)}
+/* les trois étapes jusqu'au départ, reliées par un filet */
+.pas{position:relative;list-style:none;margin:0;padding:0;display:grid;gap:1.1rem;max-width:30rem}
+.pas::before{content:"";position:absolute;left:17px;top:18px;bottom:18px;width:1px;background:var(--line-dark)}
+.pas li{position:relative;display:flex;gap:1rem;align-items:flex-start}
+.pas__n{flex:none;display:grid;place-items:center;width:35px;height:35px;border-radius:50%;background:var(--dark);border:1px solid color-mix(in srgb,var(--ice-2) 60%,transparent);color:var(--ice-2);font-size:.9rem;font-weight:600}
+.pas li > span:last-child{display:flex;flex-direction:column;gap:.2rem;padding-top:.35rem;font-size:var(--t-small);color:var(--on-dark-2);line-height:1.45}
+.pas b{font-size:1rem;font-weight:600;color:var(--on-dark)}
 .suite p + p{margin-top:.75rem}
 .actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2rem}
 
@@ -1006,6 +1066,7 @@ footer a:hover{color:var(--ink)}
 <!-- Sans JavaScript, rien n'apparaît au défilement : tout est montré d'emblée -->
 <noscript><style>
 .reveal,.stagger > *{opacity:1;transform:none}
+.chiffres.stagger .vis i{opacity:1;transform:none}
 .onde svg,.choc__dessin .planche__dessin{clip-path:none}
 .arbre .tronc,.arbre .n1,.arbre .n2,.arbre .n3,.arbre .n4,.arbre .racines{stroke-dashoffset:0}
 .arbre .pointes circle{opacity:1}
@@ -1022,12 +1083,14 @@ footer a:hover{color:var(--ink)}
     <span class="nav__word"><span>BE</span><span>LIVE</span></span>
     <span class="nav__rec" aria-hidden="true"><span></span></span>
   </a>
+  <a class="nav__retour" href="/"><span aria-hidden="true">←</span> Accueil</a>
   <div class="nav__links" id="navLinks">
     <a href="#mouvements">Les mouvements</a>
     <a href="#journee">La journée</a>
     <a href="#piliers">Les piliers</a>
     <a href="#deroule">Le déroulé</a>
     <a href="#avant">Avant de commencer</a>
+    <a class="nav__accueil" href="/"><span aria-hidden="true">← </span>Retour à l'accueil BELIVE</a>
   </div>
   <a class="nav__cta" href="#suite">Liste d'attente →</a>
   <button class="nav__burger" id="navBurger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Ouvrir le menu"><span></span><span></span></button>
@@ -1079,8 +1142,8 @@ footer a:hover{color:var(--ink)}
 
     <div class="ouverture__fondu" aria-hidden="true"></div>
     <div class="ouverture__meta">
-      <span><span>Protocole individuel</span><span>Treize semaines</span><span>À distance</span></span>
-      <span><span class="ouverture__pastille">À venir</span><span>Tarif fondateur</span><span>Trois places</span></span>
+      <span><span>Protocole individuel</span><span>13 semaines</span><span>À distance</span></span>
+      <span><span class="ouverture__pastille">À venir</span><span>Tarif fondateur</span><span>3 places</span></span>
     </div>
 
     <div class="ouverture__vide"></div>
@@ -1090,7 +1153,7 @@ footer a:hover{color:var(--ink)}
         <p class="label">BELIVE RESET</p>
         <h1 id="titre"><span class="titre__n">90 jours</span> pour reprendre les commandes.</h1>
         <p class="ouverture__lead">Un protocole pour changer d'identité, t'aligner et vivre enfin la vie que tu ne t'autorisais pas.</p>
-        <p class="ouverture__note">Quatre phases, cinq piliers, et des outils qui t'accompagnent chaque jour. À&nbsp;la fin, tu tiens sans moi.</p>
+        <p class="ouverture__note">4 phases, 5 piliers, et des outils qui t'accompagnent chaque jour. À&nbsp;la fin, tu tiens sans moi.</p>
         <div class="actions">
           <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfj11kIlWgP47-O8oDt12YvOwmYfR5KPWXMzn8iG9LAzuwBDQ/viewform" target="_blank" rel="noopener">Rejoindre la liste d'attente <span class="btn__arrow">→</span></a>
           <a class="btn btn--verre" href="https://wa.me/32493847434?text=Bonjour%20Tristan%2C%20j%27ai%20une%20question%20sur%20RESET%20%3A%20" target="_blank" rel="noopener">Une question&nbsp;? <span class="btn__arrow">→</span></a>
@@ -1138,13 +1201,21 @@ footer a:hover{color:var(--ink)}
   <section class="panel panel--chiffres" aria-label="Le protocole en chiffres">
     <dl class="chiffres stagger">
       <div class="chiffre"><dt>Durée</dt>
-        <dd><span class="chiffre__v"><span class="num" data-compte="13">13</span> semaines</span><span class="chiffre__d">91 jours, du premier call au dernier.</span></dd></div>
+        <dd><span class="chiffre__v"><span class="num" data-compte="13">13</span> semaines</span>
+          <span class="vis vis--semaines" aria-hidden="true"><span class="vis__ligne"><i class="p1 debut" style="--k:0"></i><i class="p1" style="--k:1"></i><i class="p1" style="--k:2"></i><i class="p1" style="--k:3"></i><i class="p2 debut" style="--k:4"></i><i class="p2" style="--k:5"></i><i class="p2" style="--k:6"></i><i class="p3 debut" style="--k:7"></i><i class="p3" style="--k:8"></i><i class="p3" style="--k:9"></i><i class="p4 debut" style="--k:10"></i><i class="p4" style="--k:11"></i><i class="p4" style="--k:12"></i></span><span class="vis__phases"><span style="flex:4">I</span><span style="flex:3">II</span><span style="flex:3">III</span><span style="flex:3">IV</span></span></span>
+          <span class="chiffre__d">91 jours, en 4 phases.</span></dd></div>
       <div class="chiffre"><dt>Rythme</dt>
-        <dd><span class="chiffre__v"><span class="num" data-compte="3">3</span> moments</span><span class="chiffre__d">Matin, midi, soir. Tous les jours.</span></dd></div>
+        <dd><span class="chiffre__v"><span class="num" data-compte="3">3</span> moments</span>
+          <span class="vis vis--moments" aria-hidden="true"><span><i class="m-matin" style="--k:0"></i>Matin</span><span><i class="m-midi" style="--k:3"></i>Midi</span><span><i class="m-soir" style="--k:6"></i>Soir</span></span>
+          <span class="chiffre__d">Tous les jours.</span></dd></div>
       <div class="chiffre"><dt>Rendez-vous</dt>
-        <dd><span class="chiffre__v"><span class="num"><span data-compte="13">13</span> + <span data-compte="4">4</span></span></span><span class="chiffre__d">Un call par semaine, et quatre sessions Breathwork encadrées d'une heure trente.</span></dd></div>
-      <div class="chiffre"><dt>Temps de pratique</dt>
-        <dd><span class="chiffre__v"><span class="num" data-compte="98">98</span> heures</span><span class="chiffre__d">Sur les 91 jours. En moyenne, un peu plus d'une heure par jour.</span></dd></div>
+        <dd><span class="chiffre__v"><span class="num"><span data-compte="13">13</span> + <span data-compte="4">4</span></span></span>
+          <span class="vis vis--rdv" aria-hidden="true"><span class="vis__ligne"><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i><i class="bw" style="--k:3"></i><i style="--k:4"></i><i style="--k:5"></i><i class="bw" style="--k:6"></i><i style="--k:7"></i><i style="--k:8"></i><i class="bw" style="--k:9"></i><i style="--k:10"></i><i style="--k:11"></i><i class="bw" style="--k:12"></i></span></span>
+          <span class="chiffre__d"><span class="leg"><i></i>1 call par semaine</span> <span class="leg leg--bw"><i></i>4 Breathwork de 1&nbsp;h&nbsp;30</span></span></dd></div>
+      <div class="chiffre"><dt>Temps total</dt>
+        <dd><span class="chiffre__v"><span class="num" data-compte="98">98</span> heures <span class="chiffre__en-tout">en tout</span></span>
+          <span class="vis vis--temps" aria-hidden="true"><span class="vis__ligne"><i style="--k:0;--h:21%"></i><i style="--k:1;--h:45%"></i><i style="--k:2;--h:67%"></i><i style="--k:3;--h:68%"></i><i style="--k:4;--h:94%"></i><i style="--k:5;--h:94%"></i><i style="--k:6;--h:94%"></i><i style="--k:7;--h:100%"></i><i style="--k:8;--h:100%"></i><i style="--k:9;--h:100%"></i><i style="--k:10;--h:100%"></i><i style="--k:11;--h:100%"></i><i style="--k:12;--h:100%"></i></span></span>
+          <span class="chiffre__d">Pour les 13 semaines. Chaque jour, de 18&nbsp;min au début à 85&nbsp;min à la fin.</span></dd></div>
     </dl>
   </section>
 
@@ -1166,7 +1237,7 @@ footer a:hover{color:var(--ink)}
         <span class="planche__mot" style="left:6.45%;top:27.83%;transform:translate(-2px,-190%)">Lundi, tout à fond</span>
         <span class="planche__mot" style="left:19.52%;top:70.3%;transform:translate(14px,-210%)">Jeudi</span>
         <span class="planche__mot choc__mot-b" style="left:93.55%;top:38.17%;transform:translate(-100%,-190%)">Par paliers, ça tient</span>
-        <span class="planche__mot" style="left:93.55%;top:85.22%;transform:translate(-100%,70%)">Trois semaines</span>
+        <span class="planche__mot" style="left:93.55%;top:85.22%;transform:translate(-100%,70%)">3 semaines</span>
       </div>
       <figcaption class="planche__legende"><span class="planche__fig">Fig. 01</span><span>En pointillé, tout changer d'un coup. En trait plein, une dose qui monte.</span></figcaption>
     </figure>
@@ -1181,7 +1252,7 @@ footer a:hover{color:var(--ink)}
   <section class="panel panel--dark" id="mouvements">
     <div class="head">
       <p class="label"><span class="label__n num">01</span> Le mouvement intérieur</p>
-      <h2>RESET, ce sont cinq mouvements, et ils se chevauchent.</h2>
+      <h2>RESET, ce sont 5 mouvements, et ils se chevauchent.</h2>
       <p>Pour chacun, la phrase que tu diras le jour où il sera là.</p>
     </div>
     <figure class="planche onde" data-trace>
@@ -1231,7 +1302,7 @@ footer a:hover{color:var(--ink)}
   <section class="panel panel--tint" id="journee">
     <div class="head">
       <p class="label"><span class="label__n num">02</span> La journée</p>
-      <h2>Trois moments par jour, et des outils simples pour chacun.</h2>
+      <h2>3 moments par jour, et des outils simples pour chacun.</h2>
       <p>Fais défiler, le jour passe.</p>
     </div>
 
@@ -1284,10 +1355,10 @@ footer a:hover{color:var(--ink)}
         </li>
         <li class="mom" data-angle="30" data-quand="En soirée" data-sorte="3 soirs sur 7">
           <div class="mom__haut"><p class="mom__quand">En soirée</p><p class="mom__total"><span class="mom__sorte mom__sorte--fenetre">3 soirs sur 7</span></p></div>
-          <h3>Le corps, trois soirs par semaine</h3>
+          <h3>Le corps, 3 soirs par semaine</h3>
           <ul class="gestes">
-            <li class="geste" style="--d:35"><span>Le training, deux fois par semaine</span><span class="duree">25 à 35 min</span></li>
-            <li class="geste" style="--d:25"><span>Le stretching, une fois par semaine</span><span class="duree">25 min</span></li>
+            <li class="geste" style="--d:35"><span>Le training, 2 fois par semaine</span><span class="duree">25 à 35 min</span></li>
+            <li class="geste" style="--d:25"><span>Le stretching, 1 fois par semaine</span><span class="duree">25 min</span></li>
           </ul>
         </li>
         <li class="mom" data-angle="-16" data-quand="Au coucher" data-sorte="Chaque jour">
@@ -1296,7 +1367,7 @@ footer a:hover{color:var(--ink)}
           <ul class="gestes">
             <li class="geste" style="--d:10"><span>Après le repas du soir, une marche lente</span><span class="duree">5 à 10 min</span></li>
             <li class="geste" style="--d:5"><span>Allongé, jambes au mur</span><span class="duree">5 min</span></li>
-            <li class="geste" style="--d:10"><span>L'assise du soir, une demi-heure avant</span><span class="duree">10 min</span></li>
+            <li class="geste" style="--d:10"><span>L'assise du soir, 30 min avant</span><span class="duree">10 min</span></li>
           </ul>
         </li>
       </ol>
@@ -1307,7 +1378,7 @@ footer a:hover{color:var(--ink)}
   <section class="panel" id="piliers">
     <div class="tete">
       <div class="head">
-        <p class="label"><span class="label__n num">03</span> Les cinq piliers</p>
+        <p class="label"><span class="label__n num">03</span> Les 5 piliers</p>
         <h2>Les lettres disent ce que tu vis. Les piliers disent ce que tu fais.</h2>
         <p>Ils ne se travaillent pas l'un après l'autre&nbsp;: ils montent ensemble, à des vitesses différentes.</p>
       </div>
@@ -1329,7 +1400,7 @@ footer a:hover{color:var(--ink)}
           <span class="planche__mot" data-p="RE" style="left:56.25%;top:32.54%">RE</span>
           <span class="planche__mot" data-p="ME" style="left:72.23%;top:41.81%">ME</span>
         </div>
-        <figcaption class="planche__legende"><span class="planche__fig">Fig. 04</span><span>Le sommeil en racines, quatre branches qui montent ensemble. Survole un pilier.</span></figcaption>
+        <figcaption class="planche__legende"><span class="planche__fig">Fig. 04</span><span>Le sommeil en racines, 4 branches qui montent ensemble. Survole un pilier.</span></figcaption>
       </figure>
     </div>
 
@@ -1348,11 +1419,11 @@ footer a:hover{color:var(--ink)}
       </div>
       <div class="pilier" data-p="RE" tabindex="0">
         <p class="pilier__code">RE</p><h3>Respiration</h3>
-        <p>Quelques minutes par jour, et quatre sessions longues, encadrées en direct.</p>
+        <p>Quelques minutes par jour, et 4 sessions longues, encadrées en direct.</p>
       </div>
       <div class="pilier" data-p="ME" tabindex="0">
         <p class="pilier__code">ME</p><h3>Méditation</h3>
-        <p>Deux assises par jour, le matin et le soir.</p>
+        <p>2 assises par jour, le matin et le soir.</p>
       </div>
     </div>
 
@@ -1388,8 +1459,8 @@ footer a:hover{color:var(--ink)}
     </div>
     <div class="head">
       <p class="label"><span class="label__n num">04</span> Le déroulé</p>
-      <h2>Quatre phases. Trois ajoutent, la dernière retire.</h2>
-      <p>Une phase par mois, environ. Chacune se termine par une session de Breathwork encadrée, et tu n'as jamais plus d'un mois devant toi.</p>
+      <h2>Voir. Tenir. Choisir. Ancrer.</h2>
+      <p>4 phases, 1 par mois environ. Chacune se termine par une session de Breathwork encadrée, et tu n'as jamais plus d'un mois devant toi.</p>
     </div>
 
     <div class="voyage" data-voyage>
@@ -1431,7 +1502,7 @@ footer a:hover{color:var(--ink)}
         <div class="etape__corps">
           <p class="etape__quand">Semaines 11 à 13 · le verbe est&nbsp;ancrer</p>
           <h3>L'Intégration</h3>
-          <p class="etape__txt">Tu gardes trois pratiques sur treize, tu écris ton Protocole de Vie, et c'est toi qui mènes les derniers calls.</p>
+          <p class="etape__txt">Tu gardes 3 pratiques sur 13, tu écris ton Protocole de Vie, et c'est toi qui mènes les derniers calls.</p>
           <p class="etape__palier">«&nbsp;Je tiens sans toi.&nbsp;»</p>
         </div>
       </article>
@@ -1460,32 +1531,38 @@ footer a:hover{color:var(--ink)}
   <section class="panel panel--tint" id="avant">
     <div class="head">
       <p class="label"><span class="label__n num">05</span> Avant de commencer</p>
-      <h2>Ce que le protocole n'est pas, et pour qui il n'est pas fait.</h2>
-      <p>Tout commence par un questionnaire d'admission. Si c'est non, je te le dis avant de commencer.</p>
+      <h2>Ni une remise en forme, ni une thérapie.</h2>
+      <p>Tout commence par un questionnaire d'admission. Si c'est non, je te le dis avant.</p>
     </div>
 
-    <div class="avant">
-      <div class="cas">
-        <h3>Ni remise en forme, ni thérapie</h3>
-        <p>Une remise en forme change ce que le corps peut faire. Une thérapie change le rapport au passé. RESET change l'état dans lequel tu te lèves le matin.</p>
+    <div class="compare">
+      <div class="compare__c"><p class="compare__nom">Une remise en forme</p><p class="compare__fait">change ce que ton corps peut faire.</p></div>
+      <div class="compare__c"><p class="compare__nom">Une thérapie</p><p class="compare__fait">change ton rapport au passé.</p></div>
+      <div class="compare__c compare__c--reset"><p class="compare__nom">RESET</p><p class="compare__fait">change l'état dans lequel tu te lèves le matin.</p></div>
+    </div>
+
+    <div class="verifs">
+      <div class="verif">
+        <p class="verif__gros"><span class="num">100</span> min</p>
+        <h3>À t'accorder chaque jour</h3>
+        <p>Du temps pour toi. À partir de la semaine 8, la pratique en prend jusqu'à 85. Si tu ne peux pas te les accorder aujourd'hui, ce n'est simplement pas encore le moment.</p>
       </div>
-      <div class="cas">
-        <h3>Ce qu'il ne promet pas</h3>
-        <p>Pas de guérison, pas de résultat garanti. À la place, un cadre écrit, et son coût réel dit avant l'achat.</p>
+      <div class="verif">
+        <p class="verif__gros"><span class="num">0</span> miracle</p>
+        <h3>Aucune promesse de guérison</h3>
+        <p>Ni résultat garanti. À la place, un cadre écrit, et le vrai prix annoncé avant de t'engager.</p>
       </div>
-      <div class="cas">
-        <h3>Du temps, vraiment disponible</h3>
-        <p>Compte cent minutes libres par jour sur la fin du protocole. Sans cette marge, mieux vaut attendre la cohorte suivante.</p>
-      </div>
-      <div class="cas">
-        <h3>Ta santé, d'abord</h3>
-        <p>Certaines situations ne vont pas avec ce protocole. D'autres sont possibles, avec l'accord écrit de ton praticien. La liste est courte, et elle est juste en dessous.</p>
+      <div class="verif">
+        <p class="verif__gros verif__gros--icone" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="21"/><path d="M24 14v20M14 24h20"/></svg></p>
+        <h3>Ta santé d'abord</h3>
+        <p>Certaines situations demandent l'accord écrit de ton praticien, d'autres ne permettent pas le protocole. Tout est listé juste en dessous.</p>
       </div>
     </div>
 
     <details class="depli">
-      <summary>Les situations qui demandent un avis, ou un non</summary>
+      <summary>Voir les situations qui demandent un avis, ou un non</summary>
       <div class="depli__corps">
+        <div class="depli__col">
         <p><b>Le protocole n'est pas adapté en cas de&nbsp;:</b></p>
         <ul class="liste">
           <li>grossesse en cours&nbsp;;</li>
@@ -1493,16 +1570,28 @@ footer a:hover{color:var(--ink)}
           <li>épilepsie&nbsp;;</li>
           <li>trouble respiratoire sévère, comme un asthme sévère ou une BPCO&nbsp;;</li>
           <li>diagnostic de psychose ou de trouble bipolaire&nbsp;;</li>
-          <li>idées suicidaires, actuelles ou dans les six derniers mois&nbsp;;</li>
+          <li>idées suicidaires, actuelles ou dans les 6 derniers mois&nbsp;;</li>
           <li>trouble du comportement alimentaire actif&nbsp;;</li>
           <li>dépendance active à l'alcool ou à une substance.</li>
         </ul>
         <p>Dans ces cas, je te le dis simplement, et je t'oriente vers quelqu'un si je le peux.</p>
-        <p><b>Possible, avec l'accord écrit de ton praticien.</b> Un suivi psychologique en cours n'est pas un motif de refus&nbsp;: le protocole travaille l'hygiène de vie et la régulation, pas le rapport au passé. Il faut seulement que ton praticien soit au courant et d'accord. C'est la même chose pour un traitement psychotrope, un trauma accompagné par ailleurs, un trouble cardiovasculaire stabilisé, un diabète sous traitement, des migraines sévères ou un glaucome, ou un projet de grossesse. Certaines pratiques sont alors retirées de ton protocole.</p>
+        </div>
+        <div class="depli__col">
+        <p><b>Possible, avec l'accord écrit de ton praticien&nbsp;:</b></p>
+        <ul class="liste">
+          <li>un suivi psychologique en cours&nbsp;;</li>
+          <li>un traitement psychotrope&nbsp;;</li>
+          <li>un trauma accompagné par ailleurs&nbsp;;</li>
+          <li>un trouble cardiovasculaire stabilisé, un diabète sous traitement&nbsp;;</li>
+          <li>des migraines sévères, un glaucome&nbsp;;</li>
+          <li>un projet de grossesse.</li>
+        </ul>
+        <p>Certaines pratiques sont alors retirées de ton protocole.</p>
+        </div>
       </div>
     </details>
 
-    <p class="urgence">Si tu traverses des idées suicidaires en ce moment, n'attends pas d'en parler&nbsp;: appelle le <a href="tel:080032123">0800 32 123</a> en Belgique, ou le <a href="tel:3114">3114</a> en France. C'est gratuit, et quelqu'un répond jour et nuit.</p>
+    <p class="urgence">Si tu traverses des idées suicidaires en ce moment, appelle le <a href="tel:080032123">0800 32 123</a> en Belgique ou le <a href="tel:3114">3114</a> en France. C'est gratuit, jour et nuit.</p>
   </section>
 
   <!-- ===== 06. La suite ===== -->
@@ -1519,11 +1608,14 @@ footer a:hover{color:var(--ink)}
       <p class="label"><span class="label__n num">06</span> La suite</p>
       <h2>RESET n'est pas encore ouvert.</h2>
     </div>
-    <p>La date n'est pas fixée, et je préfère le dire plutôt que d'annoncer un mois au hasard. La liste d'attente est prévenue en premier, avant l'annonce publique.</p>
-    <p>À l'ouverture, un questionnaire d'admission&nbsp;: ta santé, et le temps dont tu disposes vraiment. Si le protocole ne peut pas démarrer maintenant, je te le dis par écrit. Sinon, trente minutes d'appel, gratuites et sans engagement, pour décider à deux.</p>
+    <ol class="pas">
+      <li><span class="pas__n num">1</span><span><b>Tu t'inscris sur la liste d'attente</b>6 questions, 5 minutes.</span></li>
+      <li><span class="pas__n num">2</span><span><b>Je te préviens en premier</b>La date n'est pas encore fixée. Tu l'apprends avant l'annonce publique.</span></li>
+      <li><span class="pas__n num">3</span><span><b>Un questionnaire, puis un appel</b>Ta santé et ton temps, puis 30&nbsp;min d'appel gratuit pour décider à deux.</span></li>
+    </ol>
     <div class="actions">
       <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfj11kIlWgP47-O8oDt12YvOwmYfR5KPWXMzn8iG9LAzuwBDQ/viewform" target="_blank" rel="noopener">Rejoindre la liste d'attente <span class="btn__arrow">→</span></a>
-      <a class="btn btn--ghost" href="/#offres">Commencer par une séance <span class="btn__arrow">→</span></a>
+      <a class="btn btn--ghost" href="/#offres">Commencer par une séance offerte <span class="btn__arrow">→</span></a>
     </div>
   </section>
 
@@ -1575,7 +1667,7 @@ footer a:hover{color:var(--ink)}
   /* La section à l'écran : son lien est marqué, et sur ordinateur une pastille
      glisse derrière lui, comme sur l'accueil. */
   var links = document.getElementById('navLinks');
-  var spy = all('a', links).map(function(a){
+  var spy = all('a[href^="#"]', links).map(function(a){
     return { a:a, el:document.getElementById(a.getAttribute('href').slice(1)), x:0, w:0 };
   });
   var here = links.insertBefore(document.createElement('span'), links.firstChild);
