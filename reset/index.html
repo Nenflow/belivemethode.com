@@ -574,8 +574,9 @@ b,strong{font-weight:500}
 
 /* ================= Ce que RESET change ================= */
 /* La vie qu'on ne s'autorise pas, puis les trois freins : un trait les barre l'un après
-   l'autre à mesure qu'on descend (le script pose --b sur chacun), et « d'y croire »
-   s'allume quand le dernier est barré. Sans script, tout est lisible d'emblée. */
+   l'autre à mesure qu'on descend (le script pose --b sur chacun). Quand le dernier est
+   barré, les trois temps puis « y croire » s'allument l'un après l'autre (le script
+   pose .est-allume). Sans script, tout est lisible d'emblée. */
 .identite{
   position:relative;isolation:isolate;overflow:hidden;margin-bottom:var(--gap);
   display:grid;justify-items:center;text-align:center;gap:clamp(1.7rem,3.8vw,2.8rem);
@@ -596,18 +597,21 @@ b,strong{font-weight:500}
   transition:color .7s ease;
 }
 .frein.est-barre span{color:var(--ink-3)}
-.identite__chute{
-  position:relative;isolation:isolate;margin:clamp(.6rem,2vw,1.4rem) 0 0;max-width:22ch;text-wrap:balance;
+.identite__chute{display:grid;justify-items:center;gap:clamp(.3rem,.9vw,.55rem);margin:clamp(.6rem,2vw,1.4rem) 0 0}
+/* les trois temps passent devant la lueur de « y croire », qui remonte jusqu'à eux */
+.temps{position:relative;z-index:1;margin:0;max-width:22ch;text-wrap:balance;font-size:clamp(1.45rem,3.2vw,2.5rem);font-weight:600;letter-spacing:-.035em;line-height:1.15}
+.identite__croire{
+  position:relative;isolation:isolate;margin:clamp(.9rem,2.6vw,1.8rem) 0 0;max-width:22ch;text-wrap:balance;
   font-size:clamp(1.45rem,3.2vw,2.5rem);font-weight:500;letter-spacing:-.03em;line-height:1.1;
 }
-.identite__chute em{display:block;margin-top:.04em;font-size:2.15em;font-style:normal;font-weight:600;letter-spacing:-.05em;line-height:1;color:var(--accent)}
-.identite__chute::before{
+.identite__croire em{display:block;margin-top:.04em;font-size:2.15em;font-style:normal;font-weight:600;letter-spacing:-.05em;line-height:1;color:var(--accent)}
+.identite__croire::before{
   content:"";position:absolute;left:50%;top:58%;z-index:-1;width:min(130vw,44rem);aspect-ratio:1;border-radius:50%;pointer-events:none;
   background:radial-gradient(circle,color-mix(in srgb,var(--ice) 80%,transparent) 0%,transparent 62%);
   transform:translate(-50%,-50%) scale(var(--core));transition:transform 5s cubic-bezier(.45,0,.55,1);
 }
-.identite.est-pilote .identite__chute{opacity:.14;transform:translateY(10px);transition:opacity 1.1s ease,transform 1.1s cubic-bezier(.2,.7,.2,1)}
-.identite.est-pilote.est-libre .identite__chute{opacity:1;transform:none}
+.identite.est-pilote .temps,.identite.est-pilote .identite__croire{opacity:.14;transform:translateY(10px);transition:opacity 1.1s ease,transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.identite.est-pilote .est-allume{opacity:1;transform:none}
 .identite > *{position:relative;z-index:1}
 .identite > .identite__chute{z-index:0}
 .identite__ligne{display:block}
@@ -1170,7 +1174,8 @@ footer a:hover{color:var(--ink)}
 
   <!-- ===== Ce que RESET change ===== -->
   <!-- Le message de fond : la vie qu'on ne s'autorise pas, les trois freins qu'un trait
-       barre l'un après l'autre au défilement, puis ce qui compte le plus. -->
+       barre l'un après l'autre au défilement, puis les trois temps (l'état depuis lequel
+       on crée sa vie, le changer, créer depuis celui-là) et enfin « y croire ». -->
   <section class="identite" aria-labelledby="identite-titre">
     <div class="identite__mer" aria-hidden="true">
       <picture>
@@ -1186,7 +1191,12 @@ footer a:hover{color:var(--ink)}
       <li class="frein"><span>Tes peurs décident à ta place.</span></li>
       <li class="frein"><span>Tu doutes de pouvoir y arriver.</span></li>
     </ul>
-    <p class="identite__chute">Le plus fondamental, c'est <em>d'y croire.</em></p>
+    <div class="identite__chute">
+      <p class="temps">Depuis quel état crées-tu ta&nbsp;vie&nbsp;?</p>
+      <p class="temps">Change cet état.</p>
+      <p class="temps">Et crée ta vie depuis celui-là.</p>
+      <p class="identite__croire">Là, tu peux enfin <em>y croire.</em></p>
+    </div>
     <p class="identite__suite reveal">Ça ne dépend que de toi. <span class="identite__ligne">Personne ne pourra croire en toi à ta place, ni prendre les décisions et faire les actions à&nbsp;ta&nbsp;place.</span></p>
     <p class="identite__depart reveal">C'est ici que ça commence.</p>
     <div class="identite__action reveal">
@@ -1872,8 +1882,9 @@ footer a:hover{color:var(--ink)}
   var phrases = reduce ? [] : all('[data-mots]').map(function(e){ e.classList.add('est-pilote'); return { el:e, m:all('.m', e) }; });
 
   /* Ce que RESET change : un trait barre les trois freins l'un après l'autre,
-     puis « d'y croire » s'allume */
+     puis les trois temps et « y croire » s'allument à leur tour, un peu plus bas chacun */
   var identite = reduce ? null : one('.identite'), freins = identite ? all('.frein', identite) : [], liste = identite && one('.freins', identite);
+  var temps = identite ? all('.temps, .identite__croire', identite) : [];
   if (identite) identite.classList.add('est-pilote');
   function majFreins(vh){
     var r = liste.getBoundingClientRect();
@@ -1884,7 +1895,11 @@ footer a:hover{color:var(--ink)}
       f.style.setProperty('--b', b.toFixed(3));
       f.classList.toggle('est-barre', b > 0.98);
     });
-    identite.classList.toggle('est-libre', P > freins.length - 0.02);
+    // le dernier frein est barré quand la liste passe à 32 % de l'écran ; on compte à partir de là
+    var d = (vh * 0.32 - r.top) / vh;
+    temps.forEach(function(t, i){
+      t.classList.toggle('est-allume', d > 0.02 + i * 0.06);
+    });
   }
 
   /* Les doutes arrivent comme des notifications, la plus récente en haut, trois à la fois.
