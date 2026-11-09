@@ -531,42 +531,6 @@ const PREPA = [
   "L'idéal : venir à jeun. Sinon un repas léger, au moins 2 h avant."
 ];
 
-/* ========================== Les quatre phases ==========================
-   creuxJours reprend les jours écrits dans creux : jours 10 à 15,
-   semaine 7 (jours 43 à 49), semaines 11 et 12 (jours 71 à 84).
-   La phase III n'a pas de creux daté.
-   ======================================================================= */
-const PHASES = [
-  { n:1, romain:"I",   nom:"Rencontre Intérieure", s:[1,4],
-    verbe:"voir",
-    installe:"La lumière au réveil et la caféine déplacée, les deux seuls comportements qu'on change d'emblée. Puis les trois ancres, les marches après les repas, et la première session encadrée au jour 24.",
-    disparait:null,
-    creux:"Jours 10 à 15. La nouveauté retombe, les résultats ne sont pas encore là, et le sevrage de caféine peut mordre. C'est normal et c'est prévu : tout le monde passe par là.",
-    creuxJours:[10,15],
-    dit:"Ma journée a une structure." },
-  { n:2, romain:"II",  nom:"La Traversée", s:[5,7],
-    verbe:"tenir",
-    installe:"Deux trainings par semaine, une séance de stretching, puis le froid en fin de douche. Le but n'est pas d'endurer, c'est de rester calme pendant un stress que tu as choisi.",
-    disparait:"Le support de l'assise du soir, en semaine 7. Même durée, même créneau, plus de ratio : le soir rejoint le matin en pleine conscience. Le premier retrait du protocole, et il est plus dur qu'un ajout.",
-    creux:"Semaine 7. Le vide devient conscient : les fuites ne fonctionnent plus et rien ne les a remplacées. Rien n'est ajouté cette semaine-là, marches comprises.",
-    creuxJours:[43,49],
-    dit:"Je traverse sans fuir." },
-  { n:3, romain:"III", nom:"La Reconstruction", s:[8,10],
-    verbe:"choisir",
-    installe:"Trois gestes, un par semaine, et chacun dans le réel : un inventaire de ce que tu portes sans l'avoir choisi, une décision que quelqu'un d'autre pourrait vérifier, une demande adressée à une personne vivante.",
-    disparait:null,
-    creux:"Pas de creux daté. Ce que tu vas trouver : ce qui n'est pas daté n'a pas lieu. Le non se dit à une date, la demande se fait à une date.",
-    creuxJours:null,
-    dit:"Je décide, et je le prouve." },
-  { n:4, romain:"IV",  nom:"L'Intégration", s:[11,13],
-    verbe:"ancrer",
-    installe:"Ton Protocole de Vie, écrit à la main, une section par jour. Ta carte de rechute, ta direction à douze mois, et deux ou trois personnes prévenues.",
-    disparait:"L'éventail passe de treize pratiques à trois. La consigne s'arrête pendant sept jours. Le coach se retire : c'est toi qui mènes les deux derniers calls.",
-    creux:"Semaines 11 et 12. La peur de la fin. Les anciens réflexes reviennent tester la structure, au moment exact où l'accompagnement se retire. Le retrait est annoncé dès la semaine 10.",
-    creuxJours:[71,84],
-    dit:"Je ne reviendrai pas en arrière." }
-];
-
 /* ========================== Mémoire locale ==========================
    Tout reste dans le navigateur du client : la page n'envoie rien. Elle
    garde la date du premier call, les ressources marquées comme vues, et
@@ -869,29 +833,41 @@ function vueJour(c){
     + carteProtocole(c) + '</div></div>';
 }
 
-/* ========================== Parcours ========================== */
+/* ========================== Parcours ==========================
+   Les quatre phases et les treize semaines viennent de protocole.py : PHASES,
+   puis pour chaque semaine son titre (WEEKS[w].titre) et ses rendez-vous
+   (rdv(w, 'carte')). */
 function vueParcours(c){
-  const phases = PHASES.map(p => {
+  const phases = RESET.PHASES.map(p => {
+    const [a, b] = p.weeks;
     const e = c.etat === 'fini' ? 'fait'
       : c.etat !== 'cours' ? 'avenir'
-      : c.s > p.s[1] ? 'fait' : c.s < p.s[0] ? 'avenir' : 'ici';
+      : c.s > b ? 'fait' : c.s < a ? 'avenir' : 'ici';
     let sems = '';
-    for(let n = p.s[0]; n <= p.s[1]; n++)
-      sems += '<span' + (e === 'fait' || (e === 'ici' && n < c.s) ? ' data-e="fait"' : e === 'ici' && n === c.s ? ' data-e="ici"' : '')
-        + '>S' + n + '</span>';
+    for(let w = a; w <= b; w++){
+      const s = RESET.SEMAINES[w];
+      const ew = c.etat === 'fini' || (c.etat === 'cours' && w < c.s) ? 'fait' : c.etat === 'cours' && w === c.s ? 'proche' : '';
+      sems += '<div class="ligne" data-e="' + ew + '">'
+        + '<span class="ligne-n">' + w + '</span>'
+        + '<span class="ligne-txt"><strong>' + riche(s.titre) + '</strong><small>' + riche(s.rdv) + '</small></span>'
+        + (ew === 'proche' ? '<span class="ligne-etat">Cette semaine</span>'
+            : depart ? '<span class="ligne-etat">' + echap(texteDate(dateDu(7 * (w - 1) + 1), { day:'numeric', month:'short' })) + '</span>' : '')
+        + '</div>';
+    }
+    const suite = e === 'avenir' ? ''
+      : e === 'ici' && p.continue_.length ? '<p><b>Ce qui continue.</b> ' + p.continue_.map(t => riche(t)).join(' ') + '</p>'
+      : p.apres.length ? '<p><b>Après RESET.</b> ' + p.apres.map(t => riche(t)).join(' ') + '</p>' : '';
     const verrou = e !== 'avenir' ? ''
       : p.n === 1 || !depart ? "S'ouvre au premier call."
-      : "S'ouvre au call du " + texteDate(dateDu(jourDuCall(p.s[0])), { day:'numeric', month:'long' }) + '.';
+      : "S'ouvre au call du " + texteDate(dateDu(jourDuCall(a)), { day:'numeric', month:'long' }) + '.';
     return '<article class="phase" data-e="' + e + '">'
-      + '<div class="phase-tete"><span class="label">Phase ' + p.romain + ' · semaines ' + p.s[0] + ' à ' + p.s[1] + '</span>'
+      + '<div class="phase-tete"><span class="label">Phase ' + p.rom + ' · semaines ' + a + ' à ' + b + '</span>'
       + '<span class="pastille">' + (e === 'fait' ? 'Terminée' : e === 'ici' ? 'En cours' : 'À venir') + '</span></div>'
-      + '<div class="phase-nom"><h3>' + echap(p.nom) + '</h3>'
-      + '<span>Le verbe est ' + echap(p.verbe) + '. « ' + echap(p.dit) + ' »</span></div>'
-      + (e !== 'avenir' ? '<div class="phase-detail">'
-          + '<p><b>Ce qui s\'installe.</b> ' + echap(p.installe) + '</p>'
-          + (p.disparait ? '<p><b>Ce qui disparaît.</b> ' + echap(p.disparait) + '</p>' : '')
-          + '<p><b>Le creux.</b> ' + echap(p.creux) + '</p></div>' : '')
-      + '<div class="sems">' + sems + '</div>'
+      + '<div class="phase-nom"><h3>' + riche(p.name) + '</h3>'
+      + '<span>Le verbe est ' + riche(p.verb) + '. ' + riche(p.court) + '</span></div>'
+      + '<div class="sems">' + p.tags.map(t => '<span>' + riche(t) + '</span>').join('') + '</div>'
+      + (suite ? '<div class="phase-detail">' + suite + '</div>' : '')
+      + '<div>' + sems + '</div>'
       + (verrou ? '<span class="petit">' + echap(verrou) + '</span>' : '')
       + '</article>';
   }).join('');
@@ -917,8 +893,9 @@ function vueParcours(c){
       const e = jourDuCall(n) < j ? 'fait' : n === prochain ? 'prochain' : '';
       calls.push('<div class="ligne ligne--call" data-e="' + e + '">'
         + '<span class="ligne-num">' + String(n).padStart(2, '0') + '</span>'
-        + '<span class="ligne-date">' + echap(maj(texteDate(dateDu(jourDuCall(n)), { weekday:'short', day:'numeric', month:'short' }))) + '</span>'
-        + '<span class="ligne-etat">' + (e === 'fait' ? 'Fait' : e === 'prochain' ? 'Prochain' : n >= 12 ? 'Tu le mènes' : '') + '</span></div>');
+        + '<span class="ligne-date">' + echap(maj(texteDate(dateDu(jourDuCall(n)), { weekday:'short', day:'numeric', month:'short' }))
+            + ' · ' + (RESET.OPEN.includes(n) ? '60 min' : '30 min')) + '</span>'
+        + '<span class="ligne-etat">' + (e === 'fait' ? 'Fait' : e === 'prochain' ? 'Prochain' : '') + '</span></div>');
     }
     if(!ecran.tousCalls){
       const p0 = Math.min(prochain, 13);
@@ -952,9 +929,9 @@ function vueParcours(c){
 /* ========================== Ressources ========================== */
 function ressources(){
   const docs = DOCS.flatMap(g => g.docs.map(d => {
-    const ph = PHASES.find(p => Math.max(1, d.des) <= p.s[1]);
+    const ph = RESET.PHASES.find(p => Math.max(1, d.des) <= p.weeks[1]);
     return { cle:'d' + d.n, type:'pdf', genre:'PDF', phase:ph.n, titre:d.titre,
-      meta:d.meta + ' · phase ' + ph.romain, des:d.des, url:d.url, pret:!!d.url };
+      meta:d.meta + ' · phase ' + ph.rom, des:d.des, url:d.url, pret:!!d.url };
   }));
   /* La clé d'une vidéo est son identifiant YouTube : la coche « vu » la
      suit même si la liste change d'ordre. */
@@ -996,8 +973,8 @@ function vueRessources(c){
     /* Les documents se rangent par phase. La phase en cours vient en
        premier ; tant qu'il n'y en a pas, on montre tout. */
     const filtres = (c.phase ? [['cours', 'Phase ' + c.phase.rom + ', en cours']] : [])
-      .concat([['tout', 'Tout']], PHASES.map(p => [String(p.n), 'Phase ' + p.romain
-        + (c.etat === 'fini' || (c.etat === 'cours' && c.s >= p.s[0]) ? '' : ' · fermée')]));
+      .concat([['tout', 'Tout']], RESET.PHASES.map(p => [String(p.n), 'Phase ' + p.rom
+        + (c.etat === 'fini' || (c.etat === 'cours' && c.s >= p.weeks[0]) ? '' : ' · fermée')]));
     let f = ecran.phaseDoc;
     if(f === 'cours' && !c.phase) f = 'tout';
     const montre = f === 'cours' ? String(c.phase.n) : f;
@@ -1005,7 +982,7 @@ function vueRessources(c){
       const r = docs.find(x => x.cle === 'd' + k.n);
       if(!r) return '';
       return '<button type="button" data-act="res" data-cle="' + r.cle + '">'
-        + '<small>0' + (i + 1) + ' · phase ' + PHASES[r.phase - 1].romain + '</small>'
+        + '<small>0' + (i + 1) + ' · phase ' + RESET.PHASES[r.phase - 1].rom + '</small>'
         + '<strong>' + echap(r.titre) + '</strong></button>';
     }).join('');
     corps = '<section style="display:flex;flex-direction:column;gap:12px"><span class="label" style="padding:0 4px">Ton kit</span>'
