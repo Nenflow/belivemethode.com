@@ -538,24 +538,7 @@ b,strong{font-weight:500}
 .planche__fig{color:var(--accent);font-weight:600}
 .panel--dark .planche__legende{border-color:var(--line-dark);color:var(--on-dark-2)}
 
-/* Fig. 01 : l'onde */
-.onde{margin:0 0 clamp(2.2rem,4vw,3.2rem)}
-.onde .trace{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-.onde .axe{stroke:var(--line-dark);vector-effect:non-scaling-stroke}
-.onde__bouts{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:.4rem}
-.onde__bouts p{max-width:26ch;font-size:var(--t-small);line-height:1.45;color:var(--on-dark-2)}
-.onde__bouts p:last-child{justify-self:end;text-align:right;color:var(--on-dark)}
-.onde__quand{display:block;margin-bottom:.3rem;font-size:var(--t-label);font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--on-dark-2)}
-.onde__bouts p:last-child .onde__quand{color:var(--accent)}
-.onde__dessin{position:relative}
-.onde svg{height:clamp(72px,13vw,150px);clip-path:inset(0 calc((1 - var(--t,1))*100%) 0 0)}
-.onde__point{
-  position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--accent);
-  box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 20%,transparent),0 0 24px color-mix(in srgb,var(--accent) 60%,transparent);
-  left:var(--px,100%);top:var(--py,50%);opacity:var(--po,0);pointer-events:none;
-}
-
-/* Fig. 04 : l'arbre */
+/* Fig. 02 : l'arbre */
 .arbre .branches path,.arbre .branches g{fill:none;stroke:currentColor;stroke-linecap:round}
 .arbre .racines{fill:none;stroke:currentColor;stroke-width:1.2;stroke-opacity:.7;stroke-linecap:round}
 .arbre .pointes circle{fill:var(--panel);stroke:currentColor;stroke-width:1.2}
@@ -667,37 +650,11 @@ b,strong{font-weight:500}
   .etat img{aspect-ratio:1;border-radius:var(--r-lg)}
 }
 
-/* ================= Les cinq lettres ================= */
-/* Cinq lignes empilées, pas cinq cartes : on lit de haut en bas, comme on
-   traverse les cinq mouvements. */
-.lettres{display:grid;border-top:1px solid var(--line-dark)}
-.lettre{
-  display:grid;grid-template-columns:5rem minmax(0,15rem) minmax(0,1fr);
-  gap:clamp(1rem,3vw,2.5rem);align-items:baseline;
-  padding-block:clamp(1.4rem,2.8vw,2.2rem);
-  border-bottom:1px solid var(--line-dark);
-}
-.lettre__l{
-  font-size:clamp(2.4rem,5vw,3.4rem);font-weight:200;
-  line-height:.8;letter-spacing:-.05em;color:var(--accent);
-}
-.lettre__nom{display:grid;gap:.35rem}
-.lettre__nom h3{font-size:1rem;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
-.lettre__sous{font-size:.7rem;font-style:italic;text-transform:uppercase;letter-spacing:.14em;color:var(--on-dark-2)}
-.lettre__dit{
-  font-size:clamp(1.05rem,2vw,1.4rem);font-weight:300;
-  letter-spacing:-.02em;line-height:1.25;color:var(--accent);text-wrap:balance;
-}
-@media (max-width:780px){
-  .lettre{grid-template-columns:3.4rem minmax(0,1fr);row-gap:.7rem}
-  .lettre__l{grid-row:span 2}
-  .lettre__dit{grid-column:2}
-}
-
 /* ================= La journée ================= */
-/* Un ciel qui suit l'heure : pendant que les quatre moments défilent, le soleil
+/* Un ciel qui suit l'heure : pendant que les trois moments défilent, le soleil
    monte, passe, se couche, puis la lune et les étoiles arrivent. Le ciel reste en
-   place (sticky) ; le script règle sa position et le mélange des quatre ciels. */
+   place (sticky) ; le script règle sa position et le mélange des quatre ciels
+   (data-ciel sur chaque moment : le soir passe par le couchant avant la nuit). */
 .jour{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(1.2rem,3vw,2.4rem);align-items:start}
 .jour__ciel{
   position:sticky;top:84px;z-index:2;height:clamp(200px,56vw,300px);
@@ -764,25 +721,18 @@ b,strong{font-weight:500}
 .mom__sorte{padding:1px 8px;border-radius:999px;border:1px solid var(--line);font-size:.68rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
 .mom__sorte--ancre{border-color:color-mix(in srgb,var(--accent) 50%,transparent);color:var(--accent)}
 .mom h3{font-size:var(--t-h3);letter-spacing:-.02em}
-.mom__note{font-size:var(--t-small);color:var(--ink-3);line-height:1.5}
 
-.gestes{list-style:none;margin:0;padding:0;display:grid}
-.geste{
-  display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:1rem;row-gap:.45rem;align-items:baseline;
-  padding:.62rem 0;border-top:1px solid var(--line);font-size:var(--t-small);
+.mom__txt{font-size:var(--t-small);color:var(--ink-2);line-height:1.55;max-width:44ch}
+/* les piliers en jeu dans le moment : le lien avec la section d'avant, sans la recette */
+.mom__piliers{list-style:none;margin:.15rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:.4rem}
+.mom__piliers li{display:inline-flex;align-items:baseline;gap:.45em;padding:.28rem .7rem;border:1px solid var(--line);border-radius:999px;font-size:.8rem;color:var(--ink-2)}
+.mom__piliers b{font-size:.64rem;font-weight:600;letter-spacing:.14em;color:var(--accent)}
+.jour.est-pilote .mom.is-on .mom__piliers li{border-color:color-mix(in srgb,var(--accent) 35%,var(--line))}
+/* Dans la semaine : hors de la course du jour, un filet en pointillé */
+.hebdo{
+  border-radius:var(--r-md);padding:clamp(1.2rem,3vw,1.8rem);display:grid;gap:.85rem;
+  border:1px dashed color-mix(in srgb,var(--accent) 45%,transparent);
 }
-.geste:first-child{border-top:0;padding-top:0}
-.geste::after{
-  content:"";grid-column:1/-1;height:3px;border-radius:2px;width:calc(var(--d)*100%/35);
-  background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 45%,transparent));
-  transform-origin:left;transition:transform .9s cubic-bezier(.2,.7,.2,1);
-}
-.jour.est-pilote .geste::after{transform:scaleX(0)}
-.jour.est-pilote .mom.is-on .geste::after{transform:scaleX(1)}
-.jour.est-pilote .mom.is-on .geste:nth-child(2)::after{transition-delay:.08s}
-.jour.est-pilote .mom.is-on .geste:nth-child(3)::after{transition-delay:.16s}
-.jour.est-pilote .mom.is-on .geste:nth-child(4)::after{transition-delay:.24s}
-.geste .duree{color:var(--accent);font-weight:600;white-space:nowrap;font-variant-numeric:lining-nums tabular-nums}
 
 .releve{
   margin-top:clamp(2.2rem,4vw,3.2rem);padding-top:1.4rem;border-top:1px solid var(--line);
@@ -813,55 +763,94 @@ b,strong{font-weight:500}
 .pilier h3{font-size:var(--t-h3);margin:.5rem 0 .55rem;letter-spacing:-.02em}
 .pilier p{font-size:var(--t-small);color:var(--ink-2)}
 
-/* Survoler (ou toucher) un pilier allume sa branche dans l'arbre, sa bande dans
-   la courbe, et éteint le reste. Le script pose data-actif sur la section. */
+/* Survoler (ou toucher) un pilier, dans les cartes, l'arbre ou la légende, allume
+   sa branche dans l'arbre et ses segments dans le graphique, et éteint le reste.
+   Le script pose data-actif sur la section. */
 #piliers [data-p]{transition:opacity .35s ease}
 #piliers[data-actif] [data-p]{opacity:.16}
 #piliers[data-actif="SO"] [data-p="SO"],#piliers[data-actif="NU"] [data-p="NU"],#piliers[data-actif="MO"] [data-p="MO"],
-#piliers[data-actif="RE"] [data-p="RE"],#piliers[data-actif="ME"] [data-p="ME"]{opacity:1}
+#piliers[data-actif="RE"] [data-p="RE"],#piliers[data-actif="ME"] [data-p="ME"],#piliers[data-actif="RL"] [data-p="RL"]{opacity:1}
 #piliers[data-actif] .pilier[data-p]{opacity:.45}
 #piliers[data-actif="SO"] .pilier[data-p="SO"],#piliers[data-actif="NU"] .pilier[data-p="NU"],#piliers[data-actif="MO"] .pilier[data-p="MO"],
 #piliers[data-actif="RE"] .pilier[data-p="RE"],#piliers[data-actif="ME"] .pilier[data-p="ME"]{opacity:1;background:var(--panel-2);border-color:var(--accent)}
 .arbre .planche__mot{cursor:pointer;pointer-events:auto}
 
 /* ================= Graphique ================= */
-/* On choisit une phase (les boutons au-dessus, ou la barre sous le graphique) :
-   ses semaines restent pleines, le reste s'efface, la lecture dit ce qu'elle demande. */
-.courbe__phases{display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 1.1rem}
-.phase-choix{
-  font:inherit;font-size:.86rem;font-weight:500;line-height:1;cursor:pointer;
-  padding:.62rem 1rem;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink-2);
-  transition:background .25s,color .25s,border-color .25s;
+/* Une colonne par semaine, empilée par pilier, le total écrit au-dessus quand il
+   change et ce qui entre écrit dessous : l'escalier de la phase I se lit d'un coup
+   d'œil. Généré par assets/gen_graphique_reset.py depuis protocole.py.
+   Les bleus sont ceux des piliers dans les documents RESET ; les voisins de pile
+   restent séparés (ΔE 17,8 en clair, 23,5 en sombre, daltonisme compris), et la
+   légende et le survol portent l'identité en plus de la couleur ;
+   chaque semaine dit ses minutes dans son aria-label. */
+.barres{margin:0;--H:220px;--haut:1.7rem;
+  --c-so:#9CC7DC;--c-mo:#33708F;--c-re:#6FA6C2;--c-me:#16303D;--c-rl:#C3CCD3}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .barres{--c-so:#5D8CA8;--c-mo:#B4D6E8;--c-re:#33617D;--c-me:#7FB2CE;--c-rl:#4E5862}
 }
-.phase-choix:hover{border-color:var(--ink-3);color:var(--ink)}
-.phase-choix[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--panel)}
-.phase-choix:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.voile-phase{fill:var(--panel);opacity:.72;pointer-events:none}
-.phase-g{cursor:pointer}
-.courbe__lecture{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem 1.1rem;margin:0 0 1rem;font-size:var(--t-small);color:var(--ink-2);font-variant-numeric:lining-nums tabular-nums}
+:root[data-theme="dark"] .barres{--c-so:#5D8CA8;--c-mo:#B4D6E8;--c-re:#33617D;--c-me:#7FB2CE;--c-rl:#4E5862}
+.barres__tete{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:1rem 2rem;margin-bottom:1.6rem}
+.courbe__lecture{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem 1.1rem;margin:0;font-size:var(--t-small);color:var(--ink-2);font-variant-numeric:lining-nums tabular-nums}
 .courbe__lecture b{font-size:clamp(1.3rem,2.6vw,1.8rem);font-weight:300;letter-spacing:-.03em;color:var(--ink)}
-.courbe__lecture [data-lec-min]{color:var(--accent);font-weight:600}
-.phasebar,.phasetxt{transition:fill .35s ease}
-.phase-g:hover .phasebar{fill:color-mix(in srgb,var(--accent) 12%,var(--panel-3))}
-.phase-on .phasebar{fill:color-mix(in srgb,var(--accent) 22%,var(--panel-3))}
-.phase-on .phasetxt{fill:var(--ink)}
-.chart-scroll{overflow-x:auto;overscroll-behavior-x:contain}
-.chart-scroll svg{min-width:700px}
-/* Sous ~800 px le graphique ne tient plus : sans repère, on croit qu'il est
-   coupé. La classe est posée par le script, seulement quand ça défile vraiment. */
-.chart-glisse{display:none;margin-top:.8rem;font-size:.78rem;color:var(--ink-3)}
-.chart-scroll.est-large + .chart-glisse{display:block}
-.axis{fill:var(--ink-3);font-size:12.5px;font-weight:500;font-variant-numeric:lining-nums tabular-nums}
-.axis--week{fill:var(--ink-2)}
-.grid{stroke:var(--line);stroke-width:1}
-.band{stroke:var(--panel);stroke-width:1.5;stroke-linejoin:round}
-.bandlabel{fill:var(--ink);font-size:13px;font-weight:500}
-.bandlabel tspan{fill:var(--ink-3);font-weight:400;font-variant-numeric:lining-nums tabular-nums}
-.leader{stroke:var(--line);stroke-width:1;fill:none}
-.note{fill:var(--accent);font-size:12.5px;font-weight:600;font-variant-numeric:lining-nums tabular-nums}
-.rule{stroke:var(--accent);stroke-width:1.25;stroke-dasharray:3 4;fill:none}
-.phasebar{fill:var(--panel-3)}
-.phasetxt{fill:var(--ink-2);font-size:12.5px;font-weight:500}
+.barres__legende{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.45rem 1.1rem;font-size:var(--t-small);color:var(--ink-2)}
+.barres__legende li{display:inline-flex;align-items:center;gap:.45rem;cursor:pointer;border-radius:6px}
+.barres__legende li:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.barres__legende i{flex:none;width:12px;height:12px;border-radius:3px;background:var(--c)}
+
+.barres__zone{position:relative;padding-left:3rem}
+.barres__grille span{
+  position:absolute;left:3rem;right:0;height:0;border-top:1px solid var(--line);
+  top:calc(var(--haut) + var(--H) - var(--g) / var(--max) * var(--H));
+}
+.barres__grille b{position:absolute;right:calc(100% + .6rem);top:-.55em;font-size:.72rem;font-weight:500;color:var(--ink-3);white-space:nowrap}
+.barres__phases{position:relative;display:flex;gap:10px}
+.phase-b{flex:var(--n) 1 0;min-width:0;display:flex;flex-direction:column}
+.phase-b__nom{
+  order:2;margin:.8rem 0 0;padding-top:.65rem;border-top:2px solid var(--panel-3);
+  font-size:var(--t-label);font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);text-align:center;
+}
+.phase-b__nom b{margin-right:.35em;font-weight:600;color:var(--accent)}
+.phase-b__sems{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr))}
+.sem{position:relative;display:flex;flex-direction:column;align-items:center;gap:.35rem;border-radius:var(--r-sm);outline:none;transition:opacity .3s ease}
+.sem:focus-visible{box-shadow:inset 0 0 0 2px var(--accent)}
+.barres.a-sel .sem{opacity:.38}
+.barres.a-sel .sem.is-sel{opacity:1}
+.sem__plot{display:flex;flex-direction:column-reverse;align-items:center;gap:2px;width:100%;height:calc(var(--haut) + var(--H))}
+.seg{
+  display:block;flex:none;width:min(24px,62%);height:calc(var(--v) / var(--max) * var(--H));background:var(--c);
+  transform-origin:50% 100%;transition:transform .8s cubic-bezier(.2,.7,.2,1) calc(var(--s,0) * 55ms),opacity .35s ease;
+}
+.seg:last-child{border-radius:4px 4px 0 0}
+.barres.est-pilote:not(.is-in) .seg{transform:scaleY(0)}
+.sem__total{
+  position:absolute;left:-.5rem;right:-.5rem;text-align:center;white-space:nowrap;
+  top:calc(var(--haut) + var(--H) - var(--t) / var(--max) * var(--H) - var(--k) * 2px - 1.4rem);
+  font-size:.84rem;font-weight:600;color:var(--ink);font-variant-numeric:lining-nums tabular-nums;
+}
+.sem__n{font-size:.74rem;font-weight:500;color:var(--ink-2);font-variant-numeric:lining-nums tabular-nums}
+.sem__entre{min-height:2.4em;max-width:100%;font-size:.72rem;line-height:1.2;color:var(--ink-3);text-align:center}
+.barres figcaption{margin-top:1.4rem}
+
+/* Sous 900 px : une ligne par semaine, la barre sur toute la largeur */
+@media (max-width:899px){
+  .barres__zone{padding-left:0}
+  .barres__grille{display:none}
+  .barres__phases{flex-direction:column;gap:1.2rem}
+  .phase-b__nom{order:0;margin:0 0 .35rem;padding:0;border:0;text-align:left}
+  .phase-b__sems{grid-template-columns:minmax(0,1fr);gap:.1rem}
+  .sem{
+    display:grid;grid-template-columns:2.2rem minmax(0,1fr) auto;grid-template-areas:"n entre total" "plot plot plot";
+    column-gap:.5rem;row-gap:.3rem;align-items:baseline;padding:.3rem .25rem;
+  }
+  .sem__n{grid-area:n}
+  .sem__entre{grid-area:entre;min-height:0;text-align:left}
+  .sem__total{grid-area:total;position:static;font-size:.8rem}
+  .sem__plot{grid-area:plot;flex-direction:row;align-items:stretch;height:10px}
+  .seg{height:auto;width:calc(var(--v) / var(--max) * 100%);transform-origin:0 50%}
+  .seg:last-child{border-radius:0 4px 4px 0}
+  .barres.est-pilote:not(.is-in) .seg{transform:scaleX(0)}
+}
+
 figcaption{color:var(--ink-3);font-size:var(--t-small);margin-top:1.6rem;max-width:var(--measure)}
 
 /* ================= Les quatre phases ================= */
@@ -921,16 +910,6 @@ figcaption{color:var(--ink-3);font-size:var(--t-small);margin-top:1.6rem;max-wid
 .etape__corps h3{font-size:clamp(1.25rem,2.4vw,1.7rem);letter-spacing:-.03em}
 .etape__txt{margin-top:.7rem;max-width:52ch;color:var(--on-dark-2)}
 
-/* Le creux : le seul encart de la page, parce que c'est le seul endroit où
-   le protocole prévient d'avance de ce qui va faire mal. */
-.creux{
-  margin-top:1.2rem;padding:1rem 1.2rem;
-  border-radius:0 var(--r-md) var(--r-md) 0;background:var(--dark-2);
-  border-left:2px solid var(--accent);
-  display:grid;gap:.4rem;
-}
-.creux__quand{font-size:var(--t-label);font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
-.creux p{font-size:var(--t-small);color:var(--on-dark-2)}
 .etape__palier{
   margin-top:1.3rem;
   font-size:clamp(1.1rem,2.2vw,1.5rem);font-weight:300;
@@ -945,7 +924,7 @@ figcaption{color:var(--ink-3);font-size:var(--t-small);margin-top:1.6rem;max-wid
   .etape__n{text-align:left;font-size:1.2rem}
   /* Les capitales espacées mangent la largeur : on resserre plutôt que de
      laisser un mot seul sur sa ligne. */
-  .etape__quand,.creux__quand{letter-spacing:.1em}
+  .etape__quand{letter-spacing:.1em}
 }
 
 /* ================= Avant de commencer ================= */
@@ -1056,12 +1035,11 @@ footer a:hover{color:var(--ink)}
   .reveal{opacity:1;transform:none}
   .stagger > *{opacity:1;transform:none}
   .voyage__rail::after{transform:scaleY(1)}
-  .voyage__tete,.onde__point{display:none}
-  .onde svg,.choc__dessin .planche__dessin{clip-path:none}
+  .voyage__tete{display:none}
+  .choc__dessin .planche__dessin{clip-path:none}
   [data-mots].est-pilote .m{opacity:1}
   .frein span{background-size:100% .085em;color:var(--ink-3)}
   .jour.est-pilote .mom{opacity:1;transform:none}
-  .jour.est-pilote .geste::after{transform:none}
   .arbre .tronc,.arbre .n1,.arbre .n2,.arbre .n3,.arbre .n4,.arbre .racines{stroke-dashoffset:0}
   .arbre .pointes circle{opacity:1}
   .scene__electron{display:none}
@@ -1071,7 +1049,7 @@ footer a:hover{color:var(--ink)}
 <noscript><style>
 .reveal,.stagger > *{opacity:1;transform:none}
 .chiffres.stagger .vis i{opacity:1;transform:none}
-.onde svg,.choc__dessin .planche__dessin{clip-path:none}
+.choc__dessin .planche__dessin{clip-path:none}
 .arbre .tronc,.arbre .n1,.arbre .n2,.arbre .n3,.arbre .n4,.arbre .racines{stroke-dashoffset:0}
 .arbre .pointes circle{opacity:1}
 </style></noscript>
@@ -1089,9 +1067,8 @@ footer a:hover{color:var(--ink)}
   </a>
   <a class="nav__retour" href="/"><span aria-hidden="true">←</span> Accueil</a>
   <div class="nav__links" id="navLinks">
-    <a href="#mouvements">Les mouvements</a>
-    <a href="#journee">La journée</a>
     <a href="#piliers">Les piliers</a>
+    <a href="#journee">La journée</a>
     <a href="#deroule">Le déroulé</a>
     <a href="#avant">Avant de commencer</a>
     <a class="nav__accueil" href="/"><span aria-hidden="true">← </span>Retour à l'accueil BELIVE</a>
@@ -1157,7 +1134,7 @@ footer a:hover{color:var(--ink)}
         <p class="label">BELIVE RESET</p>
         <h1 id="titre"><span class="titre__n">90 jours</span> pour reprendre les commandes.</h1>
         <p class="ouverture__lead">Un protocole pour changer d'identité, t'aligner et vivre enfin la vie que tu ne t'autorisais pas.</p>
-        <p class="ouverture__note">4 phases, 5 piliers, et des outils qui t'accompagnent chaque jour. À&nbsp;la fin, tu tiens sans moi.</p>
+        <p class="ouverture__note">5 piliers, 3 moments par jour, 4 phases. À&nbsp;la fin, tu tiens sans moi.</p>
         <div class="actions">
           <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfj11kIlWgP47-O8oDt12YvOwmYfR5KPWXMzn8iG9LAzuwBDQ/viewform" target="_blank" rel="noopener">Rejoindre la liste d'attente <span class="btn__arrow">→</span></a>
           <a class="btn btn--verre" href="https://wa.me/32493847434?text=Bonjour%20Tristan%2C%20j%27ai%20une%20question%20sur%20RESET%20%3A%20" target="_blank" rel="noopener">Une question&nbsp;? <span class="btn__arrow">→</span></a>
@@ -1217,15 +1194,15 @@ footer a:hover{color:var(--ink)}
       <div class="chiffre"><dt>Rythme</dt>
         <dd><span class="chiffre__v"><span class="num" data-compte="3">3</span> moments</span>
           <span class="vis vis--moments" aria-hidden="true"><span><i class="m-matin" style="--k:0"></i>Matin</span><span><i class="m-midi" style="--k:3"></i>Midi</span><span><i class="m-soir" style="--k:6"></i>Soir</span></span>
-          <span class="chiffre__d">Tous les jours.</span></dd></div>
+          <span class="chiffre__d">Lancer, tenir, clôturer. Tous les jours.</span></dd></div>
       <div class="chiffre"><dt>Rendez-vous</dt>
         <dd><span class="chiffre__v"><span class="num"><span data-compte="13">13</span> + <span data-compte="4">4</span></span></span>
           <span class="vis vis--rdv" aria-hidden="true"><span class="vis__ligne"><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i><i class="bw" style="--k:3"></i><i style="--k:4"></i><i style="--k:5"></i><i class="bw" style="--k:6"></i><i style="--k:7"></i><i style="--k:8"></i><i class="bw" style="--k:9"></i><i style="--k:10"></i><i style="--k:11"></i><i class="bw" style="--k:12"></i></span></span>
           <span class="chiffre__d"><span class="leg"><i></i>1 call par semaine</span> <span class="leg leg--bw"><i></i>4 Breathwork de 1&nbsp;h&nbsp;30</span></span></dd></div>
-      <div class="chiffre"><dt>Temps total</dt>
-        <dd><span class="chiffre__v"><span class="num" data-compte="98">98</span> heures <span class="chiffre__en-tout">en tout</span></span>
-          <span class="vis vis--temps" aria-hidden="true"><span class="vis__ligne"><i style="--k:0;--h:21%"></i><i style="--k:1;--h:45%"></i><i style="--k:2;--h:67%"></i><i style="--k:3;--h:68%"></i><i style="--k:4;--h:94%"></i><i style="--k:5;--h:94%"></i><i style="--k:6;--h:94%"></i><i style="--k:7;--h:100%"></i><i style="--k:8;--h:100%"></i><i style="--k:9;--h:100%"></i><i style="--k:10;--h:100%"></i><i style="--k:11;--h:100%"></i><i style="--k:12;--h:100%"></i></span></span>
-          <span class="chiffre__d">Pour les 13 semaines. Chaque jour, de 18&nbsp;min au début à 85&nbsp;min à la fin.</span></dd></div>
+      <div class="chiffre"><dt>Chaque jour</dt>
+        <dd><span class="chiffre__v"><span class="num" data-compte="1">1</span> heure <span class="chiffre__en-tout">environ</span></span>
+          <span class="vis vis--temps" aria-hidden="true"><span class="vis__ligne"><i style="--k:0;--h:12%"></i><i style="--k:1;--h:38%"></i><i style="--k:2;--h:75%"></i><i style="--k:3;--h:81%"></i><i style="--k:4;--h:89%"></i><i style="--k:5;--h:89%"></i><i style="--k:6;--h:89%"></i><i style="--k:7;--h:100%"></i><i style="--k:8;--h:100%"></i><i style="--k:9;--h:100%"></i><i style="--k:10;--h:100%"></i><i style="--k:11;--h:100%"></i><i style="--k:12;--h:100%"></i></span></span>
+          <span class="chiffre__d">Quand tout est en place, dès la semaine 8. La première semaine, 8&nbsp;min.</span></dd></div>
     </dl>
   </section>
 
@@ -1254,66 +1231,268 @@ footer a:hover{color:var(--ink)}
     <p class="choc__suite reveal">Ce n'est pas la volonté qui a manqué. C'est la dose. Ici, chaque pratique entre petit, puis monte semaine après semaine. C'est pour ça qu'elle tient.</p>
   </section>
 
-  <!-- ===== 01. Le mouvement intérieur ===== -->
-  <!-- Cinq lignes, pas cinq cartes : les lettres se lisent de haut en bas comme
-       elles se traversent. Elles ne portent pas de semaines, le calendrier c'est
-       les quatre phases, plus bas. L'onde, au-dessus, dit la même chose en un trait :
-       le souffle qui passe de court à ample. -->
-  <section class="panel panel--dark" id="mouvements">
-    <div class="head">
-      <p class="label"><span class="label__n num">01</span> Le mouvement intérieur</p>
-      <h2>RESET, ce sont 5 mouvements, et ils se chevauchent.</h2>
-      <p>Pour chacun, la phrase que tu diras le jour où il sera là.</p>
+  <!-- ===== 01. Les cinq piliers ===== -->
+  <!-- Ce sur quoi tout repose, avant la journée qui les met en jeu. -->
+  <section class="panel" id="piliers">
+    <div class="tete">
+      <div class="head">
+        <p class="label"><span class="label__n num">01</span> Les 5 piliers</p>
+        <h2>Tout repose sur 5 piliers.</h2>
+        <p>Ils entrent un à un, au fil des semaines, puis montent ensemble, chacun à sa vitesse. La respiration est le fil qui les relie tous.</p>
+      </div>
+      <figure class="planche arbre">
+        <div class="planche__dessin">
+          <svg viewBox="-20.3 15.0 463.8 518.8" aria-hidden="true">
+            <g class="branches">
+              <path class="tronc" pathLength="1" d="M220.0 410.0L220.0 330.0" stroke-width="5.5"/>
+              <g data-p="NU"><path class="n1" pathLength="1" d="M220.0 330.0L142.0 281.2" stroke-width="3.4"/><path class="n2" pathLength="1" d="M142.0 281.2L75.2 271.2 M142.0 281.2L107.0 226.1" stroke-width="2.3"/><path class="n3" pathLength="1" d="M75.2 271.2L29.2 284.1 M75.2 271.2L36.5 248.2 M107.0 226.1L67.9 202.3 M107.0 226.1L97.5 179.6" stroke-width="1.6"/><path class="n4" pathLength="1" d="M29.2 284.1L2.2 304.5 M29.2 284.1L-2.3 279.1 M36.5 248.2L6.7 245.4 M36.5 248.2L21.3 218.6 M67.9 202.3L37.0 198.1 M67.9 202.3L46.2 178.9 M97.5 179.6L78.5 152.4 M97.5 179.6L105.9 147.7" stroke-width="1.15"/><g class="pointes"><circle cx="2.2" cy="304.5" r="3.6"/><circle cx="-2.3" cy="279.1" r="3.6"/><circle cx="6.7" cy="245.4" r="3.6"/><circle cx="21.3" cy="218.6" r="3.6"/><circle cx="37.0" cy="198.1" r="3.6"/><circle cx="46.2" cy="178.9" r="3.6"/><circle cx="78.5" cy="152.4" r="3.6"/><circle cx="105.9" cy="147.7" r="3.6"/></g></g>
+              <g data-p="MO"><path class="n1" pathLength="1" d="M220.0 330.0L175.8 220.6" stroke-width="3.4"/><path class="n2" pathLength="1" d="M175.8 220.6L120.2 153.3 M175.8 220.6L176.1 133.5" stroke-width="2.3"/><path class="n3" pathLength="1" d="M120.2 153.3L66.0 128.0 M120.2 153.3L111.3 93.6 M176.1 133.5L147.4 78.6 M176.1 133.5L202.0 81.2" stroke-width="1.6"/><path class="n4" pathLength="1" d="M66.0 128.0L26.2 127.4 M66.0 128.0L39.3 96.4 M111.3 93.6L89.3 60.5 M111.3 93.6L124.4 51.4 M147.4 78.6L112.8 56.1 M147.4 78.6L145.5 33.0 M202.0 81.2L202.1 42.4 M202.0 81.2L232.8 56.7" stroke-width="1.15"/><g class="pointes"><circle cx="26.2" cy="127.4" r="3.6"/><circle cx="39.3" cy="96.4" r="3.6"/><circle cx="89.3" cy="60.5" r="3.6"/><circle cx="124.4" cy="51.4" r="3.6"/><circle cx="112.8" cy="56.1" r="3.6"/><circle cx="145.5" cy="33.0" r="3.6"/><circle cx="202.1" cy="42.4" r="3.6"/><circle cx="232.8" cy="56.7" r="3.6"/></g></g>
+              <g data-p="RE"><path class="n1" pathLength="1" d="M220.0 330.0L234.5 227.0" stroke-width="3.4"/><path class="n2" pathLength="1" d="M234.5 227.0L213.3 160.1 M234.5 227.0L271.8 159.8" stroke-width="2.3"/><path class="n3" pathLength="1" d="M213.3 160.1L176.3 126.5 M213.3 160.1L223.3 113.1 M271.8 159.8L276.3 104.5 M271.8 159.8L312.5 123.7" stroke-width="1.6"/><path class="n4" pathLength="1" d="M176.3 126.5L144.5 114.8 M176.3 126.5L158.3 94.3 M223.3 113.1L212.6 81.6 M223.3 113.1L246.9 88.3 M276.3 104.5L263.5 69.9 M276.3 104.5L292.0 68.6 M312.5 123.7L329.2 87.2 M312.5 123.7L348.9 111.5" stroke-width="1.15"/><g class="pointes"><circle cx="144.5" cy="114.8" r="3.6"/><circle cx="158.3" cy="94.3" r="3.6"/><circle cx="212.6" cy="81.6" r="3.6"/><circle cx="246.9" cy="88.3" r="3.6"/><circle cx="263.5" cy="69.9" r="3.6"/><circle cx="292.0" cy="68.6" r="3.6"/><circle cx="329.2" cy="87.2" r="3.6"/><circle cx="348.9" cy="111.5" r="3.6"/></g></g>
+              <g data-p="ME"><path class="n1" pathLength="1" d="M220.0 330.0L286.7 260.9" stroke-width="3.4"/><path class="n2" pathLength="1" d="M286.7 260.9L301.2 198.1 M286.7 260.9L349.4 242.8" stroke-width="2.3"/><path class="n3" pathLength="1" d="M301.2 198.1L292.1 155.1 M301.2 198.1L333.6 165.8 M349.4 242.8L382.3 212.5 M349.4 242.8L394.2 254.6" stroke-width="1.6"/><path class="n4" pathLength="1" d="M292.1 155.1L275.4 127.6 M292.1 155.1L295.9 123.0 M333.6 165.8L342.6 136.8 M333.6 165.8L363.3 156.9 M382.3 212.5L396.3 186.3 M382.3 212.5L411.1 199.9 M394.2 254.6L425.5 252.6 M394.2 254.6L420.9 271.5" stroke-width="1.15"/><g class="pointes"><circle cx="275.4" cy="127.6" r="3.6"/><circle cx="295.9" cy="123.0" r="3.6"/><circle cx="342.6" cy="136.8" r="3.6"/><circle cx="363.3" cy="156.9" r="3.6"/><circle cx="396.3" cy="186.3" r="3.6"/><circle cx="411.1" cy="199.9" r="3.6"/><circle cx="425.5" cy="252.6" r="3.6"/><circle cx="420.9" cy="271.5" r="3.6"/></g></g>
+            </g>
+            <path class="racines" data-p="SO" pathLength="1" d="M220.0 410.0L179.4 431.6 M179.4 431.6L150.9 431.9 M150.9 431.9L135.3 423.5 M150.9 431.9L135.6 440.7 M179.4 431.6L164.8 456.1 M164.8 456.1L149.6 465.1 M164.8 456.1L164.9 473.8 M220.0 410.0L203.7 446.5 M203.7 446.5L186.4 464.3 M186.4 464.3L172.0 469.6 M186.4 464.3L182.9 479.3 M203.7 446.5L205.4 471.3 M205.4 471.3L198.4 485.0 M205.4 471.3L211.9 485.2 M220.0 410.0L235.7 448.9 M235.7 448.9L234.1 474.9 M234.1 474.9L226.9 489.4 M234.1 474.9L240.4 489.8 M235.7 448.9L255.4 466.1 M255.4 466.1L263.1 480.2 M255.4 466.1L270.7 471.2 M220.0 410.0L261.6 434.0 M261.6 434.0L279.3 457.9 M279.3 457.9L281.1 476.2 M279.3 457.9L296.2 465.4 M261.6 434.0L291.0 438.2 M291.0 438.2L305.6 449.5 M291.0 438.2L309.0 433.9"/>
+          </svg>
+          <span class="planche__mot" data-p="SO" style="left:51.81%;top:95.76%">SO</span>
+          <span class="planche__mot" data-p="NU" style="left:27.92%;top:47.38%">NU</span>
+          <span class="planche__mot" data-p="MO" style="left:38.27%;top:30.76%">MO</span>
+          <span class="planche__mot" data-p="RE" style="left:56.25%;top:32.54%">RE</span>
+          <span class="planche__mot" data-p="ME" style="left:72.23%;top:41.81%">ME</span>
+        </div>
+        <figcaption class="planche__legende"><span class="planche__fig">Fig. 02</span><span>Le sommeil en racines, 4 branches qui montent ensemble. Survole un pilier.</span></figcaption>
+      </figure>
     </div>
-    <figure class="planche onde" data-trace>
-      <div class="onde__bouts">
-        <p><span class="onde__quand">Jour 1</span>Un souffle court, rapide, en haut de la poitrine.</p>
-        <p><span class="onde__quand">Jour 90</span>Un souffle lent, ample, que tu sens descendre.</p>
+
+    <div class="piliers stagger">
+      <div class="pilier" data-p="SO" tabindex="0">
+        <p class="pilier__code">SO</p><h3>Sommeil</h3>
+        <p>La fondation&nbsp;: la lumière du matin, le téléphone tenu à distance, une heure de coucher. Tout le reste s'appuie dessus.</p>
       </div>
-      <div class="onde__dessin" aria-hidden="true">
-        <svg viewBox="0 0 1000 150" preserveAspectRatio="none">
-          <line class="axe" x1="20" y1="75" x2="980" y2="75"/>
-          <path class="trace" d="M20.0 75.0 L21.9 74.9 L23.8 74.0 L25.8 72.2 L27.7 69.9 L29.6 68.2 L31.5 68.0 L33.4 69.8 L35.4 73.3 L37.3 77.3 L39.2 81.1 L41.1 84.3 L43.0 86.3 L45.0 86.7 L46.9 85.5 L48.8 82.8 L50.7 78.9 L52.6 74.4 L54.6 69.9 L56.5 66.2 L58.4 63.6 L60.3 62.7 L62.2 63.5 L64.2 65.9 L66.1 69.4 L68.0 73.7 L69.9 78.0 L71.8 81.7 L73.8 84.3 L75.7 85.6 L77.6 85.3 L79.5 83.7 L81.4 81.0 L83.4 77.6 L85.3 74.1 L87.2 70.9 L89.1 68.5 L91.0 67.2 L93.0 66.9 L94.9 67.8 L96.8 69.5 L98.7 71.9 L100.6 74.5 L102.6 77.1 L104.5 79.3 L106.4 80.8 L108.3 81.5 L110.2 81.4 L112.2 80.4 L114.1 78.7 L116.0 76.5 L117.9 74.0 L119.8 71.7 L121.8 69.8 L123.7 68.5 L125.6 68.0 L127.5 68.5 L129.4 69.9 L131.4 72.1 L133.3 74.8 L135.2 77.7 L137.1 80.3 L139.0 82.3 L141.0 83.4 L142.9 83.3 L144.8 82.1 L146.7 79.9 L148.6 76.9 L150.6 73.6 L152.5 70.4 L154.4 67.8 L156.3 66.1 L158.2 65.7 L160.2 66.5 L162.1 68.4 L164.0 71.3 L165.9 74.5 L167.8 77.8 L169.8 80.6 L171.7 82.5 L173.6 83.4 L175.5 83.2 L177.4 81.9 L179.4 79.7 L181.3 77.1 L183.2 74.4 L185.1 72.0 L187.0 70.0 L189.0 68.9 L190.9 68.6 L192.8 69.1 L194.7 70.2 L196.6 71.9 L198.6 73.9 L200.5 75.9 L202.4 77.8 L204.3 79.3 L206.2 80.2 L208.2 80.5 L210.1 80.2 L212.0 79.3 L213.9 77.8 L215.8 75.8 L217.8 73.6 L219.7 71.4 L221.6 69.4 L223.5 67.9 L225.4 67.1 L227.4 67.3 L229.3 68.5 L231.2 70.7 L233.1 73.7 L235.0 77.2 L237.0 80.9 L238.9 84.1 L240.8 86.6 L242.7 87.8 L244.6 87.6 L246.6 85.7 L248.5 82.3 L250.4 77.8 L252.3 72.6 L254.2 67.4 L256.2 62.7 L258.1 59.3 L260.0 57.6 L261.9 57.8 L263.8 60.1 L265.8 64.1 L267.7 69.5 L269.6 75.6 L271.5 81.7 L273.4 87.1 L275.4 91.2 L277.3 93.5 L279.2 93.8 L281.1 92.1 L283.0 88.6 L285.0 83.6 L286.9 77.9 L288.8 72.0 L290.7 66.5 L292.6 62.0 L294.6 58.9 L296.5 57.5 L298.4 57.9 L300.3 60.0 L302.2 63.5 L304.2 68.1 L306.1 73.3 L308.0 78.6 L309.9 83.5 L311.8 87.5 L313.8 90.5 L315.7 91.9 L317.6 91.8 L319.5 90.2 L321.4 87.0 L323.4 82.7 L325.3 77.5 L327.2 72.0 L329.1 66.4 L331.0 61.5 L333.0 57.6 L334.9 55.1 L336.8 54.3 L338.7 55.4 L340.6 58.3 L342.6 62.9 L344.5 68.7 L346.4 75.4 L348.3 82.2 L350.2 88.7 L352.2 94.2 L354.1 98.1 L356.0 100.1 L357.9 100.1 L359.8 97.9 L361.8 93.7 L363.7 87.9 L365.6 81.1 L367.5 73.8 L369.4 66.6 L371.4 60.2 L373.3 55.0 L375.2 51.5 L377.1 50.0 L379.0 50.4 L381.0 52.7 L382.9 56.6 L384.8 61.7 L386.7 67.6 L388.6 73.8 L390.6 79.7 L392.5 85.0 L394.4 89.3 L396.3 92.4 L398.2 94.1 L400.2 94.4 L402.1 93.4 L404.0 91.2 L405.9 88.1 L407.8 84.3 L409.8 80.1 L411.7 75.6 L413.6 71.3 L415.5 67.3 L417.4 63.8 L419.4 61.0 L421.3 59.0 L423.2 57.9 L425.1 57.8 L427.0 58.7 L429.0 60.6 L430.9 63.4 L432.8 67.1 L434.7 71.4 L436.6 76.1 L438.6 81.1 L440.5 86.0 L442.4 90.6 L444.3 94.5 L446.2 97.5 L448.2 99.4 L450.1 100.0 L452.0 99.2 L453.9 97.0 L455.8 93.5 L457.8 88.7 L459.7 83.0 L461.6 76.6 L463.5 69.9 L465.4 63.2 L467.4 57.0 L469.3 51.6 L471.2 47.2 L473.1 44.1 L475.0 42.6 L477.0 42.6 L478.9 44.2 L480.8 47.2 L482.7 51.5 L484.6 56.9 L486.6 63.1 L488.5 69.8 L490.4 76.6 L492.3 83.3 L494.2 89.5 L496.2 95.1 L498.1 99.7 L500.0 103.3 L501.9 105.8 L503.8 106.9 L505.8 106.9 L507.7 105.6 L509.6 103.2 L511.5 99.8 L513.4 95.5 L515.4 90.5 L517.3 85.0 L519.2 79.0 L521.1 72.9 L523.0 66.8 L525.0 60.8 L526.9 55.2 L528.8 50.2 L530.7 45.8 L532.6 42.3 L534.6 39.8 L536.5 38.3 L538.4 37.9 L540.3 38.7 L542.2 40.6 L544.2 43.7 L546.1 47.8 L548.0 52.8 L549.9 58.7 L551.8 65.2 L553.8 72.2 L555.7 79.4 L557.6 86.7 L559.5 93.8 L561.4 100.4 L563.4 106.5 L565.3 111.8 L567.2 116.1 L569.1 119.4 L571.0 121.6 L573.0 122.5 L574.9 122.3 L576.8 120.8 L578.7 118.3 L580.6 114.7 L582.6 110.3 L584.5 105.1 L586.4 99.3 L588.3 93.0 L590.2 86.5 L592.2 79.9 L594.1 73.3 L596.0 66.9 L597.9 60.9 L599.8 55.2 L601.8 50.2 L603.7 45.7 L605.6 41.8 L607.5 38.7 L609.4 36.3 L611.4 34.6 L613.3 33.6 L615.2 33.3 L617.1 33.7 L619.0 34.7 L621.0 36.3 L622.9 38.4 L624.8 41.0 L626.7 44.1 L628.6 47.6 L630.6 51.5 L632.5 55.6 L634.4 60.0 L636.3 64.6 L638.2 69.3 L640.2 74.2 L642.1 79.0 L644.0 83.9 L645.9 88.6 L647.8 93.3 L649.8 97.7 L651.7 101.9 L653.6 105.9 L655.5 109.5 L657.4 112.7 L659.4 115.5 L661.3 117.9 L663.2 119.8 L665.1 121.2 L667.0 122.1 L669.0 122.6 L670.9 122.5 L672.8 121.9 L674.7 120.9 L676.6 119.4 L678.6 117.5 L680.5 115.2 L682.4 112.5 L684.3 109.6 L686.2 106.3 L688.2 102.8 L690.1 99.1 L692.0 95.2 L693.9 91.3 L695.8 87.2 L697.8 83.1 L699.7 79.0 L701.6 74.9 L703.5 70.9 L705.4 67.0 L707.4 63.2 L709.3 59.4 L711.2 55.9 L713.1 52.4 L715.0 49.2 L717.0 46.1 L718.9 43.2 L720.8 40.4 L722.7 37.9 L724.6 35.6 L726.6 33.4 L728.5 31.5 L730.4 29.8 L732.3 28.2 L734.2 26.9 L736.2 25.8 L738.1 24.9 L740.0 24.2 L741.9 23.8 L743.8 23.5 L745.8 23.4 L747.7 23.6 L749.6 24.0 L751.5 24.5 L753.4 25.3 L755.4 26.2 L757.3 27.3 L759.2 28.6 L761.1 30.1 L763.0 31.7 L765.0 33.5 L766.9 35.4 L768.8 37.4 L770.7 39.6 L772.6 41.9 L774.6 44.2 L776.5 46.6 L778.4 49.2 L780.3 51.7 L782.2 54.3 L784.2 57.0 L786.1 59.6 L788.0 62.3 L789.9 65.0 L791.8 67.7 L793.8 70.3 L795.7 73.0 L797.6 75.6 L799.5 78.2 L801.4 80.7 L803.4 83.2 L805.3 85.7 L807.2 88.1 L809.1 90.4 L811.0 92.7 L813.0 95.0 L814.9 97.2 L816.8 99.3 L818.7 101.3 L820.6 103.3 L822.6 105.2 L824.5 107.1 L826.4 108.9 L828.3 110.7 L830.2 112.3 L832.2 113.9 L834.1 115.5 L836.0 116.9 L837.9 118.4 L839.8 119.7 L841.8 121.0 L843.7 122.2 L845.6 123.3 L847.5 124.4 L849.4 125.4 L851.4 126.4 L853.3 127.3 L855.2 128.1 L857.1 128.8 L859.0 129.5 L861.0 130.1 L862.9 130.7 L864.8 131.2 L866.7 131.6 L868.6 132.0 L870.6 132.3 L872.5 132.5 L874.4 132.7 L876.3 132.8 L878.2 132.9 L880.2 132.9 L882.1 132.9 L884.0 132.8 L885.9 132.6 L887.8 132.4 L889.8 132.1 L891.7 131.8 L893.6 131.5 L895.5 131.0 L897.4 130.6 L899.4 130.1 L901.3 129.5 L903.2 128.9 L905.1 128.2 L907.0 127.5 L909.0 126.8 L910.9 126.0 L912.8 125.1 L914.7 124.2 L916.6 123.3 L918.6 122.3 L920.5 121.3 L922.4 120.2 L924.3 119.1 L926.2 118.0 L928.2 116.8 L930.1 115.6 L932.0 114.3 L933.9 113.0 L935.8 111.7 L937.8 110.4 L939.7 109.0 L941.6 107.6 L943.5 106.1 L945.4 104.6 L947.4 103.1 L949.3 101.6 L951.2 100.1 L953.1 98.5 L955.0 96.9 L957.0 95.3 L958.9 93.7 L960.8 92.0 L962.7 90.4 L964.6 88.7 L966.6 87.0 L968.5 85.3 L970.4 83.6 L972.3 81.9 L974.2 80.2 L976.2 78.5 L978.1 76.7 L980.0 75.0"/>
-        </svg>
-        <i class="onde__point"></i>
+      <div class="pilier" data-p="NU" tabindex="0">
+        <p class="pilier__code">NU</p><h3>Nutrition</h3>
+        <p>Le café déplacé, des repas à heures fixes, puis ton cadre à toi&nbsp;: 2 ou 3 règles, construites en call.</p>
       </div>
-      <figcaption class="planche__legende"><span class="planche__fig">Fig. 02</span><span>Ton souffle, du premier jour au dernier</span></figcaption>
+      <div class="pilier" data-p="MO" tabindex="0">
+        <p class="pilier__code">MO</p><h3>Mouvement</h3>
+        <p>Les marches, le mouvement du matin, le HIIT, le froid. Le pilier qui demande le plus de temps.</p>
+      </div>
+      <div class="pilier" data-p="RE" tabindex="0">
+        <p class="pilier__code">RE</p><h3>Respiration</h3>
+        <p>Une respiration à midi, selon ton état, et 4 sessions de Breathwork de 1&nbsp;h&nbsp;30, en direct.</p>
+      </div>
+      <div class="pilier" data-p="ME" tabindex="0">
+        <p class="pilier__code">ME</p><h3>Méditation</h3>
+        <p>Une assise le matin, une le soir, puis ta vision&nbsp;: ton vision board et des visualisations guidées.</p>
+      </div>
+    </div>
+
+    <!-- graphique:debut · généré par assets/gen_graphique_reset.py depuis protocole.py, ne pas éditer à la main -->
+    <figure class="barres" data-barres style="--max:70">
+      <div class="barres__tete">
+        <p class="courbe__lecture" aria-live="polite"><b data-lec-sem>De 8 min à environ 1 h</b><span data-lec-min>par jour, en 8 semaines. Choisis une semaine pour le détail.</span></p>
+        <ul class="barres__legende" aria-label="Légende">
+        <li data-p="SO" tabindex="0"><i style="--c:var(--c-so)"></i>Sommeil</li>
+        <li data-p="MO" tabindex="0"><i style="--c:var(--c-mo)"></i>Mouvement</li>
+        <li data-p="RE" tabindex="0"><i style="--c:var(--c-re)"></i>Respiration</li>
+        <li data-p="ME" tabindex="0"><i style="--c:var(--c-me)"></i>Méditation</li>
+        <li data-p="RL" tabindex="0"><i style="--c:var(--c-rl)"></i>Ton relevé</li>
+        </ul>
+      </div>
+      <div class="barres__zone">
+        <div class="barres__grille" aria-hidden="true">
+        <span style="--g:0"><b></b></span>
+        <span style="--g:30"><b>30 min</b></span>
+        <span style="--g:60"><b>1 h</b></span>
+        </div>
+        <div class="barres__phases">
+        <div class="phase-b" style="--n:4">
+          <p class="phase-b__nom"><b>I</b> Rencontre Intérieure</p>
+          <ol class="phase-b__sems">
+          <li class="sem" tabindex="0" data-sem="1" data-titre="Le matin" data-total="8" data-detail="méditation 5, ton relevé 2, respiration 1" aria-label="Semaine 1, le matin : 8 min par jour. Méditation 5, ton relevé 2, respiration 1." style="--s:1;--t:8;--k:3">
+            <span class="sem__total" aria-hidden="true">8 min</span>
+            <span class="sem__plot" aria-hidden="true">
+              <i class="seg" data-p="RE" style="--v:1;--c:var(--c-re)"></i>
+              <i class="seg" data-p="ME" style="--v:5;--c:var(--c-me)"></i>
+              <i class="seg" data-p="RL" style="--v:2;--c:var(--c-rl)"></i>
+            </span>
+            <span class="sem__n" aria-hidden="true">S1</span>
+            <span class="sem__entre" aria-hidden="true">+ le matin</span>
+          </li>
+          <li class="sem" tabindex="0" data-sem="2" data-titre="Le midi" data-total="25" data-detail="mouvement 10, méditation 10, respiration 3, ton relevé 2" aria-label="Semaine 2, le midi : 25 min par jour. Mouvement 10, méditation 10, respiration 3, ton relevé 2." style="--s:2;--t:25;--k:4">
+            <span class="sem__total" aria-hidden="true">25 min</span>
+            <span class="sem__plot" aria-hidden="true">
+              <i class="seg" data-p="MO" style="--v:10;--c:var(--c-mo)"></i>
+              <i class="seg" data-p="RE" style="--v:3;--c:var(--c-re)"></i>
+              <i class="seg" data-p="ME" style="--v:10;--c:var(--c-me)"></i>
+              <i class="seg" data-p="RL" style="--v:2;--c:var(--c-rl)"></i>
+            </span>
+            <span class="sem__n" aria-hidden="true">S2</span>
+            <span class="sem__entre" aria-hidden="true">+ le midi</span>
+          </li>
+          <li class="sem" tabindex="0" data-sem="3" data-titre="Le soir" data-total="50" data-detail="mouvement 20, méditation 20, sommeil 5, respiration 3, ton relevé 2" aria-label="Semaine 3, le soir : 50 min par jour. Mouvement 20, méditation 20, sommeil 5, respiration 3, ton relevé 2." style="--s:3;--t:50;--k:5">
+            <span class="sem__total" aria-hidden="true">50 min</span>
+            <span class="sem__plot" aria-hidden="true">
+              <i class="seg" data-p="SO" style="--v:5;--c:var(--c-so)"></i>
+              <i class="seg" data-p="MO" style="--v:20;--c:var(--c-mo)"></i>
+              <i class="seg" data-p="RE" style="--v:3;--c:var(--c-re)"></i>
+              <i class="seg" data-p="ME" style="--v:20;--c:var(--c-me)"></i>
+              <i class="seg" data-p="RL" style="--v:2;--c:var(--c-rl)"></i>
+            </span>
+            <span class="sem__n" aria-hidden="true">S3</span>
+            <span class="sem__entre" aria-hidden="true">+ le soir</span>
+          </li>
+          <li class="sem" tabindex="0" data-sem="4" data-titre="Le corps" data-total="54" data-detail="mouvement 24, méditation 20, sommeil 5, respiration 3, ton relevé 2" aria-label="Semaine 4, le corps : 54 min par jour. Mouvement 24, méditation 20, sommeil 5, respiration 3, ton relevé 2." style="--s:4;--t:54;--k:5">
+            <span class="sem__total" aria-hidden="true">55 min</span>
+            <span class="sem__plot" aria-hidden="true">
+              <i class="seg" data-p="SO" style="--v:5;--c:var(--c-so)"></i>
+              <i class="seg" data-p="MO" style="--v:24;--c:var(--c-mo)"></i>
+              <i class="seg" data-p="RE" style="--v:3;--c:var(--c-re)"></i>
+              <i class="seg" data-p="ME" style="--v:20;--c:var(--c-me)"></i>
+              <i class="seg" data-p="RL" style="--v:2;--c:var(--c-rl)"></i>
+            </span>
+            <span class="sem__n" aria-hidden="true">S4</span>
+            <span class="sem__entre" aria-hidden="true">+ le corps</span>
+          </li>
+          </ol>
+        </div>
+        <div class="phase-b" style="--n:3">
+          <p class="phase-b__nom"><b>II</b> La Traversée</p>
+          <ol class="phase-b__sems">
+          <li class="sem" tabindex="0" data-sem="5" data-titre="Le mouvement" data-total="59,5" data-detail="mouvement 29,5, méditation 20, sommeil 5, respiration 3, ton relevé 2" aria-label="Semaine 5, le mouvement : 59,5 min par jour. Mouvement 29,5, méditation 20, sommeil 5, respiration 3, ton relevé 2." style="--s:5;--t:59.5;--k:5">
+            <span class="sem__total" aria-hidden="true">60 min</span>
+            <span class="sem__plot" aria-hidden="true">
+              <i class="seg" data-p="SO" style="--v:5;--c:var(--c-so)"></i>
+              <i class="seg" data-p="MO" style="--v:29.5;--c:var(--c-mo)"></i>
+              <i class="seg" data-p="RE" style="--v:3;--c:var(--c-re)"></i>
+              <i class="seg" data-p="ME" style="--v:20;--c:var(--c-me)"></i>
+              <i class="seg" data-p="RL" style="--v:2;--c:var(--c-rl)"></i>
+            </span>
+            <span class="sem__n" aria-hidden="true">S5</span>
+            <span class="sem__entre" aria-hidden="true">+ le mouvement</span>
+          </li>
+          <li class="sem" tabindex="0" data-sem="6" data-titre="Le froid" data-total="59,5" data-detail="mouvement 29,5, méditation 20, sommeil 5, respiration 3, ton relevé 2" aria-label="Semaine 6, le froid : 59,5 min par jour. Mouvement 29,5, méditation 20, sommeil 5, respiration 3, ton relevé 2." style="--s:6;--t:59.5;--k:5">
+            <span class="sem__total" aria-hidden="true"></span>
+            <span class="sem__plot" aria-hidden="true">
+              <i class="seg" data-p="SO" style="--v:5;--c:var(--c-so)"></i>
+              <i class="seg" data-p="MO" style="--v:29.5;--c:var(--c-mo)"></i>
+              <i class="seg" data-p="RE" style="--v:3;--c:var(--c-re)"></i>
+              <i class="seg" data-p="ME" style="--v:20;--c:var(--c-me)"></i>
+              <i class="seg" data-p="RL" style="--v:2;--c:var(--c-rl)"></i>
+            </span>
+            <span class="sem__n" aria-hidden="true">S6</span>
+            <span class="sem__entre" aria-hidden="true"></span>
+          </li>
+          <li class="sem" tabindex="0" data-sem="7" data-titre="Tenir" data-total="59,5" data-detail="mouvement 29,5, méditation 20, sommeil 5, respiration 3, ton relevé 2" aria-label="Semaine 7, tenir : 59,5 min par jour. Mouvement 29,5, méditation 20, sommeil 5, respiration 3, ton relevé 2." style="--s:7;--t:59.5;--k:5">
+            <span class="sem__total" aria-hidden="true"></span>
+            <span class="sem__plot" aria-hidden="true">
+              <i class="seg" data-p="SO" style="--v:5;--c:var(--c-so)"></i>
+              <i class="seg" data-p="MO" style="--v:29.5;--c:var(--c-mo)"></i>
+              <i class="seg" data-p="RE" style="--v:3;--c:var(--c-re)"></i>
+              <i class="seg" data-p="ME" style="--v:20;--c:var(--c-me)"></i>
+              <i class="seg" data-p="RL" style="--v:2;--c:var(--c-rl)"></i>
+            </span>
+            <span class="sem__n" aria-hidden="true">S7</span>
+            <span class="sem__entre" aria-hidden="true"></span>
+          </li>
+          </ol>
+        </div>
+        <div class="phase-b" style="--n:3">
+          <p class="phase-b__nom"><b>III</b> La Reconstruction</p>
+          <ol class="phase-b__sems">
+          <li class="sem" tabindex="0" data-sem="8" data-titre="La vision" data-total="66,5" data-detail="mouvement 29,5, méditation 27, sommeil 5, respiration 3, ton relevé 2" aria-label="Semaine 8, la vision : 66,5 min par jour. Mouvement 29,5, méditation 27, sommeil 5, respiration 3, ton relevé 2." style="--s:8;--t:66.5;--k:5">
+            <span class="sem__total" aria-hidden="true">65 min</span>
+            <span class="sem__plot" aria-hidden="true">
+              <i class="seg" data-p="SO" style="--v:5;--c:var(--c-so)"></i>
+              <i class="seg" data-p="MO" style="--v:29.5;--c:var(--c-mo)"></i>
+              <i class="seg" data-p="RE" style="--v:3;--c:var(--c-re)"></i>
+              <i class="seg" data-p="ME" style="--v:27;--c:var(--c-me)"></i>
+              <i class="seg" data-p="RL" style="--v:2;--c:var(--c-rl)"></i>
+            </span>
+            <span class="sem__n" aria-hidden="true">S8</span>
+            <span class="sem__entre" aria-hidden="true">+ la vision</span>
+          </li>
+          <li class="sem" tabindex="0" data-sem="9" data-titre="Ton cadre alimentaire" data-total="66,5" data-detail="mouvement 29,5, méditation 27, sommeil 5, respiration 3, ton relevé 2" aria-label="Semaine 9, ton cadre alimentaire : 66,5 min par jour. Mouvement 29,5, méditation 27, sommeil 5, respiration 3, ton relevé 2." style="--s:9;--t:66.5;--k:5">
+            <span class="sem__total" aria-hidden="true"></span>
+            <span class="sem__plot" aria-hidden="true">
+              <i class="seg" data-p="SO" style="--v:5;--c:var(--c-so)"></i>
+              <i class="seg" data-p="MO" style="--v:29.5;--c:var(--c-mo)"></i>
+              <i class="seg" data-p="RE" style="--v:3;--c:var(--c-re)"></i>
+              <i class="seg" data-p="ME" style="--v:27;--c:var(--c-me)"></i>
+              <i class="seg" data-p="RL" style="--v:2;--c:var(--c-rl)"></i>
+            </span>
+            <span class="sem__n" aria-hidden="true">S9</span>
+            <span class="sem__entre" aria-hidden="true"></span>
+          </li>
+          <li class="sem" tabindex="0" data-sem="10" data-titre="Choisir" data-total="66,5" data-detail="mouvement 29,5, méditation 27, sommeil 5, respiration 3, ton relevé 2" aria-label="Semaine 10, choisir : 66,5 min par jour. Mouvement 29,5, méditation 27, sommeil 5, respiration 3, ton relevé 2." style="--s:10;--t:66.5;--k:5">
+            <span class="sem__total" aria-hidden="true"></span>
+            <span class="sem__plot" aria-hidden="true">
+              <i class="seg" data-p="SO" style="--v:5;--c:var(--c-so)"></i>
+              <i class="seg" data-p="MO" style="--v:29.5;--c:var(--c-mo)"></i>
+              <i class="seg" data-p="RE" style="--v:3;--c:var(--c-re)"></i>
+              <i class="seg" data-p="ME" style="--v:27;--c:var(--c-me)"></i>
+              <i class="seg" data-p="RL" style="--v:2;--c:var(--c-rl)"></i>
+            </span>
+            <span class="sem__n" aria-hidden="true">S10</span>
+            <span class="sem__entre" aria-hidden="true"></span>
+          </li>
+          </ol>
+        </div>
+        <div class="phase-b" style="--n:3">
+          <p class="phase-b__nom"><b>IV</b> L&#x27;Intégration</p>
+          <ol class="phase-b__sems">
+          <li class="sem" tabindex="0" data-sem="11" data-titre="J&#x27;écris" data-total="66,5" data-detail="mouvement 29,5, méditation 27, sommeil 5, respiration 3, ton relevé 2" aria-label="Semaine 11, j&#x27;écris : 66,5 min par jour. Mouvement 29,5, méditation 27, sommeil 5, respiration 3, ton relevé 2." style="--s:11;--t:66.5;--k:5">
+            <span class="sem__total" aria-hidden="true"></span>
+            <span class="sem__plot" aria-hidden="true">
+              <i class="seg" data-p="SO" style="--v:5;--c:var(--c-so)"></i>
+              <i class="seg" data-p="MO" style="--v:29.5;--c:var(--c-mo)"></i>
+              <i class="seg" data-p="RE" style="--v:3;--c:var(--c-re)"></i>
+              <i class="seg" data-p="ME" style="--v:27;--c:var(--c-me)"></i>
+              <i class="seg" data-p="RL" style="--v:2;--c:var(--c-rl)"></i>
+            </span>
+            <span class="sem__n" aria-hidden="true">S11</span>
+            <span class="sem__entre" aria-hidden="true"></span>
+          </li>
+          <li class="sem" tabindex="0" data-sem="12" data-titre="Seul" data-total="66,5" data-detail="mouvement 29,5, méditation 27, sommeil 5, respiration 3, ton relevé 2" aria-label="Semaine 12, seul : 66,5 min par jour. Mouvement 29,5, méditation 27, sommeil 5, respiration 3, ton relevé 2." style="--s:12;--t:66.5;--k:5">
+            <span class="sem__total" aria-hidden="true"></span>
+            <span class="sem__plot" aria-hidden="true">
+              <i class="seg" data-p="SO" style="--v:5;--c:var(--c-so)"></i>
+              <i class="seg" data-p="MO" style="--v:29.5;--c:var(--c-mo)"></i>
+              <i class="seg" data-p="RE" style="--v:3;--c:var(--c-re)"></i>
+              <i class="seg" data-p="ME" style="--v:27;--c:var(--c-me)"></i>
+              <i class="seg" data-p="RL" style="--v:2;--c:var(--c-rl)"></i>
+            </span>
+            <span class="sem__n" aria-hidden="true">S12</span>
+            <span class="sem__entre" aria-hidden="true"></span>
+          </li>
+          <li class="sem" tabindex="0" data-sem="13" data-titre="J&#x27;ancre" data-total="66,5" data-detail="mouvement 29,5, méditation 27, sommeil 5, respiration 3, ton relevé 2" aria-label="Semaine 13, j&#x27;ancre : 66,5 min par jour. Mouvement 29,5, méditation 27, sommeil 5, respiration 3, ton relevé 2." style="--s:13;--t:66.5;--k:5">
+            <span class="sem__total" aria-hidden="true"></span>
+            <span class="sem__plot" aria-hidden="true">
+              <i class="seg" data-p="SO" style="--v:5;--c:var(--c-so)"></i>
+              <i class="seg" data-p="MO" style="--v:29.5;--c:var(--c-mo)"></i>
+              <i class="seg" data-p="RE" style="--v:3;--c:var(--c-re)"></i>
+              <i class="seg" data-p="ME" style="--v:27;--c:var(--c-me)"></i>
+              <i class="seg" data-p="RL" style="--v:2;--c:var(--c-rl)"></i>
+            </span>
+            <span class="sem__n" aria-hidden="true">S13</span>
+            <span class="sem__entre" aria-hidden="true"></span>
+          </li>
+          </ol>
+        </div>
+        </div>
+      </div>
+      <figcaption>Chaque colonne est une semaine&nbsp;; sa hauteur, le temps par jour. La lumière, le froid, le café et les repas n'y sont pas&nbsp;: ils se glissent dans des gestes que tu fais déjà. Le HIIT et le stretching s'ajoutent 3 fois par semaine, 20 à 30&nbsp;min.</figcaption>
     </figure>
-    <div class="lettres stagger">
-      <article class="lettre">
-        <p class="lettre__l" aria-hidden="true">R</p>
-        <div class="lettre__nom"><h3>Reconnexion</h3><p class="lettre__sous">Revenir dans le corps</p></div>
-        <p class="lettre__dit">«&nbsp;Je sens à nouveau des choses.&nbsp;»</p>
-      </article>
-      <article class="lettre">
-        <p class="lettre__l" aria-hidden="true">E</p>
-        <div class="lettre__nom"><h3>Équilibrage</h3><p class="lettre__sous">Réguler, réagir moins</p></div>
-        <p class="lettre__dit">«&nbsp;Je réagis moins fort, moins vite.&nbsp;»</p>
-      </article>
-      <article class="lettre">
-        <p class="lettre__l" aria-hidden="true">S</p>
-        <div class="lettre__nom"><h3>Stabilisation</h3><p class="lettre__sous">Tenir dans la durée</p></div>
-        <p class="lettre__dit">«&nbsp;Mes journées se ressemblent, dans le bon sens.&nbsp;»</p>
-      </article>
-      <article class="lettre">
-        <p class="lettre__l" aria-hidden="true">É</p>
-        <div class="lettre__nom"><h3>Élan</h3><p class="lettre__sous">L'énergie revient</p></div>
-        <p class="lettre__dit">«&nbsp;J'ai envie, pas juste besoin.&nbsp;»</p>
-      </article>
-      <article class="lettre">
-        <p class="lettre__l" aria-hidden="true">T</p>
-        <div class="lettre__nom"><h3>Transformation</h3><p class="lettre__sous">Ancrer dans ta vie</p></div>
-        <p class="lettre__dit">«&nbsp;Je ne reviendrai pas en arrière.&nbsp;»</p>
-      </article>
-    </div>
+    <!-- graphique:fin -->
   </section>
 
   <!-- ===== 02. La journée ===== -->
+  <!-- La journée quand tout est en place (protocole.py, journee(8) à journee(13)),
+       dite sans la recette : l'intention, le temps, les piliers en jeu. Le détail des
+       gestes reste dans les documents clients. -->
   <section class="panel panel--tint" id="journee">
     <div class="head">
       <p class="label"><span class="label__n num">02</span> La journée</p>
-      <h2>3 moments par jour, et des outils simples pour chacun.</h2>
-      <p>Fais défiler, le jour passe.</p>
+      <h2>Tes 5 piliers, en 3 moments par jour.</h2>
+      <p>Le matin, tu lances. Le midi, tu tiens. Le soir, tu clôtures. Voici ta journée quand tout est en place, dès la semaine 8&nbsp;: en phase I, il entre un moment par semaine. Fais défiler, le jour passe.</p>
     </div>
 
     <div class="jour" data-jour>
@@ -1321,7 +1500,7 @@ footer a:hover{color:var(--ink)}
         <i class="ciel ciel--lever"></i><i class="ciel ciel--midi"></i><i class="ciel ciel--soir"></i><i class="ciel ciel--nuit"></i>
         <i class="jour__etoiles"></i>
         <div class="jour__lecture">
-          <p class="jour__quand" data-jour-quand>À midi</p>
+          <p class="jour__quand" data-jour-quand>Le midi</p>
           <p class="jour__sorte" data-jour-sorte>Chaque jour</p>
         </div>
         <svg class="jour__trace" viewBox="0 0 480 300">
@@ -1345,121 +1524,36 @@ footer a:hover{color:var(--ink)}
         <p class="jour__fig"><span class="planche__fig">Fig. 03</span> La course du jour</p>
       </div>
       <ol class="jour__liste">
-        <li class="mom" data-angle="170" data-quand="Au lever" data-sorte="Chaque jour">
-          <div class="mom__haut"><p class="mom__quand">Au lever</p><p class="mom__total"><span class="mom__sorte mom__sorte--ancre">Chaque jour</span>≈ 35 min</p></div>
-          <h3>Lumière, assise, mouvement</h3>
-          <ul class="gestes">
-            <li class="geste" style="--d:10"><span>Dehors, à la lumière, sans téléphone</span><span class="duree">10 min</span></li>
-            <li class="geste" style="--d:10"><span>L'assise du matin, avant le café</span><span class="duree">10 min</span></li>
-            <li class="geste" style="--d:15"><span>La séquence du matin</span><span class="duree">10 à 15 min</span></li>
-            <li class="geste" style="--d:2"><span>La douche, froide sur la fin</span><span class="duree">1 à 2 min</span></li>
-          </ul>
+        <li class="mom" data-angle="170" data-ciel="0" data-quand="Le matin" data-sorte="Chaque jour">
+          <div class="mom__haut"><p class="mom__quand">Le matin</p><p class="mom__total"><span class="mom__sorte mom__sorte--ancre">Chaque jour</span>20 à 30 min</p></div>
+          <h3>Tu lances ta journée</h3>
+          <p class="mom__txt">Avant le téléphone, tu commences par toi&nbsp;: la lumière, le souffle, le corps qui se réveille.</p>
+          <ul class="mom__piliers" aria-label="Les piliers en jeu"><li data-p="SO"><b>SO</b>Sommeil</li><li data-p="RE"><b>RE</b>Respiration</li><li data-p="ME"><b>ME</b>Méditation</li><li data-p="MO"><b>MO</b>Mouvement</li><li data-p="NU"><b>NU</b>Nutrition</li></ul>
         </li>
-        <li class="mom" data-angle="90" data-quand="À midi" data-sorte="Chaque jour">
-          <div class="mom__haut"><p class="mom__quand">À midi</p><p class="mom__total"><span class="mom__sorte mom__sorte--ancre">Chaque jour</span>≈ 15 min</p></div>
-          <h3>La reprise, puis la marche</h3>
-          <ul class="gestes">
-            <li class="geste" style="--d:5"><span>À la fin du repas, assis&nbsp;: la reprise</span><span class="duree">2 à 5 min</span></li>
-            <li class="geste" style="--d:10"><span>Juste après, une marche lente</span><span class="duree">10 min</span></li>
-          </ul>
+        <li class="mom" data-angle="90" data-ciel="1" data-quand="Le midi" data-sorte="Chaque jour">
+          <div class="mom__haut"><p class="mom__quand">Le midi</p><p class="mom__total"><span class="mom__sorte mom__sorte--ancre">Chaque jour</span>≈ 12 min</p></div>
+          <h3>Tu tiens le cap</h3>
+          <p class="mom__txt">Une pause au milieu de la journée. Tu reviens dans ton corps, puis tu repars.</p>
+          <ul class="mom__piliers" aria-label="Les piliers en jeu"><li data-p="NU"><b>NU</b>Nutrition</li><li data-p="RE"><b>RE</b>Respiration</li><li data-p="MO"><b>MO</b>Mouvement</li></ul>
         </li>
-        <li class="mom" data-angle="30" data-quand="En soirée" data-sorte="3 soirs sur 7">
-          <div class="mom__haut"><p class="mom__quand">En soirée</p><p class="mom__total"><span class="mom__sorte mom__sorte--fenetre">3 soirs sur 7</span></p></div>
-          <h3>Le corps, 3 soirs par semaine</h3>
-          <ul class="gestes">
-            <li class="geste" style="--d:35"><span>Le training, 2 fois par semaine</span><span class="duree">25 à 35 min</span></li>
-            <li class="geste" style="--d:25"><span>Le stretching, 1 fois par semaine</span><span class="duree">25 min</span></li>
-          </ul>
+        <li class="mom" data-angle="-16" data-ciel="3" data-quand="Le soir" data-sorte="Chaque jour">
+          <div class="mom__haut"><p class="mom__quand">Le soir</p><p class="mom__total"><span class="mom__sorte mom__sorte--ancre">Chaque jour</span>≈ 30 min</p></div>
+          <h3>Tu clôtures ta journée</h3>
+          <p class="mom__txt">Tu ralentis, tu poses ta journée, tu prépares ton sommeil. Puis ton relevé, dans ton journal.</p>
+          <ul class="mom__piliers" aria-label="Les piliers en jeu"><li data-p="MO"><b>MO</b>Mouvement</li><li data-p="SO"><b>SO</b>Sommeil</li><li data-p="ME"><b>ME</b>Méditation</li></ul>
         </li>
-        <li class="mom" data-angle="-16" data-quand="Au coucher" data-sorte="Chaque jour">
-          <div class="mom__haut"><p class="mom__quand">Au coucher</p><p class="mom__total"><span class="mom__sorte mom__sorte--ancre">Chaque jour</span>≈ 25 min</p></div>
-          <h3>Marche, jambes au mur, assise</h3>
-          <ul class="gestes">
-            <li class="geste" style="--d:10"><span>Après le repas du soir, une marche lente</span><span class="duree">5 à 10 min</span></li>
-            <li class="geste" style="--d:5"><span>Allongé, jambes au mur</span><span class="duree">5 min</span></li>
-            <li class="geste" style="--d:10"><span>L'assise du soir, 30 min avant</span><span class="duree">10 min</span></li>
-          </ul>
+        <li class="hebdo">
+          <div class="mom__haut"><p class="mom__quand">Dans la semaine</p><p class="mom__total"><span class="mom__sorte">En plus</span></p></div>
+          <p class="mom__txt">Du mouvement plus intense, 3 fois par semaine, et ton call avec moi.</p>
+          <ul class="mom__piliers" aria-label="Les piliers en jeu"><li data-p="MO"><b>MO</b>Mouvement</li><li data-p="ME"><b>ME</b>Méditation</li><li data-p="RE"><b>RE</b>Respiration</li></ul>
         </li>
       </ol>
     </div>
+    <p class="releve">Au total, environ 1&nbsp;h par jour, plus 20 à 30&nbsp;min trois fois par semaine. Le reste se glisse dans des gestes que tu fais déjà&nbsp;: le lever, la douche, le repas.</p>
   </section>
 
-  <!-- ===== 03. Les cinq piliers ===== -->
-  <section class="panel" id="piliers">
-    <div class="tete">
-      <div class="head">
-        <p class="label"><span class="label__n num">03</span> Les 5 piliers</p>
-        <h2>Les lettres disent ce que tu vis. Les piliers disent ce que tu fais.</h2>
-        <p>Ils ne se travaillent pas l'un après l'autre&nbsp;: ils montent ensemble, à des vitesses différentes.</p>
-      </div>
-      <figure class="planche arbre">
-        <div class="planche__dessin">
-          <svg viewBox="-20.3 15.0 463.8 518.8" aria-hidden="true">
-            <g class="branches">
-              <path class="tronc" pathLength="1" d="M220.0 410.0L220.0 330.0" stroke-width="5.5"/>
-              <g data-p="NU"><path class="n1" pathLength="1" d="M220.0 330.0L142.0 281.2" stroke-width="3.4"/><path class="n2" pathLength="1" d="M142.0 281.2L75.2 271.2 M142.0 281.2L107.0 226.1" stroke-width="2.3"/><path class="n3" pathLength="1" d="M75.2 271.2L29.2 284.1 M75.2 271.2L36.5 248.2 M107.0 226.1L67.9 202.3 M107.0 226.1L97.5 179.6" stroke-width="1.6"/><path class="n4" pathLength="1" d="M29.2 284.1L2.2 304.5 M29.2 284.1L-2.3 279.1 M36.5 248.2L6.7 245.4 M36.5 248.2L21.3 218.6 M67.9 202.3L37.0 198.1 M67.9 202.3L46.2 178.9 M97.5 179.6L78.5 152.4 M97.5 179.6L105.9 147.7" stroke-width="1.15"/><g class="pointes"><circle cx="2.2" cy="304.5" r="3.6"/><circle cx="-2.3" cy="279.1" r="3.6"/><circle cx="6.7" cy="245.4" r="3.6"/><circle cx="21.3" cy="218.6" r="3.6"/><circle cx="37.0" cy="198.1" r="3.6"/><circle cx="46.2" cy="178.9" r="3.6"/><circle cx="78.5" cy="152.4" r="3.6"/><circle cx="105.9" cy="147.7" r="3.6"/></g></g>
-              <g data-p="MO"><path class="n1" pathLength="1" d="M220.0 330.0L175.8 220.6" stroke-width="3.4"/><path class="n2" pathLength="1" d="M175.8 220.6L120.2 153.3 M175.8 220.6L176.1 133.5" stroke-width="2.3"/><path class="n3" pathLength="1" d="M120.2 153.3L66.0 128.0 M120.2 153.3L111.3 93.6 M176.1 133.5L147.4 78.6 M176.1 133.5L202.0 81.2" stroke-width="1.6"/><path class="n4" pathLength="1" d="M66.0 128.0L26.2 127.4 M66.0 128.0L39.3 96.4 M111.3 93.6L89.3 60.5 M111.3 93.6L124.4 51.4 M147.4 78.6L112.8 56.1 M147.4 78.6L145.5 33.0 M202.0 81.2L202.1 42.4 M202.0 81.2L232.8 56.7" stroke-width="1.15"/><g class="pointes"><circle cx="26.2" cy="127.4" r="3.6"/><circle cx="39.3" cy="96.4" r="3.6"/><circle cx="89.3" cy="60.5" r="3.6"/><circle cx="124.4" cy="51.4" r="3.6"/><circle cx="112.8" cy="56.1" r="3.6"/><circle cx="145.5" cy="33.0" r="3.6"/><circle cx="202.1" cy="42.4" r="3.6"/><circle cx="232.8" cy="56.7" r="3.6"/></g></g>
-              <g data-p="RE"><path class="n1" pathLength="1" d="M220.0 330.0L234.5 227.0" stroke-width="3.4"/><path class="n2" pathLength="1" d="M234.5 227.0L213.3 160.1 M234.5 227.0L271.8 159.8" stroke-width="2.3"/><path class="n3" pathLength="1" d="M213.3 160.1L176.3 126.5 M213.3 160.1L223.3 113.1 M271.8 159.8L276.3 104.5 M271.8 159.8L312.5 123.7" stroke-width="1.6"/><path class="n4" pathLength="1" d="M176.3 126.5L144.5 114.8 M176.3 126.5L158.3 94.3 M223.3 113.1L212.6 81.6 M223.3 113.1L246.9 88.3 M276.3 104.5L263.5 69.9 M276.3 104.5L292.0 68.6 M312.5 123.7L329.2 87.2 M312.5 123.7L348.9 111.5" stroke-width="1.15"/><g class="pointes"><circle cx="144.5" cy="114.8" r="3.6"/><circle cx="158.3" cy="94.3" r="3.6"/><circle cx="212.6" cy="81.6" r="3.6"/><circle cx="246.9" cy="88.3" r="3.6"/><circle cx="263.5" cy="69.9" r="3.6"/><circle cx="292.0" cy="68.6" r="3.6"/><circle cx="329.2" cy="87.2" r="3.6"/><circle cx="348.9" cy="111.5" r="3.6"/></g></g>
-              <g data-p="ME"><path class="n1" pathLength="1" d="M220.0 330.0L286.7 260.9" stroke-width="3.4"/><path class="n2" pathLength="1" d="M286.7 260.9L301.2 198.1 M286.7 260.9L349.4 242.8" stroke-width="2.3"/><path class="n3" pathLength="1" d="M301.2 198.1L292.1 155.1 M301.2 198.1L333.6 165.8 M349.4 242.8L382.3 212.5 M349.4 242.8L394.2 254.6" stroke-width="1.6"/><path class="n4" pathLength="1" d="M292.1 155.1L275.4 127.6 M292.1 155.1L295.9 123.0 M333.6 165.8L342.6 136.8 M333.6 165.8L363.3 156.9 M382.3 212.5L396.3 186.3 M382.3 212.5L411.1 199.9 M394.2 254.6L425.5 252.6 M394.2 254.6L420.9 271.5" stroke-width="1.15"/><g class="pointes"><circle cx="275.4" cy="127.6" r="3.6"/><circle cx="295.9" cy="123.0" r="3.6"/><circle cx="342.6" cy="136.8" r="3.6"/><circle cx="363.3" cy="156.9" r="3.6"/><circle cx="396.3" cy="186.3" r="3.6"/><circle cx="411.1" cy="199.9" r="3.6"/><circle cx="425.5" cy="252.6" r="3.6"/><circle cx="420.9" cy="271.5" r="3.6"/></g></g>
-            </g>
-            <path class="racines" data-p="SO" pathLength="1" d="M220.0 410.0L179.4 431.6 M179.4 431.6L150.9 431.9 M150.9 431.9L135.3 423.5 M150.9 431.9L135.6 440.7 M179.4 431.6L164.8 456.1 M164.8 456.1L149.6 465.1 M164.8 456.1L164.9 473.8 M220.0 410.0L203.7 446.5 M203.7 446.5L186.4 464.3 M186.4 464.3L172.0 469.6 M186.4 464.3L182.9 479.3 M203.7 446.5L205.4 471.3 M205.4 471.3L198.4 485.0 M205.4 471.3L211.9 485.2 M220.0 410.0L235.7 448.9 M235.7 448.9L234.1 474.9 M234.1 474.9L226.9 489.4 M234.1 474.9L240.4 489.8 M235.7 448.9L255.4 466.1 M255.4 466.1L263.1 480.2 M255.4 466.1L270.7 471.2 M220.0 410.0L261.6 434.0 M261.6 434.0L279.3 457.9 M279.3 457.9L281.1 476.2 M279.3 457.9L296.2 465.4 M261.6 434.0L291.0 438.2 M291.0 438.2L305.6 449.5 M291.0 438.2L309.0 433.9"/>
-          </svg>
-          <span class="planche__mot" data-p="SO" style="left:51.81%;top:95.76%">SO</span>
-          <span class="planche__mot" data-p="NU" style="left:27.92%;top:47.38%">NU</span>
-          <span class="planche__mot" data-p="MO" style="left:38.27%;top:30.76%">MO</span>
-          <span class="planche__mot" data-p="RE" style="left:56.25%;top:32.54%">RE</span>
-          <span class="planche__mot" data-p="ME" style="left:72.23%;top:41.81%">ME</span>
-        </div>
-        <figcaption class="planche__legende"><span class="planche__fig">Fig. 04</span><span>Le sommeil en racines, 4 branches qui montent ensemble. Survole un pilier.</span></figcaption>
-      </figure>
-    </div>
-
-    <div class="piliers stagger">
-      <div class="pilier" data-p="SO" tabindex="0">
-        <p class="pilier__code">SO</p><h3>Sommeil</h3>
-        <p>La lumière au réveil, une heure de lever stable. Tout le reste s'appuie dessus.</p>
-      </div>
-      <div class="pilier" data-p="NU" tabindex="0">
-        <p class="pilier__code">NU</p><h3>Nutrition</h3>
-        <p>La caféine déplacée, des repas à heures fixes. Ça ne prend pas de temps, ça demande des décisions.</p>
-      </div>
-      <div class="pilier" data-p="MO" tabindex="0">
-        <p class="pilier__code">MO</p><h3>Mouvement</h3>
-        <p>Des marches, une séquence le matin, puis des trainings. Le pilier le plus lourd en temps.</p>
-      </div>
-      <div class="pilier" data-p="RE" tabindex="0">
-        <p class="pilier__code">RE</p><h3>Respiration</h3>
-        <p>Quelques minutes par jour, et 4 sessions longues, encadrées en direct.</p>
-      </div>
-      <div class="pilier" data-p="ME" tabindex="0">
-        <p class="pilier__code">ME</p><h3>Méditation</h3>
-        <p>2 assises par jour, le matin et le soir.</p>
-      </div>
-    </div>
-
-    <figure class="courbe" style="margin:0">
-      <div class="courbe__phases" role="group" aria-label="Choisis une phase">
-        <button type="button" class="phase-choix" data-phase="0" aria-pressed="true">I · Rencontre Intérieure</button>
-        <button type="button" class="phase-choix" data-phase="1" aria-pressed="false">II · La Traversée</button>
-        <button type="button" class="phase-choix" data-phase="2" aria-pressed="false">III · La Reconstruction</button>
-        <button type="button" class="phase-choix" data-phase="3" aria-pressed="false">IV · L'Intégration</button>
-      </div>
-      <p class="courbe__lecture" aria-live="polite"><b data-lec-sem>Semaines 1 à 4</b><span data-lec-min>de 18 à 58 min par jour</span></p>
-      <div class="chart-scroll">
-        <svg id="courbe" viewBox="0 0 1000 400" role="img"
-             aria-label="Aire empilée des minutes quotidiennes par pilier, de la semaine 1 à la semaine 13. Le total passe de 18 minutes en semaine 1 à 58 en semaine 4, environ 80 pendant la Traversée, puis 85 de la semaine 8 à la fin. Le mouvement est le pilier le plus lourd, 49 minutes par jour au plus haut."></svg>
-      </div>
-      <p class="chart-glisse">Fais glisser le graphique pour le voir en entier.</p>
-      <figcaption>
-        Chaque bande est un pilier&nbsp;; sa hauteur, le temps qu'il demande par jour.
-      </figcaption>
-    </figure>
-  </section>
-
-  <!-- ===== 04. Le déroulé ===== -->
-  <!-- Les trois creux sont rendus à la phase où ils tombent, plutôt que réunis
-       dans une section à part : annoncés à leur place, ils se lisent comme
-       faisant partie du chemin. -->
+  <!-- ===== 03. Le déroulé ===== -->
+  <!-- Les 4 phases de protocole.py (PHASES) : nom, verbe, semaines, ce qui entre. -->
   <section class="panel panel--dark deroule" id="deroule">
     <div class="ciel-bande" aria-hidden="true">
       <picture>
@@ -1468,9 +1562,9 @@ footer a:hover{color:var(--ink)}
       </picture>
     </div>
     <div class="head">
-      <p class="label"><span class="label__n num">04</span> Le déroulé</p>
+      <p class="label"><span class="label__n num">03</span> Le déroulé</p>
       <h2>Voir. Tenir. Choisir. Ancrer.</h2>
-      <p>4 phases, 1 par mois environ. Chacune se termine par une session de Breathwork encadrée, et tu n'as jamais plus d'un mois devant toi.</p>
+      <p>4 phases, 1 par mois environ. Chacune s'ouvre par un call d'une heure et se termine par une session de Breathwork de 1&nbsp;h&nbsp;30. Tu n'as jamais plus d'un mois devant toi.</p>
     </div>
 
     <div class="voyage" data-voyage>
@@ -1482,7 +1576,7 @@ footer a:hover{color:var(--ink)}
         <div class="etape__corps">
           <p class="etape__quand">Semaines 1 à 4 · le verbe est&nbsp;voir</p>
           <h3>Rencontre Intérieure</h3>
-          <p class="etape__txt">Tu prends en main tes premiers outils&nbsp;: la lumière au réveil, l'assise, la marche après les repas.</p>
+          <p class="etape__txt">Tu installes ta journée, un moment par semaine&nbsp;: le matin, le midi, le soir, puis le corps. Ce que tu ajoutes, tu le gardes jusqu'au bout.</p>
           <p class="etape__palier">«&nbsp;Ma journée a une structure.&nbsp;»</p>
         </div>
       </article>
@@ -1492,7 +1586,7 @@ footer a:hover{color:var(--ink)}
         <div class="etape__corps">
           <p class="etape__quand">Semaines 5 à 7 · le verbe est&nbsp;tenir</p>
           <h3>La Traversée</h3>
-          <p class="etape__txt">Le corps monte en charge&nbsp;: training, stretching, froid. Tu apprends à rester calme dans un stress que tu as choisi.</p>
+          <p class="etape__txt">Ton corps entre en jeu&nbsp;: le mouvement du matin, le HIIT, le froid, le stretching. Partout, tu gardes un souffle lent et calme, et tes assises passent en pleine conscience.</p>
           <p class="etape__palier">«&nbsp;Je traverse sans fuir.&nbsp;»</p>
         </div>
       </article>
@@ -1502,8 +1596,8 @@ footer a:hover{color:var(--ink)}
         <div class="etape__corps">
           <p class="etape__quand">Semaines 8 à 10 · le verbe est&nbsp;choisir</p>
           <h3>La Reconstruction</h3>
-          <p class="etape__txt">Tu passes aux actes&nbsp;: une décision, un non, une demande. Chacun à une date, dans ta vraie vie.</p>
-          <p class="etape__palier">«&nbsp;Je décide, et je le prouve.&nbsp;»</p>
+          <p class="etape__txt">Ton corps est stable, ton souffle tient. Tu choisis ce que tu veux créer&nbsp;: ton vision board, que tu regardes matin et soir, des visualisations guidées, et ton cadre alimentaire, 2 ou 3 règles à toi.</p>
+          <p class="etape__palier">«&nbsp;Je choisis ce que je crée.&nbsp;»</p>
         </div>
       </article>
 
@@ -1512,7 +1606,7 @@ footer a:hover{color:var(--ink)}
         <div class="etape__corps">
           <p class="etape__quand">Semaines 11 à 13 · le verbe est&nbsp;ancrer</p>
           <h3>L'Intégration</h3>
-          <p class="etape__txt">Tu gardes 3 pratiques sur 13, tu écris ton Protocole de Vie, et c'est toi qui mènes les derniers calls.</p>
+          <p class="etape__txt">Tu écris ton protocole, tu le vis seul une semaine, tu le corriges, puis tu écris ta lettre à toi dans un an. Ce qui tient sans le cadre t'appartient. Un mois après la fin, un call de suivi.</p>
           <p class="etape__palier">«&nbsp;Je tiens sans toi.&nbsp;»</p>
         </div>
       </article>
@@ -1537,10 +1631,10 @@ footer a:hover{color:var(--ink)}
     <figcaption class="etat__texte reveal">À la fin des 90 jours, tu ne prends plus les mêmes décisions, parce&nbsp;que <span class="hl">tu n'es plus dans le même état.</span></figcaption>
   </figure>
 
-  <!-- ===== 05. Avant de commencer ===== -->
+  <!-- ===== 04. Avant de commencer ===== -->
   <section class="panel panel--tint" id="avant">
     <div class="head">
-      <p class="label"><span class="label__n num">05</span> Avant de commencer</p>
+      <p class="label"><span class="label__n num">04</span> Avant de commencer</p>
       <h2>Ni une remise en forme, ni une thérapie.</h2>
       <p>Tout commence par un questionnaire d'admission. Si c'est non, je te le dis avant.</p>
     </div>
@@ -1553,9 +1647,9 @@ footer a:hover{color:var(--ink)}
 
     <div class="verifs">
       <div class="verif">
-        <p class="verif__gros"><span class="num">100</span> min</p>
+        <p class="verif__gros"><span class="num">1</span> h</p>
         <h3>À t'accorder chaque jour</h3>
-        <p>Du temps pour toi. À partir de la semaine 8, la pratique en prend jusqu'à 85. Si tu ne peux pas te les accorder aujourd'hui, ce n'est simplement pas encore le moment.</p>
+        <p>Du temps pour toi, quand tout est en place, plus 20 à 30&nbsp;min trois fois par semaine. Si tu ne peux pas te l'accorder aujourd'hui, ce n'est simplement pas encore le moment.</p>
       </div>
       <div class="verif">
         <p class="verif__gros"><span class="num">0</span> miracle</p>
@@ -1565,38 +1659,35 @@ footer a:hover{color:var(--ink)}
       <div class="verif">
         <p class="verif__gros verif__gros--icone" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="21"/><path d="M24 14v20M14 24h20"/></svg></p>
         <h3>Ta santé d'abord</h3>
-        <p>Certaines situations demandent l'accord écrit de ton praticien, d'autres ne permettent pas le protocole. Tout est listé juste en dessous.</p>
+        <p>Certaines situations demandent l'accord écrit de ton médecin, d'autres ne permettent pas RESET. Tout est listé juste en dessous.</p>
       </div>
     </div>
 
+    <!-- Aligné sur « Ta sécurité » v2 (Accompagnement/RESET/Fabrication/gen_securite.py) -->
     <details class="depli">
       <summary>Voir les situations qui demandent un avis, ou un non</summary>
       <div class="depli__corps">
         <div class="depli__col">
-        <p><b>Le protocole n'est pas adapté en cas de&nbsp;:</b></p>
+        <p><b>Pas de RESET en cas de&nbsp;:</b></p>
         <ul class="liste">
           <li>grossesse en cours&nbsp;;</li>
-          <li>trouble cardiovasculaire non contrôlé&nbsp;: hypertension non stabilisée, arythmie, infarctus ou AVC récent, anévrisme connu&nbsp;;</li>
-          <li>épilepsie&nbsp;;</li>
-          <li>trouble respiratoire sévère, comme un asthme sévère ou une BPCO&nbsp;;</li>
-          <li>diagnostic de psychose ou de trouble bipolaire&nbsp;;</li>
-          <li>idées suicidaires, actuelles ou dans les 6 derniers mois&nbsp;;</li>
-          <li>trouble du comportement alimentaire actif&nbsp;;</li>
-          <li>dépendance active à l'alcool ou à une substance.</li>
+          <li>trouble psychique ou psychiatrique, même ancien, diagnostiqué ou traité&nbsp;: dépression, anxiété, stress post-traumatique, trouble alimentaire, psychose, trouble bipolaire…&nbsp;;</li>
+          <li>addiction&nbsp;: drogues, ou alcool en excès.</li>
         </ul>
-        <p>Dans ces cas, je te le dis simplement, et je t'oriente vers quelqu'un si je le peux.</p>
+        <p>Dans ces cas, je te le dis simplement, et je t'oriente vers un professionnel. Si l'une de ces situations apparaît pendant RESET, on arrête.</p>
         </div>
         <div class="depli__col">
-        <p><b>Possible, avec l'accord écrit de ton praticien&nbsp;:</b></p>
+        <p><b>Ton médecin d'abord, en cas de&nbsp;:</b></p>
         <ul class="liste">
-          <li>un suivi psychologique en cours&nbsp;;</li>
-          <li>un traitement psychotrope&nbsp;;</li>
-          <li>un trauma accompagné par ailleurs&nbsp;;</li>
-          <li>un trouble cardiovasculaire stabilisé, un diabète sous traitement&nbsp;;</li>
-          <li>des migraines sévères, un glaucome&nbsp;;</li>
-          <li>un projet de grossesse.</li>
+          <li>maladie cardiaque, hypertension ou hypotension importante, malaise dans l'année&nbsp;;</li>
+          <li>asthme sévère ou BPCO&nbsp;;</li>
+          <li>épilepsie, glaucome ou décollement de rétine&nbsp;;</li>
+          <li>diabète, trouble de la thyroïde non stabilisé, maladie rénale&nbsp;;</li>
+          <li>ostéoporose sévère, hernie, dos ou articulation fragiles&nbsp;;</li>
+          <li>chirurgie ou blessure récente, épuisement marqué&nbsp;;</li>
+          <li>toute autre maladie chronique, ou un traitement au long cours.</li>
         </ul>
-        <p>Certaines pratiques sont alors retirées de ton protocole.</p>
+        <p>Les pratiques concernées attendent son accord écrit. En attendant, le reste de RESET continue.</p>
         </div>
       </div>
     </details>
@@ -1604,7 +1695,7 @@ footer a:hover{color:var(--ink)}
     <p class="urgence">Si tu traverses des idées suicidaires en ce moment, appelle le <a href="tel:080032123">0800 32 123</a> en Belgique ou le <a href="tel:3114">3114</a> en France. C'est gratuit, jour et nuit.</p>
   </section>
 
-  <!-- ===== 06. La suite ===== -->
+  <!-- ===== 05. La suite ===== -->
   <section class="panel panel--dark suite" id="suite">
     <div class="suite__ciel" aria-hidden="true">
       <picture>
@@ -1615,7 +1706,7 @@ footer a:hover{color:var(--ink)}
       </picture>
     </div>
     <div class="head" style="margin-bottom:1.4rem">
-      <p class="label"><span class="label__n num">06</span> La suite</p>
+      <p class="label"><span class="label__n num">05</span> La suite</p>
       <h2>RESET n'est pas encore ouvert.</h2>
     </div>
     <ol class="pas">
@@ -1711,157 +1802,38 @@ footer a:hover{color:var(--ink)}
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureNav);
 
   /* ---------- Le graphique des piliers ---------- */
-  /* Minutes par jour et par pilier, semaine 1 à 13. Source : la grille du
-     06 §4 et les hypothèses du 06 §10 (lumière 10, relevé 3, ancre de midi
-     2 puis 3, séquence du matin 3 puis 12, trainings 2 x 30 en S5 puis
-     2 x 26, stretching 25 par semaine, froid 2 min trois fois par semaine).
-     Totaux : 18 · 38 · 56,6 · 58 · 80,1 · 79,9 · 79,9 · puis 85 jusqu'à la S13.
-     La S3 porte les trois marches de 20 min sans stimulation, lissées sur 7 jours. */
-  var PILIERS = [
-    {nom:"Sommeil",     p:"SO", v:[10, 10, 10,   10, 10,   10,   10,   10, 10, 10, 10, 10, 10]},
-    {nom:"Le relevé",   p:"RL", v:[ 3,  3,  3,    3,  3,    3,    3,    3,  3,  3,  3,  3,  3]},
-    {nom:"Méditation",  p:"ME", v:[ 5, 10, 15,   20, 20,   20,   20,   20, 20, 20, 20, 20, 20]},
-    {nom:"Respiration", p:"RE", v:[ 0,  2,  2,    2,  3,    3,    3,    3,  3,  3,  3,  3,  3]},
-    {nom:"Mouvement",   p:"MO", v:[ 0, 13, 26.6, 23, 44.1, 43.9, 43.9, 49, 49, 49, 49, 49, 49]}
-  ];
-  var PHASES = [
-    {de:0, a:4,  txt:"I · Rencontre Intérieure"},
-    {de:4, a:7,  txt:"II · La Traversée"},
-    {de:7, a:10, txt:"III · La Reconstruction"},
-    {de:10,a:13, txt:"IV · L'Intégration"}
-  ];
-
-  var N = 13, SVGNS = "http://www.w3.org/2000/svg";
-  function fr(n){ return String(n).replace(".", ","); }
-  function el(nom, attrs, texte){
-    var e = document.createElementNS(SVGNS, nom);
-    for (var a in attrs) e.setAttribute(a, attrs[a]);
-    if (texte != null) e.textContent = texte;
-    return e;
+  /* Les colonnes sont écrites dans la page (assets/gen_graphique_reset.py) ;
+     ici, seulement la lecture : survoler, toucher ou tabuler sur une semaine
+     écrit son détail au-dessus, et éteint un peu les autres. */
+  var barres = one('[data-barres]');
+  if (barres) {
+    if (!reduce) barres.classList.add('est-pilote');
+    var lecSem = one('[data-lec-sem]', barres), lecMin = one('[data-lec-min]', barres);
+    var lec0 = [lecSem.textContent, lecMin.textContent], sel = null;
+    var montrer = function(s){
+      if (sel) sel.classList.remove('is-sel');
+      sel = s;
+      barres.classList.toggle('a-sel', !!s);
+      if (!s) { lecSem.textContent = lec0[0]; lecMin.textContent = lec0[1]; return; }
+      s.classList.add('is-sel');
+      lecSem.textContent = 'Semaine ' + s.getAttribute('data-sem') + ' · ' + s.getAttribute('data-titre');
+      lecMin.textContent = s.getAttribute('data-total') + ' min par jour : ' + s.getAttribute('data-detail') + '.';
+    };
+    all('.sem', barres).forEach(function(s){
+      s.addEventListener('mouseenter', function(){ montrer(s); });
+      s.addEventListener('focus', function(){ montrer(s); });
+      s.addEventListener('click', function(){ montrer(sel === s ? null : s); });
+    });
+    one('.barres__phases', barres).addEventListener('mouseleave', function(){ montrer(null); });
+    barres.addEventListener('focusout', function(e){ if (!barres.contains(e.relatedTarget)) montrer(null); });
+    /* au doigt, toucher ailleurs efface la sélection */
+    document.addEventListener('click', function(e){ if (sel && !e.target.closest('.sem')) montrer(null); });
   }
-
-  var svg = document.getElementById("courbe");
-  var boite = svg.closest(".chart-scroll");
-  var M = {t:46, r:150, b:86, l:64};  // sous 64, le « 90 min » de l'axe est rogné
-  var pw = 1000 - M.l - M.r, ph = 400 - M.t - M.b;
-  var bw = pw / N, yMax = 90;
-  var x = function(i){ return M.l + i*bw; };
-  var y = function(v){ return M.t + ph * (1 - v/yMax); };
-  var bas = M.t + ph;
-  var TOTAUX = PILIERS[0].v.map(function(_, i){ return PILIERS.reduce(function(s, b){ return s + b.v[i]; }, 0); });
-
-  /* Grille */
-  [0,30,60,90].forEach(function(v){
-    svg.appendChild(el("line", {x1:M.l, y1:y(v), x2:M.l+pw, y2:y(v), class:"grid"}));
-    svg.appendChild(el("text", {x:M.l-10, y:y(v)+4, class:"axis", "text-anchor":"end"},
-      v===90 ? "90 min" : String(v)));
-  });
-
-  /* Les bandes, dessinées en entier */
-  var defs = svg.appendChild(el("defs", {}));
-  var cp = defs.appendChild(el("clipPath", {id:"courbe-clip"}));
-  cp.appendChild(el("rect", {x:M.l - 2, y:0, width:pw + 4, height:400}));
-  var bandes = svg.appendChild(el("g", {"clip-path":"url(#courbe-clip)"}));
-  var cum = new Array(N).fill(0);
-  PILIERS.forEach(function(b, k){
-    var haut = cum.map(function(v,i){ return v + b.v[i]; });
-    var d = "M" + x(0) + " " + y(haut[0]);
-    for (var i=0;i<N;i++) d += " L" + x(i) + " " + y(haut[i]) + " L" + x(i+1) + " " + y(haut[i]);
-    for (var j=N-1;j>=0;j--) d += " L" + x(j+1) + " " + y(cum[j]) + " L" + x(j) + " " + y(cum[j]);
-    bandes.appendChild(el("path", {d:d + " Z", class:"band", "data-p":b.p, fill:"var(--ice-deep)",
-      "fill-opacity":(0.9 - k*0.165).toFixed(3)}));
-    b._y = y((haut[N-1] + cum[N-1]) / 2);
-    b._fin = b.v[N-1];
-    cum = haut;
-  });
-
-  /* Le voile : deux rectangles qui recouvrent les semaines hors de la phase choisie */
-  var voileG = svg.appendChild(el("g", {}));
-  var voileA = voileG.appendChild(el("rect", {x:M.l, y:M.t - 10, width:0, height:ph + 10, class:"voile-phase"}));
-  var voileB = voileG.appendChild(el("rect", {x:M.l + pw, y:M.t - 10, width:0, height:ph + 10, class:"voile-phase"}));
-
-  /* Les libellés, à droite, écartés s'ils se touchent */
-  var pos = PILIERS.map(function(b){ return {y:b._y, ancre:b._y, nom:b.nom, val:b._fin, p:b.p}; });
-  pos.sort(function(a,b){ return a.y - b.y; });
-  for (var i=1;i<pos.length;i++){
-    if (pos[i].y - pos[i-1].y < 19) pos[i].y = pos[i-1].y + 19;
-  }
-  pos.forEach(function(p){
-    var g = svg.appendChild(el("g", {"data-p":p.p}));
-    g.appendChild(el("polyline", {
-      points:[M.l+pw, p.ancre, M.l+pw+10, p.ancre, M.l+pw+18, p.y, M.l+pw+24, p.y].join(" "),
-      class:"leader"
-    }));
-    var t = el("text", {x:M.l+pw+30, y:p.y+4.5, class:"bandlabel"}, p.nom + " ");
-    t.appendChild(el("tspan", {}, fr(p.val)));
-    g.appendChild(t);
-  });
-
-  /* Le maximum, atteint en S8 et tenu jusqu'à la fin */
-  svg.appendChild(el("line", {x1:x(7), y1:y(85)-6, x2:x(13), y2:y(85)-6, class:"rule"}));
-  svg.appendChild(el("text", {x:x(7)+4, y:y(85)-15, class:"note"}, "85 min, de la semaine 8 à la fin"));
-
-  /* Axe des semaines */
-  svg.appendChild(el("line", {x1:M.l, y1:bas, x2:M.l+pw, y2:bas, class:"grid"}));
-  for (var i=0;i<N;i++){
-    svg.appendChild(el("text", {x:x(i)+bw/2, y:bas+20, "text-anchor":"middle", class:"axis axis--week"},
-      "S" + (i+1)));
-  }
-
-  /* La barre des phases : on clique dessus pour la choisir */
-  var phasesG = PHASES.map(function(p, k){
-    var x0 = x(p.de)+1.5, w = (p.a-p.de)*bw-3;
-    var g = svg.appendChild(el("g", {class:"phase-g"}));
-    g.addEventListener('click', function(){ choisir(k, true); });
-    g.appendChild(el("rect", {x:x0, y:bas+32, width:w, height:26, rx:13, class:"phasebar"}));
-    g.appendChild(el("text", {x:x0+w/2, y:bas+49, "text-anchor":"middle", class:"phasetxt"}, p.txt));
-    return g;
-  });
-
-  /* Le repère de défilement, seulement si le graphique déborde pour de bon */
-  function mesure(){
-    boite.classList.toggle("est-large", boite.scrollWidth > boite.clientWidth + 1);
-  }
-  mesure();
-  window.addEventListener("resize", mesure);
-
-  /* Choisir une phase : le voile glisse sur les autres semaines, la lecture change */
-  var lecSem = one('[data-lec-sem]'), lecMin = one('[data-lec-min]');
-  var choix = all('.phase-choix'), courante = 0, va = {a:0, b:pw}, anim = 0;
-  function poserVoile(xa, xb){
-    voileA.setAttribute('width', Math.max(0, xa - M.l).toFixed(1));
-    voileB.setAttribute('x', xb.toFixed(1)); voileB.setAttribute('width', Math.max(0, M.l + pw - xb).toFixed(1));
-  }
-  function choisir(k, voir){
-    courante = k;
-    var f = PHASES[k], t = TOTAUX.slice(f.de, f.a).map(Math.round);
-    var lo = Math.min.apply(null, t), hi = Math.max.apply(null, t);
-    lecSem.textContent = 'Semaines ' + (f.de + 1) + ' à ' + f.a;
-    lecMin.textContent = lo === hi ? lo + ' min par jour' : 'de ' + lo + ' à ' + hi + ' min par jour';
-    choix.forEach(function(c, j){ c.setAttribute('aria-pressed', j === k ? 'true' : 'false'); });
-    phasesG.forEach(function(g, j){ g.classList.toggle('phase-on', j === k); });
-    var de = {a:va.a, b:va.b}, vers = {a:x(f.de), b:x(f.a)}, t0 = performance.now();
-    cancelAnimationFrame(anim);
-    (function pas(now){
-      var q = reduce ? 1 : Math.min(1, (now - t0) / 450), e = 1 - Math.pow(1 - q, 3);
-      va = {a:de.a + (vers.a - de.a) * e, b:de.b + (vers.b - de.b) * e};
-      poserVoile(va.a, va.b);
-      if (q < 1) anim = requestAnimationFrame(pas);
-    })(t0);
-    /* sur téléphone, le graphique glisse pour montrer la phase choisie */
-    if (voir && boite.classList.contains('est-large')) {
-      var echelle = svg.getBoundingClientRect().width / 1000;
-      boite.scrollTo({ left:(x(f.de) + x(f.a)) / 2 * echelle - boite.clientWidth / 2, behavior: reduce ? 'auto' : 'smooth' });
-    }
-  }
-  va = {a:M.l, b:M.l + pw};
-  choix.forEach(function(c, j){ c.addEventListener('click', function(){ choisir(j, true); }); });
-  choisir(0, false);
 
   /* ---------- Les piliers : ce qu'on survole s'allume ---------- */
   var pil = document.getElementById('piliers'), verrou = null;
   function activer(c){ if (c) pil.setAttribute('data-actif', c); else pil.removeAttribute('data-actif'); }
-  all('.pilier[data-p], .arbre .planche__mot[data-p]', pil).forEach(function(e){
+  all('.pilier[data-p], .arbre .planche__mot[data-p], .barres__legende [data-p]', pil).forEach(function(e){
     var c = e.getAttribute('data-p');
     e.addEventListener('mouseenter', function(){ activer(c); });
     e.addEventListener('mouseleave', function(){ activer(verrou); });
@@ -1936,28 +1908,17 @@ footer a:hover{color:var(--ink)}
 
   /* Les dessins se tracent à mesure qu'on descend */
   var traces = all('[data-trace]');
-  var onde = one('.onde'), ondeTrace = onde && one('.trace', onde), ondePoint = onde && one('.onde__point', onde), table = [];
-  if (ondeTrace) {
-    /* table des points de l'onde, pour poser le point à l'abscisse du tracé */
-    var L = ondeTrace.getTotalLength();
-    for (var s = 0; s <= 400; s++) { var q = ondeTrace.getPointAtLength(L * s / 400); table.push([q.x, q.y]); }
-  }
-  function surOnde(xv){
-    for (var i = 1; i < table.length; i++) if (table[i][0] >= xv) {
-      var a = table[i-1], b = table[i], f = (xv - a[0]) / Math.max(1e-6, b[0] - a[0]);
-      return [xv, a[1] + (b[1] - a[1]) * f];
-    }
-    return table[table.length - 1];
-  }
 
   /* La journée : le ciel suit l'heure du moment lu */
-  var jour = one('[data-jour]'), jourActif = -1, moms, cieux, etoiles, ciel, astre, lune, quand, sorte, ANG;
+  var jour = one('[data-jour]'), jourActif = -1, moms, cieux, etoiles, ciel, astre, lune, quand, sorte, ANG, CIEL;
   var deuxColonnes = window.matchMedia('(min-width:900px)');
   if (jour) {
     moms = all('.mom', jour); cieux = all('.ciel', jour); etoiles = one('.jour__etoiles', jour); ciel = one('.jour__ciel', jour);
     astre = one('[data-astre]', jour); lune = one('[data-lune]', jour);
     quand = one('[data-jour-quand]', jour); sorte = one('[data-jour-sorte]', jour);
     ANG = moms.map(function(m){ return +m.getAttribute('data-angle'); });
+    /* le ciel de chaque moment : 0 lever, 1 midi, 2 couchant, 3 nuit */
+    CIEL = moms.map(function(m, j){ return +(m.getAttribute('data-ciel') || j); });
     jour.classList.add('est-pilote');
   }
   function majJour(vh){
@@ -1972,8 +1933,9 @@ footer a:hover{color:var(--ink)}
     var i0 = Math.min(Math.floor(t), ANG.length - 2), f = t - i0;
     var a = (ANG[i0] + (ANG[i0 + 1] - ANG[i0]) * f) * Math.PI / 180;
     astre.setAttribute('transform', 'translate(' + (240 + 168 * Math.cos(a)).toFixed(1) + ' ' + (200 - 168 * Math.sin(a)).toFixed(1) + ')');
-    cieux.forEach(function(c, k){ c.style.opacity = Math.max(0, 1 - Math.abs(t - k)).toFixed(3); });
-    var nuit = clamp(t - 2);
+    var sc = CIEL[i0] + (CIEL[i0 + 1] - CIEL[i0]) * f;
+    cieux.forEach(function(c, k){ c.style.opacity = Math.max(0, 1 - Math.abs(sc - k)).toFixed(3); });
+    var nuit = clamp(sc - 2);
     etoiles.style.opacity = nuit.toFixed(3); lune.style.opacity = nuit.toFixed(3);
     var k = Math.round(t);
     if (k !== jourActif) {
@@ -1981,7 +1943,7 @@ footer a:hover{color:var(--ink)}
       moms.forEach(function(m, j){ m.classList.toggle('is-on', j === k); });
       quand.textContent = moms[k].getAttribute('data-quand');
       sorte.textContent = moms[k].getAttribute('data-sorte');
-      ciel.classList.toggle('est-sombre', k >= 2);
+      ciel.classList.toggle('est-sombre', CIEL[k] >= 2);
     }
   }
 
@@ -2012,12 +1974,6 @@ footer a:hover{color:var(--ink)}
       if (r.bottom < -50 || r.top > vh + 50) return;
       var t = reduce ? 1 : clamp((vh * 0.92 - r.top) / (vh * 0.55));
       f.style.setProperty('--t', t.toFixed(3));
-      if (f === onde && table.length) {
-        var pt = surOnde(20 + t * 960);
-        f.style.setProperty('--px', (pt[0] / 10).toFixed(2) + '%');
-        f.style.setProperty('--py', (pt[1] / 1.5).toFixed(2) + '%');
-        f.style.setProperty('--po', t > 0.01 ? 1 : 0);
-      }
     });
     if (identite) majFreins(vh);
     if (jour) majJour(vh);
@@ -2044,7 +2000,7 @@ footer a:hover{color:var(--ink)}
       if (k < 1) requestAnimationFrame(pas);
     });
   }
-  var cibles = all('.reveal, .stagger, .etape, .planche');
+  var cibles = all('.reveal, .stagger, .etape, .planche, .barres');
   if (!reduce && 'IntersectionObserver' in window) {
     var io = new IntersectionObserver(function(entrees){
       entrees.forEach(function(e){

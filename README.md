@@ -37,6 +37,7 @@ assets/
   nuages/               Le générateur des nuages et des planches au trait
   gen_brand.py          Regénère les icônes (depuis img/logo-b.png) et og.jpg
   gen_photos.py         Regénère les déclinaisons AVIF / WebP / JPEG des photos
+  gen_graphique_reset.py  Regénère le graphique des piliers de /reset/ depuis protocole.py
 ```
 
 Les pages légales et la page 404 portent `noindex` : seule la page d'accueil
@@ -77,6 +78,19 @@ script. Pour l'image de partage, il redessine le wordmark avec les mêmes coordo
 que le SVG inclus dans le site : en cas de modification du logotype, mettre les deux
 à jour.
 
+## Le graphique des piliers
+
+Le graphique de la page RESET (une colonne par semaine, le temps par jour et par
+pilier) est calculé depuis `protocole.py`, la source
+unique du protocole, rangée hors du dépôt. Après un changement de pratique :
+
+```bash
+python3 assets/gen_graphique_reset.py /Volumes/T7/PRO/BELIVE/Accompagnement/RESET/Fabrication/protocole.py
+```
+
+Le script réécrit le bloc entre `<!-- graphique:debut -->` et `<!-- graphique:fin -->`.
+Un geste qu'il ne connaît pas l'arrête : il faut alors le ranger dans un pilier.
+
 ## Les nuages
 
 Les nuages du site ne sont pas des photos : ils sont calculés, donc libres de
@@ -98,8 +112,7 @@ puis les nuages proches (fichiers `-avant`, sur fond transparent) devant. Elles
 doivent garder exactement le même cadrage. Les dimensions restent paires : un
 AVIF de hauteur impaire écrit par `sips` s'affiche transparent dans Chrome.
 
-Les planches au trait de la page RESET (l'onde du souffle, la course du jour,
-l'arbre-poumon) sont des tracés SVG calculés par `assets/nuages/planches.py`
+Les planches au trait de la page RESET (la course du jour, l'arbre-poumon) sont des tracés SVG calculés par `assets/nuages/planches.py`
 puis recopiés dans la page.
 
 ## Déploiement
