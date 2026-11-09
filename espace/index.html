@@ -155,7 +155,7 @@ a.bouton:hover{color:var(--panel)}
 
 main{max-width:1100px;margin:0 auto;padding:4px 16px 116px}
 
-.bas{position:fixed;left:0;right:0;bottom:0;z-index:20;display:grid;grid-template-columns:repeat(4,1fr);
+.bas{position:fixed;left:0;right:0;bottom:0;z-index:20;display:grid;grid-template-columns:repeat(3,1fr);
   padding:6px 8px calc(8px + env(safe-area-inset-bottom));background:var(--nav);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line)}
 .bas button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:56px;
@@ -194,35 +194,18 @@ main{max-width:1100px;margin:0 auto;padding:4px 16px 116px}
 .call-oui{flex:1 1 auto;background:var(--on-dark);color:var(--dark)}
 .call-actes .call-non{flex:0 1 auto;border:1px solid var(--dark-line);background:transparent;color:var(--on-dark)}
 
-.mesures{display:flex;flex-direction:column;gap:16px}
-.mesure{display:flex;flex-direction:column;gap:8px}
-.mesure-nom{font-size:15px;font-weight:500}
-.mesure-echelle{font-size:12.5px;color:var(--ink-3)}
-.notes{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
-.notes button{min-height:44px;border-radius:999px;font-size:15px;font-weight:500;
-  border:1px solid var(--p2);background:var(--p2);color:var(--ink);transition:background .15s,color .15s}
-.notes button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--panel)}
-
 .proto{gap:6px;padding-bottom:12px}
 .proto-tete{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding-bottom:8px}
 .proto-tete>div{display:flex;flex-direction:column;gap:6px}
 .compte{font-size:15px;font-weight:500;color:var(--ice)}
-.jauge{height:4px;border-radius:999px;background:var(--page);overflow:hidden}
-.jauge i{display:block;height:100%;border-radius:999px;background:var(--ice);transition:width .3s ease}
 .groupe{display:flex;flex-direction:column;padding-top:18px}
 .groupe-tete{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-bottom:4px;min-height:26px}
 .groupe-tete small{font-size:12.5px;color:var(--ink-3)}
 .groupe-tete .pastille{--pt:var(--ice)}
 .acte{display:flex;align-items:center;gap:14px;width:100%;min-height:56px;padding:8px 0;border:0;
   border-bottom:1px solid var(--filet);background:transparent;text-align:left}
-.rond{flex:none;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  border:1.5px solid var(--anneau);transition:background .15s,border-color .15s;color:var(--panel)}
-.rond svg{opacity:0}
-.acte[aria-pressed="true"] .rond{background:var(--ink);border-color:var(--ink)}
-.acte[aria-pressed="true"] .rond svg{opacity:1}
 .acte-txt{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}
 .acte-nom{font-size:15.5px;line-height:1.35}
-.acte[aria-pressed="true"] .acte-nom{color:var(--ink-3)}
 .acte-note{font-size:12.5px;line-height:1.4;color:var(--ink-3)}
 .acte-duree{flex:none;font-size:13.5px;color:var(--ink-3);white-space:nowrap}
 .groupe .petit{margin-top:10px}
@@ -271,24 +254,6 @@ main{max-width:1100px;margin:0 auto;padding:4px 16px 116px}
 .plus{align-self:flex-start;margin-top:6px;min-height:40px;padding:0 4px;border:0;background:transparent;
   color:var(--ice);font-size:14px;font-weight:500}
 .reglage{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:4px;font-size:14px;color:var(--ink-2)}
-
-/* ================= Journal ================= */
-.graphe{display:flex;align-items:flex-end;gap:4px;height:168px;padding-bottom:2px;border-bottom:1px solid var(--line)}
-.graphe div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
-.graphe i{width:100%;max-width:22px;border-radius:999px;background:var(--ink);transition:height .3s ease}
-.graphe i[data-e="vide"]{background:var(--p3)}
-.graphe i[data-e="ici"]{background:var(--ice)}
-.graphe-legende{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);margin-top:-10px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
-.stat{display:flex;flex-direction:column;gap:4px;padding:16px;border-radius:var(--r-md);background:var(--p2)}
-.stat small{font-size:12.5px;color:var(--ink-2)}
-.stat strong{font-size:28px;font-weight:600;letter-spacing:-.02em}
-.stat:nth-child(2) strong{color:var(--ink-3)}
-.stat:nth-child(3) strong{color:var(--ice)}
-.stat span{font-size:12.5px;color:var(--ink-3)}
-.releve{display:flex;align-items:center;gap:6px 12px;min-height:56px;padding:8px 0;border-top:1px solid var(--filet);flex-wrap:wrap}
-.releve strong{flex:1 1 140px;font-size:15px;font-weight:500}
-.releve span{font-size:13.5px;color:var(--ink-2)}
 
 /* ================= Ressources ================= */
 .kit{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:12px}
@@ -369,7 +334,6 @@ main{max-width:1100px;margin:0 auto;padding:4px 16px 116px}
   <nav aria-label="Sections de ton espace">
     <button type="button" data-vue="jour"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>Aujourd'hui</button>
     <button type="button" data-vue="parcours"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="6" r="2.2"/><path d="M7 17c6-1 3-9 10-10"/></svg>Parcours</button>
-    <button type="button" data-vue="journal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Journal</button>
     <button type="button" data-vue="ressources"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="4" width="6" height="16" rx="1.5"/><rect x="12" y="4" width="4.5" height="16" rx="1.5"/><path d="M18.5 5.5l2.5 14"/></svg>Ressources</button>
   </nav>
   <div class="cote-pied">
@@ -402,7 +366,6 @@ main{max-width:1100px;margin:0 auto;padding:4px 16px 116px}
 <nav class="bas" aria-label="Sections de ton espace">
   <button type="button" data-vue="jour"><span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg></span>Aujourd'hui</button>
   <button type="button" data-vue="parcours"><span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="6" r="2.2"/><path d="M7 17c6-1 3-9 10-10"/></svg></span>Parcours</button>
-  <button type="button" data-vue="journal"><span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>Journal</button>
   <button type="button" data-vue="ressources"><span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="4" width="6" height="16" rx="1.5"/><rect x="12" y="4" width="4.5" height="16" rx="1.5"/><path d="M18.5 5.5l2.5 14"/></svg></span>Ressources</button>
 </nav>
 
@@ -602,24 +565,14 @@ const PHASES = [
     dit:"Je ne reviendrai pas en arrière." }
 ];
 
-/* Le relevé : trois notes de 1 à 5, matin et soir. */
-const MESURES = {
-  matin:[ { k:'sommeil', nom:'Sommeil', echelle:'1 agité · 5 profond' },
-          { k:'energie', nom:'Énergie', echelle:'1 vide · 5 pleine' },
-          { k:'stress',  nom:'Tension', echelle:'1 calme · 5 tendu' } ],
-  soir: [ { k:'energie', nom:'Énergie', echelle:'1 vide · 5 pleine' },
-          { k:'stress',  nom:'Tension', echelle:'1 calme · 5 tendu' },
-          { k:'creux',   nom:'Le creux de 15 h', echelle:'1 absent · 5 fort' } ]
-};
-const COURBES = [ ['energie','Énergie'], ['sommeil','Sommeil'], ['stress','Tension'] ];
-
 /* ========================== Mémoire locale ==========================
-   Tout reste dans le navigateur du client : la page n'envoie rien.
-   Les coches et les relevés sont rangés par date du calendrier, pas par
-   numéro de jour, pour survivre à une date de premier call corrigée. */
+   Tout reste dans le navigateur du client : la page n'envoie rien. Elle
+   garde la date du premier call, les ressources marquées comme vues, et
+   le dernier créneau demandé pour déplacer un call. Le relevé, lui, se
+   fait dans le journal papier : rien ne s'en garde ici. */
 const CLE_VU = 'belive-espace-vu';
 const CLE_DEPART = 'belive-espace-depart';
-const CLE_JOURNAL = 'belive-espace-journal';
+const CLE_DEMANDE = 'belive-espace-demande';
 
 function lire(cle, defaut){
   try{ const v = localStorage.getItem(cle); return v === null ? defaut : JSON.parse(v); }
@@ -629,8 +582,19 @@ function ecrire(cle, val){
   try{ localStorage.setItem(cle, JSON.stringify(val)); }catch(e){}
 }
 
+/* L'ancien relevé numérique (notes du matin et du soir, coches) vivait sous
+   belive-espace-journal. La clé est effacée au chargement : il ne reste aucune
+   donnée de relevé dans le navigateur. Seule la demande de déplacement d'un
+   call, rangée là elle aussi, passe sous sa propre clé. */
+(function(){
+  const ANCIENNE = 'belive-espace-journal';
+  const ancien = lire(ANCIENNE, null);
+  if(ancien && ancien.demande && lire(CLE_DEMANDE, null) === null) ecrire(CLE_DEMANDE, ancien.demande);
+  try{ localStorage.removeItem(ANCIENNE); }catch(e){}
+})();
+
 let vus = lire(CLE_VU, {}) || {};
-let journal = Object.assign({ coches:{}, releves:{} }, lire(CLE_JOURNAL, {}) || {});
+let demande = lire(CLE_DEMANDE, null);
 let depart = lireDate(String(lire(CLE_DEPART, '') || ''));
 
 /* Le lien personnalisé : belivemethode.com/espace/06-10-2026
@@ -804,8 +768,8 @@ function momentActuel(){
 }
 
 /* ========================== État de l'écran ========================== */
-const VUES = ['jour', 'parcours', 'journal', 'ressources'];
-const ecran = { vue:'jour', moment:null, courbe:'energie', onglet:'documents', phaseDoc:'cours', tousCalls:false,
+const VUES = ['jour', 'parcours', 'ressources'];
+const ecran = { vue:'jour', onglet:'documents', phaseDoc:'cours', tousCalls:false,
                 changerDate:false, feuille:null, creneau:null };
 const main = document.getElementById('main');
 const feuille = document.getElementById('feuille');
@@ -817,8 +781,6 @@ function echap(t){
 function wa(texte){
   return 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(texte);
 }
-const COCHE = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"'
-  + ' stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 const CADENAS = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"'
   + ' aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
 
@@ -846,7 +808,7 @@ function carteCall(c){
   const quand = reste === 0 ? "Aujourd'hui" : reste === 1 ? 'Demain' : maj(texteDate(d));
   const detail = [HEURE_CALL, reste > 1 ? 'dans ' + reste + ' jours' : '', 'visio', n >= 12 ? 'tu le mènes' : '']
     .filter(Boolean).join(' · ');
-  const dem = journal.demande && journal.demande.n === n ? journal.demande : null;
+  const dem = demande && demande.n === n ? demande : null;
   return '<section class="call">'
     + '<div class="call-tete"><span class="label">Prochain call · ' + n + ' sur 13</span>'
     + (dem ? '<span class="pastille">Demandé : ' + echap(texteDate(dateDu(dem.jour), { weekday:'short', day:'numeric', month:'short' }))
@@ -858,62 +820,25 @@ function carteCall(c){
     + '</div></section>';
 }
 
-function carteReleve(){
-  const cle = iso(new Date());
-  const moment = ecran.moment || (new Date().getHours() >= 15 ? 'soir' : 'matin');
-  const cur = (journal.releves[cle] && journal.releves[cle][moment]) || {};
-  const mesures = MESURES[moment];
-  const faits = mesures.filter(m => cur[m.k]).length;
-  const statut = faits === mesures.length
-    ? 'Relevé du ' + moment + ' noté. ' + (moment === 'matin' ? 'À ce soir.' : 'Bonne nuit.')
-    : faits + ' sur ' + mesures.length + '. Réponds vite, la première impression est la bonne.';
-  return '<section class="carte">'
-    + '<div class="entre" style="align-items:flex-start"><div style="display:flex;flex-direction:column;gap:6px">'
-    + '<span class="label">Le relevé · 90 secondes</span><h2 class="h2">Comment tu es, là.</h2></div>'
-    + '<div class="seg">'
-    + ['matin', 'soir'].map(m => '<button type="button" data-act="moment" data-v="' + m + '" aria-pressed="'
-        + (m === moment) + '">' + maj(m) + '</button>').join('')
-    + '</div></div>'
-    + '<div class="mesures">' + mesures.map(m =>
-        '<div class="mesure"><div class="entre"><span class="mesure-nom">' + echap(m.nom) + '</span>'
-        + '<span class="mesure-echelle">' + echap(m.echelle) + '</span></div>'
-        + '<div class="notes" role="group" aria-label="' + echap(m.nom) + '">'
-        + [1, 2, 3, 4, 5].map(n => '<button type="button" data-act="note" data-moment="' + moment + '" data-k="' + m.k
-            + '" data-v="' + n + '" aria-pressed="' + (cur[m.k] === n) + '">' + n + '</button>').join('')
-        + '</div></div>').join('')
-    + '</div>'
-    + '<p class="petit"' + (faits === mesures.length ? ' style="color:var(--ice)"' : '') + '>' + echap(statut) + '</p>'
-    + '</section>';
-}
-
 function carteProtocole(c){
-  const cle = iso(new Date());
-  const coches = journal.coches[cle] || {};
   const moments = journee(c.s);
-  const comptes = moments.flatMap(m => m.actes).filter(a => !a.libre);
-  const faits = comptes.filter(a => coches[a.id]).length;
   const ici = momentActuel();
   const groupes = moments.map((m, i) => {
-    const quot = m.actes.filter(a => !a.libre);
     return '<div class="groupe"><div class="groupe-tete"><span class="label">' + echap(m.titre) + '</span>'
-      + (i === ici ? '<span class="pastille">Maintenant</span>'
-          : quot.length ? '<small>' + quot.filter(a => coches[a.id]).length + '/' + quot.length + '</small>' : '')
+      + (i === ici ? '<span class="pastille">Maintenant</span>' : '')
       + '</div>'
       + m.actes.map(a =>
-          '<button class="acte" type="button" data-act="coche" data-id="' + a.id + '" aria-pressed="' + !!coches[a.id] + '">'
-          + '<span class="rond">' + COCHE + '</span>'
+          '<div class="acte">'
           + '<span class="acte-txt"><span class="acte-nom">' + echap(a.nom) + '</span>'
           + (a.note ? '<span class="acte-note">' + echap(a.note) + '</span>' : '') + '</span>'
-          + '<span class="acte-duree">' + echap(a.duree) + '</span></button>').join('')
+          + '<span class="acte-duree">' + echap(a.duree) + '</span></div>').join('')
       + (m.actes.length ? (m.pied ? '<p class="petit">' + echap(m.pied) + '</p>' : '')
                         : '<p class="petit" style="margin-top:4px">' + echap(m.vide) + '</p>')
       + '</div>';
   }).join('');
   return '<section class="carte proto">'
     + '<div class="proto-tete"><div><span class="label">Le protocole du jour</span>'
-    + '<h2 class="h2">Trois ancres.</h2></div>'
-    + '<span class="compte">' + faits + ' / ' + comptes.length + '</span></div>'
-    + '<div class="jauge"><i style="width:' + (comptes.length ? faits / comptes.length * 100 : 0) + '%"></i></div>'
+    + '<h2 class="h2">Trois ancres.</h2></div></div>'
     + groupes
     + '<p class="petit proto-pied">Une journée ratée ne se rattrape pas. Manquer est normal. Faire est le résultat.</p>'
     + '</section>';
@@ -937,7 +862,7 @@ function vueJour(c){
     return '<div class="vue"><section class="tete"><span class="label">Après les 91 jours</span>'
       + '<h1 class="h1 h1--today">Les treize semaines sont passées.</h1>'
       + '<p class="lede">L\'éventail est à trois pratiques. C\'est toi qui mènes.</p>' + barreSemaines(14) + '</section>'
-      + '<div class="cols"><div class="col">' + carteReleve() + '</div></div></div>';
+      + '</div>';
 
   const p = c.phase;
   const creux = p.creuxJours && c.j >= p.creuxJours[0] && c.j <= p.creuxJours[1];
@@ -954,7 +879,7 @@ function vueJour(c){
         + (resteS === 0 ? "aujourd'hui" : resteS === 1 ? 'demain' : 'dans ' + resteS + ' jours') + '</span>'
         + '<p>' + echap(maj(texteDate(dateDu(sess.jour)))) + '. ' + echap(sess.ferme) + '</p>'
         + '<button class="lien" type="button" data-act="session" data-n="' + sess.n + '">Ce que tu prépares</button></section>' : '')
-    + '<div class="cols"><div class="col">' + carteCall(c) + carteReleve() + '</div>'
+    + '<div class="cols"><div class="col">' + carteCall(c) + '</div>'
     + carteProtocole(c) + '</div></div>';
 }
 
@@ -1034,71 +959,6 @@ function vueParcours(c){
   return '<div class="vue"><section class="tete"><span class="label">Ton parcours' + sur + '</span>'
     + '<h1 class="h1">Quatre phases. Tu n\'as jamais plus d\'un mois devant toi.</h1></section>'
     + '<div class="cols"><section class="phases">' + phases + '</section>' + cote + '</div></div>';
-}
-
-/* ========================== Journal ==========================
-   Rien n'est inventé : un jour sans relevé reste un jour sans relevé. */
-function valeur(n, k){
-  const r = journal.releves[iso(dateDu(n))];
-  if(!r) return null;
-  const v = [r.matin && r.matin[k], r.soir && r.soir[k]].filter(Boolean);
-  return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null;
-}
-function moyenne(a, b, k){
-  const v = [];
-  for(let n = a; n <= b; n++){ const x = valeur(n, k); if(x) v.push(x); }
-  return v.length ? v.reduce((p, q) => p + q, 0) / v.length : null;
-}
-function vueJournal(c){
-  const tete = '<section class="tete"><span class="label">Journal de régulation</span>'
-    + '<h1 class="h1">Qui relève tient.</h1>';
-  if(c.etat === 'sans' || c.etat === 'avant')
-    return '<div class="vue">' + tete + '<p class="lede">Matin et soir, quatre-vingt-dix secondes. '
-      + 'Le journal commence au premier call.</p></section></div>';
-
-  const jour = c.j;
-  const k = ecran.courbe;
-  const nom = COURBES.find(x => x[0] === k)[1];
-  let releves = 0;
-  for(let n = 1; n <= jour; n++) if(journal.releves[iso(dateDu(n))]) releves++;
-  const de = Math.max(1, jour - 20);
-  let barres = '';
-  for(let n = de; n <= jour; n++){
-    const v = valeur(n, k);
-    barres += '<div title="Jour ' + n + (v ? ' · ' + v.toFixed(1).replace('.', ',') : ' · pas de relevé') + '">'
-      + '<i style="height:' + (v ? v / 5 * 100 + '%' : '6px') + '"' + (v ? (n === jour ? ' data-e="ici"' : '') : ' data-e="vide"') + '></i></div>';
-  }
-  const f = x => x ? x.toFixed(1).replace('.', ',') : '–';
-  const stats = [
-    [nom + ', 7 derniers jours', f(moyenne(Math.max(1, jour - 6), jour, k)), 'sur 5'],
-    [nom + ', semaine 1', f(moyenne(1, Math.min(7, jour), k)), 'ton point de départ'],
-    ['Jours relevés', releves + '/' + jour, 'depuis le premier call']
-  ].map(s => '<div class="stat"><small>' + echap(s[0]) + '</small><strong>' + s[1] + '</strong><span>' + s[2] + '</span></div>').join('');
-
-  let recents = '';
-  for(let n = jour; n >= Math.max(1, jour - 4); n--){
-    const r = journal.releves[iso(dateDu(n))] || {};
-    const ligne = moment => r[moment] ? maj(moment) + ' · ' + MESURES[moment].filter(m => r[moment][m.k])
-      .map(m => (m.k === 'creux' ? 'creux' : m.nom.toLowerCase()) + ' ' + r[moment][m.k]).join(', ') : '';
-    const t = [ligne('matin'), ligne('soir')].filter(Boolean);
-    recents += '<div class="releve"><strong>' + (n === jour ? "Aujourd'hui"
-        : echap(maj(texteDate(dateDu(n), { weekday:'long', day:'numeric', month:'short' })))) + '</strong>'
-      + (t.length ? t.map(x => '<span>' + echap(x) + '</span>').join('') : '<span>Pas de relevé</span>') + '</div>';
-  }
-
-  return '<div class="vue">' + tete
-    + '<p class="lede">Matin et soir, quatre-vingt-dix secondes. Tu as relevé ' + releves + ' jour' + (releves > 1 ? 's' : '')
-    + (c.etat === 'fini' ? '' : ' sur ' + jour) + '.</p></section>'
-    + '<section class="carte" style="gap:20px"><div class="entre" style="align-items:center;flex-wrap:wrap">'
-    + '<span class="label">Les 21 derniers jours</span><div class="seg">'
-    + COURBES.map(x => '<button type="button" data-act="courbe" data-v="' + x[0] + '" aria-pressed="' + (x[0] === k) + '">' + x[1] + '</button>').join('')
-    + '</div></div>'
-    + '<div class="graphe">' + barres + '</div>'
-    + '<div class="graphe-legende"><span>' + echap(maj(texteDate(dateDu(de), { day:'numeric', month:'short' }))) + '</span><span>Aujourd\'hui</span></div>'
-    + '<div class="stats">' + stats + '</div></section>'
-    + '<section class="carte carte--liste"><span class="label" style="padding-bottom:8px">Les derniers relevés</span>' + recents + '</section>'
-    + '<p class="petit" style="padding:0 4px">Tes relevés restent sur cet appareil, dans ce navigateur. '
-    + 'Le journal papier reste la référence.</p></div>';
 }
 
 /* ========================== Ressources ========================== */
@@ -1263,7 +1123,6 @@ function fermerFeuille(){
 function rendre(){
   const c = situation();
   main.innerHTML = ecran.vue === 'parcours' ? vueParcours(c)
-    : ecran.vue === 'journal' ? vueJournal(c)
     : ecran.vue === 'ressources' ? vueRessources(c)
     : vueJour(c);
   document.querySelectorAll('nav [data-vue]').forEach(b => {
@@ -1298,25 +1157,7 @@ document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]');
   if(!b) return;
   const d = b.dataset;
-  const jour = iso(new Date());
   switch(d.act){
-    case 'moment': ecran.moment = d.v; rendre(); break;
-    case 'note': {
-      const r = journal.releves[jour] || (journal.releves[jour] = {});
-      const m = r[d.moment] || (r[d.moment] = {});
-      m[d.k] = +d.v;
-      ecrire(CLE_JOURNAL, journal);
-      rendre();
-      break;
-    }
-    case 'coche': {
-      const k = journal.coches[jour] || (journal.coches[jour] = {});
-      k[d.id] = !k[d.id];
-      ecrire(CLE_JOURNAL, journal);
-      rendre();
-      break;
-    }
-    case 'courbe': ecran.courbe = d.v; rendre(); break;
     case 'calls': ecran.tousCalls = !ecran.tousCalls; rendre(); break;
     case 'date': {
       ecran.changerDate = true; rendre();
@@ -1342,14 +1183,13 @@ document.addEventListener('click', e => {
     /* Le lien s'ouvre tout seul dans WhatsApp ; on garde seulement la trace
        de ce qui a été demandé. */
     case 'demande':
-      journal.demande = { n:+d.n, jour:ecran.creneau.jour, heure:ecran.creneau.heure };
-      ecrire(CLE_JOURNAL, journal);
+      demande = { n:+d.n, jour:ecran.creneau.jour, heure:ecran.creneau.heure };
+      ecrire(CLE_DEMANDE, demande);
       fermerFeuille();
       break;
     case 'fermer': fermerFeuille(); break;
   }
-  const actif = d.act && main.querySelector('[data-act="' + d.act + '"]'
-    + (d.id ? '[data-id="' + d.id + '"]' : '') + (d.k ? '[data-k="' + d.k + '"]' : '') + (d.v ? '[data-v="' + d.v + '"]' : ''));
+  const actif = d.act && main.querySelector('[data-act="' + d.act + '"]' + (d.v ? '[data-v="' + d.v + '"]' : ''));
   if(actif && !ecran.feuille && main.contains(actif) && d.act !== 'date') actif.focus({ preventScroll:true });
 });
 
