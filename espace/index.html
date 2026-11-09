@@ -677,7 +677,7 @@ function situation(){
   if(j < 1) return { etat:'avant', j:j, s:0, phase:null };
   if(j > 91) return { etat:'fini', j:j, s:14, phase:null };
   const s = Math.ceil(j / 7);
-  return { etat:'cours', j:j, s:s, phase:PHASES.find(p => s >= p.s[0] && s <= p.s[1]) };
+  return { etat:'cours', j:j, s:s, phase:phaseDe(s) };
 }
 function jourDuCall(n){ return 1 + 7 * (n - 1); }
 /* « du 1 au 7 décembre », « du 29 novembre au 5 décembre » */
@@ -693,87 +693,32 @@ function ouvert(des, c){
 }
 
 /* ========================== La journée d'aujourd'hui ==========================
-   Tout ce qui suit est repris de la grille des treize semaines (doc 06) et des
-   deux guides. Rien n'est extrapolé : une ligne apparaît la semaine où la grille
-   la fait entrer, avec la durée de cette semaine-là.
-   libre : la pratique ne se fait pas tous les jours, elle se coche mais ne
-   compte pas dans le total de la journée.
+   Les trois moments de la semaine en cours, tirés de journee(w) dans
+   protocole.py : le matin (lancer), le midi (tenir), le soir (clôturer), puis
+   ce qui se fait dans la semaine. Pas de coches : le relevé se fait dans le
+   journal papier. Ici, l'espace sert d'appui pendant la journée.
    ============================================================================ */
-function journee(s){
-  const lever = [], midi = [], soiree = [], coucher = [];
+const MOMENTS = [['matin', 'Le matin'], ['midi', 'Le midi'], ['soir', 'Le soir']];
 
-  lever.push({ id:'lumiere', nom:"Dehors, à la lumière", duree:"10 min",
-    note: s >= 2 ? "Dans les trente premières minutes, téléphone hors de portée."
-                 : "Dans les trente premières minutes du lever." });
-
-  let am;
-  if(s === 1)      am = ["5 min",  "Tu observes ton souffle et tu le comptes."];
-  else if(s === 2) am = ["10 min", "Tu observes ton souffle et tu le comptes."];
-  else             am = ["10 min", "En pleine conscience."];
-  lever.push({ id:'assise-m', nom:"L'assise du matin, avant le café", duree:am[0], note:am[1] });
-
-  if(s >= 6) lever.push({ id:'froid', libre:true, nom:"La douche, froide sur la fin",
-    duree: s === 6 ? "30 à 60 s" : "90 à 120 s",
-    note:"Les jours sans training. Jamais les deux le même jour." });
-
-  if(s >= 2 && s <= 4) lever.push({ id:'sequence', nom:"La séquence du matin", duree:"2 à 3 min",
-    note:"Le bloc 1 seul, délier." });
-  else if(s >= 5)      lever.push({ id:'sequence', nom:"La séquence du matin", duree:"10 à 15 min",
-    note:"Les trois blocs." });
-
-  if(s >= 2){
-    let note;
-    if(s <= 4)      note = "La reprise en trois temps, puis trois respirations 4/8. Toujours la même.";
-    else if(s <= 7) note = "Trois options, une par état. Tu choisis selon où tu en es.";
-    else            note = "L'éventail complet est ouvert.";
-    midi.push({ id:'reprise', nom:"À la fin du repas, assis", duree: s <= 4 ? "2 min" : "2 à 5 min", note:note });
-    midi.push({ id:'marche-midi', nom:"Juste après, une marche lente", duree: s === 2 ? "5 min" : "10 min",
-      note:"Accrochée au repas, jamais à une heure." });
-  }
-
-  if(s >= 5){
-    soiree.push({ id:'training', libre:true, nom:"Le training", duree: s === 5 ? "25 à 35 min" : "22 à 26 min",
-      note: s === 5 ? "Deux séances modérées cette semaine. Allure où la conversation reste possible."
-                    : "Deux séances en intervalles cette semaine. Jamais deux jours de suite." });
-    soiree.push({ id:'stretching', libre:true, nom:"Le stretching", duree:"25 min",
-      note:"Une fois cette semaine, un jour sans training." });
-  }
-
-  if(s >= 4) coucher.push({ id:'marche-soir', nom:"Après le repas du soir, une marche lente",
-    duree: s <= 7 ? "5 min" : "10 min", note:"" });
-  if(s >= 2) coucher.push({ id:'mur', nom:"Allongé, jambes au mur", duree:"5 min",
-    note:"Avant l'assise du soir, pas après." });
-  if(s >= 3){
-    let as;
-    if(s === 3)     as = ["5 min",  "Souffle guidé, ratio 4/8."];
-    else if(s <= 6) as = ["10 min", "Souffle guidé, ratio 4/8."];
-    else            as = ["10 min", "En pleine conscience. Plus de ratio."];
-    coucher.push({ id:'assise-s', nom:"L'assise du soir, une demi-heure avant", duree:as[0], note:as[1] });
-  }
-
-  return [
-    { titre:"Au lever", actes:lever, vide:"", pied:"" },
-    { titre:"À midi", actes:midi,
-      vide:"L'ancre de midi entre en semaine 2.",
-      pied: midi.length ? "Quand la journée déborde, c'est la marche qui saute. Les deux minutes restent." : "" },
-    { titre:"En soirée", actes:soiree,
-      vide:"La fenêtre reste vide, et c'est voulu. Le training entre en semaine 5.",
-      pied: s === 7 ? "Semaine 7 : rien n'augmente." : "" },
-    { titre:"Au coucher", actes:coucher,
-      vide:"Les jambes au mur entrent en semaine 2.",
-      pied: coucher.length ? "Jamais de stretching dans l'heure qui précède." : "" }
-  ];
-}
-
-/* Les quatre moments sont dans l'ordre de la journée. Ces bornes ne
-   servent qu'à savoir lequel mettre en avant : le protocole accroche
-   les pratiques à un geste, jamais à une heure. */
+/* Ces bornes ne servent qu'à savoir quel moment mettre en avant. */
 function momentActuel(){
   const h = new Date().getHours();
-  if(h >= 5 && h < 11) return 0;   // au lever
-  if(h >= 11 && h < 16) return 1;  // à midi
-  if(h >= 16 && h < 20) return 2;  // en soirée
-  return 3;                        // au coucher
+  if(h >= 4 && h < 11) return 0;   // le matin
+  if(h >= 11 && h < 17) return 1;  // le midi
+  return 2;                        // le soir
+}
+/* La première semaine où un moment a quelque chose : « Le midi entre en semaine 2. » */
+function entreeDu(m){
+  for(let w = 1; w <= 13; w++) if(RESET.SEMAINES[w].journee[m].length) return w;
+  return null;
+}
+/* Les rendez-vous de la semaine qui ne sont pas le call : la session
+   Breathwork, le test CO2. Le call est déjà dans journee(w). */
+function rdvSemaine(w){
+  const l = [];
+  if(RESET.BW[w]) l.push(['Session Breathwork n°' + RESET.BW[w], '1 h 30, en visio']);
+  if(RESET.CO2[w]) l.push(['Test CO2 ' + RESET.CO2[w], w === 1 ? 'au jour 1' : w === 13 ? 'au jour 91' : 'en fin de semaine']);
+  return l;
 }
 
 /* ========================== État de l'écran ========================== */
@@ -783,10 +728,17 @@ const ecran = { vue:'jour', onglet:'documents', phaseDoc:'cours', tousCalls:fals
 const main = document.getElementById('main');
 const feuille = document.getElementById('feuille');
 
+/* Tout texte affiché passe par echap : il est échappé, et reçoit l'espace
+   insécable de la typographie française devant « : ; ? ! » et dans les
+   guillemets, pour qu'une ligne ne commence jamais par deux-points. */
 function echap(t){
   return String(t).replace(/[&<>"']/g, c =>
-    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))
+    .replace(/ ([:;?!»])/g, '\u00a0$1').replace(/« /g, '«\u00a0');
 }
+/* Le texte de protocole.py peut porter du gras : <b> et </b> seulement,
+   tout le reste est échappé (gen_espace.py refuse les autres balises). */
+function riche(t){ return echap(t).replace(/&lt;(\/?)b&gt;/g, '<$1b>'); }
 function wa(texte){
   return 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(texte);
 }
@@ -815,13 +767,13 @@ function carteCall(c){
   const reste = jourDuCall(n) - c.j;
   const d = dateDu(jourDuCall(n));
   const quand = reste === 0 ? "Aujourd'hui" : reste === 1 ? 'Demain' : maj(texteDate(d));
-  const detail = [HEURE_CALL, reste > 1 ? 'dans ' + reste + ' jours' : '', 'visio', n >= 12 ? 'tu le mènes' : '']
-    .filter(Boolean).join(' · ');
+  const duree = RESET.OPEN.includes(n) ? '60 min, ouverture de la phase ' + phaseDe(n).rom : '30 min';
+  const detail = [HEURE_CALL, reste > 1 ? 'dans ' + reste + ' jours' : '', duree, 'visio'].filter(Boolean).join(' · ');
   const dem = demande && demande.n === n ? demande : null;
   return '<section class="call">'
     + '<div class="call-tete"><span class="label">Prochain call · ' + n + ' sur 13</span>'
-    + (dem ? '<span class="pastille">Demandé : ' + echap(texteDate(dateDu(dem.jour), { weekday:'short', day:'numeric', month:'short' }))
-        + ' ' + echap(dem.heure) + '</span>' : '') + '</div>'
+    + (dem ? '<span class="pastille">' + echap('Demandé : ' + texteDate(dateDu(dem.jour), { weekday:'short', day:'numeric', month:'short' })
+        + ' ' + dem.heure) + '</span>' : '') + '</div>'
     + '<div class="call-quand"><strong>' + echap(quand) + '</strong><span>' + echap(detail) + '</span></div>'
     + '<div class="call-actes">'
     + (VISIO ? '<a class="call-oui" href="' + echap(VISIO) + '" target="_blank" rel="noopener noreferrer">Rejoindre la visio</a>' : '')
@@ -829,28 +781,55 @@ function carteCall(c){
     + '</div></section>';
 }
 
-function carteProtocole(c){
-  const moments = journee(c.s);
-  const ici = momentActuel();
-  const groupes = moments.map((m, i) => {
-    return '<div class="groupe"><div class="groupe-tete"><span class="label">' + echap(m.titre) + '</span>'
-      + (i === ici ? '<span class="pastille">Maintenant</span>' : '')
-      + '</div>'
-      + m.actes.map(a =>
-          '<div class="acte">'
-          + '<span class="acte-txt"><span class="acte-nom">' + echap(a.nom) + '</span>'
-          + (a.note ? '<span class="acte-note">' + echap(a.note) + '</span>' : '') + '</span>'
-          + '<span class="acte-duree">' + echap(a.duree) + '</span></div>').join('')
-      + (m.actes.length ? (m.pied ? '<p class="petit">' + echap(m.pied) + '</p>' : '')
-                        : '<p class="petit" style="margin-top:4px">' + echap(m.vide) + '</p>')
-      + '</div>';
-  }).join('');
-  return '<section class="carte proto">'
-    + '<div class="proto-tete"><div><span class="label">Le protocole du jour</span>'
-    + '<h2 class="h2">Trois ancres.</h2></div></div>'
-    + groupes
-    + '<p class="petit proto-pied">Une journée ratée ne se rattrape pas. Manquer est normal. Faire est le résultat.</p>'
+/* Ce qui entre cette semaine : le bandeau du journal papier, WEEKS[w].journal. */
+function carteSemaine(c){
+  const s = RESET.SEMAINES[c.s];
+  return '<section class="carte">'
+    + '<div style="display:flex;flex-direction:column;gap:6px"><span class="label">Semaine ' + c.s + ' · ce qui entre</span>'
+    + '<h2 class="h2">' + riche(s.titre) + '.</h2></div>'
+    + '<ul class="prepa">' + s.journal.map(t => '<li>' + riche(t) + '</li>').join('') + '</ul>'
     + '</section>';
+}
+
+function lignesActes(l){
+  return l.map(a => '<div class="acte"><span class="acte-txt"><span class="acte-nom">' + riche(a[0]) + '</span></span>'
+    + '<span class="acte-duree">' + riche(a[1]) + '</span></div>').join('');
+}
+
+function carteProtocole(c){
+  const j = RESET.SEMAINES[c.s].journee;
+  const ici = momentActuel();
+  const moments = MOMENTS.map(([m, titre], i) => {
+    const l = j[m];
+    const vide = !l.length ? '<p class="petit" style="margin-top:4px">' + echap(titre + ' entre en semaine ' + entreeDu(m) + '.') + '</p>' : '';
+    /* À midi, la respiration se choisit selon l'état du moment. */
+    const aide = m === 'midi' && l.length ? '<p class="petit">' + echap('Ta respiration, selon ton état. '
+      + RESET.RESPIRATIONS_MIDI.map(r => r.etat + ' : ' + r.nom.charAt(0).toLowerCase() + r.nom.slice(1) + '.').join(' ')) + '</p>' : '';
+    return '<div class="groupe"><div class="groupe-tete"><span class="label">' + echap(titre) + '</span>'
+      + (i === ici ? '<span class="pastille">Maintenant</span>' : '') + '</div>'
+      + lignesActes(l) + vide + aide + '</div>';
+  }).join('');
+  const semaine = '<div class="groupe"><div class="groupe-tete"><span class="label">Cette semaine</span></div>'
+    + lignesActes(j.semaine.concat(rdvSemaine(c.s))) + '</div>';
+  return '<section class="carte proto">'
+    + '<div class="proto-tete"><div><span class="label">Ta journée · semaine ' + c.s + '</span>'
+    + '<h2 class="h2">Trois moments.</h2></div></div>'
+    + moments + semaine
+    + '<p class="petit proto-pied">' + echap("Ton relevé se fait dans ton journal papier, matin et soir, après l'assise.") + '</p>'
+    + '</section>';
+}
+
+/* Le call de suivi : un mois après la fin des treize semaines. */
+function carteSuivi(){
+  const d = dateDu(91);
+  d.setMonth(d.getMonth() + 1);
+  const apres = RESET.PHASES[RESET.PHASES.length - 1].apres;
+  return '<section class="call">'
+    + '<div class="call-tete"><span class="label">Le call de suivi</span></div>'
+    + '<div class="call-quand"><strong>' + echap('Vers le ' + texteDate(d, { day:'numeric', month:'long' })) + '</strong>'
+    + '<span>' + riche(apres[0] || '') + '</span></div>'
+    + '<div class="call-actes"><a class="call-oui" href="' + echap(wa('Bonjour Tristan, je voudrais fixer notre call de suivi.'))
+    + '" target="_blank" rel="noopener noreferrer">Le fixer avec Tristan</a></div></section>';
 }
 
 function vueJour(c){
@@ -863,30 +842,30 @@ function vueJour(c){
   if(c.etat === 'avant')
     return '<div class="vue"><section class="tete"><span class="label">Avant le jour 1</span>'
       + '<h1 class="h1 h1--today">Ça commence le ' + echap(texteDate(dateDu(1), { day:'numeric', month:'long' })) + '.</h1>'
-      + '<p class="lede">La phase I s\'ouvrira au premier call. D\'ici là, tes premiers documents '
-      + 'sont dans les ressources.</p>' + barreSemaines(0) + '</section>'
+      + '<p class="lede">Ton premier call ouvre RESET. D\'ici là, lis <b>Ta sécurité</b>, dans les ressources.</p>'
+      + barreSemaines(0) + '</section>'
       + '<button class="bouton" type="button" data-vue="ressources" style="align-self:flex-start">Ouvrir les ressources</button></div>';
 
-  if(c.etat === 'fini')
+  if(c.etat === 'fini'){
+    const apres = RESET.PHASES[RESET.PHASES.length - 1].apres;
     return '<div class="vue"><section class="tete"><span class="label">Après les 91 jours</span>'
       + '<h1 class="h1 h1--today">Les treize semaines sont passées.</h1>'
-      + '<p class="lede">L\'éventail est à trois pratiques. C\'est toi qui mènes.</p>' + barreSemaines(14) + '</section>'
-      + '</div>';
+      + '<p class="lede">' + riche(apres[1] || '') + '</p>' + barreSemaines(14) + '</section>'
+      + '<div class="cols"><div class="col">' + carteSuivi() + '</div></div></div>';
+  }
 
   const p = c.phase;
-  const creux = p.creuxJours && c.j >= p.creuxJours[0] && c.j <= p.creuxJours[1];
   const sess = SESSIONS.find(x => x.semaine === c.s);
   return '<div class="vue">'
     + '<section class="tete" style="gap:14px"><span class="label">' + echap(maj(texteDate(new Date())))
     + ' · Jour ' + c.j + ' sur 91</span>'
-    + '<h1 class="h1 h1--today">' + echap(p.nom) + '.</h1>'
-    + '<p class="lede">Phase ' + p.romain + ' · semaine ' + c.s + ' sur 13 · le verbe est <b>' + echap(p.verbe) + '</b>.</p>'
+    + '<h1 class="h1 h1--today">' + riche(p.name) + '.</h1>'
+    + '<p class="lede">Phase ' + p.rom + ' · semaine ' + c.s + ' sur 13 · le verbe est <b>' + riche(p.verb) + '</b>.</p>'
     + barreSemaines(c.s) + '</section>'
-    + (creux ? '<section class="bandeau"><span class="label">Le creux · tu y es</span><p>' + echap(p.creux) + '</p></section>' : '')
     + (sess ? '<section class="bandeau"><span class="label">Session Breathwork ' + sess.n + ' sur 4 · cette semaine</span>'
-        + '<p>' + echap(sess.texte) + ' On la date ensemble, dans la semaine.</p>'
+        + '<p>' + echap(sess.texte + ' On la date ensemble, dans la semaine.') + '</p>'
         + '<button class="lien" type="button" data-act="session" data-n="' + sess.n + '">Ce que tu prépares</button></section>' : '')
-    + '<div class="cols"><div class="col">' + carteCall(c) + '</div>'
+    + '<div class="cols"><div class="col">' + carteCall(c) + carteSemaine(c) + '</div>'
     + carteProtocole(c) + '</div></div>';
 }
 
@@ -1016,7 +995,7 @@ function vueRessources(c){
     const docs = tout.filter(r => r.type === 'pdf');
     /* Les documents se rangent par phase. La phase en cours vient en
        premier ; tant qu'il n'y en a pas, on montre tout. */
-    const filtres = (c.phase ? [['cours', 'Phase ' + c.phase.romain + ', en cours']] : [])
+    const filtres = (c.phase ? [['cours', 'Phase ' + c.phase.rom + ', en cours']] : [])
       .concat([['tout', 'Tout']], PHASES.map(p => [String(p.n), 'Phase ' + p.romain
         + (c.etat === 'fini' || (c.etat === 'cours' && c.s >= p.s[0]) ? '' : ' · fermée')]));
     let f = ecran.phaseDoc;
@@ -1142,7 +1121,7 @@ function rendre(){
   ou.hidden = c.etat !== 'cours';
   if(c.etat === 'cours'){
     document.getElementById('cote-semaine').textContent = 'Semaine ' + c.s + ' sur 13';
-    document.getElementById('cote-phase').textContent = c.phase.nom;
+    document.getElementById('cote-phase').textContent = c.phase.name;
   }
 }
 
