@@ -510,15 +510,17 @@ const KIT = [
   { n:"11", texte:"Une page, écrite de ta main en semaine 11 : ce qui a tenu, et que tu gardes." }
 ];
 
-/* ========================== Les quatre sessions encadrées ==========================
-   Jours exacts repris de la grille des treize semaines (doc 06).
-   ================================================================================= */
+/* ========================== Les quatre sessions Breathwork ==========================
+   1 h 30 en visio, à la fin de chaque phase. Elles se datent avec Tristan dans
+   leur semaine, jamais à un jour fixe. La semaine vient de BW (protocole.py) ;
+   ici, seulement le texte de chacune.
+   ================================================================================== */
 const SESSIONS = [
-  { n:1, jour:24, semaine:4,  ferme:"Quatre semaines d'assise ont fait remonter des choses. Celle-ci les dépose." },
-  { n:2, jour:45, semaine:7,  ferme:"La semaine du vide. La seule chose qui s'ouvre dans une semaine où tout se retire." },
-  { n:3, jour:66, semaine:10, ferme:"Tu as posé une limite et fait une demande. Le corps se met derrière." },
-  { n:4, jour:89, semaine:13, ferme:"La clôture. La dernière fois que quelqu'un tient le cadre à ta place." }
-];
+  { n:1, texte:"La fin de la phase I. Tu poses ton intention avant de commencer." },
+  { n:2, texte:"La fin de la phase II. Tu poses ton intention avant de commencer." },
+  { n:3, texte:"La fin de la phase III. Tu poses ton intention avant de commencer." },
+  { n:4, texte:"La clôture de RESET. Tu poses ton intention avant de commencer." }
+].map(x => Object.assign(x, { semaine:+Object.keys(RESET.BW).find(w => RESET.BW[w] === x.n) }));
 
 const PREPA = [
   "Une pièce où tu peux faire du bruit, porte fermée, animaux dehors, téléphone en mode avion.",
@@ -526,7 +528,7 @@ const PREPA = [
   "Caméra allumée et cadrée sur ton corps : il faut que tes mains, ta cage thoracique et tes jambes soient visibles.",
   "Un casque ou des écouteurs, jamais le haut-parleur. Micro ouvert du début à la fin.",
   "Prévois une bouteille d'eau, une couverture et un gros coussin à glisser sous tes genoux.",
-  "Mange léger, au moins dans les trois heures qui précèdent la pratique."
+  "L'idéal : venir à jeun. Sinon un repas léger, au moins 2 h avant."
 ];
 
 /* ========================== Les quatre phases ==========================
@@ -678,6 +680,13 @@ function situation(){
   return { etat:'cours', j:j, s:s, phase:PHASES.find(p => s >= p.s[0] && s <= p.s[1]) };
 }
 function jourDuCall(n){ return 1 + 7 * (n - 1); }
+/* « du 1 au 7 décembre », « du 29 novembre au 5 décembre » */
+function texteSemaine(w){
+  const a = dateDu(7 * (w - 1) + 1), b = dateDu(7 * w);
+  return 'du ' + texteDate(a, a.getMonth() === b.getMonth() ? { day:'numeric' } : { day:'numeric', month:'long' })
+    + ' au ' + texteDate(b, { day:'numeric', month:'long' });
+}
+function phaseDe(w){ return RESET.PHASES.find(p => w >= p.weeks[0] && w <= p.weeks[1]); }
 function ouvert(des, c){
   if(des === 0 || c.etat === 'fini') return true;
   return c.etat === 'cours' && c.s >= des;
@@ -866,8 +875,7 @@ function vueJour(c){
 
   const p = c.phase;
   const creux = p.creuxJours && c.j >= p.creuxJours[0] && c.j <= p.creuxJours[1];
-  const sess = SESSIONS.find(x => x.jour >= c.j && x.jour - c.j <= 7);
-  const resteS = sess ? sess.jour - c.j : 0;
+  const sess = SESSIONS.find(x => x.semaine === c.s);
   return '<div class="vue">'
     + '<section class="tete" style="gap:14px"><span class="label">' + echap(maj(texteDate(new Date())))
     + ' · Jour ' + c.j + ' sur 91</span>'
@@ -875,9 +883,8 @@ function vueJour(c){
     + '<p class="lede">Phase ' + p.romain + ' · semaine ' + c.s + ' sur 13 · le verbe est <b>' + echap(p.verbe) + '</b>.</p>'
     + barreSemaines(c.s) + '</section>'
     + (creux ? '<section class="bandeau"><span class="label">Le creux · tu y es</span><p>' + echap(p.creux) + '</p></section>' : '')
-    + (sess ? '<section class="bandeau"><span class="label">Session Breathwork ' + sess.n + ' sur 4 · '
-        + (resteS === 0 ? "aujourd'hui" : resteS === 1 ? 'demain' : 'dans ' + resteS + ' jours') + '</span>'
-        + '<p>' + echap(maj(texteDate(dateDu(sess.jour)))) + '. ' + echap(sess.ferme) + '</p>'
+    + (sess ? '<section class="bandeau"><span class="label">Session Breathwork ' + sess.n + ' sur 4 · cette semaine</span>'
+        + '<p>' + echap(sess.texte) + ' On la date ensemble, dans la semaine.</p>'
         + '<button class="lien" type="button" data-act="session" data-n="' + sess.n + '">Ce que tu prépares</button></section>' : '')
     + '<div class="cols"><div class="col">' + carteCall(c) + '</div>'
     + carteProtocole(c) + '</div></div>';
@@ -913,13 +920,15 @@ function vueParcours(c){
   let cote = '';
   if(depart){
     const j = c.j;
+    /* Une session n'a pas de jour fixe : on montre sa semaine. */
     const sessions = SESSIONS.map(x => {
-      const e = x.jour < j ? 'fait' : x.jour - j < 8 ? 'proche' : '';
+      const e = c.etat === 'fini' || (c.etat === 'cours' && c.s > x.semaine) ? 'fait'
+        : c.etat === 'cours' && c.s === x.semaine ? 'proche' : '';
       return '<button class="ligne" type="button" data-act="session" data-n="' + x.n + '" data-e="' + e + '">'
         + '<span class="ligne-n">' + x.n + '</span>'
-        + '<span class="ligne-txt"><strong>' + echap(maj(texteDate(dateDu(x.jour)))) + '</strong>'
-        + '<small>Semaine ' + x.semaine + ' · visio · fin de phase ' + PHASES[x.n - 1].romain + '</small></span>'
-        + '<span class="ligne-etat">' + (x.jour < j ? 'Faite' : x.jour === j ? "Aujourd'hui" : 'Jour ' + x.jour) + '</span></button>';
+        + '<span class="ligne-txt"><strong>Semaine ' + x.semaine + '</strong>'
+        + '<small>' + echap(maj(texteSemaine(x.semaine))) + ' · fin de phase ' + phaseDe(x.semaine).rom + '</small></span>'
+        + '<span class="ligne-etat">' + (e === 'fait' ? 'Passée' : e === 'proche' ? 'Cette semaine' : '') + '</span></button>';
     }).join('');
 
     let prochain = 1;
@@ -1066,9 +1075,9 @@ function feuilleRes(cle, c){
 function feuilleSession(n){
   const x = SESSIONS.find(s => s.n === n);
   if(!x) return '';
-  return '<div class="feuille-tete"><span class="label">Session Breathwork ' + x.n + ' sur 4 · semaine ' + x.semaine + '</span>'
-    + '<h2 id="feuille-titre">' + echap(depart ? maj(texteDate(dateDu(x.jour))) + '.' : 'Jour ' + x.jour + '.') + '</h2></div>'
-    + '<p class="feuille-txt">' + echap(x.ferme) + '</p>'
+  return '<div class="feuille-tete"><span class="label">Session Breathwork ' + x.n + ' sur 4 · 1 h 30 en visio</span>'
+    + '<h2 id="feuille-titre">' + echap('Semaine ' + x.semaine + (depart ? ', ' + texteSemaine(x.semaine) : '') + '.') + '</h2></div>'
+    + '<p class="feuille-txt">' + echap(x.texte) + ' On la date ensemble, dans la semaine.</p>'
     + '<span class="label">Ce que tu prépares</span>'
     + '<ul class="prepa">' + PREPA.map(t => '<li>' + echap(t) + '</li>').join('') + '</ul>';
 }
