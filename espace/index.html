@@ -617,6 +617,7 @@ function majAdresse(){
   try{
     const u = new URL(location.href);
     u.searchParams.delete('j1');
+    u.searchParams.delete('t');      // posé par la page 404 contre le cache
     u.pathname = u.pathname.replace(/[^/]*$/, '') + (depart ? versJJMMAAAA(depart) : '');
     if(u.href !== location.href) history.replaceState(history.state, '', u.href);
   }catch(e){}
