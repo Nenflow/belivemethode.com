@@ -198,14 +198,22 @@ main{max-width:1100px;margin:0 auto;padding:4px 16px 116px}
 .proto-tete{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding-bottom:8px}
 .proto-tete>div{display:flex;flex-direction:column;gap:6px}
 .compte{font-size:15px;font-weight:500;color:var(--ice)}
+.jauge{height:4px;border-radius:999px;background:var(--page);overflow:hidden}
+.jauge i{display:block;height:100%;border-radius:999px;background:var(--ice);transition:width .3s ease}
 .groupe{display:flex;flex-direction:column;padding-top:18px}
 .groupe-tete{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-bottom:4px;min-height:26px}
 .groupe-tete small{font-size:12.5px;color:var(--ink-3)}
 .groupe-tete .pastille{--pt:var(--ice)}
 .acte{display:flex;align-items:center;gap:14px;width:100%;min-height:56px;padding:8px 0;border:0;
   border-bottom:1px solid var(--filet);background:transparent;text-align:left}
+.rond{flex:none;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  border:1.5px solid var(--anneau);transition:background .15s,border-color .15s;color:var(--panel)}
+.rond svg{opacity:0}
+.acte[aria-pressed="true"] .rond{background:var(--ink);border-color:var(--ink)}
+.acte[aria-pressed="true"] .rond svg{opacity:1}
 .acte-txt{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}
 .acte-nom{font-size:15.5px;line-height:1.35}
+.acte[aria-pressed="true"] .acte-nom{color:var(--ink-3)}
 .acte-note{font-size:12.5px;line-height:1.4;color:var(--ink-3)}
 .acte-duree{flex:none;font-size:13.5px;color:var(--ink-3);white-space:nowrap}
 .groupe .petit{margin-top:10px}
@@ -510,12 +518,14 @@ const PREPA = [
 
 /* ========================== Mémoire locale ==========================
    Tout reste dans le navigateur du client : la page n'envoie rien. Elle
-   garde la date du premier call, les ressources marquées comme vues, et
-   le dernier créneau demandé pour déplacer un call. Le relevé, lui, se
-   fait dans le journal papier : rien ne s'en garde ici. */
+   garde la date du premier call, les ressources marquées comme vues, le
+   dernier créneau demandé pour déplacer un call, et les ronds cochés
+   aujourd'hui. Le relevé, lui, se fait dans le journal papier : aucun
+   historique ne se garde ici. */
 const CLE_VU = 'belive-espace-vu';
 const CLE_DEPART = 'belive-espace-depart';
 const CLE_DEMANDE = 'belive-espace-demande';
+const CLE_JOUR = 'belive-espace-jour';
 
 function lire(cle, defaut){
   try{ const v = localStorage.getItem(cle); return v === null ? defaut : JSON.parse(v); }
@@ -534,7 +544,16 @@ function ecrire(cle, val){
   const ancien = lire(ANCIENNE, null);
   if(ancien && ancien.demande && lire(CLE_DEMANDE, null) === null) ecrire(CLE_DEMANDE, ancien.demande);
   try{ localStorage.removeItem(ANCIENNE); }catch(e){}
+  const jour = lire(CLE_JOUR, null);
+  if(jour && jour.date !== iso(new Date())) try{ localStorage.removeItem(CLE_JOUR); }catch(e){}
 })();
+
+/* Les ronds du jour : ce qui est fait aujourd'hui, et rien d'autre. La date
+   est rangée avec eux : le lendemain, tout repart à zéro. */
+function faitsDuJour(){
+  const v = lire(CLE_JOUR, null);
+  return v && v.date === iso(new Date()) && v.faits ? v.faits : {};
+}
 
 let vus = lire(CLE_VU, {}) || {};
 let demande = lire(CLE_DEMANDE, null);
@@ -683,6 +702,8 @@ function riche(t){ return echap(t).replace(/&lt;(\/?)b&gt;/g, '<$1b>'); }
 function wa(texte){
   return 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(texte);
 }
+const COCHE = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"'
+  + ' stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 const CADENAS = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"'
   + ' aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
 
@@ -732,14 +753,26 @@ function carteSemaine(c){
     + '</section>';
 }
 
-function lignesActes(l){
-  return l.map(a => '<div class="acte"><span class="acte-txt"><span class="acte-nom">' + riche(a[0]) + '</span></span>'
-    + '<span class="acte-duree">' + riche(a[1]) + '</span></div>').join('');
+/* Avec un moment (matin, midi, soir), chaque ligne est un rond à cocher ;
+   sans, une simple ligne (ce qui se fait dans la semaine). */
+function lignesActes(l, m, faits){
+  return l.map((a, i) => {
+    const txt = '<span class="acte-txt"><span class="acte-nom">' + riche(a[0]) + '</span></span>'
+      + '<span class="acte-duree">' + riche(a[1]) + '</span>';
+    if(!m) return '<div class="acte">' + txt + '</div>';
+    const id = m + '-' + i;
+    return '<button class="acte" type="button" data-act="coche" data-id="' + id + '" aria-pressed="' + !!faits[id] + '">'
+      + '<span class="rond">' + COCHE + '</span>' + txt + '</button>';
+  }).join('');
 }
 
 function carteProtocole(c){
   const j = RESET.SEMAINES[c.s].journee;
   const ici = momentActuel();
+  const faits = faitsDuJour();
+  const fait = m => j[m].filter((a, i) => faits[m + '-' + i]).length;
+  const total = MOMENTS.reduce((n, [m]) => n + j[m].length, 0);
+  const faitsTotal = MOMENTS.reduce((n, [m]) => n + fait(m), 0);
   const moments = MOMENTS.map(([m, titre], i) => {
     const l = j[m];
     const vide = !l.length ? '<p class="petit" style="margin-top:4px">' + echap(titre + ' entre en semaine ' + entreeDu(m) + '.') + '</p>' : '';
@@ -747,16 +780,19 @@ function carteProtocole(c){
     const aide = m === 'midi' && l.length ? '<p class="petit">' + echap('Ta respiration, selon ton état. '
       + RESET.RESPIRATIONS_MIDI.map(r => r.etat + ' : ' + r.nom.charAt(0).toLowerCase() + r.nom.slice(1) + '.').join(' ')) + '</p>' : '';
     return '<div class="groupe"><div class="groupe-tete"><span class="label">' + echap(titre) + '</span>'
-      + (i === ici ? '<span class="pastille">Maintenant</span>' : '') + '</div>'
-      + lignesActes(l) + vide + aide + '</div>';
+      + (i === ici ? '<span class="pastille">Maintenant</span>'
+          : l.length ? '<small>' + fait(m) + '/' + l.length + '</small>' : '') + '</div>'
+      + lignesActes(l, m, faits) + vide + aide + '</div>';
   }).join('');
   const semaine = '<div class="groupe"><div class="groupe-tete"><span class="label">Cette semaine</span></div>'
     + lignesActes(j.semaine.concat(rdvSemaine(c.s))) + '</div>';
   return '<section class="carte proto">'
     + '<div class="proto-tete"><div><span class="label">Ta journée · semaine ' + c.s + '</span>'
-    + '<h2 class="h2">Trois moments.</h2></div></div>'
+    + '<h2 class="h2">Trois moments.</h2></div>'
+    + '<span class="compte">' + faitsTotal + ' / ' + total + '</span></div>'
+    + '<div class="jauge"><i style="width:' + (total ? faitsTotal / total * 100 : 0) + '%"></i></div>'
     + moments + semaine
-    + '<p class="petit proto-pied">' + echap("Ton relevé se fait dans ton journal papier, matin et soir, après l'assise.") + '</p>'
+    + '<p class="petit proto-pied">' + echap("Les ronds repartent à zéro chaque jour. Ton relevé se fait dans ton journal papier, matin et soir, après l'assise.") + '</p>'
     + '</section>';
 }
 
@@ -1108,6 +1144,13 @@ document.addEventListener('click', e => {
   const d = b.dataset;
   switch(d.act){
     case 'calls': ecran.tousCalls = !ecran.tousCalls; rendre(); break;
+    case 'coche': {
+      const faits = faitsDuJour();
+      faits[d.id] = !faits[d.id];
+      ecrire(CLE_JOUR, { date:iso(new Date()), faits:faits });
+      rendre();
+      break;
+    }
     case 'date': {
       ecran.changerDate = true; rendre();
       const i = document.getElementById('depart'); if(i) i.focus();
@@ -1138,7 +1181,8 @@ document.addEventListener('click', e => {
       break;
     case 'fermer': fermerFeuille(); break;
   }
-  const actif = d.act && main.querySelector('[data-act="' + d.act + '"]' + (d.v ? '[data-v="' + d.v + '"]' : ''));
+  const actif = d.act && main.querySelector('[data-act="' + d.act + '"]'
+    + (d.id ? '[data-id="' + d.id + '"]' : '') + (d.v ? '[data-v="' + d.v + '"]' : ''));
   if(actif && !ecran.feuille && main.contains(actif) && d.act !== 'date') actif.focus({ preventScroll:true });
 });
 
