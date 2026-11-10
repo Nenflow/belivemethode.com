@@ -224,44 +224,58 @@ main{max-width:1100px;margin:0 auto;padding:4px 16px 116px}
   background:var(--p2);color:var(--ink)}
 
 /* ================= Parcours ================= */
+.frise{display:flex;gap:6px;margin-top:6px}
+.frise button{display:flex;flex-direction:column;gap:8px;min-width:0;padding:4px 0;border:0;background:transparent;
+  text-align:left;color:var(--ink-3)}
+.frise button[data-e="ici"]{color:var(--ink)}
+.frise .barre{margin-top:0}
+.frise-nom{font-size:12.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.parcours{display:grid;gap:20px;align-items:start}
+.parcours-cote{display:flex;flex-direction:column;gap:20px;min-width:0}
+.parcours-cote .label--suite{padding-top:18px}
 .phases{display:flex;flex-direction:column;gap:12px;min-width:0}
-.phase{display:flex;flex-direction:column;gap:14px;padding:22px;border-radius:var(--r-lg)}
+.phase{display:flex;flex-direction:column;gap:14px;padding:22px;border-radius:var(--r-lg);scroll-margin-top:84px}
 .phase[data-e="ici"]{background:var(--panel)}
 .phase[data-e="fait"]{background:var(--p2)}
+.phase[data-e="avenir"]{border:1px solid var(--line)}
 .phase[data-e="fait"] .pastille{--pt:var(--ink)}
 .phase[data-e="ici"] .pastille{--pt:var(--ice)}
+.phase-h{margin:0;font:inherit}
+.phase-bouton{display:flex;flex-direction:column;gap:12px;width:100%;padding:0;border:0;background:transparent;
+  text-align:left;color:inherit}
 .phase-tete{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.phase-etat{display:flex;align-items:center;gap:8px;color:var(--ink-3)}
+.chevron{transition:transform .2s}
+.phase-bouton[aria-expanded="true"] .chevron{transform:rotate(180deg)}
 .phase-nom{display:flex;flex-direction:column;gap:4px}
-.phase-nom h3{font-size:24px;font-weight:600;line-height:1.1;letter-spacing:-.02em}
-.phase-nom span{font-size:15px;color:var(--ink-2)}
-.phase-detail{display:flex;flex-direction:column;gap:10px;font-size:14.5px;line-height:1.55}
-.phase-detail p{text-wrap:pretty}
-.phase-detail b{font-weight:500}
+.phase-nom strong{font-size:24px;font-weight:600;line-height:1.1;letter-spacing:-.02em}
+.phase-nom span{font-size:15px;line-height:1.45;color:var(--ink-2);text-wrap:pretty}
 .sems{display:flex;gap:6px;flex-wrap:wrap}
 .sems span{min-width:40px;height:30px;padding:0 10px;border-radius:999px;display:inline-flex;align-items:center;
   justify-content:center;font-size:12.5px;font-weight:500;background:var(--p3);color:var(--ink-2)}
-.sems span[data-e="fait"]{background:var(--ink);color:var(--panel)}
-.sems span[data-e="ici"]{background:var(--ice);color:var(--panel)}
 .phase[data-e="avenir"] .sems span{background:transparent;border:1px solid var(--line)}
-
-.ligne{display:flex;align-items:center;gap:14px;min-height:58px;width:100%;padding:6px 0;border:0;
-  border-top:1px solid var(--filet);background:transparent;text-align:left}
+.semaines{display:flex;flex-direction:column}
+.ligne{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-top:1px solid var(--filet)}
 .ligne-n{flex:none;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
   font-size:13px;font-weight:600;background:var(--p2);color:var(--ink)}
 .ligne[data-e="fait"] .ligne-n{background:var(--ink);color:var(--panel)}
-.ligne[data-e="proche"] .ligne-n{background:var(--ice-2);color:var(--ice-ink)}
-.ligne-txt{flex:1;display:flex;flex-direction:column;gap:1px;min-width:0}
-.ligne-txt strong{font-size:15px;font-weight:500}
+.ligne[data-e="ici"]{margin:4px -12px;padding:14px 12px;border-top-color:transparent;border-radius:var(--r-md);background:var(--ice-2)}
+.ligne[data-e="ici"] + .ligne{border-top-color:transparent}
+.ligne[data-e="ici"] .ligne-n{background:var(--ice);color:var(--panel)}
+.ligne[data-e="ici"] .label{color:var(--ice-ink)}
+.ligne-txt{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0;padding-top:2px}
+.ligne-txt strong{font-size:15.5px;font-weight:500}
 .ligne-txt small{font-size:13px;color:var(--ink-3)}
-.ligne-etat{font-size:13px;color:var(--ink-3);white-space:nowrap}
-.ligne[data-e="fait"] .ligne-etat,.ligne[data-e="proche"] .ligne-etat,.ligne[data-e="prochain"] .ligne-etat{color:var(--ice)}
-.ligne--call{min-height:52px}
-.ligne--call .ligne-num{flex:none;width:28px;font-size:13px;font-weight:600}
-.ligne--call .ligne-date{flex:1;font-size:15px}
-.ligne--call[data-e="fait"]{color:var(--ink-3)}
-.plus{align-self:flex-start;margin-top:6px;min-height:40px;padding:0 4px;border:0;background:transparent;
-  color:var(--ice);font-size:14px;font-weight:500}
+.ligne[data-e="fait"] .ligne-txt strong{color:var(--ink-2)}
+.rdv{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+button.pastille{background:transparent;cursor:pointer}
+button.pastille:hover{border-color:var(--ink-3)}
+.fleche{flex:none;color:var(--ink-3)}
 .reglage{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:4px;font-size:14px;color:var(--ink-2)}
+@media (min-width:1180px){
+  .parcours{grid-template-columns:minmax(0,1fr) 340px}
+  .parcours-cote{order:2;position:sticky;top:44px}
+}
 
 /* ================= Ressources ================= */
 .kit{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:12px}
@@ -674,16 +688,17 @@ function entreeDu(m){
 }
 /* Les rendez-vous de la semaine qui ne sont pas le call : la session
    Breathwork, le test CO2. Le call est déjà dans journee(w). */
+function quandCO2(w){ return w === 1 ? 'au jour 1' : w === 13 ? 'au jour 91' : 'en fin de semaine'; }
 function rdvSemaine(w){
   const l = [];
   if(RESET.BW[w]) l.push(['Session Breathwork n°' + RESET.BW[w], '1 h 30, en visio']);
-  if(RESET.CO2[w]) l.push(['Test CO2 ' + RESET.CO2[w], w === 1 ? 'au jour 1' : w === 13 ? 'au jour 91' : 'en fin de semaine']);
+  if(RESET.CO2[w]) l.push(['Test CO2 ' + RESET.CO2[w], quandCO2(w)]);
   return l;
 }
 
 /* ========================== État de l'écran ========================== */
 const VUES = ['jour', 'parcours', 'ressources'];
-const ecran = { vue:'jour', onglet:'documents', phaseDoc:'cours', tousCalls:false,
+const ecran = { vue:'jour', onglet:'documents', phaseDoc:'cours', ouvertes:{},
                 changerDate:false, feuille:null, creneau:null };
 const main = document.getElementById('main');
 const feuille = document.getElementById('feuille');
@@ -847,96 +862,136 @@ function vueJour(c){
 }
 
 /* ========================== Parcours ==========================
-   Les quatre phases et les treize semaines viennent de protocole.py : PHASES,
-   puis pour chaque semaine son titre (WEEKS[w].titre) et ses rendez-vous
-   (rdv(w, 'carte')). */
+   Une seule lecture, de la semaine 1 à la semaine 13. En haut, la frise des
+   quatre phases ; à côté, la semaine en cours, ses rendez-vous et ce qui vient
+   ensuite ; puis chaque phase, repliée sauf celle en cours, avec ses semaines
+   et leurs rendez-vous en pastilles. Tout vient de protocole.py : PHASES,
+   WEEKS[w].titre, OPEN, BW et CO2. */
+const CHEVRON = '<svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"'
+  + ' stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+const FLECHE = '<svg class="fleche" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"'
+  + ' stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
+
+function etatPhase(p, c){
+  return c.etat === 'fini' ? 'fait' : c.etat !== 'cours' ? 'avenir'
+    : c.s > p.weeks[1] ? 'fait' : c.s < p.weeks[0] ? 'avenir' : 'ici';
+}
+function etatSemaine(w, c){
+  return c.etat === 'fini' || (c.etat === 'cours' && w < c.s) ? 'fait' : c.etat === 'cours' && w === c.s ? 'ici' : '';
+}
+/* Ouverte par défaut : la phase en cours, ou la phase I avant le départ. */
+function phaseOuverte(p, c){
+  if(p.n in ecran.ouvertes) return ecran.ouvertes[p.n];
+  return c.phase ? c.phase.n === p.n : c.etat !== 'fini' && p.n === 1;
+}
+function jourCourt(d){ return texteDate(d, { weekday:'short', day:'numeric', month:'short' }); }
+
+/* Les rendez-vous d'une semaine, en pastilles : le call, la session, le test. */
+function pastillesRdv(w){
+  const n = RESET.BW[w];
+  return '<span class="rdv"><span class="pastille">Call ' + (RESET.OPEN.includes(w) ? '60' : '30') + ' min</span>'
+    + (n ? '<button class="pastille" type="button" data-act="session" data-n="' + n + '" style="--pt:var(--ice)">Breathwork n°' + n + '</button>' : '')
+    + (RESET.CO2[w] ? '<span class="pastille" style="--pt:var(--ink)">' + echap('Test CO2 ' + RESET.CO2[w]) + '</span>' : '')
+    + '</span>';
+}
+
+function frise(c){
+  return '<nav class="frise" aria-label="Les quatre phases">' + RESET.PHASES.map(p => {
+    let ticks = '';
+    for(let w = p.weeks[0]; w <= p.weeks[1]; w++){
+      const e = etatSemaine(w, c);
+      ticks += '<i' + (e ? ' data-e="' + e + '"' : '') + '></i>';
+    }
+    return '<button type="button" data-act="phase-va" data-v="' + p.n + '" data-e="' + etatPhase(p, c) + '"'
+      + ' style="flex:' + (p.weeks[1] - p.weeks[0] + 1) + '" aria-label="' + echap('Phase ' + p.rom + ', ' + p.name) + '">'
+      + '<span class="barre" aria-hidden="true">' + ticks + '</span>'
+      + '<span class="frise-nom">' + p.rom + ' · ' + riche(p.verb) + '</span></button>';
+  }).join('') + '</nav>';
+}
+
+/* Une ligne de rendez-vous ; avec une session, elle ouvre sa préparation. */
+function ligneRdv(nom, quand, session){
+  const txt = '<span class="acte-txt"><span class="acte-nom">' + echap(nom) + '</span></span>'
+    + '<span class="acte-duree">' + echap(quand) + '</span>';
+  return session ? '<button class="acte" type="button" data-act="session" data-n="' + session + '">' + txt + FLECHE + '</button>'
+    : '<div class="acte">' + txt + '</div>';
+}
+
+/* À côté de la frise : la semaine en cours (ou la première, avant le départ),
+   ses rendez-vous, et ce qui vient ensuite. */
+function carteMaintenant(c){
+  if(c.etat === 'fini') return carteSuivi();
+  if(c.etat === 'sans')
+    return '<section class="carte"><span class="label">Ton calendrier</span>'
+      + '<p class="petit" style="font-size:15px">Les calls, les sessions et les tests se datent à partir de ton premier call.</p>'
+      + champDate() + '</section>';
+  const w = c.etat === 'cours' ? c.s : 1;
+  const ouv = RESET.OPEN.includes(w);
+  let h = ligneRdv(ouv ? "Call d'ouverture, phase " + phaseDe(w).rom : 'Ton call',
+    jourCourt(dateDu(jourDuCall(w))) + ' · ' + (ouv ? '60' : '30') + ' min');
+  if(RESET.BW[w]) h += ligneRdv('Session Breathwork n°' + RESET.BW[w], '1 h 30, dans la semaine', RESET.BW[w]);
+  if(RESET.CO2[w]) h += ligneRdv('Test CO2 ' + RESET.CO2[w], quandCO2(w));
+  /* Ensuite : la prochaine session et la prochaine phase, dans l'ordre. */
+  const suite = [];
+  const x = SESSIONS.find(x => x.semaine > w);
+  if(x) suite.push([x.semaine, ligneRdv('Session Breathwork n°' + x.n,
+    'semaine du ' + texteDate(dateDu(7 * (x.semaine - 1) + 1), { day:'numeric', month:'short' }), x.n)]);
+  const p = RESET.PHASES.find(p => p.weeks[0] > w);
+  if(p) suite.push([p.weeks[0], ligneRdv('Phase ' + p.rom + ', ' + p.name, jourCourt(dateDu(jourDuCall(p.weeks[0]))))]);
+  suite.sort((a, b) => a[0] - b[0]);
+  return '<section class="carte carte--liste">'
+    + '<span class="label">' + echap((c.etat === 'cours' ? 'Semaine ' + w + ' sur 13 · ' : 'Ta première semaine · ')
+        + texteSemaine(w)) + '</span>'
+    + '<h2 class="h2">' + riche(RESET.SEMAINES[w].titre) + '.</h2>'
+    + h
+    + (suite.length ? '<span class="label label--suite">Ensuite</span>' + suite.map(s => s[1]).join('') : '')
+    + '</section>';
+}
+
 function vueParcours(c){
   const phases = RESET.PHASES.map(p => {
     const [a, b] = p.weeks;
-    const e = c.etat === 'fini' ? 'fait'
-      : c.etat !== 'cours' ? 'avenir'
-      : c.s > b ? 'fait' : c.s < a ? 'avenir' : 'ici';
+    const e = etatPhase(p, c);
+    const ouvert = phaseOuverte(p, c);
     let sems = '';
-    for(let w = a; w <= b; w++){
-      const s = RESET.SEMAINES[w];
-      const ew = c.etat === 'fini' || (c.etat === 'cours' && w < c.s) ? 'fait' : c.etat === 'cours' && w === c.s ? 'proche' : '';
-      sems += '<div class="ligne" data-e="' + ew + '">'
+    if(ouvert) for(let w = a; w <= b; w++){
+      const ew = etatSemaine(w, c);
+      sems += '<div class="ligne"' + (ew ? ' data-e="' + ew + '"' : '') + '>'
         + '<span class="ligne-n">' + w + '</span>'
-        + '<span class="ligne-txt"><strong>' + riche(s.titre) + '</strong><small>' + riche(s.rdv) + '</small></span>'
-        + (ew === 'proche' ? '<span class="ligne-etat">Cette semaine</span>'
-            : depart ? '<span class="ligne-etat">' + echap(texteDate(dateDu(7 * (w - 1) + 1), { day:'numeric', month:'short' })) + '</span>' : '')
-        + '</div>';
+        + '<span class="ligne-txt">' + (ew === 'ici' ? '<span class="label">Cette semaine</span>' : '')
+        + '<strong>' + riche(RESET.SEMAINES[w].titre) + '</strong>'
+        + (depart ? '<small>' + echap(maj(texteSemaine(w))) + '</small>' : '')
+        + pastillesRdv(w) + '</span></div>';
     }
-    const suite = e === 'avenir' ? ''
-      : e === 'ici' && p.continue_.length ? '<p><b>Ce qui continue.</b> ' + p.continue_.map(t => riche(t)).join(' ') + '</p>'
-      : p.apres.length ? '<p><b>Après RESET.</b> ' + p.apres.map(t => riche(t)).join(' ') + '</p>' : '';
     const verrou = e !== 'avenir' ? ''
       : p.n === 1 || !depart ? "S'ouvre au premier call."
       : "S'ouvre au call du " + texteDate(dateDu(jourDuCall(a)), { day:'numeric', month:'long' }) + '.';
-    return '<article class="phase" data-e="' + e + '">'
-      + '<div class="phase-tete"><span class="label">Phase ' + p.rom + ' · semaines ' + a + ' à ' + b + '</span>'
-      + '<span class="pastille">' + (e === 'fait' ? 'Terminée' : e === 'ici' ? 'En cours' : 'À venir') + '</span></div>'
-      + '<div class="phase-nom"><h3>' + riche(p.name) + '</h3>'
-      + '<span>Le verbe est ' + riche(p.verb) + '. ' + riche(p.court) + '</span></div>'
-      + '<div class="sems">' + p.tags.map(t => '<span>' + riche(t) + '</span>').join('') + '</div>'
-      + (suite ? '<div class="phase-detail">' + suite + '</div>' : '')
-      + '<div>' + sems + '</div>'
+    return '<article class="phase" id="phase-' + p.n + '" data-e="' + e + '">'
+      + '<h3 class="phase-h"><button class="phase-bouton" type="button" data-act="phase-ouvre" data-v="' + p.n + '"'
+      + ' aria-expanded="' + ouvert + '" aria-controls="semaines-' + p.n + '">'
+      + '<span class="phase-tete"><span class="label">Phase ' + p.rom + ' · semaines ' + a + ' à ' + b + '</span>'
+      + '<span class="phase-etat"><span class="pastille">' + (e === 'fait' ? 'Terminée' : e === 'ici' ? 'En cours' : 'À venir') + '</span>'
+      + CHEVRON + '</span></span>'
+      + '<span class="phase-nom"><strong>' + riche(p.name) + '</strong>'
+      + '<span>Le verbe est ' + riche(p.verb) + '. ' + riche(p.court) + '</span></span>'
+      + '</button></h3>'
+      + (ouvert ? '' : '<div class="sems">' + p.tags.map(t => '<span>' + riche(t) + '</span>').join('') + '</div>')
+      + '<div class="semaines" id="semaines-' + p.n + '"' + (ouvert ? '' : ' hidden') + '>' + sems + '</div>'
       + (verrou ? '<span class="petit">' + echap(verrou) + '</span>' : '')
       + '</article>';
   }).join('');
 
-  let cote = '';
-  if(depart){
-    const j = c.j;
-    /* Une session n'a pas de jour fixe : on montre sa semaine. */
-    const sessions = SESSIONS.map(x => {
-      const e = c.etat === 'fini' || (c.etat === 'cours' && c.s > x.semaine) ? 'fait'
-        : c.etat === 'cours' && c.s === x.semaine ? 'proche' : '';
-      return '<button class="ligne" type="button" data-act="session" data-n="' + x.n + '" data-e="' + e + '">'
-        + '<span class="ligne-n">' + x.n + '</span>'
-        + '<span class="ligne-txt"><strong>Semaine ' + x.semaine + '</strong>'
-        + '<small>' + echap(maj(texteSemaine(x.semaine))) + ' · fin de phase ' + phaseDe(x.semaine).rom + '</small></span>'
-        + '<span class="ligne-etat">' + (e === 'fait' ? 'Passée' : e === 'proche' ? 'Cette semaine' : '') + '</span></button>';
-    }).join('');
-
-    let prochain = 1;
-    while(prochain <= 13 && jourDuCall(prochain) < j) prochain++;
-    let calls = [];
-    for(let n = 1; n <= 13; n++){
-      const e = jourDuCall(n) < j ? 'fait' : n === prochain ? 'prochain' : '';
-      calls.push('<div class="ligne ligne--call" data-e="' + e + '">'
-        + '<span class="ligne-num">' + String(n).padStart(2, '0') + '</span>'
-        + '<span class="ligne-date">' + echap(maj(texteDate(dateDu(jourDuCall(n)), { weekday:'short', day:'numeric', month:'short' }))
-            + ' · ' + (RESET.OPEN.includes(n) ? '60 min' : '30 min')) + '</span>'
-        + '<span class="ligne-etat">' + (e === 'fait' ? 'Fait' : e === 'prochain' ? 'Prochain' : '') + '</span></div>');
-    }
-    if(!ecran.tousCalls){
-      const p0 = Math.min(prochain, 13);
-      calls = calls.slice(Math.max(0, p0 - 3), p0 + 2);
-    }
-    cote = '<div class="col">'
-      + '<section class="carte carte--liste"><span class="label">Les sessions Breathwork · 1 h 30</span>'
-      + '<h2 class="h2">La longue ne se fait jamais seul.</h2>' + sessions + '</section>'
-      + '<section class="carte carte--liste"><div class="entre"><span class="label">Les calls · un par semaine</span>'
-      + '<span class="compte" style="font-size:13px">' + (prochain - 1) + ' / 13</span></div>'
-      + '<h2 class="h2">Le ' + echap(texteDate(dateDu(1), { weekday:'long' })) + (HEURE_CALL ? ', ' + echap(HEURE_CALL) : '') + '.</h2>'
-      + calls.join('')
-      + '<button class="plus" type="button" data-act="calls">' + (ecran.tousCalls ? 'Voir moins' : 'Voir les treize calls') + '</button>'
-      + '</section>'
-      + '<div class="reglage">' + (ecran.changerDate ? champDate()
-          : '<span>Premier call, ' + echap(texteDate(dateDu(1), { day:'numeric', month:'long', year:'numeric' })) + '.</span>'
-            + '<button class="lien" type="button" data-act="date">modifier</button>') + '</div>'
-      + '</div>';
-  } else {
-    cote = '<div class="col"><section class="carte"><span class="label">Ton calendrier</span>'
-      + '<p class="petit" style="font-size:15px">Les sessions et les treize calls se datent à partir de ton premier call.</p>'
-      + champDate() + '</section></div>';
-  }
+  const reglage = !depart ? '' : '<div class="reglage">' + (ecran.changerDate ? champDate()
+    : '<span>' + echap('Premier call le ' + texteDate(dateDu(1), { day:'numeric', month:'long', year:'numeric' })
+        + ', puis un call chaque ' + texteDate(dateDu(1), { weekday:'long' }) + (HEURE_CALL ? ' à ' + HEURE_CALL : '') + '.') + '</span>'
+      + '<button class="lien" type="button" data-act="date">modifier</button>') + '</div>';
 
   const sur = c.etat === 'cours' ? ' · jour ' + c.j + ' sur 91' : '';
   return '<div class="vue"><section class="tete"><span class="label">Ton parcours' + sur + '</span>'
-    + '<h1 class="h1">Quatre phases. Tu n\'as jamais plus d\'un mois devant toi.</h1></section>'
-    + '<div class="cols"><section class="phases">' + phases + '</section>' + cote + '</div></div>';
+    + '<h1 class="h1">Quatre phases. Tu n\'as jamais plus d\'un mois devant toi.</h1>'
+    + frise(c) + '</section>'
+    + '<div class="parcours"><aside class="parcours-cote">' + carteMaintenant(c) + '</aside>'
+    + '<div class="phases">' + phases + reglage + '</div></div></div>';
 }
 
 /* ========================== Ressources ========================== */
@@ -1143,7 +1198,20 @@ document.addEventListener('click', e => {
   if(!b) return;
   const d = b.dataset;
   switch(d.act){
-    case 'calls': ecran.tousCalls = !ecran.tousCalls; rendre(); break;
+    case 'phase-ouvre': {
+      const p = RESET.PHASES.find(x => x.n === +d.v);
+      ecran.ouvertes[p.n] = !phaseOuverte(p, situation());
+      rendre();
+      break;
+    }
+    /* Depuis la frise : la phase s'ouvre, et la page descend jusqu'à elle. */
+    case 'phase-va': {
+      ecran.ouvertes[+d.v] = true;
+      rendre();
+      const a = document.getElementById('phase-' + d.v);
+      if(a) a.scrollIntoView({ behavior:matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth', block:'start' });
+      break;
+    }
     case 'coche': {
       const faits = faitsDuJour();
       faits[d.id] = !faits[d.id];
