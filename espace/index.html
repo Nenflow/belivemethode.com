@@ -927,14 +927,14 @@ function carteMaintenant(c){
       + champDate() + '</section>';
   const w = c.etat === 'cours' ? c.s : 1;
   const ouv = RESET.OPEN.includes(w);
-  let h = ligneRdv(ouv ? "Call d'ouverture, phase " + phaseDe(w).rom : 'Ton call',
+  let h = ligneRdv(ouv ? "Call d'ouverture" : 'Ton call',
     jourCourt(dateDu(jourDuCall(w))) + ' · ' + (ouv ? '60' : '30') + ' min');
-  if(RESET.BW[w]) h += ligneRdv('Session Breathwork n°' + RESET.BW[w], '1 h 30, dans la semaine', RESET.BW[w]);
+  if(RESET.BW[w]) h += ligneRdv('Breathwork n°' + RESET.BW[w], '1 h 30, dans la semaine', RESET.BW[w]);
   if(RESET.CO2[w]) h += ligneRdv('Test CO2 ' + RESET.CO2[w], quandCO2(w));
   /* Ensuite : la prochaine session et la prochaine phase, dans l'ordre. */
   const suite = [];
   const x = SESSIONS.find(x => x.semaine > w);
-  if(x) suite.push([x.semaine, ligneRdv('Session Breathwork n°' + x.n,
+  if(x) suite.push([x.semaine, ligneRdv('Breathwork n°' + x.n,
     'semaine du ' + texteDate(dateDu(7 * (x.semaine - 1) + 1), { day:'numeric', month:'short' }), x.n)]);
   const p = RESET.PHASES.find(p => p.weeks[0] > w);
   if(p) suite.push([p.weeks[0], ligneRdv('Phase ' + p.rom + ', ' + p.name, jourCourt(dateDu(jourDuCall(p.weeks[0]))))]);
