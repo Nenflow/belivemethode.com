@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /espace/docs/
 
 Sitemap: https://belivemethode.com/sitemap.xml

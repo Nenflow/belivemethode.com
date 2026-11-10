@@ -155,7 +155,7 @@ a.bouton:hover{color:var(--panel)}
 
 main{max-width:1100px;margin:0 auto;padding:4px 16px 116px}
 
-.bas{position:fixed;left:0;right:0;bottom:0;z-index:20;display:grid;grid-template-columns:repeat(4,1fr);
+.bas{position:fixed;left:0;right:0;bottom:0;z-index:20;display:grid;grid-template-columns:repeat(3,1fr);
   padding:6px 8px calc(8px + env(safe-area-inset-bottom));background:var(--nav);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line)}
 .bas button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:56px;
@@ -194,15 +194,6 @@ main{max-width:1100px;margin:0 auto;padding:4px 16px 116px}
 .call-oui{flex:1 1 auto;background:var(--on-dark);color:var(--dark)}
 .call-actes .call-non{flex:0 1 auto;border:1px solid var(--dark-line);background:transparent;color:var(--on-dark)}
 
-.mesures{display:flex;flex-direction:column;gap:16px}
-.mesure{display:flex;flex-direction:column;gap:8px}
-.mesure-nom{font-size:15px;font-weight:500}
-.mesure-echelle{font-size:12.5px;color:var(--ink-3)}
-.notes{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
-.notes button{min-height:44px;border-radius:999px;font-size:15px;font-weight:500;
-  border:1px solid var(--p2);background:var(--p2);color:var(--ink);transition:background .15s,color .15s}
-.notes button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--panel)}
-
 .proto{gap:6px;padding-bottom:12px}
 .proto-tete{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding-bottom:8px}
 .proto-tete>div{display:flex;flex-direction:column;gap:6px}
@@ -233,62 +224,58 @@ main{max-width:1100px;margin:0 auto;padding:4px 16px 116px}
   background:var(--p2);color:var(--ink)}
 
 /* ================= Parcours ================= */
+.frise{display:flex;gap:6px;margin-top:6px}
+.frise button{display:flex;flex-direction:column;gap:8px;min-width:0;padding:4px 0;border:0;background:transparent;
+  text-align:left;color:var(--ink-3)}
+.frise button[data-e="ici"]{color:var(--ink)}
+.frise .barre{margin-top:0}
+.frise-nom{font-size:12.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.parcours{display:grid;gap:20px;align-items:start}
+.parcours-cote{display:flex;flex-direction:column;gap:20px;min-width:0}
+.parcours-cote .label--suite{padding-top:18px}
 .phases{display:flex;flex-direction:column;gap:12px;min-width:0}
-.phase{display:flex;flex-direction:column;gap:14px;padding:22px;border-radius:var(--r-lg)}
+.phase{display:flex;flex-direction:column;gap:14px;padding:22px;border-radius:var(--r-lg);scroll-margin-top:84px}
 .phase[data-e="ici"]{background:var(--panel)}
 .phase[data-e="fait"]{background:var(--p2)}
+.phase[data-e="avenir"]{border:1px solid var(--line)}
 .phase[data-e="fait"] .pastille{--pt:var(--ink)}
 .phase[data-e="ici"] .pastille{--pt:var(--ice)}
+.phase-h{margin:0;font:inherit}
+.phase-bouton{display:flex;flex-direction:column;gap:12px;width:100%;padding:0;border:0;background:transparent;
+  text-align:left;color:inherit}
 .phase-tete{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.phase-etat{display:flex;align-items:center;gap:8px;color:var(--ink-3)}
+.chevron{transition:transform .2s}
+.phase-bouton[aria-expanded="true"] .chevron{transform:rotate(180deg)}
 .phase-nom{display:flex;flex-direction:column;gap:4px}
-.phase-nom h3{font-size:24px;font-weight:600;line-height:1.1;letter-spacing:-.02em}
-.phase-nom span{font-size:15px;color:var(--ink-2)}
-.phase-detail{display:flex;flex-direction:column;gap:10px;font-size:14.5px;line-height:1.55}
-.phase-detail p{text-wrap:pretty}
-.phase-detail b{font-weight:500}
+.phase-nom strong{font-size:24px;font-weight:600;line-height:1.1;letter-spacing:-.02em}
+.phase-nom span{font-size:15px;line-height:1.45;color:var(--ink-2);text-wrap:pretty}
 .sems{display:flex;gap:6px;flex-wrap:wrap}
 .sems span{min-width:40px;height:30px;padding:0 10px;border-radius:999px;display:inline-flex;align-items:center;
   justify-content:center;font-size:12.5px;font-weight:500;background:var(--p3);color:var(--ink-2)}
-.sems span[data-e="fait"]{background:var(--ink);color:var(--panel)}
-.sems span[data-e="ici"]{background:var(--ice);color:var(--panel)}
 .phase[data-e="avenir"] .sems span{background:transparent;border:1px solid var(--line)}
-
-.ligne{display:flex;align-items:center;gap:14px;min-height:58px;width:100%;padding:6px 0;border:0;
-  border-top:1px solid var(--filet);background:transparent;text-align:left}
+.semaines{display:flex;flex-direction:column}
+.ligne{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-top:1px solid var(--filet)}
 .ligne-n{flex:none;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
   font-size:13px;font-weight:600;background:var(--p2);color:var(--ink)}
 .ligne[data-e="fait"] .ligne-n{background:var(--ink);color:var(--panel)}
-.ligne[data-e="proche"] .ligne-n{background:var(--ice-2);color:var(--ice-ink)}
-.ligne-txt{flex:1;display:flex;flex-direction:column;gap:1px;min-width:0}
-.ligne-txt strong{font-size:15px;font-weight:500}
+.ligne[data-e="ici"]{margin:4px -12px;padding:14px 12px;border-top-color:transparent;border-radius:var(--r-md);background:var(--ice-2)}
+.ligne[data-e="ici"] + .ligne{border-top-color:transparent}
+.ligne[data-e="ici"] .ligne-n{background:var(--ice);color:var(--panel)}
+.ligne[data-e="ici"] .label{color:var(--ice-ink)}
+.ligne-txt{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0;padding-top:2px}
+.ligne-txt strong{font-size:15.5px;font-weight:500}
 .ligne-txt small{font-size:13px;color:var(--ink-3)}
-.ligne-etat{font-size:13px;color:var(--ink-3);white-space:nowrap}
-.ligne[data-e="fait"] .ligne-etat,.ligne[data-e="proche"] .ligne-etat,.ligne[data-e="prochain"] .ligne-etat{color:var(--ice)}
-.ligne--call{min-height:52px}
-.ligne--call .ligne-num{flex:none;width:28px;font-size:13px;font-weight:600}
-.ligne--call .ligne-date{flex:1;font-size:15px}
-.ligne--call[data-e="fait"]{color:var(--ink-3)}
-.plus{align-self:flex-start;margin-top:6px;min-height:40px;padding:0 4px;border:0;background:transparent;
-  color:var(--ice);font-size:14px;font-weight:500}
+.ligne[data-e="fait"] .ligne-txt strong{color:var(--ink-2)}
+.rdv{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+button.pastille{background:transparent;cursor:pointer}
+button.pastille:hover{border-color:var(--ink-3)}
+.fleche{flex:none;color:var(--ink-3)}
 .reglage{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:4px;font-size:14px;color:var(--ink-2)}
-
-/* ================= Journal ================= */
-.graphe{display:flex;align-items:flex-end;gap:4px;height:168px;padding-bottom:2px;border-bottom:1px solid var(--line)}
-.graphe div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
-.graphe i{width:100%;max-width:22px;border-radius:999px;background:var(--ink);transition:height .3s ease}
-.graphe i[data-e="vide"]{background:var(--p3)}
-.graphe i[data-e="ici"]{background:var(--ice)}
-.graphe-legende{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);margin-top:-10px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
-.stat{display:flex;flex-direction:column;gap:4px;padding:16px;border-radius:var(--r-md);background:var(--p2)}
-.stat small{font-size:12.5px;color:var(--ink-2)}
-.stat strong{font-size:28px;font-weight:600;letter-spacing:-.02em}
-.stat:nth-child(2) strong{color:var(--ink-3)}
-.stat:nth-child(3) strong{color:var(--ice)}
-.stat span{font-size:12.5px;color:var(--ink-3)}
-.releve{display:flex;align-items:center;gap:6px 12px;min-height:56px;padding:8px 0;border-top:1px solid var(--filet);flex-wrap:wrap}
-.releve strong{flex:1 1 140px;font-size:15px;font-weight:500}
-.releve span{font-size:13.5px;color:var(--ink-2)}
+@media (min-width:1180px){
+  .parcours{grid-template-columns:minmax(0,1fr) 340px}
+  .parcours-cote{order:2;position:sticky;top:44px}
+}
 
 /* ================= Ressources ================= */
 .kit{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:12px}
@@ -369,7 +356,6 @@ main{max-width:1100px;margin:0 auto;padding:4px 16px 116px}
   <nav aria-label="Sections de ton espace">
     <button type="button" data-vue="jour"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>Aujourd'hui</button>
     <button type="button" data-vue="parcours"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="6" r="2.2"/><path d="M7 17c6-1 3-9 10-10"/></svg>Parcours</button>
-    <button type="button" data-vue="journal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Journal</button>
     <button type="button" data-vue="ressources"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="4" width="6" height="16" rx="1.5"/><rect x="12" y="4" width="4.5" height="16" rx="1.5"/><path d="M18.5 5.5l2.5 14"/></svg>Ressources</button>
   </nav>
   <div class="cote-pied">
@@ -402,7 +388,6 @@ main{max-width:1100px;margin:0 auto;padding:4px 16px 116px}
 <nav class="bas" aria-label="Sections de ton espace">
   <button type="button" data-vue="jour"><span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg></span>Aujourd'hui</button>
   <button type="button" data-vue="parcours"><span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="6" r="2.2"/><path d="M7 17c6-1 3-9 10-10"/></svg></span>Parcours</button>
-  <button type="button" data-vue="journal"><span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>Journal</button>
   <button type="button" data-vue="ressources"><span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="4" width="6" height="16" rx="1.5"/><rect x="12" y="4" width="4.5" height="16" rx="1.5"/><path d="M18.5 5.5l2.5 14"/></svg></span>Ressources</button>
 </nav>
 
@@ -410,8 +395,67 @@ main{max-width:1100px;margin:0 auto;padding:4px 16px 116px}
 
 <script>
 /* ==========================================================================
+   LE PROTOCOLE
+   Tout ce qui décrit RESET (phases, semaines, journée, rendez-vous, documents)
+   vient de protocole.py. Le bloc suivant est écrit par assets/gen_espace.py :
+   voir le README, « L'espace RESET ».
+   ========================================================================== */
+/* <protocole> */
+/* Écrit par assets/gen_espace.py depuis protocole.py. Ne se modifie pas à la main :
+   on change protocole.py, puis on relance le script. */
+const RESET = {
+  PHASES: [
+    {"n": 1, "rom": "I", "name": "Rencontre Intérieure", "verb": "voir", "weeks": [1, 4], "intent": "Tu installes ta journée, un moment par semaine : le matin, le midi, le soir, puis le corps. Ce que tu ajoutes, tu le gardes jusqu'au bout.", "court": "Tu installes ta journée, un moment par semaine.", "tags": ["Le matin", "Le midi", "Le soir", "Le corps"], "continue_": [], "apres": []},
+    {"n": 2, "rom": "II", "name": "La Traversée", "verb": "tenir", "weeks": [5, 7], "intent": "Ton corps entre en jeu : le mouvement, l'effort, puis le froid. Partout, tu gardes un souffle lent et calme.", "court": "Ton corps entre en jeu, et tes assises passent en pleine conscience.", "tags": ["Le mouvement", "Le HIIT", "Le froid", "Le stretching"], "continue_": ["Lumière, café, repas à heures fixes avec un verre d'eau.", "À midi, ta respiration selon ton état, puis la marche.", "Le soir, la marche, les jambes au mur, et plus de téléphone 2 h avant le coucher.", "Ton relevé, matin et soir."], "apres": []},
+    {"n": 3, "rom": "III", "name": "La Reconstruction", "verb": "choisir", "weeks": [8, 10], "intent": "Ton corps est stable, ton souffle tient. Tu choisis maintenant ce que tu veux créer, et tu le regardes chaque jour.", "court": "Tu choisis ce que tu veux créer, et tu le regardes chaque jour.", "tags": ["Ton vision board", "Les visualisations", "Ton cadre alimentaire"], "continue_": ["Tes assises, matin et soir, en pleine conscience.", "Ton mouvement du matin, tes 2 HIIT et ton stretching.", "À midi, ta respiration, puis la marche. Le soir, la marche et les jambes au mur.", "Ton relevé, matin et soir."], "apres": []},
+    {"n": 4, "rom": "IV", "name": "L'Intégration", "verb": "ancrer", "weeks": [11, 13], "intent": "Tu écris ton protocole, tu le vis seul une semaine, tu le corriges. Ce qui tient sans le cadre t'appartient.", "court": "Tu écris ton protocole, tu le vis seul, tu le gardes.", "tags": ["Mon protocole", "Une semaine seul", "Ta lettre à un an"], "continue_": [], "apres": ["Un call de suivi, un mois après la fin.", "Ton protocole, ton vision board et ton carnet continuent."]},
+  ],
+  SEMAINES: {
+    1: {"titre": "Le matin", "journal": ["Au réveil : jusqu'à 3, puis quelques respirations au bord du lit", "Lumière dehors au réveil", "Téléphone hors des 30 premières minutes", "Assise du matin, 5 min, souffle compté", "Ton relevé, matin et soir"], "journee": {"matin": [["Respirations, bord du lit", "1 min"], ["Lumière dehors", "5-15 min"], ["Assise du matin", "5 min"]], "midi": [], "soir": [["Ton relevé", "2 min"]], "semaine": [["Ton call", "60 min"]]}, "rdv": "Call d'ouverture, 60 min · test CO2 n°1"},
+    2: {"titre": "Le midi", "journal": ["Assise du matin à 10 min", "Repas à heures fixes, un verre d'eau à chaque repas", "Café : rien dans les 90 min après le lever, rien après 14 h", "Fin du déjeuner : une des 3 respirations, puis 10 min de marche lente"], "journee": {"matin": [["Respirations, bord du lit", "1 min"], ["Lumière dehors", "5-15 min"], ["Assise du matin", "10 min"], ["Café", "après 90 min"]], "midi": [["Repas à heure fixe", "± 1 h"], ["Respiration de midi", "2 min"], ["Marche lente", "10 min"], ["Café", "avant 14 h"], ["Tes pas", "chaque jour"]], "soir": [["Ton relevé", "2 min"]], "semaine": [["Ton call", "30 min"]]}, "rdv": "Call, 30 min"},
+    3: {"titre": "Le soir", "journal": ["Marche lente 10 min après le dîner", "Jambes au mur, 5 min", "Assise du soir, 10 min, souffle compté", "Plus de téléphone dans les 2 h avant le coucher"], "journee": {"matin": [["Respirations, bord du lit", "1 min"], ["Lumière dehors", "5-15 min"], ["Assise du matin", "10 min"], ["Café", "après 90 min"]], "midi": [["Repas à heure fixe", "± 1 h"], ["Respiration de midi", "2 min"], ["Marche lente", "10 min"], ["Café", "avant 14 h"], ["Tes pas", "chaque jour"]], "soir": [["Marche lente", "10 min"], ["Téléphone coupé", "2 h avant"], ["Jambes au mur", "5 min"], ["Assise du soir", "10 min"], ["Ton relevé", "2 min"]], "semaine": [["Ton call", "30 min"]]}, "rdv": "Call, 30 min"},
+    4: {"titre": "Le corps", "journal": ["Séquence chinoise après la douche : 9 mouvements, environ 4 min"], "journee": {"matin": [["Respirations, bord du lit", "1 min"], ["Lumière dehors", "5-15 min"], ["Assise du matin", "10 min"], ["Séquence chinoise", "4 min"], ["Café", "après 90 min"]], "midi": [["Repas à heure fixe", "± 1 h"], ["Respiration de midi", "2 min"], ["Marche lente", "10 min"], ["Café", "avant 14 h"], ["Tes pas", "chaque jour"]], "soir": [["Marche lente", "10 min"], ["Téléphone coupé", "2 h avant"], ["Jambes au mur", "5 min"], ["Assise du soir", "10 min"], ["Ton relevé", "2 min"]], "semaine": [["Ton call", "30 min"]]}, "rdv": "Session Breathwork n°1, 1 h 30 en visio · test CO2 n°2 · call, 30 min"},
+    5: {"titre": "Le mouvement", "journal": ["Assises du matin et du soir en pleine conscience", "Le matin : séquence (4 min) ou mobilité (15 min)", "HIIT 2 fois par semaine, jamais deux jours de suite", "Respirations d'activation, si tu veux"], "journee": {"matin": [["Respirations, bord du lit", "1 min"], ["Lumière dehors", "5-15 min"], ["Assise, pleine conscience", "10 min"], ["Séquence ou mobilité", "4 à 15 min"], ["Café", "après 90 min"]], "midi": [["Repas à heure fixe", "± 1 h"], ["Respiration de midi", "2 min"], ["Marche lente", "10 min"], ["Café", "avant 14 h"], ["Tes pas", "chaque jour"]], "soir": [["Marche lente", "10 min"], ["Téléphone coupé", "2 h avant"], ["Jambes au mur", "5 min"], ["Assise, pleine conscience", "10 min"], ["Ton relevé", "2 min"]], "semaine": [["HIIT, 2 fois", "20-30 min"], ["Respirations d'activation", "si tu veux"], ["Ton call", "60 min"]]}, "rdv": "Call d'ouverture, 60 min"},
+    6: {"titre": "Le froid", "journal": ["Douche écossaise : 30 s de froid en fin de douche", "Stretching, 30 min, une fois par semaine"], "journee": {"matin": [["Respirations, bord du lit", "1 min"], ["Lumière dehors", "5-15 min"], ["Assise, pleine conscience", "10 min"], ["Douche, fin froide", "30 s"], ["Séquence ou mobilité", "4 à 15 min"], ["Café", "après 90 min"]], "midi": [["Repas à heure fixe", "± 1 h"], ["Respiration de midi", "2 min"], ["Marche lente", "10 min"], ["Café", "avant 14 h"], ["Tes pas", "chaque jour"]], "soir": [["Marche lente", "10 min"], ["Téléphone coupé", "2 h avant"], ["Jambes au mur", "5 min"], ["Assise, pleine conscience", "10 min"], ["Ton relevé", "2 min"]], "semaine": [["HIIT, 2 fois", "20-30 min"], ["Stretching, 1 fois", "30 min"], ["Respirations d'activation", "si tu veux"], ["Ton call", "30 min"]]}, "rdv": "Call, 30 min"},
+    7: {"titre": "Tenir", "journal": ["Le froid passe à 1 min", "Rien d'autre : tu tiens ce qui est en place"], "journee": {"matin": [["Respirations, bord du lit", "1 min"], ["Lumière dehors", "5-15 min"], ["Assise, pleine conscience", "10 min"], ["Douche, fin froide", "1 min"], ["Séquence ou mobilité", "4 à 15 min"], ["Café", "après 90 min"]], "midi": [["Repas à heure fixe", "± 1 h"], ["Respiration de midi", "2 min"], ["Marche lente", "10 min"], ["Café", "avant 14 h"], ["Tes pas", "chaque jour"]], "soir": [["Marche lente", "10 min"], ["Téléphone coupé", "2 h avant"], ["Jambes au mur", "5 min"], ["Assise, pleine conscience", "10 min"], ["Ton relevé", "2 min"]], "semaine": [["HIIT, 2 fois", "20-30 min"], ["Stretching, 1 fois", "30 min"], ["Respirations d'activation", "si tu veux"], ["Ton call", "30 min"]]}, "rdv": "Session Breathwork n°2, 1 h 30 en visio · test CO2 n°3 · call, 30 min"},
+    8: {"titre": "La vision", "journal": ["Ton vision board, créé en 1 à 2 h, regardé matin et soir", "Une visualisation guidée par semaine, à la place d'une assise", "Ton carnet s'ouvre, à ton rythme", "Douche froide complète"], "journee": {"matin": [["Respirations, bord du lit", "1 min"], ["Lumière dehors", "5-15 min"], ["Vision board", "2-5 min"], ["Assise, pleine conscience", "10 min"], ["Douche froide", "complète"], ["Séquence ou mobilité", "4 à 15 min"], ["Café", "après 90 min"]], "midi": [["Repas à heure fixe", "± 1 h"], ["Respiration de midi", "2 min"], ["Marche lente", "10 min"], ["Café", "avant 14 h"], ["Tes pas", "chaque jour"]], "soir": [["Marche lente", "10 min"], ["Téléphone coupé", "2 h avant"], ["Jambes au mur", "5 min"], ["Assise, pleine conscience", "10 min"], ["Vision board", "2-5 min"], ["Ton relevé", "2 min"]], "semaine": [["HIIT, 2 fois", "20-30 min"], ["Stretching, 1 fois", "30 min"], ["Visualisation, 1 fois", "à la place d'une assise"], ["Ton carnet", "à ton rythme"], ["Respirations d'activation", "si tu veux"], ["Ton call", "60 min"]]}, "rdv": "Call d'ouverture, 60 min"},
+    9: {"titre": "Ton cadre alimentaire", "journal": ["2 ou 3 règles alimentaires à toi, construites en call"], "journee": {"matin": [["Respirations, bord du lit", "1 min"], ["Lumière dehors", "5-15 min"], ["Vision board", "2-5 min"], ["Assise, pleine conscience", "10 min"], ["Douche froide", "complète"], ["Séquence ou mobilité", "4 à 15 min"], ["Café", "après 90 min"]], "midi": [["Repas, ton cadre", "± 1 h"], ["Respiration de midi", "2 min"], ["Marche lente", "10 min"], ["Café", "avant 14 h"], ["Tes pas", "chaque jour"]], "soir": [["Marche lente", "10 min"], ["Téléphone coupé", "2 h avant"], ["Jambes au mur", "5 min"], ["Assise, pleine conscience", "10 min"], ["Vision board", "2-5 min"], ["Ton relevé", "2 min"]], "semaine": [["HIIT, 2 fois", "20-30 min"], ["Stretching, 1 fois", "30 min"], ["Visualisation, 1 fois", "à la place d'une assise"], ["Ton carnet", "à ton rythme"], ["Respirations d'activation", "si tu veux"], ["Ton call", "30 min"]]}, "rdv": "Call, 30 min"},
+    10: {"titre": "Choisir", "journal": ["Rien de nouveau : tu tiens ce que tu as choisi"], "journee": {"matin": [["Respirations, bord du lit", "1 min"], ["Lumière dehors", "5-15 min"], ["Vision board", "2-5 min"], ["Assise, pleine conscience", "10 min"], ["Douche froide", "complète"], ["Séquence ou mobilité", "4 à 15 min"], ["Café", "après 90 min"]], "midi": [["Repas, ton cadre", "± 1 h"], ["Respiration de midi", "2 min"], ["Marche lente", "10 min"], ["Café", "avant 14 h"], ["Tes pas", "chaque jour"]], "soir": [["Marche lente", "10 min"], ["Téléphone coupé", "2 h avant"], ["Jambes au mur", "5 min"], ["Assise, pleine conscience", "10 min"], ["Vision board", "2-5 min"], ["Ton relevé", "2 min"]], "semaine": [["HIIT, 2 fois", "20-30 min"], ["Stretching, 1 fois", "30 min"], ["Visualisation, 1 fois", "à la place d'une assise"], ["Ton carnet", "à ton rythme"], ["Respirations d'activation", "si tu veux"], ["Ton call", "30 min"]]}, "rdv": "Session Breathwork n°3, 1 h 30 en visio · test CO2 n°4 · call, 30 min"},
+    11: {"titre": "J'écris", "journal": ["Tu écris Mon protocole en call : ce que tu as vraiment tenu"], "journee": {"matin": [["Respirations, bord du lit", "1 min"], ["Lumière dehors", "5-15 min"], ["Vision board", "2-5 min"], ["Assise, pleine conscience", "10 min"], ["Douche froide", "complète"], ["Séquence ou mobilité", "4 à 15 min"], ["Café", "après 90 min"]], "midi": [["Repas, ton cadre", "± 1 h"], ["Respiration de midi", "2 min"], ["Marche lente", "10 min"], ["Café", "avant 14 h"], ["Tes pas", "chaque jour"]], "soir": [["Marche lente", "10 min"], ["Téléphone coupé", "2 h avant"], ["Jambes au mur", "5 min"], ["Assise, pleine conscience", "10 min"], ["Vision board", "2-5 min"], ["Ton relevé", "2 min"]], "semaine": [["HIIT, 2 fois", "20-30 min"], ["Stretching, 1 fois", "30 min"], ["Visualisation, 1 fois", "à la place d'une assise"], ["Ton carnet", "à ton rythme"], ["Respirations d'activation", "si tu veux"], ["Ton call", "60 min"]]}, "rdv": "Call d'ouverture, 60 min"},
+    12: {"titre": "Seul", "journal": ["Semaine sans consigne : tu vis ton protocole", "Ce qui lâche, tu le notes dans ton carnet"], "journee": {"matin": [["Respirations, bord du lit", "1 min"], ["Lumière dehors", "5-15 min"], ["Vision board", "2-5 min"], ["Assise, pleine conscience", "10 min"], ["Douche froide", "complète"], ["Séquence ou mobilité", "4 à 15 min"], ["Café", "après 90 min"]], "midi": [["Repas, ton cadre", "± 1 h"], ["Respiration de midi", "2 min"], ["Marche lente", "10 min"], ["Café", "avant 14 h"], ["Tes pas", "chaque jour"]], "soir": [["Marche lente", "10 min"], ["Téléphone coupé", "2 h avant"], ["Jambes au mur", "5 min"], ["Assise, pleine conscience", "10 min"], ["Vision board", "2-5 min"], ["Ton relevé", "2 min"]], "semaine": [["HIIT, 2 fois", "20-30 min"], ["Stretching, 1 fois", "30 min"], ["Visualisation, 1 fois", "à la place d'une assise"], ["Ton carnet", "à ton rythme"], ["Respirations d'activation", "si tu veux"], ["Ton call", "30 min"]]}, "rdv": "Call, 30 min"},
+    13: {"titre": "J'ancre", "journal": ["Tu révises Mon protocole", "Ta lettre à toi dans un an", "Ton bilan du jour 91, à la fin de ce journal"], "journee": {"matin": [["Respirations, bord du lit", "1 min"], ["Lumière dehors", "5-15 min"], ["Vision board", "2-5 min"], ["Assise, pleine conscience", "10 min"], ["Douche froide", "complète"], ["Séquence ou mobilité", "4 à 15 min"], ["Café", "après 90 min"]], "midi": [["Repas, ton cadre", "± 1 h"], ["Respiration de midi", "2 min"], ["Marche lente", "10 min"], ["Café", "avant 14 h"], ["Tes pas", "chaque jour"]], "soir": [["Marche lente", "10 min"], ["Téléphone coupé", "2 h avant"], ["Jambes au mur", "5 min"], ["Assise, pleine conscience", "10 min"], ["Vision board", "2-5 min"], ["Ton relevé", "2 min"]], "semaine": [["HIIT, 2 fois", "20-30 min"], ["Stretching, 1 fois", "30 min"], ["Visualisation, 1 fois", "à la place d'une assise"], ["Ton carnet", "à ton rythme"], ["Respirations d'activation", "si tu veux"], ["Ton call", "30 min"]]}, "rdv": "Session Breathwork n°4, la clôture · test CO2 final · call, 30 min"},
+  },
+  OPEN: [1, 5, 8, 11],
+  BW: {"4": 1, "7": 2, "10": 3, "13": 4},
+  CO2: {"1": "n°1", "4": "n°2", "7": "n°3", "10": "n°4", "13": "final"},
+  RESPIRATIONS_MIDI: [
+    {"etat": "Tendu, agité", "nom": "Le soupir", "geste": "Inspiration par le nez, petite inspiration en plus par-dessus, puis expiration longue et fine, lèvres pincées.", "duree": "1 à 2 min"},
+    {"etat": "À plat, lourd", "nom": "Monter", "geste": "Debout, 20 respirations amples, puis 20 mouvements.", "duree": "2 min"},
+    {"etat": "Ça va", "nom": "Les respirations reliées", "geste": "4 respirations normales enchaînées, la 5e lente à l'inspire et à l'expire. 4 tours.", "duree": "2 à 3 min"},
+  ],
+  DOCS: [
+    {"titre": "Ta sécurité", "des": 0, "fichier": "ta-securite.pdf", "pages": 6},
+    {"titre": "La carte de RESET", "des": 1, "fichier": "la-carte-de-reset.pdf", "pages": 10},
+    {"titre": "Phase I · Rencontre Intérieure", "des": 1, "fichier": "phase-1-rencontre-interieure.pdf", "pages": 4},
+    {"titre": "Ton journal, à imprimer", "des": 1, "fichier": "ton-journal.pdf", "pages": 29},
+    {"titre": "Tes respirations", "des": 1, "fichier": "tes-respirations.pdf", "pages": 3},
+    {"titre": "Le test CO2", "des": 1, "fichier": "le-test-co2.pdf", "pages": 2},
+    {"titre": "Le mouvement du matin", "des": 4, "fichier": "le-mouvement-du-matin.pdf", "pages": 3},
+    {"titre": "Phase II · La Traversée", "des": 5, "fichier": "phase-2-la-traversee.pdf", "pages": 4},
+    {"titre": "Le HIIT", "des": 5, "fichier": "le-hiit.pdf", "pages": 3},
+    {"titre": "Le stretching", "des": 6, "fichier": "le-stretching.pdf", "pages": 2},
+    {"titre": "Phase III · La Reconstruction", "des": 8, "fichier": "phase-3-la-reconstruction.pdf", "pages": 4},
+    {"titre": "Ton vision board", "des": 8, "note": "Remis en call, semaine 8."},
+    {"titre": "Phase IV · L'Intégration", "des": 11, "fichier": "phase-4-l-integration.pdf", "pages": 4},
+    {"titre": "Mon protocole", "des": 11, "fichier": "mon-protocole.pdf", "pages": 3},
+  ]
+};
+/* </protocole> */
+
+/* ==========================================================================
    LES RÉGLAGES, LES VIDÉOS ET LES DOCUMENTS
-   C'est le seul bloc à modifier. Le reste de la page se construit tout seul.
+   C'est le seul bloc à modifier à la main. Le reste de la page se construit
+   tout seul, à partir d'ici et du bloc du protocole, plus haut.
 
    Les calls :
      - VISIO : le lien de la visio. Vide, le bouton « Rejoindre » n'apparaît pas.
@@ -429,13 +473,15 @@ main{max-width:1100px;margin:0 auto;padding:4px 16px 116px}
      - des est facultatif : la semaine où la vidéo s'ouvre. Sans lui, elle
        est là dès le début.
 
-   Pour ajouter un document :
-     - dépose le PDF dans le dossier Drive « RESET / Espace client · partagé
-       par lien ». Le dossier est partagé par lien, le fichier l'est donc
-       aussi, sans rien régler. Colle ensuite son lien dans url.
-     - pour remplacer un PDF sans changer son lien : dans Drive, clic droit
-       sur le fichier, « Gérer les versions », puis envoyer la nouvelle.
-     - les documents ne vivent pas dans le dépôt : le dépôt est public.
+   Les documents :
+     - les PDF sont dans espace/docs/, sous des noms qui ne changent jamais.
+       Leur liste (titre, nom du fichier, semaine où il s'ouvre) est en haut
+       de assets/gen_espace.py : le script recopie les PDF depuis « Documents
+       clients » et écrit DOCS dans le bloc du protocole. Voir le README.
+     - une nouvelle version d'un document se recopie par-dessus l'ancienne :
+       son adresse reste la même.
+     - le dépôt est public : un PDF de espace/docs/ se lit par qui connaît son
+       adresse. Ton vision board, guide vendu, n'y va jamais.
    ========================================================================== */
 
 const WHATSAPP = '32493847434';
@@ -453,51 +499,27 @@ const PRATIQUES = [
   ]}
 ];
 
-/* des : la semaine où le document s'ouvre, 0 = dès l'inscription.
-   C'est aussi elle qui range le document dans sa phase : ce qui s'ouvre
-   avant la semaine 5 est en phase I, puis 5 à 7, 8 à 10, 11 à 13.
-   Repris du LISEZMOI des documents client : les fiches de phase au call
-   qui ouvre leur phase, le Protocole de Vie en semaine 11, la carte de
-   rechute en semaine 12. */
-const DOCS = [
-  { groupe:"Avant le jour 1", docs:[
-    { n:"01", titre:"Carte du protocole",                     meta:"5 pages A4",  des:0,  url:"https://drive.google.com/file/d/1XX4_rexwPJ5oKtLmhXirIQYl-KSMiX39/view" },
-    { n:"02", titre:"Journal de bord",                        meta:"21 pages A4", des:0,  url:"https://drive.google.com/file/d/1VV7gQMwxAmbgK8wc-Htli0mUZEJpslKL/view" },
-    { n:"03", titre:"Carte du test CO₂",                      meta:"2 pages A5",  des:0,  url:"https://drive.google.com/file/d/17ytySZnNIwN9KlWcfxHOoSf_CCCLxYcB/view" }
-  ]},
-  { groupe:"Tes références", docs:[
-    { n:"04", titre:"Guide des Pratiques Respiratoires",      meta:"7 pages A4",  des:0,  url:"https://drive.google.com/file/d/1iZEJFFmbBTI6FzTO-KFM7zjS2Nfnig_0/view" },
-    { n:"05", titre:"Guide du Mouvement",                     meta:"8 pages A4",  des:0,  url:"https://drive.google.com/file/d/1q3QeiZlYy4z1li11ic_ikHXN9NKm734D/view" },
-    { n:"06", titre:"Carnet d'Hygiène de Vie",                meta:"5 pages A4",  des:1,  url:"https://drive.google.com/file/d/1xalXWrzqIUElibvjgCv-epu_ran7TsAT/view" }
-  ]},
-  { groupe:"Au fil des phases", docs:[
-    { n:"07", titre:"Fiche de phase I · Rencontre Intérieure", meta:"4 pages A4", des:1,  url:"https://drive.google.com/file/d/1QAe9qYlhxQd3WK9YHxBWkPwm0ezza1H9/view" },
-    { n:"08", titre:"Fiche de phase II · La Traversée",       meta:"3 pages A4",  des:5,  url:"https://drive.google.com/file/d/1vlVFue4rEznk5XVeH3qQin4Fibzcx1-W/view" },
-    { n:"09", titre:"Fiche de phase III · La Reconstruction", meta:"3 pages A4",  des:8,  url:"https://drive.google.com/file/d/1itRadYyABdoFhzCSjeIhQmjLI_4Irfk_/view" },
-    { n:"10", titre:"Fiche de phase IV · L'Intégration",      meta:"3 pages A4",  des:11, url:"https://drive.google.com/file/d/1EjGDagqfYKXyKENTpICARNENRk92a5eB/view" },
-    { n:"11", titre:"Protocole de Vie Souveraine",            meta:"2 pages A4",  des:11, url:"https://drive.google.com/file/d/12cggYKPPmKaSiRrHivLblYp_zXzx_9BR/view" },
-    { n:"12", titre:"Carte du protocole de rechute",          meta:"2 pages A5",  des:12, url:"https://drive.google.com/file/d/1neclc6GL8eB1gf7MCuvCKDy61mdnHgq7/view" }
-  ]}
-];
-
-/* Les quatre cartes « Ton kit », en haut des ressources : le numéro du
-   document, et la phrase qui s'affiche quand on l'ouvre. */
+/* Les quatre cartes « Ton kit », en haut des ressources : le titre du
+   document, tel qu'il est dans DOCS, et la phrase qui s'affiche quand on
+   l'ouvre. */
 const KIT = [
-  { n:"02", texte:"Vingt et une pages à imprimer. Le relevé de chaque jour, sur papier, loin du téléphone." },
-  { n:"04", texte:"La boîte à outils pour gérer le stress en temps réel, sans moi." },
-  { n:"05", texte:"La séquence du matin, les marches et les trainings, calibrés sur ton niveau et sur le temps que tu as vraiment." },
-  { n:"11", texte:"Une page, écrite de ta main en semaine 11 : ce qui a tenu, et que tu gardes." }
+  { titre:"Ton journal, à imprimer", texte:"29 pages à imprimer. Ton relevé, matin et soir, après l'assise, loin du téléphone." },
+  { titre:"Tes respirations",        texte:"Tes assises, tes 3 respirations de midi selon ton état, et l'activation." },
+  { titre:"Le mouvement du matin",   texte:"La séquence chinoise, puis la mobilité : 4 à 15 min après la douche." },
+  { titre:"Mon protocole",           texte:"Une page écrite de ta main en semaine 11 : ce que tu as vraiment tenu, et que tu gardes." }
 ];
 
-/* ========================== Les quatre sessions encadrées ==========================
-   Jours exacts repris de la grille des treize semaines (doc 06).
-   ================================================================================= */
+/* ========================== Les quatre sessions Breathwork ==========================
+   1 h 30 en visio, à la fin de chaque phase. Elles se datent avec Tristan dans
+   leur semaine, jamais à un jour fixe. La semaine vient de BW (protocole.py) ;
+   ici, seulement le texte de chacune.
+   ================================================================================== */
 const SESSIONS = [
-  { n:1, jour:24, semaine:4,  ferme:"Quatre semaines d'assise ont fait remonter des choses. Celle-ci les dépose." },
-  { n:2, jour:45, semaine:7,  ferme:"La semaine du vide. La seule chose qui s'ouvre dans une semaine où tout se retire." },
-  { n:3, jour:66, semaine:10, ferme:"Tu as posé une limite et fait une demande. Le corps se met derrière." },
-  { n:4, jour:89, semaine:13, ferme:"La clôture. La dernière fois que quelqu'un tient le cadre à ta place." }
-];
+  { n:1, texte:"La fin de la phase I. Tu poses ton intention avant de commencer." },
+  { n:2, texte:"La fin de la phase II. Tu poses ton intention avant de commencer." },
+  { n:3, texte:"La fin de la phase III. Tu poses ton intention avant de commencer." },
+  { n:4, texte:"La clôture de RESET. Tu poses ton intention avant de commencer." }
+].map(x => Object.assign(x, { semaine:+Object.keys(RESET.BW).find(w => RESET.BW[w] === x.n) }));
 
 const PREPA = [
   "Une pièce où tu peux faire du bruit, porte fermée, animaux dehors, téléphone en mode avion.",
@@ -505,63 +527,19 @@ const PREPA = [
   "Caméra allumée et cadrée sur ton corps : il faut que tes mains, ta cage thoracique et tes jambes soient visibles.",
   "Un casque ou des écouteurs, jamais le haut-parleur. Micro ouvert du début à la fin.",
   "Prévois une bouteille d'eau, une couverture et un gros coussin à glisser sous tes genoux.",
-  "Mange léger, au moins dans les trois heures qui précèdent la pratique."
+  "L'idéal : venir à jeun. Sinon un repas léger, au moins 2 h avant."
 ];
-
-/* ========================== Les quatre phases ==========================
-   creuxJours reprend les jours écrits dans creux : jours 10 à 15,
-   semaine 7 (jours 43 à 49), semaines 11 et 12 (jours 71 à 84).
-   La phase III n'a pas de creux daté.
-   ======================================================================= */
-const PHASES = [
-  { n:1, romain:"I",   nom:"Rencontre Intérieure", s:[1,4],
-    verbe:"voir",
-    installe:"La lumière au réveil et la caféine déplacée, les deux seuls comportements qu'on change d'emblée. Puis les trois ancres, les marches après les repas, et la première session encadrée au jour 24.",
-    disparait:null,
-    creux:"Jours 10 à 15. La nouveauté retombe, les résultats ne sont pas encore là, et le sevrage de caféine peut mordre. C'est normal et c'est prévu : tout le monde passe par là.",
-    creuxJours:[10,15],
-    dit:"Ma journée a une structure." },
-  { n:2, romain:"II",  nom:"La Traversée", s:[5,7],
-    verbe:"tenir",
-    installe:"Deux trainings par semaine, une séance de stretching, puis le froid en fin de douche. Le but n'est pas d'endurer, c'est de rester calme pendant un stress que tu as choisi.",
-    disparait:"Le support de l'assise du soir, en semaine 7. Même durée, même créneau, plus de ratio : le soir rejoint le matin en pleine conscience. Le premier retrait du protocole, et il est plus dur qu'un ajout.",
-    creux:"Semaine 7. Le vide devient conscient : les fuites ne fonctionnent plus et rien ne les a remplacées. Rien n'est ajouté cette semaine-là, marches comprises.",
-    creuxJours:[43,49],
-    dit:"Je traverse sans fuir." },
-  { n:3, romain:"III", nom:"La Reconstruction", s:[8,10],
-    verbe:"choisir",
-    installe:"Trois gestes, un par semaine, et chacun dans le réel : un inventaire de ce que tu portes sans l'avoir choisi, une décision que quelqu'un d'autre pourrait vérifier, une demande adressée à une personne vivante.",
-    disparait:null,
-    creux:"Pas de creux daté. Ce que tu vas trouver : ce qui n'est pas daté n'a pas lieu. Le non se dit à une date, la demande se fait à une date.",
-    creuxJours:null,
-    dit:"Je décide, et je le prouve." },
-  { n:4, romain:"IV",  nom:"L'Intégration", s:[11,13],
-    verbe:"ancrer",
-    installe:"Ton Protocole de Vie, écrit à la main, une section par jour. Ta carte de rechute, ta direction à douze mois, et deux ou trois personnes prévenues.",
-    disparait:"L'éventail passe de treize pratiques à trois. La consigne s'arrête pendant sept jours. Le coach se retire : c'est toi qui mènes les deux derniers calls.",
-    creux:"Semaines 11 et 12. La peur de la fin. Les anciens réflexes reviennent tester la structure, au moment exact où l'accompagnement se retire. Le retrait est annoncé dès la semaine 10.",
-    creuxJours:[71,84],
-    dit:"Je ne reviendrai pas en arrière." }
-];
-
-/* Le relevé : trois notes de 1 à 5, matin et soir. */
-const MESURES = {
-  matin:[ { k:'sommeil', nom:'Sommeil', echelle:'1 agité · 5 profond' },
-          { k:'energie', nom:'Énergie', echelle:'1 vide · 5 pleine' },
-          { k:'stress',  nom:'Tension', echelle:'1 calme · 5 tendu' } ],
-  soir: [ { k:'energie', nom:'Énergie', echelle:'1 vide · 5 pleine' },
-          { k:'stress',  nom:'Tension', echelle:'1 calme · 5 tendu' },
-          { k:'creux',   nom:'Le creux de 15 h', echelle:'1 absent · 5 fort' } ]
-};
-const COURBES = [ ['energie','Énergie'], ['sommeil','Sommeil'], ['stress','Tension'] ];
 
 /* ========================== Mémoire locale ==========================
-   Tout reste dans le navigateur du client : la page n'envoie rien.
-   Les coches et les relevés sont rangés par date du calendrier, pas par
-   numéro de jour, pour survivre à une date de premier call corrigée. */
+   Tout reste dans le navigateur du client : la page n'envoie rien. Elle
+   garde la date du premier call, les ressources marquées comme vues, le
+   dernier créneau demandé pour déplacer un call, et les ronds cochés
+   aujourd'hui. Le relevé, lui, se fait dans le journal papier : aucun
+   historique ne se garde ici. */
 const CLE_VU = 'belive-espace-vu';
 const CLE_DEPART = 'belive-espace-depart';
-const CLE_JOURNAL = 'belive-espace-journal';
+const CLE_DEMANDE = 'belive-espace-demande';
+const CLE_JOUR = 'belive-espace-jour';
 
 function lire(cle, defaut){
   try{ const v = localStorage.getItem(cle); return v === null ? defaut : JSON.parse(v); }
@@ -571,8 +549,28 @@ function ecrire(cle, val){
   try{ localStorage.setItem(cle, JSON.stringify(val)); }catch(e){}
 }
 
+/* L'ancien relevé numérique (notes du matin et du soir, coches) vivait sous
+   belive-espace-journal. La clé est effacée au chargement : il ne reste aucune
+   donnée de relevé dans le navigateur. Seule la demande de déplacement d'un
+   call, rangée là elle aussi, passe sous sa propre clé. */
+(function(){
+  const ANCIENNE = 'belive-espace-journal';
+  const ancien = lire(ANCIENNE, null);
+  if(ancien && ancien.demande && lire(CLE_DEMANDE, null) === null) ecrire(CLE_DEMANDE, ancien.demande);
+  try{ localStorage.removeItem(ANCIENNE); }catch(e){}
+  const jour = lire(CLE_JOUR, null);
+  if(jour && jour.date !== iso(new Date())) try{ localStorage.removeItem(CLE_JOUR); }catch(e){}
+})();
+
+/* Les ronds du jour : ce qui est fait aujourd'hui, et rien d'autre. La date
+   est rangée avec eux : le lendemain, tout repart à zéro. */
+function faitsDuJour(){
+  const v = lire(CLE_JOUR, null);
+  return v && v.date === iso(new Date()) && v.faits ? v.faits : {};
+}
+
 let vus = lire(CLE_VU, {}) || {};
-let journal = Object.assign({ coches:{}, releves:{} }, lire(CLE_JOURNAL, {}) || {});
+let demande = lire(CLE_DEMANDE, null);
 let depart = lireDate(String(lire(CLE_DEPART, '') || ''));
 
 /* Le lien personnalisé : belivemethode.com/espace/06-10-2026
@@ -653,109 +651,69 @@ function situation(){
   if(j < 1) return { etat:'avant', j:j, s:0, phase:null };
   if(j > 91) return { etat:'fini', j:j, s:14, phase:null };
   const s = Math.ceil(j / 7);
-  return { etat:'cours', j:j, s:s, phase:PHASES.find(p => s >= p.s[0] && s <= p.s[1]) };
+  return { etat:'cours', j:j, s:s, phase:phaseDe(s) };
 }
 function jourDuCall(n){ return 1 + 7 * (n - 1); }
+/* « du 1 au 7 décembre », « du 29 novembre au 5 décembre » */
+function texteSemaine(w){
+  const a = dateDu(7 * (w - 1) + 1), b = dateDu(7 * w);
+  return 'du ' + texteDate(a, a.getMonth() === b.getMonth() ? { day:'numeric' } : { day:'numeric', month:'long' })
+    + ' au ' + texteDate(b, { day:'numeric', month:'long' });
+}
+function phaseDe(w){ return RESET.PHASES.find(p => w >= p.weeks[0] && w <= p.weeks[1]); }
 function ouvert(des, c){
   if(des === 0 || c.etat === 'fini') return true;
   return c.etat === 'cours' && c.s >= des;
 }
 
 /* ========================== La journée d'aujourd'hui ==========================
-   Tout ce qui suit est repris de la grille des treize semaines (doc 06) et des
-   deux guides. Rien n'est extrapolé : une ligne apparaît la semaine où la grille
-   la fait entrer, avec la durée de cette semaine-là.
-   libre : la pratique ne se fait pas tous les jours, elle se coche mais ne
-   compte pas dans le total de la journée.
+   Les trois moments de la semaine en cours, tirés de journee(w) dans
+   protocole.py : le matin (lancer), le midi (tenir), le soir (clôturer), puis
+   ce qui se fait dans la semaine. Pas de coches : le relevé se fait dans le
+   journal papier. Ici, l'espace sert d'appui pendant la journée.
    ============================================================================ */
-function journee(s){
-  const lever = [], midi = [], soiree = [], coucher = [];
+const MOMENTS = [['matin', 'Le matin'], ['midi', 'Le midi'], ['soir', 'Le soir']];
 
-  lever.push({ id:'lumiere', nom:"Dehors, à la lumière", duree:"10 min",
-    note: s >= 2 ? "Dans les trente premières minutes, téléphone hors de portée."
-                 : "Dans les trente premières minutes du lever." });
-
-  let am;
-  if(s === 1)      am = ["5 min",  "Tu observes ton souffle et tu le comptes."];
-  else if(s === 2) am = ["10 min", "Tu observes ton souffle et tu le comptes."];
-  else             am = ["10 min", "En pleine conscience."];
-  lever.push({ id:'assise-m', nom:"L'assise du matin, avant le café", duree:am[0], note:am[1] });
-
-  if(s >= 6) lever.push({ id:'froid', libre:true, nom:"La douche, froide sur la fin",
-    duree: s === 6 ? "30 à 60 s" : "90 à 120 s",
-    note:"Les jours sans training. Jamais les deux le même jour." });
-
-  if(s >= 2 && s <= 4) lever.push({ id:'sequence', nom:"La séquence du matin", duree:"2 à 3 min",
-    note:"Le bloc 1 seul, délier." });
-  else if(s >= 5)      lever.push({ id:'sequence', nom:"La séquence du matin", duree:"10 à 15 min",
-    note:"Les trois blocs." });
-
-  if(s >= 2){
-    let note;
-    if(s <= 4)      note = "La reprise en trois temps, puis trois respirations 4/8. Toujours la même.";
-    else if(s <= 7) note = "Trois options, une par état. Tu choisis selon où tu en es.";
-    else            note = "L'éventail complet est ouvert.";
-    midi.push({ id:'reprise', nom:"À la fin du repas, assis", duree: s <= 4 ? "2 min" : "2 à 5 min", note:note });
-    midi.push({ id:'marche-midi', nom:"Juste après, une marche lente", duree: s === 2 ? "5 min" : "10 min",
-      note:"Accrochée au repas, jamais à une heure." });
-  }
-
-  if(s >= 5){
-    soiree.push({ id:'training', libre:true, nom:"Le training", duree: s === 5 ? "25 à 35 min" : "22 à 26 min",
-      note: s === 5 ? "Deux séances modérées cette semaine. Allure où la conversation reste possible."
-                    : "Deux séances en intervalles cette semaine. Jamais deux jours de suite." });
-    soiree.push({ id:'stretching', libre:true, nom:"Le stretching", duree:"25 min",
-      note:"Une fois cette semaine, un jour sans training." });
-  }
-
-  if(s >= 4) coucher.push({ id:'marche-soir', nom:"Après le repas du soir, une marche lente",
-    duree: s <= 7 ? "5 min" : "10 min", note:"" });
-  if(s >= 2) coucher.push({ id:'mur', nom:"Allongé, jambes au mur", duree:"5 min",
-    note:"Avant l'assise du soir, pas après." });
-  if(s >= 3){
-    let as;
-    if(s === 3)     as = ["5 min",  "Souffle guidé, ratio 4/8."];
-    else if(s <= 6) as = ["10 min", "Souffle guidé, ratio 4/8."];
-    else            as = ["10 min", "En pleine conscience. Plus de ratio."];
-    coucher.push({ id:'assise-s', nom:"L'assise du soir, une demi-heure avant", duree:as[0], note:as[1] });
-  }
-
-  return [
-    { titre:"Au lever", actes:lever, vide:"", pied:"" },
-    { titre:"À midi", actes:midi,
-      vide:"L'ancre de midi entre en semaine 2.",
-      pied: midi.length ? "Quand la journée déborde, c'est la marche qui saute. Les deux minutes restent." : "" },
-    { titre:"En soirée", actes:soiree,
-      vide:"La fenêtre reste vide, et c'est voulu. Le training entre en semaine 5.",
-      pied: s === 7 ? "Semaine 7 : rien n'augmente." : "" },
-    { titre:"Au coucher", actes:coucher,
-      vide:"Les jambes au mur entrent en semaine 2.",
-      pied: coucher.length ? "Jamais de stretching dans l'heure qui précède." : "" }
-  ];
-}
-
-/* Les quatre moments sont dans l'ordre de la journée. Ces bornes ne
-   servent qu'à savoir lequel mettre en avant : le protocole accroche
-   les pratiques à un geste, jamais à une heure. */
+/* Ces bornes ne servent qu'à savoir quel moment mettre en avant. */
 function momentActuel(){
   const h = new Date().getHours();
-  if(h >= 5 && h < 11) return 0;   // au lever
-  if(h >= 11 && h < 16) return 1;  // à midi
-  if(h >= 16 && h < 20) return 2;  // en soirée
-  return 3;                        // au coucher
+  if(h >= 4 && h < 11) return 0;   // le matin
+  if(h >= 11 && h < 17) return 1;  // le midi
+  return 2;                        // le soir
+}
+/* La première semaine où un moment a quelque chose : « Le midi entre en semaine 2. » */
+function entreeDu(m){
+  for(let w = 1; w <= 13; w++) if(RESET.SEMAINES[w].journee[m].length) return w;
+  return null;
+}
+/* Les rendez-vous de la semaine qui ne sont pas le call : la session
+   Breathwork, le test CO2. Le call est déjà dans journee(w). */
+function quandCO2(w){ return w === 1 ? 'au jour 1' : w === 13 ? 'au jour 91' : 'en fin de semaine'; }
+function rdvSemaine(w){
+  const l = [];
+  if(RESET.BW[w]) l.push(['Session Breathwork n°' + RESET.BW[w], '1 h 30, en visio']);
+  if(RESET.CO2[w]) l.push(['Test CO2 ' + RESET.CO2[w], quandCO2(w)]);
+  return l;
 }
 
 /* ========================== État de l'écran ========================== */
-const VUES = ['jour', 'parcours', 'journal', 'ressources'];
-const ecran = { vue:'jour', moment:null, courbe:'energie', onglet:'documents', phaseDoc:'cours', tousCalls:false,
+const VUES = ['jour', 'parcours', 'ressources'];
+const ecran = { vue:'jour', onglet:'documents', phaseDoc:'cours', ouvertes:{},
                 changerDate:false, feuille:null, creneau:null };
 const main = document.getElementById('main');
 const feuille = document.getElementById('feuille');
 
+/* Tout texte affiché passe par echap : il est échappé, et reçoit l'espace
+   insécable de la typographie française devant « : ; ? ! » et dans les
+   guillemets, pour qu'une ligne ne commence jamais par deux-points. */
 function echap(t){
   return String(t).replace(/[&<>"']/g, c =>
-    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))
+    .replace(/ ([:;?!»])/g, '\u00a0$1').replace(/« /g, '«\u00a0');
 }
+/* Le texte de protocole.py peut porter du gras : <b> et </b> seulement,
+   tout le reste est échappé (gen_espace.py refuse les autres balises). */
+function riche(t){ return echap(t).replace(/&lt;(\/?)b&gt;/g, '<$1b>'); }
 function wa(texte){
   return 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(texte);
 }
@@ -786,13 +744,13 @@ function carteCall(c){
   const reste = jourDuCall(n) - c.j;
   const d = dateDu(jourDuCall(n));
   const quand = reste === 0 ? "Aujourd'hui" : reste === 1 ? 'Demain' : maj(texteDate(d));
-  const detail = [HEURE_CALL, reste > 1 ? 'dans ' + reste + ' jours' : '', 'visio', n >= 12 ? 'tu le mènes' : '']
-    .filter(Boolean).join(' · ');
-  const dem = journal.demande && journal.demande.n === n ? journal.demande : null;
+  const duree = RESET.OPEN.includes(n) ? '60 min, ouverture de la phase ' + phaseDe(n).rom : '30 min';
+  const detail = [HEURE_CALL, reste > 1 ? 'dans ' + reste + ' jours' : '', duree, 'visio'].filter(Boolean).join(' · ');
+  const dem = demande && demande.n === n ? demande : null;
   return '<section class="call">'
     + '<div class="call-tete"><span class="label">Prochain call · ' + n + ' sur 13</span>'
-    + (dem ? '<span class="pastille">Demandé : ' + echap(texteDate(dateDu(dem.jour), { weekday:'short', day:'numeric', month:'short' }))
-        + ' ' + echap(dem.heure) + '</span>' : '') + '</div>'
+    + (dem ? '<span class="pastille">' + echap('Demandé : ' + texteDate(dateDu(dem.jour), { weekday:'short', day:'numeric', month:'short' })
+        + ' ' + dem.heure) + '</span>' : '') + '</div>'
     + '<div class="call-quand"><strong>' + echap(quand) + '</strong><span>' + echap(detail) + '</span></div>'
     + '<div class="call-actes">'
     + (VISIO ? '<a class="call-oui" href="' + echap(VISIO) + '" target="_blank" rel="noopener noreferrer">Rejoindre la visio</a>' : '')
@@ -800,65 +758,70 @@ function carteCall(c){
     + '</div></section>';
 }
 
-function carteReleve(){
-  const cle = iso(new Date());
-  const moment = ecran.moment || (new Date().getHours() >= 15 ? 'soir' : 'matin');
-  const cur = (journal.releves[cle] && journal.releves[cle][moment]) || {};
-  const mesures = MESURES[moment];
-  const faits = mesures.filter(m => cur[m.k]).length;
-  const statut = faits === mesures.length
-    ? 'Relevé du ' + moment + ' noté. ' + (moment === 'matin' ? 'À ce soir.' : 'Bonne nuit.')
-    : faits + ' sur ' + mesures.length + '. Réponds vite, la première impression est la bonne.';
+/* Ce qui entre cette semaine : le bandeau du journal papier, WEEKS[w].journal. */
+function carteSemaine(c){
+  const s = RESET.SEMAINES[c.s];
   return '<section class="carte">'
-    + '<div class="entre" style="align-items:flex-start"><div style="display:flex;flex-direction:column;gap:6px">'
-    + '<span class="label">Le relevé · 90 secondes</span><h2 class="h2">Comment tu es, là.</h2></div>'
-    + '<div class="seg">'
-    + ['matin', 'soir'].map(m => '<button type="button" data-act="moment" data-v="' + m + '" aria-pressed="'
-        + (m === moment) + '">' + maj(m) + '</button>').join('')
-    + '</div></div>'
-    + '<div class="mesures">' + mesures.map(m =>
-        '<div class="mesure"><div class="entre"><span class="mesure-nom">' + echap(m.nom) + '</span>'
-        + '<span class="mesure-echelle">' + echap(m.echelle) + '</span></div>'
-        + '<div class="notes" role="group" aria-label="' + echap(m.nom) + '">'
-        + [1, 2, 3, 4, 5].map(n => '<button type="button" data-act="note" data-moment="' + moment + '" data-k="' + m.k
-            + '" data-v="' + n + '" aria-pressed="' + (cur[m.k] === n) + '">' + n + '</button>').join('')
-        + '</div></div>').join('')
-    + '</div>'
-    + '<p class="petit"' + (faits === mesures.length ? ' style="color:var(--ice)"' : '') + '>' + echap(statut) + '</p>'
+    + '<div style="display:flex;flex-direction:column;gap:6px"><span class="label">Semaine ' + c.s + ' · ce qui entre</span>'
+    + '<h2 class="h2">' + riche(s.titre) + '.</h2></div>'
+    + '<ul class="prepa">' + s.journal.map(t => '<li>' + riche(t) + '</li>').join('') + '</ul>'
     + '</section>';
 }
 
-function carteProtocole(c){
-  const cle = iso(new Date());
-  const coches = journal.coches[cle] || {};
-  const moments = journee(c.s);
-  const comptes = moments.flatMap(m => m.actes).filter(a => !a.libre);
-  const faits = comptes.filter(a => coches[a.id]).length;
-  const ici = momentActuel();
-  const groupes = moments.map((m, i) => {
-    const quot = m.actes.filter(a => !a.libre);
-    return '<div class="groupe"><div class="groupe-tete"><span class="label">' + echap(m.titre) + '</span>'
-      + (i === ici ? '<span class="pastille">Maintenant</span>'
-          : quot.length ? '<small>' + quot.filter(a => coches[a.id]).length + '/' + quot.length + '</small>' : '')
-      + '</div>'
-      + m.actes.map(a =>
-          '<button class="acte" type="button" data-act="coche" data-id="' + a.id + '" aria-pressed="' + !!coches[a.id] + '">'
-          + '<span class="rond">' + COCHE + '</span>'
-          + '<span class="acte-txt"><span class="acte-nom">' + echap(a.nom) + '</span>'
-          + (a.note ? '<span class="acte-note">' + echap(a.note) + '</span>' : '') + '</span>'
-          + '<span class="acte-duree">' + echap(a.duree) + '</span></button>').join('')
-      + (m.actes.length ? (m.pied ? '<p class="petit">' + echap(m.pied) + '</p>' : '')
-                        : '<p class="petit" style="margin-top:4px">' + echap(m.vide) + '</p>')
-      + '</div>';
+/* Avec un moment (matin, midi, soir), chaque ligne est un rond à cocher ;
+   sans, une simple ligne (ce qui se fait dans la semaine). */
+function lignesActes(l, m, faits){
+  return l.map((a, i) => {
+    const txt = '<span class="acte-txt"><span class="acte-nom">' + riche(a[0]) + '</span></span>'
+      + '<span class="acte-duree">' + riche(a[1]) + '</span>';
+    if(!m) return '<div class="acte">' + txt + '</div>';
+    const id = m + '-' + i;
+    return '<button class="acte" type="button" data-act="coche" data-id="' + id + '" aria-pressed="' + !!faits[id] + '">'
+      + '<span class="rond">' + COCHE + '</span>' + txt + '</button>';
   }).join('');
+}
+
+function carteProtocole(c){
+  const j = RESET.SEMAINES[c.s].journee;
+  const ici = momentActuel();
+  const faits = faitsDuJour();
+  const fait = m => j[m].filter((a, i) => faits[m + '-' + i]).length;
+  const total = MOMENTS.reduce((n, [m]) => n + j[m].length, 0);
+  const faitsTotal = MOMENTS.reduce((n, [m]) => n + fait(m), 0);
+  const moments = MOMENTS.map(([m, titre], i) => {
+    const l = j[m];
+    const vide = !l.length ? '<p class="petit" style="margin-top:4px">' + echap(titre + ' entre en semaine ' + entreeDu(m) + '.') + '</p>' : '';
+    /* À midi, la respiration se choisit selon l'état du moment. */
+    const aide = m === 'midi' && l.length ? '<p class="petit">' + echap('Ta respiration, selon ton état. '
+      + RESET.RESPIRATIONS_MIDI.map(r => r.etat + ' : ' + r.nom.charAt(0).toLowerCase() + r.nom.slice(1) + '.').join(' ')) + '</p>' : '';
+    return '<div class="groupe"><div class="groupe-tete"><span class="label">' + echap(titre) + '</span>'
+      + (i === ici ? '<span class="pastille">Maintenant</span>'
+          : l.length ? '<small>' + fait(m) + '/' + l.length + '</small>' : '') + '</div>'
+      + lignesActes(l, m, faits) + vide + aide + '</div>';
+  }).join('');
+  const semaine = '<div class="groupe"><div class="groupe-tete"><span class="label">Cette semaine</span></div>'
+    + lignesActes(j.semaine.concat(rdvSemaine(c.s))) + '</div>';
   return '<section class="carte proto">'
-    + '<div class="proto-tete"><div><span class="label">Le protocole du jour</span>'
-    + '<h2 class="h2">Trois ancres.</h2></div>'
-    + '<span class="compte">' + faits + ' / ' + comptes.length + '</span></div>'
-    + '<div class="jauge"><i style="width:' + (comptes.length ? faits / comptes.length * 100 : 0) + '%"></i></div>'
-    + groupes
-    + '<p class="petit proto-pied">Une journée ratée ne se rattrape pas. Manquer est normal. Faire est le résultat.</p>'
+    + '<div class="proto-tete"><div><span class="label">Ta journée · semaine ' + c.s + '</span>'
+    + '<h2 class="h2">Trois moments.</h2></div>'
+    + '<span class="compte">' + faitsTotal + ' / ' + total + '</span></div>'
+    + '<div class="jauge"><i style="width:' + (total ? faitsTotal / total * 100 : 0) + '%"></i></div>'
+    + moments + semaine
+    + '<p class="petit proto-pied">' + echap("Les ronds repartent à zéro chaque jour. Ton relevé se fait dans ton journal papier, matin et soir, après l'assise.") + '</p>'
     + '</section>';
+}
+
+/* Le call de suivi : un mois après la fin des treize semaines. */
+function carteSuivi(){
+  const d = dateDu(91);
+  d.setMonth(d.getMonth() + 1);
+  const apres = RESET.PHASES[RESET.PHASES.length - 1].apres;
+  return '<section class="call">'
+    + '<div class="call-tete"><span class="label">Le call de suivi</span></div>'
+    + '<div class="call-quand"><strong>' + echap('Vers le ' + texteDate(d, { day:'numeric', month:'long' })) + '</strong>'
+    + '<span>' + riche(apres[0] || '') + '</span></div>'
+    + '<div class="call-actes"><a class="call-oui" href="' + echap(wa('Bonjour Tristan, je voudrais fixer notre call de suivi.'))
+    + '" target="_blank" rel="noopener noreferrer">Le fixer avec Tristan</a></div></section>';
 }
 
 function vueJour(c){
@@ -871,185 +834,176 @@ function vueJour(c){
   if(c.etat === 'avant')
     return '<div class="vue"><section class="tete"><span class="label">Avant le jour 1</span>'
       + '<h1 class="h1 h1--today">Ça commence le ' + echap(texteDate(dateDu(1), { day:'numeric', month:'long' })) + '.</h1>'
-      + '<p class="lede">La phase I s\'ouvrira au premier call. D\'ici là, tes premiers documents '
-      + 'sont dans les ressources.</p>' + barreSemaines(0) + '</section>'
+      + '<p class="lede">Ton premier call ouvre RESET. D\'ici là, lis <b>Ta sécurité</b>, dans les ressources.</p>'
+      + barreSemaines(0) + '</section>'
       + '<button class="bouton" type="button" data-vue="ressources" style="align-self:flex-start">Ouvrir les ressources</button></div>';
 
-  if(c.etat === 'fini')
+  if(c.etat === 'fini'){
+    const apres = RESET.PHASES[RESET.PHASES.length - 1].apres;
     return '<div class="vue"><section class="tete"><span class="label">Après les 91 jours</span>'
       + '<h1 class="h1 h1--today">Les treize semaines sont passées.</h1>'
-      + '<p class="lede">L\'éventail est à trois pratiques. C\'est toi qui mènes.</p>' + barreSemaines(14) + '</section>'
-      + '<div class="cols"><div class="col">' + carteReleve() + '</div></div></div>';
+      + '<p class="lede">' + riche(apres[1] || '') + '</p>' + barreSemaines(14) + '</section>'
+      + '<div class="cols"><div class="col">' + carteSuivi() + '</div></div></div>';
+  }
 
   const p = c.phase;
-  const creux = p.creuxJours && c.j >= p.creuxJours[0] && c.j <= p.creuxJours[1];
-  const sess = SESSIONS.find(x => x.jour >= c.j && x.jour - c.j <= 7);
-  const resteS = sess ? sess.jour - c.j : 0;
+  const sess = SESSIONS.find(x => x.semaine === c.s);
   return '<div class="vue">'
     + '<section class="tete" style="gap:14px"><span class="label">' + echap(maj(texteDate(new Date())))
     + ' · Jour ' + c.j + ' sur 91</span>'
-    + '<h1 class="h1 h1--today">' + echap(p.nom) + '.</h1>'
-    + '<p class="lede">Phase ' + p.romain + ' · semaine ' + c.s + ' sur 13 · le verbe est <b>' + echap(p.verbe) + '</b>.</p>'
+    + '<h1 class="h1 h1--today">' + riche(p.name) + '.</h1>'
+    + '<p class="lede">Phase ' + p.rom + ' · semaine ' + c.s + ' sur 13 · le verbe est <b>' + riche(p.verb) + '</b>.</p>'
     + barreSemaines(c.s) + '</section>'
-    + (creux ? '<section class="bandeau"><span class="label">Le creux · tu y es</span><p>' + echap(p.creux) + '</p></section>' : '')
-    + (sess ? '<section class="bandeau"><span class="label">Session Breathwork ' + sess.n + ' sur 4 · '
-        + (resteS === 0 ? "aujourd'hui" : resteS === 1 ? 'demain' : 'dans ' + resteS + ' jours') + '</span>'
-        + '<p>' + echap(maj(texteDate(dateDu(sess.jour)))) + '. ' + echap(sess.ferme) + '</p>'
+    + (sess ? '<section class="bandeau"><span class="label">Session Breathwork ' + sess.n + ' sur 4 · cette semaine</span>'
+        + '<p>' + echap(sess.texte + ' On la date ensemble, dans la semaine.') + '</p>'
         + '<button class="lien" type="button" data-act="session" data-n="' + sess.n + '">Ce que tu prépares</button></section>' : '')
-    + '<div class="cols"><div class="col">' + carteCall(c) + carteReleve() + '</div>'
+    + '<div class="cols"><div class="col">' + carteCall(c) + carteSemaine(c) + '</div>'
     + carteProtocole(c) + '</div></div>';
 }
 
-/* ========================== Parcours ========================== */
+/* ========================== Parcours ==========================
+   Une seule lecture, de la semaine 1 à la semaine 13. En haut, la frise des
+   quatre phases ; à côté, la semaine en cours, ses rendez-vous et ce qui vient
+   ensuite ; puis chaque phase, repliée sauf celle en cours, avec ses semaines
+   et leurs rendez-vous en pastilles. Tout vient de protocole.py : PHASES,
+   WEEKS[w].titre, OPEN, BW et CO2. */
+const CHEVRON = '<svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"'
+  + ' stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+const FLECHE = '<svg class="fleche" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"'
+  + ' stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
+
+function etatPhase(p, c){
+  return c.etat === 'fini' ? 'fait' : c.etat !== 'cours' ? 'avenir'
+    : c.s > p.weeks[1] ? 'fait' : c.s < p.weeks[0] ? 'avenir' : 'ici';
+}
+function etatSemaine(w, c){
+  return c.etat === 'fini' || (c.etat === 'cours' && w < c.s) ? 'fait' : c.etat === 'cours' && w === c.s ? 'ici' : '';
+}
+/* Ouverte par défaut : la phase en cours, ou la phase I avant le départ. */
+function phaseOuverte(p, c){
+  if(p.n in ecran.ouvertes) return ecran.ouvertes[p.n];
+  return c.phase ? c.phase.n === p.n : c.etat !== 'fini' && p.n === 1;
+}
+function jourCourt(d){ return texteDate(d, { weekday:'short', day:'numeric', month:'short' }); }
+
+/* Les rendez-vous d'une semaine, en pastilles : le call, la session, le test. */
+function pastillesRdv(w){
+  const n = RESET.BW[w];
+  return '<span class="rdv"><span class="pastille">Call ' + (RESET.OPEN.includes(w) ? '60' : '30') + ' min</span>'
+    + (n ? '<button class="pastille" type="button" data-act="session" data-n="' + n + '" style="--pt:var(--ice)">Breathwork n°' + n + '</button>' : '')
+    + (RESET.CO2[w] ? '<span class="pastille" style="--pt:var(--ink)">' + echap('Test CO2 ' + RESET.CO2[w]) + '</span>' : '')
+    + '</span>';
+}
+
+function frise(c){
+  return '<nav class="frise" aria-label="Les quatre phases">' + RESET.PHASES.map(p => {
+    let ticks = '';
+    for(let w = p.weeks[0]; w <= p.weeks[1]; w++){
+      const e = etatSemaine(w, c);
+      ticks += '<i' + (e ? ' data-e="' + e + '"' : '') + '></i>';
+    }
+    return '<button type="button" data-act="phase-va" data-v="' + p.n + '" data-e="' + etatPhase(p, c) + '"'
+      + ' style="flex:' + (p.weeks[1] - p.weeks[0] + 1) + '" aria-label="' + echap('Phase ' + p.rom + ', ' + p.name) + '">'
+      + '<span class="barre" aria-hidden="true">' + ticks + '</span>'
+      + '<span class="frise-nom">' + p.rom + ' · ' + riche(p.verb) + '</span></button>';
+  }).join('') + '</nav>';
+}
+
+/* Une ligne de rendez-vous ; avec une session, elle ouvre sa préparation. */
+function ligneRdv(nom, quand, session){
+  const txt = '<span class="acte-txt"><span class="acte-nom">' + echap(nom) + '</span></span>'
+    + '<span class="acte-duree">' + echap(quand) + '</span>';
+  return session ? '<button class="acte" type="button" data-act="session" data-n="' + session + '">' + txt + FLECHE + '</button>'
+    : '<div class="acte">' + txt + '</div>';
+}
+
+/* À côté de la frise : la semaine en cours (ou la première, avant le départ),
+   ses rendez-vous, et ce qui vient ensuite. */
+function carteMaintenant(c){
+  if(c.etat === 'fini') return carteSuivi();
+  if(c.etat === 'sans')
+    return '<section class="carte"><span class="label">Ton calendrier</span>'
+      + '<p class="petit" style="font-size:15px">Les calls, les sessions et les tests se datent à partir de ton premier call.</p>'
+      + champDate() + '</section>';
+  const w = c.etat === 'cours' ? c.s : 1;
+  const ouv = RESET.OPEN.includes(w);
+  let h = ligneRdv(ouv ? "Call d'ouverture" : 'Ton call',
+    jourCourt(dateDu(jourDuCall(w))) + ' · ' + (ouv ? '60' : '30') + ' min');
+  if(RESET.BW[w]) h += ligneRdv('Breathwork n°' + RESET.BW[w], '1 h 30, dans la semaine', RESET.BW[w]);
+  if(RESET.CO2[w]) h += ligneRdv('Test CO2 ' + RESET.CO2[w], quandCO2(w));
+  /* Ensuite : la prochaine session et la prochaine phase, dans l'ordre. */
+  const suite = [];
+  const x = SESSIONS.find(x => x.semaine > w);
+  if(x) suite.push([x.semaine, ligneRdv('Breathwork n°' + x.n,
+    'semaine du ' + texteDate(dateDu(7 * (x.semaine - 1) + 1), { day:'numeric', month:'short' }), x.n)]);
+  const p = RESET.PHASES.find(p => p.weeks[0] > w);
+  if(p) suite.push([p.weeks[0], ligneRdv('Phase ' + p.rom + ', ' + p.name, jourCourt(dateDu(jourDuCall(p.weeks[0]))))]);
+  suite.sort((a, b) => a[0] - b[0]);
+  return '<section class="carte carte--liste">'
+    + '<span class="label">' + echap((c.etat === 'cours' ? 'Semaine ' + w + ' sur 13 · ' : 'Ta première semaine · ')
+        + texteSemaine(w)) + '</span>'
+    + '<h2 class="h2">' + riche(RESET.SEMAINES[w].titre) + '.</h2>'
+    + h
+    + (suite.length ? '<span class="label label--suite">Ensuite</span>' + suite.map(s => s[1]).join('') : '')
+    + '</section>';
+}
+
 function vueParcours(c){
-  const phases = PHASES.map(p => {
-    const e = c.etat === 'fini' ? 'fait'
-      : c.etat !== 'cours' ? 'avenir'
-      : c.s > p.s[1] ? 'fait' : c.s < p.s[0] ? 'avenir' : 'ici';
+  const phases = RESET.PHASES.map(p => {
+    const [a, b] = p.weeks;
+    const e = etatPhase(p, c);
+    const ouvert = phaseOuverte(p, c);
     let sems = '';
-    for(let n = p.s[0]; n <= p.s[1]; n++)
-      sems += '<span' + (e === 'fait' || (e === 'ici' && n < c.s) ? ' data-e="fait"' : e === 'ici' && n === c.s ? ' data-e="ici"' : '')
-        + '>S' + n + '</span>';
+    if(ouvert) for(let w = a; w <= b; w++){
+      const ew = etatSemaine(w, c);
+      sems += '<div class="ligne"' + (ew ? ' data-e="' + ew + '"' : '') + '>'
+        + '<span class="ligne-n">' + w + '</span>'
+        + '<span class="ligne-txt">' + (ew === 'ici' ? '<span class="label">Cette semaine</span>' : '')
+        + '<strong>' + riche(RESET.SEMAINES[w].titre) + '</strong>'
+        + (depart ? '<small>' + echap(maj(texteSemaine(w))) + '</small>' : '')
+        + pastillesRdv(w) + '</span></div>';
+    }
     const verrou = e !== 'avenir' ? ''
       : p.n === 1 || !depart ? "S'ouvre au premier call."
-      : "S'ouvre au call du " + texteDate(dateDu(jourDuCall(p.s[0])), { day:'numeric', month:'long' }) + '.';
-    return '<article class="phase" data-e="' + e + '">'
-      + '<div class="phase-tete"><span class="label">Phase ' + p.romain + ' · semaines ' + p.s[0] + ' à ' + p.s[1] + '</span>'
-      + '<span class="pastille">' + (e === 'fait' ? 'Terminée' : e === 'ici' ? 'En cours' : 'À venir') + '</span></div>'
-      + '<div class="phase-nom"><h3>' + echap(p.nom) + '</h3>'
-      + '<span>Le verbe est ' + echap(p.verbe) + '. « ' + echap(p.dit) + ' »</span></div>'
-      + (e !== 'avenir' ? '<div class="phase-detail">'
-          + '<p><b>Ce qui s\'installe.</b> ' + echap(p.installe) + '</p>'
-          + (p.disparait ? '<p><b>Ce qui disparaît.</b> ' + echap(p.disparait) + '</p>' : '')
-          + '<p><b>Le creux.</b> ' + echap(p.creux) + '</p></div>' : '')
-      + '<div class="sems">' + sems + '</div>'
+      : "S'ouvre au call du " + texteDate(dateDu(jourDuCall(a)), { day:'numeric', month:'long' }) + '.';
+    return '<article class="phase" id="phase-' + p.n + '" data-e="' + e + '">'
+      + '<h3 class="phase-h"><button class="phase-bouton" type="button" data-act="phase-ouvre" data-v="' + p.n + '"'
+      + ' aria-expanded="' + ouvert + '" aria-controls="semaines-' + p.n + '">'
+      + '<span class="phase-tete"><span class="label">Phase ' + p.rom + ' · semaines ' + a + ' à ' + b + '</span>'
+      + '<span class="phase-etat"><span class="pastille">' + (e === 'fait' ? 'Terminée' : e === 'ici' ? 'En cours' : 'À venir') + '</span>'
+      + CHEVRON + '</span></span>'
+      + '<span class="phase-nom"><strong>' + riche(p.name) + '</strong>'
+      + '<span>Le verbe est ' + riche(p.verb) + '. ' + riche(p.court) + '</span></span>'
+      + '</button></h3>'
+      + (ouvert ? '' : '<div class="sems">' + p.tags.map(t => '<span>' + riche(t) + '</span>').join('') + '</div>')
+      + '<div class="semaines" id="semaines-' + p.n + '"' + (ouvert ? '' : ' hidden') + '>' + sems + '</div>'
       + (verrou ? '<span class="petit">' + echap(verrou) + '</span>' : '')
       + '</article>';
   }).join('');
 
-  let cote = '';
-  if(depart){
-    const j = c.j;
-    const sessions = SESSIONS.map(x => {
-      const e = x.jour < j ? 'fait' : x.jour - j < 8 ? 'proche' : '';
-      return '<button class="ligne" type="button" data-act="session" data-n="' + x.n + '" data-e="' + e + '">'
-        + '<span class="ligne-n">' + x.n + '</span>'
-        + '<span class="ligne-txt"><strong>' + echap(maj(texteDate(dateDu(x.jour)))) + '</strong>'
-        + '<small>Semaine ' + x.semaine + ' · visio · fin de phase ' + PHASES[x.n - 1].romain + '</small></span>'
-        + '<span class="ligne-etat">' + (x.jour < j ? 'Faite' : x.jour === j ? "Aujourd'hui" : 'Jour ' + x.jour) + '</span></button>';
-    }).join('');
-
-    let prochain = 1;
-    while(prochain <= 13 && jourDuCall(prochain) < j) prochain++;
-    let calls = [];
-    for(let n = 1; n <= 13; n++){
-      const e = jourDuCall(n) < j ? 'fait' : n === prochain ? 'prochain' : '';
-      calls.push('<div class="ligne ligne--call" data-e="' + e + '">'
-        + '<span class="ligne-num">' + String(n).padStart(2, '0') + '</span>'
-        + '<span class="ligne-date">' + echap(maj(texteDate(dateDu(jourDuCall(n)), { weekday:'short', day:'numeric', month:'short' }))) + '</span>'
-        + '<span class="ligne-etat">' + (e === 'fait' ? 'Fait' : e === 'prochain' ? 'Prochain' : n >= 12 ? 'Tu le mènes' : '') + '</span></div>');
-    }
-    if(!ecran.tousCalls){
-      const p0 = Math.min(prochain, 13);
-      calls = calls.slice(Math.max(0, p0 - 3), p0 + 2);
-    }
-    cote = '<div class="col">'
-      + '<section class="carte carte--liste"><span class="label">Les sessions Breathwork · 1 h 30</span>'
-      + '<h2 class="h2">La longue ne se fait jamais seul.</h2>' + sessions + '</section>'
-      + '<section class="carte carte--liste"><div class="entre"><span class="label">Les calls · un par semaine</span>'
-      + '<span class="compte" style="font-size:13px">' + (prochain - 1) + ' / 13</span></div>'
-      + '<h2 class="h2">Le ' + echap(texteDate(dateDu(1), { weekday:'long' })) + (HEURE_CALL ? ', ' + echap(HEURE_CALL) : '') + '.</h2>'
-      + calls.join('')
-      + '<button class="plus" type="button" data-act="calls">' + (ecran.tousCalls ? 'Voir moins' : 'Voir les treize calls') + '</button>'
-      + '</section>'
-      + '<div class="reglage">' + (ecran.changerDate ? champDate()
-          : '<span>Premier call, ' + echap(texteDate(dateDu(1), { day:'numeric', month:'long', year:'numeric' })) + '.</span>'
-            + '<button class="lien" type="button" data-act="date">modifier</button>') + '</div>'
-      + '</div>';
-  } else {
-    cote = '<div class="col"><section class="carte"><span class="label">Ton calendrier</span>'
-      + '<p class="petit" style="font-size:15px">Les sessions et les treize calls se datent à partir de ton premier call.</p>'
-      + champDate() + '</section></div>';
-  }
+  const reglage = !depart ? '' : '<div class="reglage">' + (ecran.changerDate ? champDate()
+    : '<span>' + echap('Premier call le ' + texteDate(dateDu(1), { day:'numeric', month:'long', year:'numeric' })
+        + ', puis un call chaque ' + texteDate(dateDu(1), { weekday:'long' }) + (HEURE_CALL ? ' à ' + HEURE_CALL : '') + '.') + '</span>'
+      + '<button class="lien" type="button" data-act="date">modifier</button>') + '</div>';
 
   const sur = c.etat === 'cours' ? ' · jour ' + c.j + ' sur 91' : '';
   return '<div class="vue"><section class="tete"><span class="label">Ton parcours' + sur + '</span>'
-    + '<h1 class="h1">Quatre phases. Tu n\'as jamais plus d\'un mois devant toi.</h1></section>'
-    + '<div class="cols"><section class="phases">' + phases + '</section>' + cote + '</div></div>';
-}
-
-/* ========================== Journal ==========================
-   Rien n'est inventé : un jour sans relevé reste un jour sans relevé. */
-function valeur(n, k){
-  const r = journal.releves[iso(dateDu(n))];
-  if(!r) return null;
-  const v = [r.matin && r.matin[k], r.soir && r.soir[k]].filter(Boolean);
-  return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null;
-}
-function moyenne(a, b, k){
-  const v = [];
-  for(let n = a; n <= b; n++){ const x = valeur(n, k); if(x) v.push(x); }
-  return v.length ? v.reduce((p, q) => p + q, 0) / v.length : null;
-}
-function vueJournal(c){
-  const tete = '<section class="tete"><span class="label">Journal de régulation</span>'
-    + '<h1 class="h1">Qui relève tient.</h1>';
-  if(c.etat === 'sans' || c.etat === 'avant')
-    return '<div class="vue">' + tete + '<p class="lede">Matin et soir, quatre-vingt-dix secondes. '
-      + 'Le journal commence au premier call.</p></section></div>';
-
-  const jour = c.j;
-  const k = ecran.courbe;
-  const nom = COURBES.find(x => x[0] === k)[1];
-  let releves = 0;
-  for(let n = 1; n <= jour; n++) if(journal.releves[iso(dateDu(n))]) releves++;
-  const de = Math.max(1, jour - 20);
-  let barres = '';
-  for(let n = de; n <= jour; n++){
-    const v = valeur(n, k);
-    barres += '<div title="Jour ' + n + (v ? ' · ' + v.toFixed(1).replace('.', ',') : ' · pas de relevé') + '">'
-      + '<i style="height:' + (v ? v / 5 * 100 + '%' : '6px') + '"' + (v ? (n === jour ? ' data-e="ici"' : '') : ' data-e="vide"') + '></i></div>';
-  }
-  const f = x => x ? x.toFixed(1).replace('.', ',') : '–';
-  const stats = [
-    [nom + ', 7 derniers jours', f(moyenne(Math.max(1, jour - 6), jour, k)), 'sur 5'],
-    [nom + ', semaine 1', f(moyenne(1, Math.min(7, jour), k)), 'ton point de départ'],
-    ['Jours relevés', releves + '/' + jour, 'depuis le premier call']
-  ].map(s => '<div class="stat"><small>' + echap(s[0]) + '</small><strong>' + s[1] + '</strong><span>' + s[2] + '</span></div>').join('');
-
-  let recents = '';
-  for(let n = jour; n >= Math.max(1, jour - 4); n--){
-    const r = journal.releves[iso(dateDu(n))] || {};
-    const ligne = moment => r[moment] ? maj(moment) + ' · ' + MESURES[moment].filter(m => r[moment][m.k])
-      .map(m => (m.k === 'creux' ? 'creux' : m.nom.toLowerCase()) + ' ' + r[moment][m.k]).join(', ') : '';
-    const t = [ligne('matin'), ligne('soir')].filter(Boolean);
-    recents += '<div class="releve"><strong>' + (n === jour ? "Aujourd'hui"
-        : echap(maj(texteDate(dateDu(n), { weekday:'long', day:'numeric', month:'short' })))) + '</strong>'
-      + (t.length ? t.map(x => '<span>' + echap(x) + '</span>').join('') : '<span>Pas de relevé</span>') + '</div>';
-  }
-
-  return '<div class="vue">' + tete
-    + '<p class="lede">Matin et soir, quatre-vingt-dix secondes. Tu as relevé ' + releves + ' jour' + (releves > 1 ? 's' : '')
-    + (c.etat === 'fini' ? '' : ' sur ' + jour) + '.</p></section>'
-    + '<section class="carte" style="gap:20px"><div class="entre" style="align-items:center;flex-wrap:wrap">'
-    + '<span class="label">Les 21 derniers jours</span><div class="seg">'
-    + COURBES.map(x => '<button type="button" data-act="courbe" data-v="' + x[0] + '" aria-pressed="' + (x[0] === k) + '">' + x[1] + '</button>').join('')
-    + '</div></div>'
-    + '<div class="graphe">' + barres + '</div>'
-    + '<div class="graphe-legende"><span>' + echap(maj(texteDate(dateDu(de), { day:'numeric', month:'short' }))) + '</span><span>Aujourd\'hui</span></div>'
-    + '<div class="stats">' + stats + '</div></section>'
-    + '<section class="carte carte--liste"><span class="label" style="padding-bottom:8px">Les derniers relevés</span>' + recents + '</section>'
-    + '<p class="petit" style="padding:0 4px">Tes relevés restent sur cet appareil, dans ce navigateur. '
-    + 'Le journal papier reste la référence.</p></div>';
+    + '<h1 class="h1">Quatre phases. Tu n\'as jamais plus d\'un mois devant toi.</h1>'
+    + frise(c) + '</section>'
+    + '<div class="parcours"><aside class="parcours-cote">' + carteMaintenant(c) + '</aside>'
+    + '<div class="phases">' + phases + reglage + '</div></div></div>';
 }
 
 /* ========================== Ressources ========================== */
 function ressources(){
-  const docs = DOCS.flatMap(g => g.docs.map(d => {
-    const ph = PHASES.find(p => Math.max(1, d.des) <= p.s[1]);
-    return { cle:'d' + d.n, type:'pdf', genre:'PDF', phase:ph.n, titre:d.titre,
-      meta:d.meta + ' · phase ' + ph.romain, des:d.des, url:d.url, pret:!!d.url };
-  }));
+  /* La semaine d'ouverture range aussi le document dans sa phase. Un
+     document sans fichier (Ton vision board) n'a qu'une note, pas de lien. */
+  const docs = RESET.DOCS.map(d => {
+    const ph = RESET.PHASES.find(p => Math.max(1, d.des) <= p.weeks[1]);
+    return { cle:'d:' + (d.fichier || d.titre), type:'pdf', genre:'PDF', phase:ph.n, titre:d.titre,
+      meta:(d.pages ? d.pages + ' page' + (d.pages > 1 ? 's' : '') + ' · ' : '') + 'phase ' + ph.rom,
+      des:d.des, url:d.fichier ? '/espace/docs/' + d.fichier : '', note:d.note || '', pret:!!d.fichier };
+  });
   /* La clé d'une vidéo est son identifiant YouTube : la coche « vu » la
      suit même si la liste change d'ordre. */
   const videos = PRATIQUES.flatMap(f => f.videos.filter(v => v.id).map(v => ({ cle:'y' + v.id, type:'video',
@@ -1061,6 +1015,10 @@ function quandOuvre(des){
 }
 function ligneRes(r, c){
   const ok = ouvert(r.des, c);
+  if(r.note)
+    return '<div class="res" data-type="' + r.type + '"' + (ok ? '' : ' data-ferme') + '>'
+      + '<span class="res-type">PDF</span>'
+      + '<span class="res-txt"><strong>' + echap(r.titre) + '</strong><small>' + echap(r.note) + '</small></span></div>';
   const meta = !ok ? quandOuvre(r.des) : !r.pret ? 'à venir' : r.meta;
   return '<button class="res" type="button" data-act="res" data-cle="' + echap(r.cle) + '" data-type="' + r.type + '"'
     + (ok && r.pret ? '' : ' data-ferme') + '>'
@@ -1089,17 +1047,17 @@ function vueRessources(c){
     const docs = tout.filter(r => r.type === 'pdf');
     /* Les documents se rangent par phase. La phase en cours vient en
        premier ; tant qu'il n'y en a pas, on montre tout. */
-    const filtres = (c.phase ? [['cours', 'Phase ' + c.phase.romain + ', en cours']] : [])
-      .concat([['tout', 'Tout']], PHASES.map(p => [String(p.n), 'Phase ' + p.romain
-        + (c.etat === 'fini' || (c.etat === 'cours' && c.s >= p.s[0]) ? '' : ' · fermée')]));
+    const filtres = (c.phase ? [['cours', 'Phase ' + c.phase.rom + ', en cours']] : [])
+      .concat([['tout', 'Tout']], RESET.PHASES.map(p => [String(p.n), 'Phase ' + p.rom
+        + (c.etat === 'fini' || (c.etat === 'cours' && c.s >= p.weeks[0]) ? '' : ' · fermée')]));
     let f = ecran.phaseDoc;
     if(f === 'cours' && !c.phase) f = 'tout';
     const montre = f === 'cours' ? String(c.phase.n) : f;
-    const kit = KIT.map((k, i) => {
-      const r = docs.find(x => x.cle === 'd' + k.n);
+    const kit = KIT.map(k => {
+      const r = docs.find(x => x.titre === k.titre && x.pret);
       if(!r) return '';
-      return '<button type="button" data-act="res" data-cle="' + r.cle + '">'
-        + '<small>0' + (i + 1) + ' · phase ' + PHASES[r.phase - 1].romain + '</small>'
+      return '<button type="button" data-act="res" data-cle="' + echap(r.cle) + '">'
+        + '<small>Phase ' + RESET.PHASES[r.phase - 1].rom + '</small>'
         + '<strong>' + echap(r.titre) + '</strong></button>';
     }).join('');
     corps = '<section style="display:flex;flex-direction:column;gap:12px"><span class="label" style="padding:0 4px">Ton kit</span>'
@@ -1120,14 +1078,14 @@ function feuilleRes(cle, c){
   const r = ressources().find(x => x.cle === cle);
   if(!r) return '';
   const ok = ouvert(r.des, c);
-  const kit = KIT.find(k => 'd' + k.n === cle);
+  const kit = KIT.find(k => k.titre === r.titre);
   const genre = r.genre;
   let corps;
   if(!ok){
     const quand = r.des <= 1 || !depart ? "S'ouvre au premier call."
       : "S'ouvre en semaine " + r.des + ', au call du ' + texteDate(dateDu(jourDuCall(r.des)), { day:'numeric', month:'long' }) + '.';
     corps = '<div class="verrou"><strong>' + echap(quand) + '</strong>'
-      + '<span>Une phase s\'ouvre au call qui la commence, jamais avant. Ce qui arrive trop tôt devient une distraction.</span></div>';
+      + '<span>Un document s\'ouvre au call de sa semaine, jamais avant. Ce qui arrive trop tôt devient une distraction.</span></div>';
   } else if(!r.pret){
     corps = '<div class="verrou"><strong>À venir.</strong><span>Cette ressource n\'est pas encore en ligne.</span></div>';
   } else if(r.type === 'video'){
@@ -1148,9 +1106,9 @@ function feuilleRes(cle, c){
 function feuilleSession(n){
   const x = SESSIONS.find(s => s.n === n);
   if(!x) return '';
-  return '<div class="feuille-tete"><span class="label">Session Breathwork ' + x.n + ' sur 4 · semaine ' + x.semaine + '</span>'
-    + '<h2 id="feuille-titre">' + echap(depart ? maj(texteDate(dateDu(x.jour))) + '.' : 'Jour ' + x.jour + '.') + '</h2></div>'
-    + '<p class="feuille-txt">' + echap(x.ferme) + '</p>'
+  return '<div class="feuille-tete"><span class="label">Session Breathwork ' + x.n + ' sur 4 · 1 h 30 en visio</span>'
+    + '<h2 id="feuille-titre">' + echap('Semaine ' + x.semaine + (depart ? ', ' + texteSemaine(x.semaine) : '') + '.') + '</h2></div>'
+    + '<p class="feuille-txt">' + echap(x.texte) + ' On la date ensemble, dans la semaine.</p>'
     + '<span class="label">Ce que tu prépares</span>'
     + '<ul class="prepa">' + PREPA.map(t => '<li>' + echap(t) + '</li>').join('') + '</ul>';
 }
@@ -1205,7 +1163,6 @@ function fermerFeuille(){
 function rendre(){
   const c = situation();
   main.innerHTML = ecran.vue === 'parcours' ? vueParcours(c)
-    : ecran.vue === 'journal' ? vueJournal(c)
     : ecran.vue === 'ressources' ? vueRessources(c)
     : vueJour(c);
   document.querySelectorAll('nav [data-vue]').forEach(b => {
@@ -1216,7 +1173,7 @@ function rendre(){
   ou.hidden = c.etat !== 'cours';
   if(c.etat === 'cours'){
     document.getElementById('cote-semaine').textContent = 'Semaine ' + c.s + ' sur 13';
-    document.getElementById('cote-phase').textContent = c.phase.nom;
+    document.getElementById('cote-phase').textContent = c.phase.name;
   }
 }
 
@@ -1240,26 +1197,28 @@ document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]');
   if(!b) return;
   const d = b.dataset;
-  const jour = iso(new Date());
   switch(d.act){
-    case 'moment': ecran.moment = d.v; rendre(); break;
-    case 'note': {
-      const r = journal.releves[jour] || (journal.releves[jour] = {});
-      const m = r[d.moment] || (r[d.moment] = {});
-      m[d.k] = +d.v;
-      ecrire(CLE_JOURNAL, journal);
+    case 'phase-ouvre': {
+      const p = RESET.PHASES.find(x => x.n === +d.v);
+      ecran.ouvertes[p.n] = !phaseOuverte(p, situation());
       rendre();
+      break;
+    }
+    /* Depuis la frise : la phase s'ouvre, et la page descend jusqu'à elle. */
+    case 'phase-va': {
+      ecran.ouvertes[+d.v] = true;
+      rendre();
+      const a = document.getElementById('phase-' + d.v);
+      if(a) a.scrollIntoView({ behavior:matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth', block:'start' });
       break;
     }
     case 'coche': {
-      const k = journal.coches[jour] || (journal.coches[jour] = {});
-      k[d.id] = !k[d.id];
-      ecrire(CLE_JOURNAL, journal);
+      const faits = faitsDuJour();
+      faits[d.id] = !faits[d.id];
+      ecrire(CLE_JOUR, { date:iso(new Date()), faits:faits });
       rendre();
       break;
     }
-    case 'courbe': ecran.courbe = d.v; rendre(); break;
-    case 'calls': ecran.tousCalls = !ecran.tousCalls; rendre(); break;
     case 'date': {
       ecran.changerDate = true; rendre();
       const i = document.getElementById('depart'); if(i) i.focus();
@@ -1284,14 +1243,14 @@ document.addEventListener('click', e => {
     /* Le lien s'ouvre tout seul dans WhatsApp ; on garde seulement la trace
        de ce qui a été demandé. */
     case 'demande':
-      journal.demande = { n:+d.n, jour:ecran.creneau.jour, heure:ecran.creneau.heure };
-      ecrire(CLE_JOURNAL, journal);
+      demande = { n:+d.n, jour:ecran.creneau.jour, heure:ecran.creneau.heure };
+      ecrire(CLE_DEMANDE, demande);
       fermerFeuille();
       break;
     case 'fermer': fermerFeuille(); break;
   }
   const actif = d.act && main.querySelector('[data-act="' + d.act + '"]'
-    + (d.id ? '[data-id="' + d.id + '"]' : '') + (d.k ? '[data-k="' + d.k + '"]' : '') + (d.v ? '[data-v="' + d.v + '"]' : ''));
+    + (d.id ? '[data-id="' + d.id + '"]' : '') + (d.v ? '[data-v="' + d.v + '"]' : ''));
   if(actif && !ecran.feuille && main.contains(actif) && d.act !== 'date') actif.focus({ preventScroll:true });
 });
 

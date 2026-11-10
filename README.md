@@ -26,6 +26,8 @@ confidentialite.html    Politique de confidentialité (RGPD)
 mentions-legales.html   Mentions légales
 404.html                Page d'erreur servie par GitHub Pages, chemins absolus
 reset/index.html        La page du protocole RESET : mer de nuages, planches au trait
+espace/index.html       L'espace privé des clients de RESET (noindex)
+espace/docs/            Les PDF client de RESET, sous des noms stables
 CNAME                   Domaine personnalisé lu par GitHub Pages
 robots.txt              Indexation ouverte, pointe vers le sitemap
 sitemap.xml             Une seule URL : la page d'accueil
@@ -38,6 +40,7 @@ assets/
   gen_brand.py          Regénère les icônes (depuis img/logo-b.png) et og.jpg
   gen_photos.py         Regénère les déclinaisons AVIF / WebP / JPEG des photos
   gen_graphique_reset.py  Regénère le graphique des piliers de /reset/ depuis protocole.py
+  gen_espace.py         Met l'espace RESET à jour depuis protocole.py, copie les PDF
 ```
 
 Les pages légales et la page 404 portent `noindex` : seule la page d'accueil
@@ -114,6 +117,27 @@ AVIF de hauteur impaire écrit par `sips` s'affiche transparent dans Chrome.
 
 Les planches au trait de la page RESET (la course du jour, l'arbre-poumon) sont des tracés SVG calculés par `assets/nuages/planches.py`
 puis recopiés dans la page.
+
+## L'espace RESET
+
+`espace/index.html` est l'espace des clients de RESET, en `noindex`. Il n'a pas de
+serveur : la date du premier call vit dans l'adresse et dans le navigateur du client.
+Le suivi se fait dans le journal papier ; l'espace est un appui pendant la journée.
+
+Le protocole n'y est pas écrit à la main. Il vient de `protocole.py`, la source
+unique de RESET (`Accompagnement/RESET/Fabrication/`), que `assets/gen_espace.py`
+lit sans jamais le modifier : le script réécrit le bloc compris entre
+`/* <protocole> */` et `/* </protocole> */`, et rien d'autre.
+
+Avec le dossier « Documents clients » en second argument, il recopie aussi les PDF
+dans `espace/docs/`, sous un nom stable : la version la plus haute de chaque titre
+passe par-dessus l'ancienne, et l'adresse du document ne change jamais. La liste
+des documents (titre, nom en ligne, semaine d'ouverture) est en haut du script.
+Le vision board n'y a pas de fichier : c'est un guide vendu, il ne va pas en ligne.
+
+```bash
+python3 assets/gen_espace.py "/Volumes/T7/PRO/BELIVE/Accompagnement/RESET/Fabrication/protocole.py" "/Volumes/T7/PRO/BELIVE/Accompagnement/RESET/Documents clients"
+```
 
 ## Déploiement
 
