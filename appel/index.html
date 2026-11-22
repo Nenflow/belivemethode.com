@@ -179,27 +179,30 @@ b,strong{font-weight:500}
 .btn:hover .btn__arrow{transform:translateX(3px)}
 .btn:disabled{opacity:.6;cursor:progress;transform:none}
 
-/* ================= L'en-tête : la silhouette de nuit de « La suite » ================= */
-.intro{position:relative;overflow:hidden;isolation:isolate;display:grid;gap:1rem}
+/* ================= L'en-tête : la silhouette sur son rocher, de jour ================= */
+/* Toujours clair, comme le haut de l'accueil, quel que soit le thème : le ciel bleu
+   derrière, un voile laiteux à gauche pour que le texte se lise sur les nuages. */
+.intro{position:relative;overflow:hidden;isolation:isolate;display:grid;gap:1rem;background:#EEF3F6;color:#12171B}
 .intro__ciel{position:absolute;inset:0;z-index:-1;pointer-events:none}
-.intro__ciel img{width:100%;height:100%;object-fit:cover;object-position:50% 56%}
+.intro__ciel img{width:100%;height:100%;object-fit:cover;object-position:50% 45%}
 .intro__ciel::after{
   content:"";position:absolute;inset:0;
-  background:linear-gradient(90deg,var(--dark) 0%,color-mix(in srgb,var(--dark) 82%,transparent) 44%,color-mix(in srgb,var(--dark) 15%,transparent) 78%,transparent 100%);
+  background:linear-gradient(90deg,rgba(238,243,246,.8) 0%,rgba(238,243,246,.5) 40%,rgba(238,243,246,0) 68%);
 }
+.intro .label{color:#3F4A54}
 .intro h1{font-size:var(--t-h1);max-width:14ch}
-.intro__lead{max-width:44ch;color:var(--on-dark-2)}
-.intro__faits{list-style:none;margin:.6rem 0 0;padding:1.1rem 0 0;border-top:1px solid var(--line-dark);display:flex;flex-wrap:wrap;gap:.8rem 2rem;max-width:36rem;font-size:var(--t-small);color:var(--on-dark-2)}
+.intro__lead{max-width:44ch;color:#2B343C}
+.intro__faits{list-style:none;margin:.6rem 0 0;padding:1.1rem 0 0;border-top:1px solid rgba(18,23,27,.18);display:flex;flex-wrap:wrap;gap:.8rem 2rem;max-width:36rem;font-size:var(--t-small);color:#3F4A54}
 .intro__faits li{display:flex;flex-direction:column;gap:.1rem}
-.intro__faits b{font-size:1.05rem;font-weight:600;color:var(--on-dark)}
+.intro__faits b{font-size:1.05rem;font-weight:600;color:#12171B}
 @media (max-width:760px){
   .intro__ciel{
     inset:0 0 auto 0;height:min(90vw,380px);
-    -webkit-mask-image:linear-gradient(#000 45%,transparent 92%);mask-image:linear-gradient(#000 45%,transparent 92%);
+    -webkit-mask-image:linear-gradient(#000 50%,transparent 96%);mask-image:linear-gradient(#000 50%,transparent 96%);
   }
   .intro__ciel img{object-position:50% 50%}
   .intro__ciel::after{background:none}
-  .intro{padding-top:clamp(12rem,62vw,16rem)}
+  .intro{padding-top:clamp(13rem,66vw,17rem)}
 }
 
 /* ================= Les questions ================= */
@@ -287,13 +290,13 @@ input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outli
 
 <main class="shell" id="contenu">
 
-  <section class="panel panel--dark intro" aria-labelledby="titre">
+  <section class="panel intro" aria-labelledby="titre">
     <div class="intro__ciel" aria-hidden="true">
       <picture>
-        <source media="(max-width: 760px)" type="image/avif" srcset="/assets/img/nuages/suite-nuit-carre.avif">
-        <source media="(max-width: 760px)" type="image/webp" srcset="/assets/img/nuages/suite-nuit-carre.webp">
-        <source type="image/avif" srcset="/assets/img/nuages/suite-nuit.avif">
-        <img src="/assets/img/nuages/suite-nuit.webp" alt="" width="2400" height="1000" decoding="async">
+        <source media="(max-width: 760px)" type="image/avif" srcset="/assets/img/nuages/rocher-jour-carre.avif">
+        <source media="(max-width: 760px)" type="image/webp" srcset="/assets/img/nuages/rocher-jour-carre.webp">
+        <source type="image/avif" srcset="/assets/img/nuages/rocher-jour.avif">
+        <img src="/assets/img/nuages/rocher-jour.webp" alt="" width="2400" height="1028" decoding="async">
       </picture>
     </div>
     <p class="label">Ton appel de 30 min</p>
