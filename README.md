@@ -26,6 +26,7 @@ confidentialite.html    Politique de confidentialité (RGPD)
 mentions-legales.html   Mentions légales
 404.html                Page d'erreur servie par GitHub Pages, chemins absolus
 reset/index.html        La page du protocole RESET : mer de nuages, planches au trait
+appel/index.html        Le questionnaire avant l'appel de 30 min, qui mène à Cal.com (noindex)
 espace/index.html       L'espace privé des clients de RESET (noindex)
 espace/docs/            Les PDF client de RESET, sous des noms stables
 CNAME                   Domaine personnalisé lu par GitHub Pages
@@ -117,6 +118,19 @@ AVIF de hauteur impaire écrit par `sips` s'affiche transparent dans Chrome.
 
 Les planches au trait de la page RESET (la course du jour, l'arbre-poumon) sont des tracés SVG calculés par `assets/nuages/planches.py`
 puis recopiés dans la page.
+
+## L'appel de 30 min
+
+Tous les boutons « Réserver mon appel de 30 min » mènent à `appel/index.html` : cinq
+questions, puis l'agenda Cal.com. Le site n'enregistre rien. À l'envoi, le script
+poste d'abord les réponses au Google Form « BELIVE RESET, appel de 30 minutes »
+(attribut `data-gform`, numéros des champs dans `CHAMPS`), qui les recopie dans
+Notion. Puis il ouvre l'événement Cal.com `ccb` (l'appel de 30 min) en pré-remplissant le prénom (`name`),
+l'e-mail (`email`) et, dans le champ « notes » de la réservation, le WhatsApp et les
+réponses. L'adresse de l'événement est écrite une seule fois, dans l'attribut
+`action` du formulaire : si l'événement change d'adresse dans Cal.com, c'est là
+qu'il faut la reporter. Si une question du Google Form est modifiée ou recréée, son
+numéro `entry.…` change : le relire sur le formulaire public et le reporter dans `CHAMPS`.
 
 ## L'espace RESET
 

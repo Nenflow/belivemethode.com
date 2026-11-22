@@ -274,6 +274,7 @@ b,strong{font-weight:500}
 }
 .nav__cta{flex:none;background:#E6ECF0;color:#12171B!important;padding:11px 20px;border-radius:999px;font-size:14px;font-weight:500;text-decoration:none;transition:transform .3s}
 .nav__cta:hover{transform:translateY(-1px)}
+@media (max-width:560px){.nav__cta-plus{display:none}}
 .nav__burger{
   display:none;flex:none;position:relative;width:40px;height:40px;padding:0;border-radius:50%;
   border:1px solid rgba(230,236,240,.22);background:none;color:#E6ECF0;cursor:pointer;
@@ -999,6 +1000,13 @@ figcaption{color:var(--ink-3);font-size:var(--t-small);margin-top:1.6rem;max-wid
 .pas li > span:last-child{display:flex;flex-direction:column;gap:.2rem;padding-top:.35rem;font-size:var(--t-small);color:var(--on-dark-2);line-height:1.45}
 .pas b{font-size:1rem;font-weight:600;color:var(--on-dark)}
 .suite p + p{margin-top:.75rem}
+/* les repères avant de s'inscrire : départ, clôture, prix, paiement */
+.cles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.1rem 1.6rem;max-width:34rem;margin:0 0 1rem;padding:1.2rem 0;border-top:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark)}
+.cles dt{font-size:var(--t-label);font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--on-dark-2)}
+.cles dd{margin:.3rem 0 0;font-size:var(--t-small);line-height:1.45;color:var(--on-dark-2)}
+.cles dd b{display:block;font-size:1.05rem;font-weight:600;letter-spacing:-.01em;color:var(--on-dark)}
+.suite .cles__note{margin-bottom:2rem}
+@media (max-width:480px){.cles{grid-template-columns:minmax(0,1fr)}}
 .actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2rem}
 
 footer{display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;max-width:var(--maxw);margin-inline:auto;padding:2.4rem .4rem .8rem;color:var(--ink-3);font-size:var(--t-small)}
@@ -1073,7 +1081,7 @@ footer a:hover{color:var(--ink)}
     <a href="#avant">Avant de commencer</a>
     <a class="nav__accueil" href="/"><span aria-hidden="true">← </span>Retour à l'accueil BELIVE</a>
   </div>
-  <a class="nav__cta" href="#suite">Liste d'attente →</a>
+  <a class="nav__cta" href="/appel/">Réserver mon appel<span class="nav__cta-plus"> de 30 min</span> →</a>
   <button class="nav__burger" id="navBurger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Ouvrir le menu"><span></span><span></span></button>
 </nav>
 </header>
@@ -1124,7 +1132,7 @@ footer a:hover{color:var(--ink)}
     <div class="ouverture__fondu" aria-hidden="true"></div>
     <div class="ouverture__meta">
       <span><span>Protocole individuel</span><span>13 semaines</span><span>À distance</span></span>
-      <span><span class="ouverture__pastille">À venir</span><span>Tarif fondateur</span><span>3 places</span></span>
+      <span><span class="ouverture__pastille">Départ le 18 janvier 2027</span><span>Tarif fondateur</span><span>3 places</span></span>
     </div>
 
     <div class="ouverture__vide"></div>
@@ -1136,7 +1144,7 @@ footer a:hover{color:var(--ink)}
         <p class="ouverture__lead">Un protocole pour changer d'identité, t'aligner et vivre enfin la vie que tu ne t'autorisais pas.</p>
         <p class="ouverture__note">5 piliers, 3 moments par jour, 4 phases. À&nbsp;la fin, tu tiens sans moi.</p>
         <div class="actions">
-          <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfj11kIlWgP47-O8oDt12YvOwmYfR5KPWXMzn8iG9LAzuwBDQ/viewform" target="_blank" rel="noopener">Rejoindre la liste d'attente <span class="btn__arrow">→</span></a>
+          <a class="btn" href="/appel/">Réserver mon appel de 30 min <span class="btn__arrow">→</span></a>
           <a class="btn btn--verre" href="https://wa.me/32493847434?text=Bonjour%20Tristan%2C%20j%27ai%20une%20question%20sur%20RESET%20%3A%20" target="_blank" rel="noopener">Une question&nbsp;? <span class="btn__arrow">→</span></a>
         </div>
       </div>
@@ -1177,8 +1185,8 @@ footer a:hover{color:var(--ink)}
     <p class="identite__suite reveal">Ça ne dépend que de toi. <span class="identite__ligne">Personne ne pourra croire en toi à ta place, ni prendre les décisions et faire les actions à&nbsp;ta&nbsp;place.</span></p>
     <p class="identite__depart reveal">C'est ici que ça commence.</p>
     <div class="identite__action reveal">
-      <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfj11kIlWgP47-O8oDt12YvOwmYfR5KPWXMzn8iG9LAzuwBDQ/viewform" target="_blank" rel="noopener">Je passe à l'action <span class="btn__arrow">→</span></a>
-      <p class="identite__note">Ta première action&nbsp;: rejoindre la liste d'attente. Tu sauras en premier quand RESET ouvre.</p>
+      <a class="btn" href="/appel/">Réserver mon appel de 30 min <span class="btn__arrow">→</span></a>
+      <p class="identite__note">Ta première action&nbsp;: un appel de 30 minutes avec moi, gratuit et sans engagement.</p>
     </div>
   </section>
 
@@ -1636,7 +1644,7 @@ footer a:hover{color:var(--ink)}
     <div class="head">
       <p class="label"><span class="label__n num">04</span> Avant de commencer</p>
       <h2>Ni une remise en forme, ni une thérapie.</h2>
-      <p>Tout commence par un questionnaire d'admission. Si c'est non, je te le dis avant.</p>
+      <p>Tout commence par un questionnaire, puis un appel de 30 minutes. Si c'est non, je te le dis avant.</p>
     </div>
 
     <div class="compare">
@@ -1707,16 +1715,23 @@ footer a:hover{color:var(--ink)}
     </div>
     <div class="head" style="margin-bottom:1.4rem">
       <p class="label"><span class="label__n num">05</span> La suite</p>
-      <h2>RESET n'est pas encore ouvert.</h2>
+      <h2>Départ le lundi 18&nbsp;janvier&nbsp;2027.</h2>
     </div>
+    <dl class="cles">
+      <div><dt>Début</dt><dd><b>Lundi 18 janvier 2027</b>13 semaines, en ligne.</dd></div>
+      <div><dt>Inscriptions</dt><dd><b>Jusqu'au 10 janvier 2027</b>Dernier jour pour réserver ta place.</dd></div>
+      <div><dt>Prix</dt><dd><b class="num">1&nbsp;222&nbsp;€</b>Tarif fondateur, 3 places. Ensuite 1&nbsp;777&nbsp;€.</dd></div>
+      <div><dt>Paiement</dt><dd><b>En 1 ou en 3 fois</b>3&nbsp;×&nbsp;407,33&nbsp;€ au tarif fondateur.</dd></div>
+    </dl>
+    <p class="cles__note">Les 13 calls et les 4 sessions de Breathwork sont compris dans le prix.</p>
     <ol class="pas">
-      <li><span class="pas__n num">1</span><span><b>Tu t'inscris sur la liste d'attente</b>6 questions, 5 minutes.</span></li>
-      <li><span class="pas__n num">2</span><span><b>Je te préviens en premier</b>La date n'est pas encore fixée. Tu l'apprends avant l'annonce publique.</span></li>
-      <li><span class="pas__n num">3</span><span><b>Un questionnaire, puis un appel</b>Ta santé et ton temps, puis 30&nbsp;min d'appel gratuit pour décider à deux.</span></li>
+      <li><span class="pas__n num">1</span><span><b>Tu réserves ton appel</b>5 questions, puis tu choisis ton créneau.</span></li>
+      <li><span class="pas__n num">2</span><span><b>On se parle 30 minutes</b>Un appel gratuit et sans engagement, pour décider à deux.</span></li>
+      <li><span class="pas__n num">3</span><span><b>Tu démarres le 18 janvier</b>Si c'est oui, tu réserves ta place avant le 10 janvier 2027.</span></li>
     </ol>
     <div class="actions">
-      <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfj11kIlWgP47-O8oDt12YvOwmYfR5KPWXMzn8iG9LAzuwBDQ/viewform" target="_blank" rel="noopener">Rejoindre la liste d'attente <span class="btn__arrow">→</span></a>
-      <a class="btn btn--ghost" href="/#offres">Séance découverte à moitié prix <span class="btn__arrow">→</span></a>
+      <a class="btn" href="/appel/">Réserver mon appel de 30 min <span class="btn__arrow">→</span></a>
+      <a class="btn btn--ghost" href="/#groupe">Séance découverte à 25&nbsp;€ <span class="btn__arrow">→</span></a>
     </div>
   </section>
 
