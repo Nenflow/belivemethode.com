@@ -25,10 +25,8 @@ cgv.html                Conditions générales de vente
 confidentialite.html    Politique de confidentialité (RGPD)
 mentions-legales.html   Mentions légales
 404.html                Page d'erreur servie par GitHub Pages, chemins absolus
-reset/index.html        La page du protocole RESET : mer de nuages, planches au trait
-appel/index.html        Le questionnaire avant l'appel de 30 min, qui mène à Cal.com (noindex)
-espace/index.html       L'espace privé des clients de RESET (noindex)
-espace/docs/            Les PDF client de RESET, sous des noms stables
+reset/index.html        Renvoi vers l'accueil (RESET retiré, voir plus bas)
+appel/index.html        Renvoi vers l'accueil (RESET retiré, voir plus bas)
 CNAME                   Domaine personnalisé lu par GitHub Pages
 robots.txt              Indexation ouverte, pointe vers le sitemap
 sitemap.xml             Une seule URL : la page d'accueil
@@ -40,8 +38,8 @@ assets/
   nuages/               Le générateur des nuages et des planches au trait
   gen_brand.py          Regénère les icônes (depuis img/logo-b.png) et og.jpg
   gen_photos.py         Regénère les déclinaisons AVIF / WebP / JPEG des photos
-  gen_graphique_reset.py  Regénère le graphique des piliers de /reset/ depuis protocole.py
-  gen_espace.py         Met l'espace RESET à jour depuis protocole.py, copie les PDF
+  gen_graphique_reset.py  Graphique des piliers de /reset/ (version archivée, voir plus bas)
+  gen_espace.py         Espace client de RESET (version archivée, voir plus bas)
 ```
 
 Les pages légales et la page 404 portent `noindex` : seule la page d'accueil
@@ -82,76 +80,29 @@ script. Pour l'image de partage, il redessine le wordmark avec les mêmes coordo
 que le SVG inclus dans le site : en cas de modification du logotype, mettre les deux
 à jour.
 
-## Le graphique des piliers
+## Le programme signature : RESET retiré, emplacement gardé
 
-Le graphique de la page RESET (une colonne par semaine, le temps par jour et par
-pilier) est calculé depuis `protocole.py`, la source
-unique du protocole, rangée hors du dépôt. Après un changement de pratique :
+Le protocole RESET a été retiré du site le 24/11/2026. Un nouveau programme doit
+prendre sa place, et le site sera refait autour d'une nouvelle cible.
 
-```bash
-python3 assets/gen_graphique_reset.py /Volumes/T7/PRO/BELIVE/Accompagnement/RESET/Fabrication/protocole.py
-```
+- **Page d'accueil** : chaque bloc de RESET est toujours là, mis en page, mais
+  enveloppé dans un `<template data-programme="…">` précédé d'un commentaire
+  `PROGRAMME`. Un `<template>` ne s'affiche pas et n'est pas lu par les moteurs de
+  recherche. Les emplacements : `nav`, `hero-carte`, `hero-prix`, `offres-etape`,
+  `offres-carte`, `section` (l'ancienne section `#protocole`), `faq-programme`,
+  `faq-prix`, `pied-appel`, `pied-tuile`, `resa-offre`. Pour en rallumer un : réécrire
+  son texte, puis retirer les balises `<template>` qui l'entourent.
+- **`/reset/` et `/appel/`** renvoient vers l'accueil, pour que les liens déjà partagés
+  ne tombent pas sur une page introuvable.
+- **`/espace/`** et ses PDF ont été retirés du site.
 
-Le script réécrit le bloc entre `<!-- graphique:debut -->` et `<!-- graphique:fin -->`.
-Un geste qu'il ne connaît pas l'arrête : il faut alors le ranger dans un pilier.
-
-## Les nuages
-
-Les nuages du site ne sont pas des photos : ils sont calculés, donc libres de
-droits. `assets/nuages/gen.html` est un lanceur de rayons WebGL (mer de nuages,
-cumulus, rocher et silhouette) que Chrome exécute sans interface, sur la puce
-graphique ; chaque image est décrite dans `assets/nuages/reglages.json`
-(caméra, soleil, couleurs, tours de cumulus). Pour en refaire une, ou toutes :
-
-```bash
-python3 assets/nuages/rendu.py ciel-jour
-```
-
-```bash
-python3 assets/nuages/rendu.py
-```
-
-Les hauts de page empilent deux images du même rendu : le ciel derrière le mot,
-puis les nuages proches (fichiers `-avant`, sur fond transparent) devant. Elles
-doivent garder exactement le même cadrage. Les dimensions restent paires : un
-AVIF de hauteur impaire écrit par `sips` s'affiche transparent dans Chrome.
-
-Les planches au trait de la page RESET (la course du jour, l'arbre-poumon) sont des tracés SVG calculés par `assets/nuages/planches.py`
-puis recopiés dans la page.
-
-## L'appel de 30 min
-
-Tous les boutons « Réserver mon appel de 30 min » mènent à `appel/index.html` : cinq
-questions, puis l'agenda Cal.com. Le site n'enregistre rien. À l'envoi, le script
-poste d'abord les réponses au Google Form « BELIVE RESET, appel de 30 minutes »
-(attribut `data-gform`, numéros des champs dans `CHAMPS`), qui les recopie dans
-Notion. Puis il ouvre l'événement Cal.com `ccb` (l'appel de 30 min) en pré-remplissant le prénom (`name`),
-l'e-mail (`email`) et, dans le champ « notes » de la réservation, le WhatsApp et les
-réponses. L'adresse de l'événement est écrite une seule fois, dans l'attribut
-`action` du formulaire : si l'événement change d'adresse dans Cal.com, c'est là
-qu'il faut la reporter. Si une question du Google Form est modifiée ou recréée, son
-numéro `entry.…` change : le relire sur le formulaire public et le reporter dans `CHAMPS`.
-
-## L'espace RESET
-
-`espace/index.html` est l'espace des clients de RESET, en `noindex`. Il n'a pas de
-serveur : la date du premier call vit dans l'adresse et dans le navigateur du client.
-Le suivi se fait dans le journal papier ; l'espace est un appui pendant la journée.
-
-Le protocole n'y est pas écrit à la main. Il vient de `protocole.py`, la source
-unique de RESET (`Accompagnement/RESET/Fabrication/`), que `assets/gen_espace.py`
-lit sans jamais le modifier : le script réécrit le bloc compris entre
-`/* <protocole> */` et `/* </protocole> */`, et rien d'autre.
-
-Avec le dossier « Documents clients » en second argument, il recopie aussi les PDF
-dans `espace/docs/`, sous un nom stable : la version la plus haute de chaque titre
-passe par-dessus l'ancienne, et l'adresse du document ne change jamais. La liste
-des documents (titre, nom en ligne, semaine d'ouverture) est en haut du script.
-Le vision board n'y a pas de fichier : c'est un guide vendu, il ne va pas en ligne.
-
-```bash
-python3 assets/gen_espace.py "/Volumes/T7/PRO/BELIVE/Accompagnement/RESET/Fabrication/protocole.py" "/Volumes/T7/PRO/BELIVE/Accompagnement/RESET/Documents clients"
-```
+Tout RESET reste dans le tag git `archive-reset` : la page `/reset/` (mer de nuages,
+planches au trait, graphique des piliers), le questionnaire `/appel/` relié au Google
+Form et à Cal.com, l'espace client et ce README tel qu'il les documentait. Pour
+récupérer une page : `git show archive-reset:reset/index.html`, ou
+`git checkout archive-reset -- reset appel espace` pour tout remettre d'un coup.
+Les scripts `gen_graphique_reset.py` et `gen_espace.py` travaillent sur ces pages
+archivées : ils ne servent qu'une fois celles-ci remises en place.
 
 ## Déploiement
 
